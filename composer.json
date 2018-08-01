@@ -1,0 +1,17 @@
+{
+    "name": "scylabs/neptune-bundle",
+    "description": "Admin bundle all in one",
+    "require": {
+        "symfony/website-skeleton": "v4.1.2.6"
+    },
+    "require-dev": {
+        "friendsofsymfony/user-bundle": "^2.1",
+        "sensio/framework-extra-bundle": "^5.2"
+    },
+    "authors": [
+        {
+            "name": "Alexandre Sciacca",
+            "email": "alexandre.sciacca@gmail.com"
+        }
+    ]
+}
