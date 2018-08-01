@@ -1,8 +1,8 @@
 <?php
 
-namespace App\ScyLabs\NeptuneBundle\Repository;
+namespace Scylabs\NeptuneBundle\Repository;
 
-use App\ScyLabs\NeptuneBundle\Entity\AbstractDetail;
+use Scylabs\NeptuneBundle\Entity\AbstractDetail;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

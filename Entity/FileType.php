@@ -1,13 +1,13 @@
 <?php
 
-namespace App\ScyLabs\NeptuneBundle\Entity;
+namespace Scylabs\NeptuneBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\ScyLabs\NeptuneBundle\Repository\FileTypeRepository")
+ * @ORM\Entity(repositoryClass="Scylabs\NeptuneBundle\Repository\FileTypeRepository")
  */
 class FileType extends AbstractElemType
 {
@@ -19,7 +19,7 @@ class FileType extends AbstractElemType
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\File", mappedBy="type")
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\File", mappedBy="type")
      */
     private $files;
 

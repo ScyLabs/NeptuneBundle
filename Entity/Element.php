@@ -1,13 +1,13 @@
 <?php
 
-namespace App\ScyLabs\NeptuneBundle\Entity;
+namespace Scylabs\NeptuneBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\ScyLabs\NeptuneBundle\Repository\ElementRepository")
+ * @ORM\Entity(repositoryClass="Scylabs\NeptuneBundle\Repository\ElementRepository")
  */
 class Element extends AbstractChild
 {
@@ -19,39 +19,39 @@ class Element extends AbstractChild
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\ScyLabs\NeptuneBundle\Entity\ElementType", inversedBy="elements")
+     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\ElementType", inversedBy="elements")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="element")
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Photo", mappedBy="element")
      */
     protected $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Document", mappedBy="element")
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Document", mappedBy="element")
      */
     protected $documents;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Video", mappedBy="element")
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Video", mappedBy="element")
      */
     protected $videos;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Page", inversedBy="elements")
+     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\Page", inversedBy="elements")
      */
     protected $page;
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\ElementDetail", mappedBy="element", orphanRemoval=true,cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\ElementDetail", mappedBy="element", orphanRemoval=true,cascade={"persist","remove"})
      */
     protected $details;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Zone", mappedBy="element")
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Zone", mappedBy="element")
      */
     private $zones;
 

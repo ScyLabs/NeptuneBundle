@@ -1,13 +1,13 @@
 <?php
 
-namespace App\ScyLabs\NeptuneBundle\Entity;
+namespace Scylabs\NeptuneBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\ScyLabs\NeptuneBundle\Repository\FormRepository")
+ * @ORM\Entity(repositoryClass="Scylabs\NeptuneBundle\Repository\FormRepository")
  */
 class Form
 {
@@ -24,12 +24,12 @@ class Form
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Zone", inversedBy="forms")
+     * @ORM\ManyToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Zone", inversedBy="forms")
      */
     private $zones;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Field", mappedBy="form", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Field", mappedBy="form", orphanRemoval=true)
      */
     private $fields;
 

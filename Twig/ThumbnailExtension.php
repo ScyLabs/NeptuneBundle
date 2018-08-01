@@ -6,7 +6,7 @@
  * Time: 14:34
  */
 
-namespace App\ScyLabs\NeptuneBundle\Twig;
+namespace Scylabs\NeptuneBundle\Twig;
 
 
 use Twig\Extension\AbstractExtension;

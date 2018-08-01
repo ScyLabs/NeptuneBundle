@@ -1,8 +1,8 @@
 <?php
 
-namespace App\ScyLabs\NeptuneBundle\Form;
+namespace Scylabs\NeptuneBundle\Form;
 
-use App\ScyLabs\NeptuneBundle\Entity\ZoneDetail;
+use Scylabs\NeptuneBundle\Entity\ZoneDetail;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

@@ -6,21 +6,21 @@
  * Time: 15:48
  */
 
-namespace App\ScyLabs\NeptuneBundle\Controller;
+namespace Scylabs\NeptuneBundle\Controller;
 
-use App\ScyLabs\NeptuneBundle\Entity\AbstractChild;
-use App\ScyLabs\NeptuneBundle\Entity\AbstractFileLink;
-use App\ScyLabs\NeptuneBundle\Entity\Document;
-use App\ScyLabs\NeptuneBundle\Entity\Element;
-use App\ScyLabs\NeptuneBundle\Entity\File;
-use App\ScyLabs\NeptuneBundle\Entity\Page;
-use App\ScyLabs\NeptuneBundle\Entity\Photo;
-use App\ScyLabs\NeptuneBundle\Entity\Video;
-use App\ScyLabs\NeptuneBundle\Entity\Zone;
-use App\ScyLabs\NeptuneBundle\Form\ElementForm;
-use App\ScyLabs\NeptuneBundle\Form\PageForm;
-use App\ScyLabs\NeptuneBundle\Form\ZoneForm;
-use App\ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
+use Scylabs\NeptuneBundle\Entity\AbstractChild;
+use Scylabs\NeptuneBundle\Entity\AbstractFileLink;
+use Scylabs\NeptuneBundle\Entity\Document;
+use Scylabs\NeptuneBundle\Entity\Element;
+use Scylabs\NeptuneBundle\Entity\File;
+use Scylabs\NeptuneBundle\Entity\Page;
+use Scylabs\NeptuneBundle\Entity\Photo;
+use Scylabs\NeptuneBundle\Entity\Video;
+use Scylabs\NeptuneBundle\Entity\Zone;
+use Scylabs\NeptuneBundle\Form\ElementForm;
+use Scylabs\NeptuneBundle\Form\PageForm;
+use Scylabs\NeptuneBundle\Form\ZoneForm;
+use Scylabs\NeptuneBundle\Form\ZoneTypeForm;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

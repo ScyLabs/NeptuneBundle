@@ -6,11 +6,11 @@
  * Time: 09:46
  */
 
-namespace App\ScyLabs\NeptuneBundle;
+namespace Scylabs\NeptuneBundle;
 
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use App\ScyLabs\NeptuneBundle\DependencyInjection\ScyLabsNeptuneExtension;
+use Scylabs\NeptuneBundle\DependencyInjection\ScyLabsNeptuneExtension;
 
 class ScyLabsNeptuneBundle extends Bundle
 {

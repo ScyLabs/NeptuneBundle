@@ -6,22 +6,22 @@
  * Time: 16:30
  */
 
-namespace App\ScyLabs\NeptuneBundle\Controller;
+namespace Scylabs\NeptuneBundle\Controller;
 
 
 
 
 
-use App\ScyLabs\NeptuneBundle\Entity\Document;
-use App\ScyLabs\NeptuneBundle\Entity\Element;
-use App\ScyLabs\NeptuneBundle\Entity\File;
+use Scylabs\NeptuneBundle\Entity\Document;
+use Scylabs\NeptuneBundle\Entity\Element;
+use Scylabs\NeptuneBundle\Entity\File;
 
-use App\ScyLabs\NeptuneBundle\Entity\FileType;
-use App\ScyLabs\NeptuneBundle\Entity\Page;
-use App\ScyLabs\NeptuneBundle\Entity\Photo;
-use App\ScyLabs\NeptuneBundle\Entity\Video;
-use App\ScyLabs\NeptuneBundle\Entity\Zone;
-use App\ScyLabs\NeptuneBundle\Services\FileUploader;
+use Scylabs\NeptuneBundle\Entity\FileType;
+use Scylabs\NeptuneBundle\Entity\Page;
+use Scylabs\NeptuneBundle\Entity\Photo;
+use Scylabs\NeptuneBundle\Entity\Video;
+use Scylabs\NeptuneBundle\Entity\Zone;
+use Scylabs\NeptuneBundle\Services\FileUploader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -180,16 +180,16 @@ class FileController extends BaseController
         }
 
         $minesok = array(
-            'App\ScyLabs\NeptuneBundlelication/pdf',
+            'Scylabs\NeptuneBundlelication/pdf',
             'image/jpeg',
             'image/png',
             'image/svg+xml',
             'audio/*',
             'image/gif',
             'video/mp4',
-            'App\ScyLabs\NeptuneBundlelication/zip',
-            'App\ScyLabs\NeptuneBundlelication/x-7z-compressed',
-            'App\ScyLabs\NeptuneBundlelication/x-rar-compressed'
+            'Scylabs\NeptuneBundlelication/zip',
+            'Scylabs\NeptuneBundlelication/x-7z-compressed',
+            'Scylabs\NeptuneBundlelication/x-rar-compressed'
         );
 
         $uploadFile = new SymfonyFile($res);
@@ -199,7 +199,7 @@ class FileController extends BaseController
         $typeRepo = $this->getDoctrine()->getRepository(FileType::class);
 
         switch($uploadFile->getMimeType()){
-            case 'App\ScyLabs\NeptuneBundlelication/pdf':
+            case 'Scylabs\NeptuneBundlelication/pdf':
                 $name = 'document';
                 break;
             case 'image/jpeg':

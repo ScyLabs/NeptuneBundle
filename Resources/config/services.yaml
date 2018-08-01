@@ -6,7 +6,7 @@ parameters:
 
 services:
 
-    App\ScyLabs\NeptuneBundle\:
+    Scylabs\NeptuneBundle\:
         resource: '../../*'
         exclude: '../../{Entity,Migrations,Tests,Kernel.php}'
 

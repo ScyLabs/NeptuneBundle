@@ -1,11 +1,11 @@
 <?php
 
-namespace App\ScyLabs\NeptuneBundle\Entity;
+namespace Scylabs\NeptuneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\ScyLabs\NeptuneBundle\Repository\PhotoRepository")
+ * @ORM\Entity(repositoryClass="Scylabs\NeptuneBundle\Repository\PhotoRepository")
  */
 class Photo extends AbstractFileLink
 {
@@ -17,23 +17,23 @@ class Photo extends AbstractFileLink
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\ScyLabs\NeptuneBundle\Entity\File", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\File", inversedBy="photos")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $file;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Page", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\Page", inversedBy="photos")
      */
     protected $page;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Zone", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\Zone", inversedBy="photos")
      */
     protected $zone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Element", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\Element", inversedBy="photos")
      */
     protected $element;
 

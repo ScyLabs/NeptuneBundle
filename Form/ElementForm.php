@@ -1,15 +1,15 @@
 <?php
 
-namespace App\ScyLabs\NeptuneBundle\Form;
+namespace Scylabs\NeptuneBundle\Form;
 
-use App\ScyLabs\NeptuneBundle\Entity\Element;
-use App\ScyLabs\NeptuneBundle\Entity\Page;
-use App\ScyLabs\NeptuneBundle\Entity\PageType;
-use App\ScyLabs\NeptuneBundle\Entity\ElementType;
-use App\ScyLabs\NeptuneBundle\Repository\PageRepository;
+use Scylabs\NeptuneBundle\Entity\Element;
+use Scylabs\NeptuneBundle\Entity\Page;
+use Scylabs\NeptuneBundle\Entity\PageType;
+use Scylabs\NeptuneBundle\Entity\ElementType;
+use Scylabs\NeptuneBundle\Repository\PageRepository;
 
-use App\ScyLabs\NeptuneBundle\Repository\PageTypeRepository;
-use App\ScyLabs\NeptuneBundle\Repository\ElementTypeRepository;
+use Scylabs\NeptuneBundle\Repository\PageTypeRepository;
+use Scylabs\NeptuneBundle\Repository\ElementTypeRepository;
 use Doctrine\ORM\Mapping\Entity;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

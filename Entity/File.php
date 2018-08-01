@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ScyLabs\NeptuneBundle\Entity;
+namespace Scylabs\NeptuneBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\ScyLabs\NeptuneBundle\Repository\FileRepository")
+ * @ORM\Entity(repositoryClass="Scylabs\NeptuneBundle\Repository\FileRepository")
  */
 class File
 {
@@ -25,23 +25,23 @@ class File
     private $file;
     
     /**
-     * @ORM\ManyToOne(targetEntity="App\ScyLabs\NeptuneBundle\Entity\FileType", inversedBy="files")
+     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\FileType", inversedBy="files")
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="file", orphanRemoval=true,cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Photo", mappedBy="file", orphanRemoval=true,cascade={"remove"})
      */
     private $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Document", mappedBy="file", orphanRemoval=true,cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Document", mappedBy="file", orphanRemoval=true,cascade={"remove"})
      */
     private $documents;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Video", mappedBy="file", orphanRemoval=true,cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Video", mappedBy="file", orphanRemoval=true,cascade={"remove"})
      */
     private $videos;
 

@@ -6,11 +6,11 @@
  * Time: 12:15
  */
 
-namespace App\ScyLabs\NeptuneBundle\EventListener;
+namespace Scylabs\NeptuneBundle\EventListener;
 
 
-use App\ScyLabs\NeptuneBundle\Entity\File;
-use App\ScyLabs\NeptuneBundle\Services\FileUploader;
+use Scylabs\NeptuneBundle\Entity\File;
+use Scylabs\NeptuneBundle\Services\FileUploader;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use FOS\UserBundle\Form\Factory\FactoryInterface;

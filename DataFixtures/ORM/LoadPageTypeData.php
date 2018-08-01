@@ -6,10 +6,10 @@
  * Time: 12:19
  */
 
-namespace App\ScyLabs\NeptuneBundle\DataFixtures\ORM;
+namespace Scylabs\NeptuneBundle\DataFixtures\ORM;
 
 
-use App\ScyLabs\NeptuneBundle\Entity\PageType;
+use Scylabs\NeptuneBundle\Entity\PageType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;

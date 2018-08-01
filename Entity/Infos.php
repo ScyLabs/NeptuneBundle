@@ -1,11 +1,11 @@
 <?php
 
-namespace App\ScyLabs\NeptuneBundle\Entity;
+namespace Scylabs\NeptuneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\ScyLabs\NeptuneBundle\Repository\InfosRepository")
+ * @ORM\Entity(repositoryClass="Scylabs\NeptuneBundle\Repository\InfosRepository")
  */
 class Infos
 {

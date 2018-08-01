@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ScyLabs\NeptuneBundle\Entity;
+namespace Scylabs\NeptuneBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping\OrderBy;
 use Doctrine\ORM\Mapping\Annotation;
 
 /**
- * @ORM\Entity(repositoryClass="App\ScyLabs\NeptuneBundle\Repository\PageRepository")
+ * @ORM\Entity(repositoryClass="Scylabs\NeptuneBundle\Repository\PageRepository")
  */
 class Page extends AbstractElem
 {
@@ -22,53 +22,53 @@ class Page extends AbstractElem
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Page", inversedBy="childs")
+     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\Page", inversedBy="childs")
      */
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Page", mappedBy="parent",orphanRemoval=true,cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Page", mappedBy="parent",orphanRemoval=true,cascade={"persist","remove"})
      * @OrderBy({"prio" = "ASC"})
      */
     private $childs;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="page",cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Photo", mappedBy="page",cascade={"persist","remove"})
      * @OrderBy({"prio" = "ASC"})
      */
     protected $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Document", mappedBy="page",cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Document", mappedBy="page",cascade={"persist","remove"})
      * @OrderBy({"prio" = "ASC"})
      */
     protected $documents;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Video", mappedBy="page",cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Video", mappedBy="page",cascade={"persist","remove"})
      * @OrderBy({"prio" = "ASC"})
      */
     protected $videos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Zone", mappedBy="page")
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Zone", mappedBy="page")
      * @OrderBy({"prio" = "ASC"})
      */
     private $zones;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Element", mappedBy="page")
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Element", mappedBy="page")
      * @OrderBy({"prio" = "ASC"})
      */
     private $elements;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\ScyLabs\NeptuneBundle\Entity\PageDetail", mappedBy="page", orphanRemoval=true,cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\PageDetail", mappedBy="page", orphanRemoval=true,cascade={"persist","remove"})
      */
     private $details;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\ScyLabs\NeptuneBundle\Entity\PageType", inversedBy="pages")
+     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\PageType", inversedBy="pages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;

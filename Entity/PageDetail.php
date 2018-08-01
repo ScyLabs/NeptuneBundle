@@ -1,11 +1,11 @@
 <?php
 
-namespace App\ScyLabs\NeptuneBundle\Entity;
+namespace Scylabs\NeptuneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\ScyLabs\NeptuneBundle\Repository\PageDetailRepository")
+ * @ORM\Entity(repositoryClass="Scylabs\NeptuneBundle\Repository\PageDetailRepository")
  */
 class PageDetail extends AbstractAvancedDetail
 {
@@ -17,7 +17,7 @@ class PageDetail extends AbstractAvancedDetail
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\ScyLabs\NeptuneBundle\Entity\Page", inversedBy="details")
+     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\Page", inversedBy="details")
      * @ORM\JoinColumn(nullable=false)
      */
     private $page;

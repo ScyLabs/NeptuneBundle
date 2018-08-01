@@ -6,7 +6,7 @@
  * Time: 17:14
  */
 
-namespace App\ScyLabs\NeptuneBundle\Entity;
+namespace Scylabs\NeptuneBundle\Entity;
 
 use Doctrine\ORM\Mapping\MappedSuperclass;
 /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\ScyLabs\NeptuneBundle\Entity;
+namespace Scylabs\NeptuneBundle\Entity;
 
-use App\ScyLabs\NeptuneBundle\Form\ValidForm;
+use Scylabs\NeptuneBundle\Form\ValidForm;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
