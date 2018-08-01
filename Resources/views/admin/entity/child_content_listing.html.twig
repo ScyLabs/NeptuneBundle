@@ -1,0 +1,118 @@
+{% import _self as recursiveMacro %}
+{% macro recursiveTabPage(page) %}
+    {% import _self as self %}
+    {% if page.remove == 0 %}
+        <tr data-id="{{ page.id }}" data-type="page" data-files="{{ page.jsonFiles }}" data-action="{{ path('admin_entity_json',{'type':app.request.attributes.get('type'),'parentType':'page','parentId':page.id}) }}" data-zones="{{ page.jsonZones }}" data-elements="{{ page.jsonElements }}">
+            <td>
+                {{ page.name }}
+            </td>
+            <td>
+                {% if page.parent is not  null %}
+                    {{ page.parent.name }}
+                {% endif %}
+            </td>
+        </tr>
+        {% if page.childs |length %}
+            {% for child in page.childs %}
+                {{ self.recursiveTabPage(child) }}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+<h4>Gérez vos {{ app.request.attributes.get('type') }}s</h4>
+<div class="row">
+    <div id="container_objects" class="col-md-6 trans500" data-select="[]">
+        <div id="tabs2">
+            <ul class="onglets">
+                <li><a href="#tabs-11">Gestion</a></li>
+                <li><a href="#tabs-22">Prios</a></li>
+            </ul>
+            <div id="tabs-11">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="objects_datatable" class="table table-bordered table-striped no-footer" role="grid" aria-describedby="myTable_info">
+                            <thead>
+                            <th>Actif</th>
+                            <th>Name</th>
+                            <th>Actions</th>
+                            </thead>
+                            <tbody id="body_tab_objects">
+                            <tr>
+                                <td >Cliquez sur un element pour afficher les {{ app.request.attributes.get('type') }}s qui y sont liées</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="tabs-22">
+                <div class="card">
+                    <div class="card-body">
+                        <span id="initial_message">Cliquez sur un element pour afficher les {{ app.request.attributes.get('type') }}s qui y sont liées</span>
+                        <div class="nestable">
+                            <div class="dd" id="nestable1" data-action="{{ path('admin_entity_prio',{'type':app.request.attributes.get('type')}) }}">
+                                <ol class="dd-list" id="objects">
+                                    {% if objects | length %}
+                                        {% for object in objects %}
+                                        {% endfor %}
+                                    {% endif %}
+
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 trans500" id="gallery_actions">
+        <div class="card">
+            <button id="button_add" data-action="{{ path('admin_entity_add',{'type':app.request.attributes.get('type')})}}" class="btn btn-pink m-b-10 m-l-5 show_form">Ajouter un{{ ((app.request.attributes.get('type') == 'element') ? ' ' : 'e ') ~ app.request.attributes.get('type') }}</button>
+        </div>
+        <div id="selection_elements" class="card">
+            <br/>
+            <div id="tabs_locked">
+                {% if collection is defined %}
+                    <ul class="onglets">
+                        {% for key, tab in collection %}
+                            <li><a href="#tabs-{{ loop.index }}">{{ key }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% for key, tab in collection %}
+                        <div id="tabs-{{ loop.index }}">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
+                                        <thead>
+                                        <th>Name</th>
+                                        <th>Parent</th>
+                                        </thead>
+                                        <tbody>
+                                        {% for object in tab %}
+                                            {% if key == 'Pages' %}
+                                                {{ recursiveMacro.recursiveTabPage(object) }}
+                                            {% else %}
+                                                {% set type = (key | trim('s', 'right') | lower) %}
+                                                <tr class="none" data-id="{{ object.id }}" data-type="{{ type }}" data-action="{{ path('admin_entity_json',{'type':app.request.attributes.get('type'),'parentType':type,'parentId':object.id}) }}">
+                                                    <td>{{ object.name }}</td>
+                                                    <td>
+                                                        {% if object.parent != null %}
+                                                            {{ object.parent.name }}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

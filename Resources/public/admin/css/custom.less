@@ -1,0 +1,159 @@
+.onglets {
+    display: block;
+    width:100%;
+    position: relative;
+    margin-bottom: -15px;
+    > li {
+        display: inline-block;
+        border:1px solid #ededed;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom: none;
+        a{padding:10px 20px;display: block;}
+    }
+    > li.ui-state-active{background:#d1ecf1;}
+}
+
+#flashes {
+    position: fixed;
+    bottom:50px;
+    right:0;
+    width:100%;
+    max-width: 300px;
+    z-index: 999;
+    .flash { margin:10px;}
+    .alert p {color:#000!important;}
+}
+
+.nobtnstyle {
+    border:none!important;
+    background:none!important;
+}
+.actions > li {
+    display: inline-block;
+}
+.relative {
+    position: relative;
+}
+#keyup {
+    position: fixed;
+    bottom:40px;
+    left:0;
+    padding:20px;
+    z-index:999;
+}
+.dropzone  {
+    min-height: 300px;
+}
+#addfile_form {
+    display: none;
+}
+.hack-inline {
+    letter-spacing: -0.5em;
+    > * {letter-spacing: normal;display: inline-block;}
+}
+
+.centerXY {
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+}
+.cartouches > li {
+    display:inline-block;
+    overflow: hidden;
+    padding:5px;
+    cursor: pointer;
+    > span {
+        overflow: hidden;
+        position: relative;
+        display: block;
+        > .boxing {
+            position: absolute;
+            left: 0;
+            top:0;
+            width:100%;
+            height:100%;
+            display: flex;
+            justify-content: center;
+            > img {
+                object-fit: cover;
+                object-position: 50% 50%;
+            }
+        }
+        &::after {
+            content:'';
+            padding-top: 75%;
+            position: relative;
+            display: block;
+        }
+        > .boxing > i {
+            opacity: 0;
+            font-size: 60px;
+            color:green;
+            transition: all 500ms;
+            z-index: 3;
+        }
+        &::before{
+            content:'';
+            display: block;
+            position: absolute;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            background:transparent;
+            opacity: 0;
+            transition:all 500ms;
+            z-index: 2;
+        }
+        .date {
+            position: absolute;
+            bottom:0;
+            padding:10px;
+            color:#fff;
+            z-index: 99;
+            opacity: 0;
+            transition:all 500ms;
+        }
+        
+    }
+
+    &:not(.active):hover > span::before {opacity: 1;background: rgba(255,255,255,0.3);}
+    &:hover > span .date {opacity: 1;}
+    form {
+        position: absolute;
+        z-index: 999;
+        right:0;
+        top:0;
+        padding:5px;
+        display: block;
+        transition:all 500ms;
+        opacity: 0;
+    }
+    &:hover {
+        form { opacity: 1;}
+    }
+    &.active {
+        > span  i {opacity: 1;}
+        > span::before {opacity: 1; background:rgba(0,0,0,0.5);}
+    }
+
+}
+
+
+.trans500 {
+    transition:all 500ms;
+}
+.none {
+    display: none;
+}
+
+#selection_elements table tbody tr {
+    cursor: pointer;
+    &:hover,&.active{border:2px solid #0d71bb;}
+}
+
+.block {
+    display: block;}
+textarea.form-control {height: auto;}

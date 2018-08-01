@@ -1,0 +1,107 @@
+{% import '@ScyLabsNeptune/admin/entity/macros.html.twig' as recursiveMacro %}
+<!-- Start Page Content -->
+<div class="row">
+    <div class="col-lg-10">
+        <div id="tabs">
+            <ul class="onglets">
+                <li><a href="#tabs-1">Gestion</a></li>
+                <li><a href="#tabs-2">Prios</a></li>
+            </ul>
+            <div id="tabs-1">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
+                            <thead>
+                            <th>Actif</th>
+                            <th>Type</th>
+                            <th>Name</th>
+                            <th>Parent</th>
+                            <th>Actions</th>
+                            </thead>
+                            <tbody>
+                            {% if objects is defined and objects | length %}
+                                {% for object in objects %}
+                                    {% if app.request.attributes.get('type') == 'page' %}
+                                        {{ recursiveMacro.recursiveTabPage(object) }}
+                                    {% else %}
+                                        <tr>
+                                            <td>
+                                                <a href="{{ path('admin_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}">
+                                                    {% if object.active %}
+                                                        <i class="fa fa-check text-success"></i>
+                                                    {% else %}
+                                                        <i class="fa fa-times text-danger"></i>
+                                                    {% endif %}
+                                                </a>
+                                            </td>
+                                            <td>{{ object.type.name }}</td>
+                                            <td>{{ object.name }}</td>
+                                            <td>{{ object.parent.name }}</td>
+                                            <td>
+                                                <ul class="actions">
+                                                    <li><a href="{{ path('admin_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
+                                                    <li><a href="{{ path('admin_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
+                                                    <li class="">
+                                                        {{ render(controller(
+                                                            'App\\Controller\\Admin\\EntityController::deleteAction',
+                                                            {'id':object.id,'type':app.request.attributes.get('type')}
+                                                        )) }}
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="tabs-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Nestedable</h4>
+                        <div class="card-content">
+                            <div class="nestable">
+                                <div class="dd" id="nestable{{ app.request.attributes.get('type') == 'page' ? '' : '1'}}" data-action="{{ path('admin_entity_prio',{'type':app.request.attributes.get('type')}) }}">
+                                    <ol class="dd-list">
+                                        {% if objects | length %}
+                                            {% for object in objects %}
+                                                {% if app.request.attributes.get('type') == 'page' %}
+                                                    {{ recursiveMacro.recursivePage(object) }}
+                                                {% else %}
+                                                    <li class="dd-item" data-id="{{ object.id }}">
+                                                        <div class="dd-handle">
+                                                            <a href="{{ path('admin_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}">
+                                                                {% if object.active %}
+                                                                    <i class="fa fa-check text-success"></i>
+                                                                {% else %}
+                                                                    <i class="fa fa-times text-danger"></i>
+                                                                {% endif %}
+                                                            </a>
+                                                            {{ object.name }}
+                                                        </div>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% if app.request.attributes.get('_route') == 'admin_entity' %}
+        <div class="col-lg-2 m-t-25">
+            <div class="card">
+                <button onclick="window.location.href = '{{ path('admin_entity_add',{'type':app.request.attributes.get('type')}) }}'" class="btn btn-pink m-b-10 m-l-5 show_form">Créer une {{ app.request.attributes.get('type') }}</button>
+            </div>
+        </div>
+    {% endif %}
+</div>
+<!-- End page Content -->

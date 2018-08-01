@@ -1,0 +1,47 @@
+<!-- Start Page Content -->
+<div class="row">
+    <div class="col-lg-10">
+        <div class="card">
+            <div class="card-body">
+                <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
+                    <thead>
+                    <th>Nom</th>
+                    <th>Intitulé</th>
+                    <th>Actions</th>
+                    </thead>
+                    <tbody>
+                    {% if types |length %}
+                        {% for type in types %}
+                            <tr>
+                                <td>{{ type.name }}</td>
+                                <td>{{ type.title }}</td>
+                                <td>
+                                    <ul class="actions">
+                                        {% if type.removable %}
+                                            <li><a href="{{ path('admin_type_edit',{'id':type.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
+                                            <li class="">
+                                                {{ render(controller(
+                                                    'App\\Controller\\Admin\\TypeController::deleteAction',
+                                                    {'type':app.request.attributes.get('type'),'id':type.id}
+                                                )) }}
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% if app.request.attributes.get('_route') == 'admin_type' %}
+        <div class="col-lg-2 m-t-25">
+            <div class="card">
+                <button onclick="window.location.href = '{{ path('admin_type_add',{'type':app.request.attributes.get('type')}) }}'" class="btn btn-pink m-b-10 m-l-5 show_form">Créer un type</button>
+            </div>
+        </div>
+    {% endif %}
+</div>
+<!-- End page Content -->

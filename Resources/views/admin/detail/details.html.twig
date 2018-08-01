@@ -1,0 +1,32 @@
+{% extends '@ScyLabsNeptune/admin/layout.html.twig' %}
+{% block css %}
+{% endblock %}
+{% block js %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {{ parent() }}
+        <div class="col-lg-6">
+            <div id="tabs">
+                {% if collection is defined %}
+                    <ul class="onglets">
+                        {% for key, tab in collection %}
+                            <li><a href="#tabs-{{ loop.index }}">{{ key }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% for key, tab in collection %}
+                        <div id="tabs-{{ loop.index }}">
+                            <div class="card">
+                                {% for object in tab %}
+                                    {% set form = tab['form'] %}
+                                        {% include '@ScyLabsNeptune/admin/form.html.twig' %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

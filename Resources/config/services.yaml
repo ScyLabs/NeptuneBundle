@@ -1,0 +1,23 @@
+parameters:
+    locale: 'fr'
+    uploads_directory: '%kernel.project_dir%/public/uploads/'
+    langs: ['fr','en','ru','de']
+
+
+services:
+
+    App\ScyLabs\NeptuneBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Scylabs\NeptuneBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+
+
+              #- { name: doctrine.event_listener,event: postLoad }
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

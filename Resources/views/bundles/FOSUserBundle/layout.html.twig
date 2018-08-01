@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image.jpg') }}" sizes="16x16" href="{{ asset('bundles/scylabsneptune/admin/images/favicon.jpg') }}">
+    <title>Ela - Bootstrap Admin Dashboard Template</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="{{ asset('css/login/login.css') }}"/>
+</head>
+
+<body>
+
+<div id="canvas-wrapper" style="">
+    <div class="content-login centerXY">
+
+        {% if title is defined %}
+            <h3>{{ title }}</h3>
+        {% else %}
+            <h3>Connectez vous</h3>
+        {% endif %}
+
+        <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user.firstConnexion == false %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% endif %}
+        </div>
+
+
+        <div class="form">
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+        </div>
+        <div>
+            {% if app.request.hasPreviousSession %}
+                {% for type, messages in app.session.flashBag.all %}
+                    {% for message in messages %}
+                        <div class="{{ type }}">
+                            {{ message|trans({}, 'FOSUserBundle') }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <canvas style="height:100%;width:100%;left:0;top:0;position:absolute;" id="demo-canvas"></canvas>
+</div>
+<script src="{{ asset('bundles/scylabsneptune/admin/js/lib/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('bundles/scylabsneptune/admin/js/lib/jquery-ui/jquery-ui.min.js') }}"></script>
+
+<script src="{{ asset('js/login/canvasbg.js') }}"></script>
+<script>
+    CanvasBG.init({
+        Loc: {
+            x: window.innerWidth/2,
+            y: window.innerHeight/3.3
+        }
+    });
+</script>
+</body>
+</html>

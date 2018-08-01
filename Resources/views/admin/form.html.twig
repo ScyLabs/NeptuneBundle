@@ -1,0 +1,37 @@
+{{ form_start(form) }}
+        {% for widget in form %}
+            <div class="form-group">
+                {% if widget.vars.block_prefixes[1] != 'hidden' %}
+                    <label class="block">
+                        {{ form_label(widget) }}
+
+                        {% if widget.vars.name == "type" %}
+                            {% set fullname = widget.vars.full_name %}
+                            {% set href = path('admin_type_add',{'type':app.request.attributes.get('type')}) %}
+                            {% if fullname == "page_form[type]"  %}
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                    <a href="{{ href }}"><i class="fa fa-plus text-success m-l-5"></i> </a>
+                                {% endif %}
+                            {% else %}
+                                <a href="{{ href }}"><i class="fa fa-plus text-success m-l-5"></i> </a>
+                            {% endif %}
+
+                        {% endif %}
+                    </label>
+                {% endif %}
+                {% if widget.vars.block_prefixes[1] == 'choice'%}
+                    {% set select2 = ' select2' %}
+                {% else %}
+                    {% set select2 = '' %}
+                {% endif %}
+
+                {{ form_widget(widget,{'attr':{'class':'form-control'~select2}}) }}
+
+                {% if widget.vars.block_prefixes[1] != 'submit' and widget.vars.block_prefixes[1] != 'hidden' %}
+                    {{ form_errors(widget) }}
+                {% endif %}
+            </div>
+        {% endfor %}
+        {{ form_rest(form) }}
+        {{ form_errors(form) }}
+{{ form_end(form) }}

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image.jpg') }}" sizes="16x16" href="{{ asset('bundles/scylabsneptune/admin/images/favicon.jpg') }}">
+    <title>Ela - Bootstrap Admin Dashboard Template</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom CSS -->
+
+
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/calendar2/semantic.ui.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/calendar2/pignose.calendar.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/owl.carousel.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/owl.theme.default.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/helper.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/font-awesome/css/fontawesome-all.min.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('bundles/scylabsneptune/admin/css/custom.less') }}" rel="stylesheet/less">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
+    <!--[if lt IE 9]>
+<!--
+    <script src="https:**oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js') }}"></script>
+    <script src="https:**oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js') }}"></script>
+-->
+
+    {% block css %}
+    {% endblock %}
+
+    <![endif]-->
+</head>
+
+<body class="fix-header fix-sidebar">
+<!-- Preloader - style you can find in spinners.css -->
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+</div>
+
+
+<!-- Main wrapper  -->
+<div id="main-wrapper">
+    <!-- header header  -->
+    <div class="header">
+        <nav class="navbar top-navbar navbar-expand-md navbar-light">
+            <!-- Logo -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">
+                    <!-- Logo icon -->
+                    <b><img src="{{ asset('bundles/scylabsneptune/admin/images/logo.jpg') }}" alt="homepage" class="dark-logo" /></b>
+                    <!--End Logo icon -->
+                    <!-- Logo text -->
+                    <span><img src="{{ asset('bundles/scylabsneptune/admin/images/logo-text.jpg') }}" alt="homepage" class="dark-logo" /></span>
+                </a>
+            </div>
+            <!-- End Logo -->
+            <div class="navbar-collapse">
+                <!-- toggle and nav items -->
+                <ul class="navbar-nav mr-auto mt-md-0">
+                </ul>
+                <!-- User profile and search -->
+                <ul class="navbar-nav my-lg-0">
+
+                    <!-- Search
+                    <li class="nav-item hidden-sm-down search-box"> <a class="nav-link hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-search"></i></a>
+                        <form class="app-search">
+                            <input type="text" class="form-control" placeholder="Search here"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
+                    </li>
+                    -->
+                    <!-- Comment -->
+
+                    <!-- Messages -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-muted  " href="#" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-envelope"></i>
+                            <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right mailbox animated zoomIn" aria-labelledby="2">
+                            <ul>
+                                <li>
+                                    <div class="drop-title">You have 4 new messages</div>
+                                </li>
+                                <li>
+                                    <div class="message-center">
+                                        <!-- Message -->
+                                        <a href="#">
+                                            <div class="user-img"><i class="fal fa-user"></i> <span class="profile-status online pull-right"></span> </div>
+                                            <div class="mail-contnet">
+                                                <h5>Michael Qin</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span>
+                                            </div>
+                                        </a>
+                                        <!-- Message -->
+                                        <a href="#">
+                                            <div class="user-img"> <img src="{{ asset('bundles/scylabsneptune/admin/images/users/2.jpg') }}" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
+                                            <div class="mail-contnet">
+                                                <h5>John Doe</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span>
+                                            </div>
+                                        </a>
+                                        <!-- Message -->
+                                        <a href="#">
+                                            <div class="user-img"> <img src="{{ asset('bundles/scylabsneptune/admin/images/users/3.jpg') }}" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
+                                            <div class="mail-contnet">
+                                                <h5>Mr. John</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span>
+                                            </div>
+                                        </a>
+                                        <!-- Message -->
+                                        <a href="#">
+                                            <div class="user-img"> <img src="{{ asset('bundles/scylabsneptune/admin/images/users/4.jpg') }}" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
+                                            <div class="mail-contnet">
+                                                <h5>Michael Qin</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="nav-link text-center" href="javascript:void(0);"> <strong>See all e-Mails</strong> <i class="fa fa-angle-right"></i> </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- End Messages -->
+                    <!-- Profile -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fal fa-user"></i> </a>
+                        <div class="dropdown-menu dropdown-menu-right animated zoomIn">
+                            <ul class="dropdown-user">
+                                <li><a href="#"><i class="fa fa-power-off"></i> Deconnexion</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- End header header -->
+    <!-- Left Sidebar  -->
+    <div class="left-sidebar">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav">
+                    <li class="nav-devider"></li>
+                    <li class="nav-label">Home</li>
+                    <li> <a href="{{ path('admin_home') }}" aria-expanded="false"><i class="fa fa-tachometer"></i><span class="hide-menu">Panneau de bords <span class="label label-rouded label-primary pull-right">2</span></span></a>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">Gestion des pages</span> </a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="{{ path('admin_entity',{'type':'page'}) }}"><i class="fa fa-list-ul m-r-10"></i>Listing des pages</a> </li>
+                            <li><a href="{{ path('admin_entity_add',{'type':'page'}) }}"><i class="fa fa-plus m-r-10"></i>Créer une page</a> </li>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li><a href="{{ path('admin_type',{'type':'page'}) }}"><i class="fa fa-list-ul m-r-10"></i>Types de page</a> </li>
+                                <li><a href="{{ path('admin_type_add',{'type':'page'}) }}"><i class="fa fa-plus m-r-10"></i>Créer un type de page</a> </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">Gestion des zones</span> </a>
+                        <ul aria-expanded="false" class="collapse">
+
+                            <li><a href="{{ path('admin_entity',{'type':'zone'}) }}">Listing des zones</a></li>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li><a href="{{ path('admin_type',{'type':'zone'}) }}"><i class="fa fa-list-ul m-r-10"></i>Types de Zones</a> </li>
+                                <li><a href="{{ path('admin_type_add',{'type':'zone'}) }}"><i class="fa fa-plus m-r-10"></i>Créer un type de zone</a> </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">Gestion des Elements</span> </a>
+                        <ul aria-expanded="false" class="collapse">
+
+                            <li><a href="{{ path('admin_entity',{'type':'element'}) }}">Listing des éléments</a></li>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li><a href="{{ path('admin_type',{'type':'element'}) }}"><i class="fa fa-list-ul m-r-10"></i>Types d'Elements</a> </li>
+                                <li><a href="{{ path('admin_type_add',{'type':'element'}) }}"><i class="fa fa-plus m-r-10"></i>Créer un type d'élement</a> </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="nav-label">Medias</li>
+                    <li>
+                        <a href="{{ path('admin_file') }}"><i class="fa fa-photo"></i> Mediathèque</a>
+                        <a href="{{ path('admin_type',{'type':'file'}) }}"><i class="fa fa-photo"></i> Type de fichiers</a>
+                    </li>
+
+                </ul>
+            </nav>
+            <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+    </div>
+    <!-- End Left Sidebar  -->
+    <!-- Page wrapper  -->
+    <div class="page-wrapper">
+        <!-- Bread crumb -->
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h3 class="text-primary">
+                    {% if title is defined%}
+                        {{ title }}
+                    {% else %}
+                        Pas de variable title envoyée par le controller
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="col-md-7 align-self-center">
+                <!-- FIL DARIANE-->
+                <ol class="breadcrumb">
+                    {% if ariane is defined %}
+                        {% for ligne in ariane %}
+                            <li class="breadcrumb-item"><a href="{{ ligne.link }}">{{ ligne.name }}</a></li>
+                        {% endfor %}
+                    {% endif %}
+
+                </ol>
+            </div>
+        </div>
+
+        <!-- CONTENU DE LA PAGE -->
+        <div class="container-fluid">
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+    </div>
+    <!-- End Page wrapper  -->
+</div>
+
+<div id="flashes">
+    {% for flash in app.session.flashbag.get('notice') %}
+        <div class="flash dialog alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true"><i class="fa fa-times"></i></span>
+            </button>
+            <p>{{ flash }}</p>
+
+        </div>
+    {% endfor %}
+</div>
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+    <div id="keyup">
+
+    </div>
+{% endif %}
+
+
+<!-- End Wrapper -->
+<!-- All Jquery -->
+<script src="{{ asset('bundles/scylabsneptune/admin/js/lib/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('bundles/scylabsneptune/admin/js/lib/less/less.min.js') }}"></script>
+<script src="{{ asset('bundles/scylabsneptune/admin/js/lib/jquery-ui/jquery-ui.min.js') }}"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="{{ asset('bundles/scylabsneptune/admin/js/lib/bootstrap/js/popper.min.js') }}"></script>
+<script src="{{ asset('bundles/scylabsneptune/admin/js/lib/bootstrap/js/bootstrap.min.js') }}"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="{{ asset('bundles/scylabsneptune/admin/js/jquery.slimscroll.js') }}"></script>
+<!--Menu sidebar -->
+<script src="{{ asset('bundles/scylabsneptune/admin/js/sidebarmenu.js') }}"></script>
+<!--stickey kit -->
+<script src="{{ asset('bundles/scylabsneptune/admin/js/lib/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
+
+
+<!--Custom JavaScript -->
+
+
+<!-- scripit init-->
+
+
+{% block js %}
+{% endblock js %}
+<script>
+    var url_site = "{{ asset("admin") }}";
+</script>
+<script src="{{ asset('bundles/scylabsneptune/admin/js/scripts.js') }}"></script>
+<script src="{{ asset('bundles/scylabsneptune/admin/js/custom.js') }}"></script>
+<script src="{{ asset('bundles/scylabsneptune/admin/js/egs.js') }}"></script>
+
+</body>
+
+</html>

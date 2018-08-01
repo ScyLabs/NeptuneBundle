@@ -1,0 +1,34 @@
+{% extends '@ScyLabsNeptune/admin/add.html.twig' %}
+
+{% block css %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/nestable/nestable.css') }}" rel="stylesheet">
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/nestable/jquery.nestable.js') }}"></script>
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/nestable/nestable.init.js') }}"></script>
+    <!-- scripit init-->
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/nestable/nestable.init.js') }}"></script>
+
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables-init') }}></script>
+
+{% endblock %}
+
+{% block content%}
+    <div class="row">
+        {{ parent() }}
+
+        <div class="col-lg-8">
+            {% include '@ScyLabsNeptune/admin/entity/content_listing.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

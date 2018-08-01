@@ -1,0 +1,124 @@
+{% extends '@ScyLabsNeptune/admin/layout.html.twig' %}
+{% import _self as recursiveMacro %}
+{% macro recursiveTabPage(page) %}
+    {% import _self as self %}
+    {% if page.remove == 0 %}
+        <tr data-id="{{ page.id }}" data-type="page" data-files="{{ page.jsonFiles }}" data-zones="{{ page.jsonZones }}" data-elements="{{ page.jsonElements }}">
+            <td>
+                {{ page.name }}
+            </td>
+            <td>
+                {% if page.parent is not  null %}
+                    {{ page.parent.name }}
+                {% endif %}
+            </td>
+        </tr>
+        {% if page.childs |length %}
+            {% for child in page.childs %}
+                {{ self.recursiveTabPage(child) }}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/scylabsneptune/admin/css/lib/dropzone/dropzone.css') }}"/>
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/dropzone/dropzone.js') }}"></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables-init') }}></script>
+
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/gallery.js') }}"></script>
+{% endblock %}
+{% block content %}
+    <div id="addfile_form">
+        <form action="{{ path('admin_file_upload') }}"
+              class="dropzone"
+              id="customdropzone"></form>
+    </div>
+
+    <h4>Gérez vos fichiers</h4>
+    <div class="row">
+        <div id="container_cartouches" class="col-md-10 trans500" data-select="[]">
+            <form>
+                <label>Filtres : </label>
+                <select id="filter_type">
+                    <option value="all">Tout</option>
+                    {% if fileTypes is defined %}
+                        {% for type in fileTypes %}
+                            <option value="{{ type.name }}">{{ type.title }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </form>
+            <div class="card">
+                <div class="card-body">
+                    <ul id="cartouches" class="hack-inline cartouches">
+                        {% if files is defined %}
+                            {% for file in files %}
+                               {% include('@ScyLabsNeptune/admin/file/cartouche.html.twig') %}
+                            {% endfor %}
+                        {% endif %}
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-2 trans500" id="gallery_actions">
+            <div class="card">
+                <button onclick="$('#addfile_form').slideToggle(500)" class="btn btn-pink m-b-10 m-l-5 show_form">Ajouter des fichiers</button>
+                <button id="lier" class="btn btn-pink m-b-10 m-l-5 show_form">Lier</button>
+            </div>
+            <div id="selection_elements" class="card none">
+                <br/>
+                <div id="tabs">
+                    <ul class="onglets">
+
+                        {% if collection is defined %}
+                            {% for key, tab in collection %}
+                                <li><a href="#tabs-{{ loop.index }}">{{ key }}</a></li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                    {% for key, tab in collection %}
+                        <div id="tabs-{{ loop.index }}">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
+                                            <thead>
+                                            <th>Name</th>
+                                            <th>Parent</th>
+                                            </thead>
+                                            <tbody>
+                                            {% for object in tab %}
+                                                {% if key == 'Pages' %}
+                                                    {{ recursiveMacro.recursiveTabPage(object) }}
+                                                {% else %}
+                                                    <tr class="none" data-files="{{ object.jsonFiles }}" data-type="{{ key | trim('s', 'right') | lower  }}{{ (key == 'Zones') ? 'zone' : 'element' }}" data-id="{{ object.id }}">
+                                                        <td>{{ object.name }}</td>
+                                                        <td>{{ object.parent.name }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button id="valider_liaison" class="btn btn-pink m-b-10 m-l-5" data-action="{{ path('admin_file_link') }}">Valider</button>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

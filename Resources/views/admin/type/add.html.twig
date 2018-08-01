@@ -1,0 +1,10 @@
+{% extends '@ScyLabsNeptune/admin/add.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        {{ parent() }}
+        <div class="col-md-8">
+            {% include('@ScyLabsNeptune/admin/type/content_listing.html.twig') %}
+        </div>
+    </div>
+{% endblock content %}
