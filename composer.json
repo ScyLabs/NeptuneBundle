@@ -2,8 +2,14 @@
     "name": "scylabs/neptune-bundle",
     "description": "Admin bundle all in one",
     "require": {
+        "friendsofsymfony/user-bundle": "dev-master",
     },
     "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "ScyLabs\\": "./"
+        }
     },
     "authors": [
         {
