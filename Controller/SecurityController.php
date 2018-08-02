@@ -6,7 +6,7 @@
  * Time: 17:11
  */
 
-namespace Scylabs\NeptuneBundle\Controller;
+namespace ScyLabs\NeptuneBundle\Controller;
 
 
 use FOS\UserBundle\Event\FormEvent;

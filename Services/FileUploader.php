@@ -6,7 +6,7 @@
  * Time: 10:18
  */
 
-namespace Scylabs\NeptuneBundle\Services;
+namespace ScyLabs\NeptuneBundle\Services;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -45,7 +45,7 @@ class FileUploader
             }
 
         }
-        elseif($mime == "Scylabs\NeptuneBundlelication/pdf") {
+        elseif($mime == "ScyLabs\NeptuneBundlelication/pdf") {
             $thumbsDir = $this->getTargetDirectory().'/thumbnails/';
             if(!file_exists($thumbsDir)){
                 mkdir($thumbsDir);

@@ -1,13 +1,13 @@
 <?php
 
-namespace Scylabs\NeptuneBundle\Entity;
+namespace ScyLabs\NeptuneBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Scylabs\NeptuneBundle\Repository\ZoneTypeRepository")
+ * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\ZoneTypeRepository")
  */
 class ZoneType extends AbstractElemType
 {
@@ -19,7 +19,7 @@ class ZoneType extends AbstractElemType
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Zone", mappedBy="type", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Zone", mappedBy="type", orphanRemoval=true)
      */
     private $zones;
 

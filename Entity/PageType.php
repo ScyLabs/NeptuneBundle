@@ -1,13 +1,13 @@
 <?php
 
-namespace Scylabs\NeptuneBundle\Entity;
+namespace ScyLabs\NeptuneBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Scylabs\NeptuneBundle\Repository\PageTypeRepository")
+ * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\PageTypeRepository")
  */
 class PageType extends AbstractElemType
 {
@@ -19,7 +19,7 @@ class PageType extends AbstractElemType
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Page", mappedBy="type", orphanRemoval=true,cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Page", mappedBy="type", orphanRemoval=true,cascade={"persist","remove"})
      */
     private $pages;
 

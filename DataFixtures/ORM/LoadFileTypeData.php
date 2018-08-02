@@ -6,9 +6,9 @@
  * Time: 12:19
  */
 
-namespace Scylabs\NeptuneBundle\DataFixtures\ORM;
+namespace ScyLabs\NeptuneBundle\DataFixtures\ORM;
 
-use Scylabs\NeptuneBundle\Entity\FileType;
+use ScyLabs\NeptuneBundle\Entity\FileType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;

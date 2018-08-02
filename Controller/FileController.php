@@ -6,22 +6,22 @@
  * Time: 16:30
  */
 
-namespace Scylabs\NeptuneBundle\Controller;
+namespace ScyLabs\NeptuneBundle\Controller;
 
 
 
 
 
-use Scylabs\NeptuneBundle\Entity\Document;
-use Scylabs\NeptuneBundle\Entity\Element;
-use Scylabs\NeptuneBundle\Entity\File;
+use ScyLabs\NeptuneBundle\Entity\Document;
+use ScyLabs\NeptuneBundle\Entity\Element;
+use ScyLabs\NeptuneBundle\Entity\File;
 
-use Scylabs\NeptuneBundle\Entity\FileType;
-use Scylabs\NeptuneBundle\Entity\Page;
-use Scylabs\NeptuneBundle\Entity\Photo;
-use Scylabs\NeptuneBundle\Entity\Video;
-use Scylabs\NeptuneBundle\Entity\Zone;
-use Scylabs\NeptuneBundle\Services\FileUploader;
+use ScyLabs\NeptuneBundle\Entity\FileType;
+use ScyLabs\NeptuneBundle\Entity\Page;
+use ScyLabs\NeptuneBundle\Entity\Photo;
+use ScyLabs\NeptuneBundle\Entity\Video;
+use ScyLabs\NeptuneBundle\Entity\Zone;
+use ScyLabs\NeptuneBundle\Services\FileUploader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -180,16 +180,16 @@ class FileController extends BaseController
         }
 
         $minesok = array(
-            'Scylabs\NeptuneBundlelication/pdf',
+            'ScyLabs\NeptuneBundlelication/pdf',
             'image/jpeg',
             'image/png',
             'image/svg+xml',
             'audio/*',
             'image/gif',
             'video/mp4',
-            'Scylabs\NeptuneBundlelication/zip',
-            'Scylabs\NeptuneBundlelication/x-7z-compressed',
-            'Scylabs\NeptuneBundlelication/x-rar-compressed'
+            'ScyLabs\NeptuneBundlelication/zip',
+            'ScyLabs\NeptuneBundlelication/x-7z-compressed',
+            'ScyLabs\NeptuneBundlelication/x-rar-compressed'
         );
 
         $uploadFile = new SymfonyFile($res);
@@ -199,7 +199,7 @@ class FileController extends BaseController
         $typeRepo = $this->getDoctrine()->getRepository(FileType::class);
 
         switch($uploadFile->getMimeType()){
-            case 'Scylabs\NeptuneBundlelication/pdf':
+            case 'ScyLabs\NeptuneBundlelication/pdf':
                 $name = 'document';
                 break;
             case 'image/jpeg':

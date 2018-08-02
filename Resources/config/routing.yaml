@@ -1,5 +1,5 @@
 #admin_home:
 #   path: /admin
-#    controller: Scylabs\NeptuneBundle\Controller\TypeController::indexAction
+#    controller: ScyLabs\NeptuneBundle\Controller\TypeController::indexAction
 
 

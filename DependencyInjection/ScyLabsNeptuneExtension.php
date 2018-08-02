@@ -6,7 +6,7 @@
  * Time: 12:16
  */
 
-namespace Scylabs\NeptuneBundle\DependencyInjection;
+namespace ScyLabs\NeptuneBundle\DependencyInjection;
 
 
 use Symfony\Component\Config\FileLocator;

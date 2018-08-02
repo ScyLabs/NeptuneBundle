@@ -6,13 +6,13 @@ parameters:
 
 services:
 
-    Scylabs\NeptuneBundle\:
+    ScyLabs\NeptuneBundle\:
         resource: '../../*'
         exclude: '../../{Entity,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Scylabs\NeptuneBundle\Controller\:
+    ScyLabs\NeptuneBundle\Controller\:
         resource: '../../Controller'
         tags: ['controller.service_arguments']
 

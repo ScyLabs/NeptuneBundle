@@ -1,8 +1,8 @@
 <?php
 
-namespace Scylabs\NeptuneBundle\Form;
+namespace ScyLabs\NeptuneBundle\Form;
 
-use Scylabs\NeptuneBundle\Entity\File;
+use ScyLabs\NeptuneBundle\Entity\File;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;

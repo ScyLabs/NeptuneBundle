@@ -6,17 +6,17 @@
  * Time: 16:30
  */
 
-namespace Scylabs\NeptuneBundle\Controller;
+namespace ScyLabs\NeptuneBundle\Controller;
 
 
-use Scylabs\NeptuneBundle\Entity\ElementType;
-use Scylabs\NeptuneBundle\Entity\FileType;
-use Scylabs\NeptuneBundle\Entity\PageType;
-use Scylabs\NeptuneBundle\Entity\ZoneType;
-use Scylabs\NeptuneBundle\Form\ElementTypeForm;
-use Scylabs\NeptuneBundle\Form\FileTypeForm;
-use Scylabs\NeptuneBundle\Form\PageTypeForm;
-use Scylabs\NeptuneBundle\Form\ZoneTypeForm;
+use ScyLabs\NeptuneBundle\Entity\ElementType;
+use ScyLabs\NeptuneBundle\Entity\FileType;
+use ScyLabs\NeptuneBundle\Entity\PageType;
+use ScyLabs\NeptuneBundle\Entity\ZoneType;
+use ScyLabs\NeptuneBundle\Form\ElementTypeForm;
+use ScyLabs\NeptuneBundle\Form\FileTypeForm;
+use ScyLabs\NeptuneBundle\Form\PageTypeForm;
+use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

@@ -6,7 +6,7 @@
  * Time: 12:23
  */
 
-namespace Scylabs\NeptuneBundle\Form;
+namespace ScyLabs\NeptuneBundle\Form;
 
 
 use Symfony\Component\Form\AbstractType;

@@ -4,7 +4,7 @@
     module.exports = factory();
   }
   else if(typeof define === 'function' && define.amd) {
-    define(['jquery', 'googlemaps!gmaps'], factory);
+    define(['jquery', 'googlemaps!NeptuneBundle/Resources/public/admin/js/lib/gmap/gmaps'], factory);
   }
   else {
     root.GMaps = factory();

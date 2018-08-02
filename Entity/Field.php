@@ -1,13 +1,13 @@
 <?php
 
-namespace Scylabs\NeptuneBundle\Entity;
+namespace ScyLabs\NeptuneBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Scylabs\NeptuneBundle\Repository\FieldRepository")
+ * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\FieldRepository")
  */
 class Field
 {
@@ -24,7 +24,7 @@ class Field
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\Form", inversedBy="fields")
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Form", inversedBy="fields")
      * @ORM\JoinColumn(nullable=false)
      */
     private $form;
@@ -40,17 +40,17 @@ class Field
     private $value;
 
     /**
-     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\FieldDetail", mappedBy="field", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\FieldDetail", mappedBy="field", orphanRemoval=true)
      */
     private $details;
 
     /**
-     * @ORM\OneToMany(targetEntity="Scylabs\NeptuneBundle\Entity\Field", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Field", mappedBy="parent")
      */
     private $childs;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\Field", inversedBy="childs")
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Field", inversedBy="childs")
      */
     private $parent;
 

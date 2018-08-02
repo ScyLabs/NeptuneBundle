@@ -1,13 +1,13 @@
 <?php
 
-namespace Scylabs\NeptuneBundle\Form;
+namespace ScyLabs\NeptuneBundle\Form;
 
-use Scylabs\NeptuneBundle\Controller\Admin\PageController;
-use Scylabs\NeptuneBundle\Entity\Page;
-use Scylabs\NeptuneBundle\Entity\PageType;
-use Scylabs\NeptuneBundle\Repository\PageRepository;
+use ScyLabs\NeptuneBundle\Controller\Admin\PageController;
+use ScyLabs\NeptuneBundle\Entity\Page;
+use ScyLabs\NeptuneBundle\Entity\PageType;
+use ScyLabs\NeptuneBundle\Repository\PageRepository;
 
-use Scylabs\NeptuneBundle\Repository\PageTypeRepository;
+use ScyLabs\NeptuneBundle\Repository\PageTypeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;

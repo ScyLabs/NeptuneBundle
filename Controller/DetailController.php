@@ -6,15 +6,15 @@
  * Time: 14:23
  */
 
-namespace Scylabs\NeptuneBundle\Controller;
+namespace ScyLabs\NeptuneBundle\Controller;
 
 
-use Scylabs\NeptuneBundle\Entity\Element;
-use Scylabs\NeptuneBundle\Entity\ElementDetail;
-use Scylabs\NeptuneBundle\Entity\Page;
-use Scylabs\NeptuneBundle\Entity\PageDetail;
-use Scylabs\NeptuneBundle\Entity\Zone;
-use Scylabs\NeptuneBundle\Entity\ZoneDetail;
+use ScyLabs\NeptuneBundle\Entity\Element;
+use ScyLabs\NeptuneBundle\Entity\ElementDetail;
+use ScyLabs\NeptuneBundle\Entity\Page;
+use ScyLabs\NeptuneBundle\Entity\PageDetail;
+use ScyLabs\NeptuneBundle\Entity\Zone;
+use ScyLabs\NeptuneBundle\Entity\ZoneDetail;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;

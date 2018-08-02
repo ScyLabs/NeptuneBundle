@@ -6,33 +6,33 @@
  * Time: 11:23
  */
 
-namespace Scylabs\NeptuneBundle\Controller;
+namespace ScyLabs\NeptuneBundle\Controller;
 
 
-use Scylabs\NeptuneBundle\Entity\AbstractElem;
-use Scylabs\NeptuneBundle\Entity\Document;
-use Scylabs\NeptuneBundle\Entity\Element;
-use Scylabs\NeptuneBundle\Entity\ElementDetail;
-use Scylabs\NeptuneBundle\Entity\ElementType;
-use Scylabs\NeptuneBundle\Entity\FileType;
-use Scylabs\NeptuneBundle\Entity\Page;
-use Scylabs\NeptuneBundle\Entity\PageDetail;
-use Scylabs\NeptuneBundle\Entity\PageType;
-use Scylabs\NeptuneBundle\Entity\Photo;
-use Scylabs\NeptuneBundle\Entity\Video;
-use Scylabs\NeptuneBundle\Entity\Zone;
-use Scylabs\NeptuneBundle\Entity\ZoneDetail;
-use Scylabs\NeptuneBundle\Entity\ZoneType;
-use Scylabs\NeptuneBundle\Form\ElementDetailForm;
-use Scylabs\NeptuneBundle\Form\ElementForm;
-use Scylabs\NeptuneBundle\Form\ElementTypeForm;
-use Scylabs\NeptuneBundle\Form\FileTypeForm;
-use Scylabs\NeptuneBundle\Form\PageDetailForm;
-use Scylabs\NeptuneBundle\Form\PageForm;
-use Scylabs\NeptuneBundle\Form\PageTypeForm;
-use Scylabs\NeptuneBundle\Form\ZoneDetailForm;
-use Scylabs\NeptuneBundle\Form\ZoneForm;
-use Scylabs\NeptuneBundle\Form\ZoneTypeForm;
+use ScyLabs\NeptuneBundle\Entity\AbstractElem;
+use ScyLabs\NeptuneBundle\Entity\Document;
+use ScyLabs\NeptuneBundle\Entity\Element;
+use ScyLabs\NeptuneBundle\Entity\ElementDetail;
+use ScyLabs\NeptuneBundle\Entity\ElementType;
+use ScyLabs\NeptuneBundle\Entity\FileType;
+use ScyLabs\NeptuneBundle\Entity\Page;
+use ScyLabs\NeptuneBundle\Entity\PageDetail;
+use ScyLabs\NeptuneBundle\Entity\PageType;
+use ScyLabs\NeptuneBundle\Entity\Photo;
+use ScyLabs\NeptuneBundle\Entity\Video;
+use ScyLabs\NeptuneBundle\Entity\Zone;
+use ScyLabs\NeptuneBundle\Entity\ZoneDetail;
+use ScyLabs\NeptuneBundle\Entity\ZoneType;
+use ScyLabs\NeptuneBundle\Form\ElementDetailForm;
+use ScyLabs\NeptuneBundle\Form\ElementForm;
+use ScyLabs\NeptuneBundle\Form\ElementTypeForm;
+use ScyLabs\NeptuneBundle\Form\FileTypeForm;
+use ScyLabs\NeptuneBundle\Form\PageDetailForm;
+use ScyLabs\NeptuneBundle\Form\PageForm;
+use ScyLabs\NeptuneBundle\Form\PageTypeForm;
+use ScyLabs\NeptuneBundle\Form\ZoneDetailForm;
+use ScyLabs\NeptuneBundle\Form\ZoneForm;
+use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class BaseController extends Controller

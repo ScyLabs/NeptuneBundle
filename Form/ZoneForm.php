@@ -1,18 +1,18 @@
 <?php
 
-namespace Scylabs\NeptuneBundle\Form;
+namespace ScyLabs\NeptuneBundle\Form;
 
-use Scylabs\NeptuneBundle\Controller\Admin\PageController;
-use Scylabs\NeptuneBundle\Entity\Element;
-use Scylabs\NeptuneBundle\Entity\Page;
-use Scylabs\NeptuneBundle\Entity\PageType;
-use Scylabs\NeptuneBundle\Entity\Zone;
-use Scylabs\NeptuneBundle\Entity\ZoneType;
-use Scylabs\NeptuneBundle\Repository\PageRepository;
+use ScyLabs\NeptuneBundle\Controller\Admin\PageController;
+use ScyLabs\NeptuneBundle\Entity\Element;
+use ScyLabs\NeptuneBundle\Entity\Page;
+use ScyLabs\NeptuneBundle\Entity\PageType;
+use ScyLabs\NeptuneBundle\Entity\Zone;
+use ScyLabs\NeptuneBundle\Entity\ZoneType;
+use ScyLabs\NeptuneBundle\Repository\PageRepository;
 
-use Scylabs\NeptuneBundle\Repository\PageTypeRepository;
-use Scylabs\NeptuneBundle\Repository\ZoneTypeRepository;
-use Doctrine\ORM\MScylabs\NeptuneBundleing\Entity;
+use ScyLabs\NeptuneBundle\Repository\PageTypeRepository;
+use ScyLabs\NeptuneBundle\Repository\ZoneTypeRepository;
+use Doctrine\ORM\MScyLabs\NeptuneBundleing\Entity;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
