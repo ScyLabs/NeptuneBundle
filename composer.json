@@ -1,5 +1,9 @@
 {
     "name": "scylabs/neptune-bundle",
+    "type": "symfony-bundle",
+    "keywords": ["User management"],
+    "homepage": "https://github.com/ScyLabs/NeptuneBundle",
+    "license": "MIT",
     "description": "Admin bundle all in one",
     "require": {
         "php": "^7.1.3"
