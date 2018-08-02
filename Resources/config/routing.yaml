@@ -1,3 +1,0 @@
-neptune:
-   resource: '@ScyLabsNeptuneBundle/Controller'
-   type: annotation
