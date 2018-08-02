@@ -23,6 +23,5 @@ class ScyLabsNeptuneExtension extends Extension
             new FileLocator(dirname(__DIR__).'/Resources/config')
         );
         $loader->load('services.yaml');
-        $loader->load('routing.yaml');
     }
 }
