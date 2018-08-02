@@ -2,9 +2,7 @@ parameters:
     locale: 'fr'
     uploads_directory: '%kernel.project_dir%/public/uploads/'
     langs: ['fr','en','ru','de']
-framework:
-    templating:
-        engines: ["twig"]
+
 services:
 
     _defaults:
