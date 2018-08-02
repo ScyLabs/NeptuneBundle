@@ -1,5 +1,3 @@
-#admin_home:
-#   path: /admin
-#    controller: ScyLabs\NeptuneBundle\Controller\TypeController::indexAction
-
-
+neptune:
+   resource: '@ScyLabsNeptuneBundle/Controller'
+   type: annotation
