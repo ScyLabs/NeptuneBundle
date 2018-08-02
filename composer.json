@@ -7,7 +7,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ScyLabs\\": "./"
+            "ScyLabs\\NeptuneBundle\\": "./"
         }
     },
     "authors": [
