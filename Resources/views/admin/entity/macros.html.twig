@@ -53,7 +53,7 @@
                     <li><a href="{{ path('admin_entity_edit',{'id':page.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
                     <li class="">
                         {{ render(controller(
-                            'App\\ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
+                            'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
                             {'id':page.id,'type':app.request.attributes.get('type')}
                         )) }}
                     </li>

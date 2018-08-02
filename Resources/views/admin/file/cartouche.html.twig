@@ -5,7 +5,7 @@
             <img src="{{ asset('uploads/'~file.file) | thumb(200) }}"/>
             <span class="date">{{ file.date.format('d/m/Y')}}</span>
             {{ render(controller(
-                'App\\ScyLabs\\NeptuneBundle\\Controller\\FileController::deleteAction',
+                'ScyLabs\\NeptuneBundle\\Controller\\FileController::deleteAction',
                 {'id':file.id}
             )) }}
         </span>
