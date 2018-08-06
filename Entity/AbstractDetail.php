@@ -4,6 +4,7 @@ namespace ScyLabs\NeptuneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\MappedSuperclass;
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @MappedSuperclass
  */
@@ -17,6 +18,10 @@ abstract class AbstractDetail
     private $lang;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
+    /**
      * @ORM\Column(type="string", length=255,nullable = true)
      */
     private $title;
@@ -25,6 +30,12 @@ abstract class AbstractDetail
      * @ORM\Column(type="text",nullable = true)
      */
     private $description;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128,unique=true)
+     */
+    private $slug;
 
     public function getId()
     {
@@ -43,6 +54,18 @@ abstract class AbstractDetail
         return $this;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     public function getTitle(): ?string
     {
         return $this->title;
@@ -52,6 +75,14 @@ abstract class AbstractDetail
     {
         $this->title = $title;
 
+        return $this;
+    }
+
+    public function getSlug() : string{
+        return $this->slug;
+    }
+    public function setSlug(string $slug) : self {
+        $this->slug = $slug;
         return $this;
     }
 

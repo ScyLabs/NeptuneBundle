@@ -48,6 +48,7 @@ class DetailController extends BaseController
             foreach ($langs as $lang){
                 $detail = new $classDetail();
                 $detail->setLang($lang);
+                $detail->setName($object->getName());
                 $object->addDetail($detail);
                 $em->persist($detail);
             }
@@ -76,6 +77,7 @@ class DetailController extends BaseController
                         if($i == sizeof($details)){
                             $newDetail = new $classDetail();
                             $newDetail->setLang($lang);
+                            $newDetail->setName($object->getName());
                             $object->addDetail($newDetail);
                             $em->persist($newDetail);
                         }

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\FormFactory;
 use Doctrine\ORM\Mapping\OrderBy;
 use Doctrine\ORM\Mapping\Annotation;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\PageRepository")
@@ -73,6 +74,11 @@ class Page extends AbstractElem
      */
     private $type;
 
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128,unique=true)
+     */
+    private $slug;
 
 
     public function __construct()

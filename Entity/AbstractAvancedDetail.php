@@ -11,10 +11,7 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
 abstract class AbstractAvancedDetail extends AbstractDetail
 {
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $name;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -41,17 +38,7 @@ abstract class AbstractAvancedDetail extends AbstractDetail
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
 
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
 
     public function getH1(): ?string
     {
