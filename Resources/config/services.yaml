@@ -3,6 +3,10 @@ parameters:
     uploads_directory: '%kernel.project_dir%/public/uploads/'
     langs: ['fr','en','ru','de']
 
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
 services:
 
     _defaults:
