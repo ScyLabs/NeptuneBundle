@@ -36,6 +36,7 @@ abstract class AbstractDetail
      * @ORM\Column(length=128,unique=true)
      */
     private $slug;
+    
 
     public function getId()
     {
