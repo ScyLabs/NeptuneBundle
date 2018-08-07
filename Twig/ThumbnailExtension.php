@@ -52,6 +52,7 @@ class ThumbnailExtension extends AbstractExtension
         if(!file_exists($realDir.'/thumbnails/')){
             mkdir($realDir.'/thumbnails/');
         }
+
         $wh = '';
 
         if($w != 0 || $h != 0)
@@ -93,14 +94,13 @@ class ThumbnailExtension extends AbstractExtension
         }
         else{
 
-
             if(file_exists($localThumb.$wh.'.'.$ext) && ($w == 0 && $h == 0) ){
                 return $webThumb.$wh.'.'.$ext;
             }
 
             $img = new \Imagick($realPath);
             $img->setCompressionQuality($q);
-            if($w != 0 && $h != 0){
+            if($w != 0 || $h != 0){
                 $img->thumbnailImage($w,$h);
             }
             $img->writeImage($localThumb.$wh.'.'.$ext);
