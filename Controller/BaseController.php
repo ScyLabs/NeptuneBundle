@@ -53,6 +53,7 @@ class BaseController extends Controller
                         foreach ($langs as $lang){
                             $detail = new $classDetail();
                             $detail->setLang($lang);
+                            $detail->setName($object->getName());
                             $object->addDetail($detail);
                         }
                     }

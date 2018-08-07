@@ -80,6 +80,12 @@ class Page extends AbstractElem
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\PageUrl", mappedBy="page",cascade={"persist","remove"})
+     */
+
+    private $urls;
+
 
     public function __construct()
     {
@@ -91,6 +97,7 @@ class Page extends AbstractElem
         $this->zones = new ArrayCollection();
         $this->elements = new ArrayCollection();
         $this->details = new ArrayCollection();
+        $this->urls = new ArrayCollection();
 
     }
     public function getId()
@@ -288,6 +295,46 @@ class Page extends AbstractElem
             }
         }
         return new PageDetail();
+    }
+
+    /**
+     * @return Collection|PageUrl[]
+     */
+    public function getUrls(): Collection
+    {
+        return $this->urls;
+    }
+
+    public function getUrl($locale) : PageUrl{
+        foreach ($this->urls as $url){
+            if($url->getLang() == $locale){
+                return $url;
+            }
+        }
+        return null;
+    }
+
+    public function addUrl(PageUrl $url): self
+    {
+        if (!$this->urls->contains($url)) {
+            $this->urls[] = $url;
+            $url->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUrl(PageUrl $url): self
+    {
+        if ($this->urls->contains($url)) {
+            $this->urls->removeElement($url);
+            // set the owning side to null (unless already changed)
+            if ($url->getPage() === $this) {
+                $url->setPage(null);
+            }
+        }
+
+        return $this;
     }
 
 }

@@ -41,6 +41,7 @@ class DetailController extends BaseController
             return $this->redirectToRoute('admin_home');
         }
         $details = $object->getDetails();
+
         /*Si l'objet n'a aucun details */
 
         if($details->count() === 0){

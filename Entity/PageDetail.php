@@ -17,7 +17,7 @@ class PageDetail extends AbstractAvancedDetail
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page", inversedBy="details")
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page", inversedBy="details",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $page;
