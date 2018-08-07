@@ -94,7 +94,7 @@ class ThumbnailExtension extends AbstractExtension
         }
         else{
 
-            if(file_exists($localThumb.$wh.'.'.$ext) && ($w == 0 && $h == 0) ){
+            if(file_exists($localThumb.$wh.'.'.$ext)){
                 return $webThumb.$wh.'.'.$ext;
             }
 
