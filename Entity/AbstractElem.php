@@ -2,6 +2,7 @@
 
 namespace ScyLabs\NeptuneBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use ScyLabs\NeptuneBundle\Form\ValidForm;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -49,6 +50,9 @@ abstract class AbstractElem
         if($this->remove === NULL){
             $this->remove = false;
         }
+        $this->photos = new ArrayCollection();
+        $this->videos = new ArrayCollection();
+        $this->documents = new ArrayCollection();
     }
 
     public function getId()

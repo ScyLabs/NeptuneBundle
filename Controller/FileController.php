@@ -96,6 +96,10 @@ class FileController extends BaseController
             $repo = $em->getRepository(Zone::class);
             $obj = $repo->find($id);
         }
+        elseif($typeElement == 'partner'){
+            $repo = $em->getRepository(Partner::class);
+            $obj = $repo->find($id);
+        }
         else{
             $repo = $em->getRepository(Element::class);
             $obj = $repo->find($id);

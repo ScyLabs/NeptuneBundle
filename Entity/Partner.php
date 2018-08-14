@@ -40,9 +40,29 @@ class Partner extends AbstractElem
      */
     protected $details;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="partner",cascade={"persist","remove"})
+     * @OrderBy({"prio" = "ASC"})
+     */
+    protected $photos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Document", mappedBy="partner",cascade={"persist","remove"})
+     * @OrderBy({"prio" = "ASC"})
+     */
+    protected $documents;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Video", mappedBy="partner",cascade={"persist","remove"})
+     * @OrderBy({"prio" = "ASC"})
+     */
+    protected $videos;
+
+
     public function __construct()
     {
         $this->details = new ArrayCollection();
+        $this->documents = new ArrayCollection();
         parent::__construct();
 
     }

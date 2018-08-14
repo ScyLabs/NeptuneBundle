@@ -36,6 +36,10 @@ class Photo extends AbstractFileLink
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Element", inversedBy="photos")
      */
     protected $element;
+    /**
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Partner", inversedBy="photos")
+     */
+    protected $partner;
 
     public function getId()
     {

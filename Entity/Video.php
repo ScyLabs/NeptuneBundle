@@ -36,6 +36,10 @@ class Video extends AbstractFileLink
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Element", inversedBy="videos")
      */
     protected $element;
+    /**
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Partner", inversedBy="videos")
+     */
+    protected $partner;
 
     public function getId()
     {

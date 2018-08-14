@@ -18,6 +18,7 @@ class AbstractFileLink extends AbstractElem
     protected $page;
     protected $zone;
     protected $element;
+    protected $partner;
 
     public function getFile(): ?File
     {
@@ -60,10 +61,18 @@ class AbstractFileLink extends AbstractElem
         return $this->element;
     }
 
+
     public function setElement(?Element $element): self
     {
         $this->element = $element;
 
+        return $this;
+    }
+    public function getPartner() : ?Partner{
+        return $this->partner;
+    }
+    public function setPartner(?Partner $partner) : self {
+        $this->partner = $partner;
         return $this;
     }
     public function getParent(){
@@ -72,6 +81,9 @@ class AbstractFileLink extends AbstractElem
         }
         elseif($this->zone !== null){
             return $this->zone;
+        }
+        elseif($this->partner !== null){
+            return $this->partner;
         }
         else{
             return $this->element;
@@ -83,6 +95,9 @@ class AbstractFileLink extends AbstractElem
         }
         elseif($parent instanceof Zone){
             $this->zone = $parent;
+        }
+        elseif($parent instanceof Partner){
+            $this->partner = $parent;
         }
         else{
             $this->element = $parent;

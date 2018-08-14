@@ -36,6 +36,10 @@ class Document extends AbstractFileLink
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Element", inversedBy="documents")
      */
     protected $element;
+    /**
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Partner", inversedBy="documents")
+     */
+    protected $partner;
 
     public function getId()
     {
