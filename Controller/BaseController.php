@@ -18,6 +18,8 @@ use ScyLabs\NeptuneBundle\Entity\FileType;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\PageDetail;
 use ScyLabs\NeptuneBundle\Entity\PageType;
+use ScyLabs\NeptuneBundle\Entity\Partner;
+use ScyLabs\NeptuneBundle\Entity\PartnerDetail;
 use ScyLabs\NeptuneBundle\Entity\Photo;
 use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
@@ -30,6 +32,8 @@ use ScyLabs\NeptuneBundle\Form\FileTypeForm;
 use ScyLabs\NeptuneBundle\Form\PageDetailForm;
 use ScyLabs\NeptuneBundle\Form\PageForm;
 use ScyLabs\NeptuneBundle\Form\PageTypeForm;
+use ScyLabs\NeptuneBundle\Form\PartnerDetailForm;
+use ScyLabs\NeptuneBundle\Form\PartnerForm;
 use ScyLabs\NeptuneBundle\Form\ZoneDetailForm;
 use ScyLabs\NeptuneBundle\Form\ZoneForm;
 use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
@@ -82,7 +86,8 @@ class BaseController extends Controller
     public function getLastPrio(AbstractElem $object,$typeParent = 'parent'){
         $prio = 0;
 
-        $parentId = ($object->getParent() === null) ? null : $object->getParent()->getId();
+        if($typeParent != null)
+            $parentId = ($object->getParent() === null) ? null : $object->getParent()->getId();
 
 
         $params = array('remove'=>false);
@@ -142,6 +147,10 @@ class BaseController extends Controller
             $form = ZoneForm::class;
             return Zone::class;
         }
+        elseif($name == 'partner'){
+            $form = PartnerForm::class;
+            return Partner::class;
+        }
         elseif($name == 'photo'){
             return Photo::class;
         }
@@ -183,6 +192,10 @@ class BaseController extends Controller
         elseif($name == Element::class){
             $form = ElementDetailForm::class;
             return ElementDetail::class;
+        }
+        elseif($name == Partner::class){
+            $form = PartnerDetailForm::class;
+            return PartnerDetail::class;
         }
         elseif($name == Zone::class){
             $form = ZoneDetailForm::class;

@@ -13,9 +13,17 @@
                         <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
                             <thead>
                             <th>Actif</th>
-                            <th>Type</th>
+                            {% if app.request.attributes.get('type') != 'partner' %}
+                                <th>Type</th>
+                            {% endif %}
                             <th>Name</th>
-                            <th>Parent</th>
+                            {% if app.request.attributes.get('type') == 'partner' %}
+                                <th>Site du partenaire</th>
+                            {% endif %}
+                            {% if app.request.attributes.get('type') != 'partner' %}
+                                <th>Parent</th>
+                            {% endif %}
+
                             <th>Actions</th>
                             </thead>
                             <tbody>
@@ -34,13 +42,21 @@
                                                     {% endif %}
                                                 </a>
                                             </td>
-                                            <td>{{ object.type.name }}</td>
+                                            {% if object.type is defined %}
+                                                <td>{{ object.type.name }}</td>
+                                            {% endif %}
                                             <td>{{ object.name }}</td>
-                                            <td>{{ object.parent.name }}</td>
+                                            {% if object.parent is defined %}
+                                                <td>{{ object.parent.name }}</td>
+                                            {% endif %}
+                                            {% if object.url is defined %}
+                                                <td><a href="{{ object.url }}">{{ object.url }}</a></td>
+                                            {% endif %}
                                             <td>
                                                 <ul class="actions">
                                                     <li><a href="{{ path('admin_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
                                                     <li><a href="{{ path('admin_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
+                                                    <li><a href="{{ path('admin_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
                                                     <li class="">
                                                         {{ render(controller(
                                                             'Scylabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',

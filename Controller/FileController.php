@@ -18,6 +18,7 @@ use ScyLabs\NeptuneBundle\Entity\File;
 
 use ScyLabs\NeptuneBundle\Entity\FileType;
 use ScyLabs\NeptuneBundle\Entity\Page;
+use ScyLabs\NeptuneBundle\Entity\Partner;
 use ScyLabs\NeptuneBundle\Entity\Photo;
 use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
@@ -240,7 +241,7 @@ class FileController extends BaseController
     }
 
     /**
-     * @Route("admin/{type}/{id}/files", name="admin_file_gallery_prio" , requirements={"id"="\d+","type"="(page|zone|element)"})
+     * @Route("admin/{type}/{id}/files", name="admin_file_gallery_prio" , requirements={"id"="\d+","type"="(page|zone|element|partner)"})
      */
     public function galleryprioAction(Request $request,$id,$type){
 
@@ -253,6 +254,10 @@ class FileController extends BaseController
         }
         elseif($type == 'zone'){
             $repo = $em->getRepository(Zone::class);
+            $object = $repo->find($id);
+        }
+        elseif($type == 'partner'){
+            $repo = $em->getRepository(Partner::class);
             $object = $repo->find($id);
         }
         else{
@@ -278,6 +283,7 @@ class FileController extends BaseController
             'remove'=>false,
         ));
 
+        dump($object);
         $params = array(
             'title'     => 'Gestion des fichiers de '.(($type == 'page' ||$type == 'zone') ? 'la ' : "l'").ucfirst($type).' : '.$object->getName(),
             'ariane'    => $ariane,

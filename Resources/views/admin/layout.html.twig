@@ -184,6 +184,13 @@
                             {% endif %}
                         </ul>
                     </li>
+                    <li>
+                        <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">Gestion des Partenaires</span> </a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="{{ path('admin_entity',{'type':'partner'}) }}"><i class="fa fa-list-ul m-r-10"></i>Listing des Partenaires</a> </li>
+                            <li><a href="{{ path('admin_entity_add',{'type':'partner'}) }}"><i class="fa fa-plus m-r-10"></i>Créer un Partenaire</a> </li>
+                        </ul>
+                    </li>
                     <li class="nav-label">Medias</li>
                     <li>
                         <a href="{{ path('admin_file') }}"><i class="fa fa-photo"></i> Mediathèque</a>

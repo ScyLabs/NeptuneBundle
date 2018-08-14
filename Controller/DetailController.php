@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DetailController extends BaseController
 {
 
-    const VALID_ENTITIES = "(page|element|zone)";
+    const VALID_ENTITIES = "(page|element|zone|partner)";
     /**
      * @Route("admin/{type}/details/{id}",name="admin_detail", requirements={"type"=DetailController::VALID_ENTITIES,"id"="\d+"})
      */

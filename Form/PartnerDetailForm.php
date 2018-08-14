@@ -2,7 +2,7 @@
 
 namespace ScyLabs\NeptuneBundle\Form;
 
-use ScyLabs\NeptuneBundle\Entity\ZoneDetail;
+use ScyLabs\NeptuneBundle\Entity\PartnerDetail;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ZoneDetailForm extends AbstractType
+class PartnerDetailForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,12 +24,6 @@ class ZoneDetailForm extends AbstractType
             ->add('description',TextareaType::class,array(
                 'required'=> false
             ))
-            ->add('title2',TextType::class,array(
-                'required'=> false
-            ))
-            ->add('description2',TextareaType::class,array(
-                'required'=> false
-            ))
             ->add('Valider',SubmitType::class)
         ;
     }
@@ -37,7 +31,7 @@ class ZoneDetailForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ZoneDetail::class,
+            'data_class' => PartnerDetail::class,
         ]);
     }
 }
