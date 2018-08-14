@@ -21,7 +21,7 @@
                                             <li><a href="{{ path('admin_type_edit',{'id':type.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
                                             <li class="">
                                                 {{ render(controller(
-                                                    'ScyLabs\\Controller\\TypeController::deleteAction',
+                                                    'ScyLabs\\NeptuneBundle\\Controller\\TypeController::deleteAction',
                                                     {'type':app.request.attributes.get('type'),'id':type.id}
                                                 )) }}
                                             </li>

@@ -26,15 +26,15 @@
 {% endblock %}
 {% block js %}
     <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/dropzone/dropzone.js') }}"></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables-init') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables-init.js') }}></script>
 
     <script src="{{ asset('bundles/scylabsneptune/admin/js/gallery.js') }}"></script>
 {% endblock %}
@@ -103,7 +103,7 @@
                                                 {% if key == 'Pages' %}
                                                     {{ recursiveMacro.recursiveTabPage(object) }}
                                                 {% else %}
-                                                    <tr class="none" data-files="{{ object.jsonFiles }}" data-type="{{ key | trim('s', 'right') | lower  }}{{ (key == 'Zones') ? 'zone' : 'element' }}" data-id="{{ object.id }}">
+                                                    <tr class="none" data-files="{{ object.jsonFiles }}" data-type="{{ key | trim('s', 'right') | lower  }}" data-id="{{ object.id }}">
                                                         <td>{{ object.name }}</td>
                                                         <td>{{ object.parent.name }}</td>
                                                     </tr>

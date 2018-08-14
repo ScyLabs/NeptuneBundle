@@ -149,7 +149,7 @@ class EntityController extends BaseController
      */
     public function addAction(Request $request,$type,$parentType,$parentId){
 
-        $class =$this->getClass($type,$form);
+        $class = $this->getClass($type,$form);
         $object = new $class();
         if($parentType !== null && $parentId !== null && in_array($parentType,['page','element'])){
             $classParent = $this->getClass($parentType);

@@ -40,7 +40,6 @@ class BaseController extends Controller
     /* Fonction de génération de formulaire (surement future service)*/
     protected function validForm($type,$object,$request,&$param,$action = null){
 
-
         $form = $this->createForm($type,$object,['action'=>$action]);
 
         $form->handleRequest($request);

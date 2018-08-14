@@ -141,7 +141,6 @@ class FileController extends BaseController
                     ->setName($obj->getName())
                     ->setFile($file)
                     ->setPrio($prioPhoto++);
-
                 ;
 
                 $obj->addPhoto($photo);
