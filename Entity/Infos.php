@@ -55,6 +55,18 @@ class Infos
      * @ORM\Column(type="text", nullable=true)
      */
     private $gmap;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $facebook;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $twitter;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $insta;
 
     public function getId()
     {
@@ -153,6 +165,38 @@ class Infos
     public function setGmap(?string $gmap): self
     {
         $this->gmap = $gmap;
+
+        return $this;
+    }
+    public function getFacebook(): ?string
+    {
+        return $this->facebook;
+    }
+
+    public function setFacebook(?string $facebook): self
+    {
+        $this->facebook = $facebook;
+
+        return $this;
+    }
+    public function getTwitter(): ?string
+    {
+        return $this->twitter;
+    }
+
+    public function setTwitter(?string $twitter): self
+    {
+        $this->twitter = $twitter;
+
+        return $this;
+    }
+    public function getInsta(): ?string
+    {
+        return $this->insta;
+    }
+    public function setInsta(?string $insta): self
+    {
+        $this->insta = $insta;
 
         return $this;
     }

@@ -59,8 +59,20 @@ class InfosForm extends AbstractType
                 'label'=>'Portable',
                 'required'=>false,
             ])
-            ->add('mobile',TextareaType::class,[
+            ->add('Iframe GoogleMaps',TextareaType::class,[
                 'label'=>'gmap',
+                'required'=>false,
+            ])
+            ->add('facebook',TextType::class,[
+                'label'=>'Url Facebook',
+                'required'=>false,
+            ])
+            ->add('twitter',TextType::class,[
+                'label'=>'Url Twitter',
+                'required'=>false,
+            ])
+            ->add('insta',TextType::class,[
+                'label'=>'Url Instagram',
                 'required'=>false,
             ])
             ->add('Valider',SubmitType::class,[
