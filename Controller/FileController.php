@@ -97,7 +97,7 @@ class FileController extends BaseController
             $obj = $repo->find($id);
         }
         else{
-            $repo = $em->getRepository(Element::classs);
+            $repo = $em->getRepository(Element::class);
             $obj = $repo->find($id);
             $typeElement = 'element';
         }
