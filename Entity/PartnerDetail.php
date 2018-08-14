@@ -34,10 +34,6 @@ class PartnerDetail extends AbstractDetail
      */
     private $partner;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function getId()
     {

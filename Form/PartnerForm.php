@@ -27,7 +27,8 @@ class PartnerForm extends AbstractType
                 'label'=>'Nom du partenaire'
             ])
             ->add('url',TextType::class,[
-                'label'=>'Site du partenaire'
+                'label'=>'Site du partenaire',
+                'required'=>false
             ])
 
             ->add('submit',SubmitType::class,[
