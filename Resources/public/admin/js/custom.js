@@ -134,6 +134,7 @@ Chargement de scripts de faÃ§on automatique :
 
     $('#tabs').tabs();
     $('#tabs2').tabs();
+    $('.tabs').tabs();
 
     if($.fn.nestable){
         $('.dd').on('change',function () {
