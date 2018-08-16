@@ -25,9 +25,9 @@ class DetailController extends BaseController
 
     const VALID_ENTITIES = "(page|element|zone|partner)";
     /**
-     * @Route("admin/{type}/details/{id}",name="admin_detail", requirements={"type"=DetailController::VALID_ENTITIES,"id"="\d+"})
+     * @Route("admin/{type}/details/{id}",defaults={"parentType"=null},name="admin_detail", requirements={"type"=DetailController::VALID_ENTITIES,"id"="\d+"})
      */
-    public function listAction(Request $request,$type,$id){
+    public function listAction(Request $request,$type,$id,$parentType){
         $class = $this->getClass($type);
         if($class === null){
             return $this->redirectToRoute('admin_home');
@@ -100,8 +100,25 @@ class DetailController extends BaseController
             $this->validForm($form,$detail,$request,$collection[$detail->getLang()]['form'],$route);
         }
         $params = array(
-            'title'         =>  'Test',
+            'title'         =>  'Details de l'.(($type == 'element') ? "'" : 'a').' '.$type.'  :  '.$object->getName(),
             'collection'    =>  $collection
+        );
+        $params['objects'] = $this->getEntities($object,$parentType);
+
+
+        $params['ariane'] = array(
+            [
+                'link'  =>  $this->generateUrl('admin_home'),
+                'name' =>  'Accueil'
+            ],
+            [
+                'link'  =>  $this->generateUrl('admin_entity',array('type'=>$type)),
+                'name' =>  ucfirst($type).'s',
+            ],
+            [
+                'link'  =>  '#',
+                'name' =>  'Details de l'.(($type == 'element') ? "'" : 'a').' '.$type.'  :  '.$object->getName(),
+            ]
         );
 
         return $this->render('@ScyLabsNeptune/admin/detail/details.html.twig',$params);

@@ -55,7 +55,7 @@ class Zone extends AbstractChild
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Element", inversedBy="zones")
      */
-    private $element;
+    protected $element;
 
     /**
      * @ORM\ManyToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Form", mappedBy="zones")

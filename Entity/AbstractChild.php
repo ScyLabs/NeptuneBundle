@@ -22,6 +22,8 @@ abstract class AbstractChild extends AbstractElem
 
     protected $forms;
 
+    protected $element;
+
 
     public function __construct()
     {
@@ -89,6 +91,18 @@ abstract class AbstractChild extends AbstractElem
         $this->type = $type;
 
         return $this;
+    }
+
+    public function getParentType(){
+        if($this->page != null){
+            return 'page';
+        }
+        elseif($this->element != null){
+            return 'element';
+        }
+        else{
+            return null;
+        }
     }
 
 }

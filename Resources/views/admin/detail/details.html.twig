@@ -1,14 +1,32 @@
 {% extends '@ScyLabsNeptune/admin/layout.html.twig' %}
 {% block css %}
-{% endblock %}
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/select2/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/nestable/nestable.css') }}" rel="stylesheet">
+{% endblock css %}
+
 {% block js %}
-{% endblock %}
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/select2/select2.full.min.js') }}"></script>
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/select2/select2-init.js') }}"></script>
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/nestable/jquery.nestable.js') }}"></script>
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/nestable/nestable.init.js') }}"></script>
+    <!-- scripit init-->
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/nestable/nestable.init.js') }}"></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js') }}></script>
+    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables-init.js') }}></script>
+{% endblock js %}
 
 {% block content %}
     <div class="row">
         {{ parent() }}
         <div class="col-lg-6">
-            <div id="tabs">
+            <div class="tabs">
                 {% if collection is defined %}
                     <ul class="onglets">
                         {% for key, tab in collection %}
@@ -28,5 +46,10 @@
                 {% endif %}
             </div>
         </div>
+        {% if objects != null %}
+            <div class="col-lg-6">
+                {% include '@ScyLabsNeptune/admin/entity/content_listing.html.twig' %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

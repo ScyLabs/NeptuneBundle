@@ -9,6 +9,7 @@
 namespace ScyLabs\NeptuneBundle\Controller;
 
 
+use ScyLabs\NeptuneBundle\Entity\AbstractChild;
 use ScyLabs\NeptuneBundle\Entity\AbstractElem;
 use ScyLabs\NeptuneBundle\Entity\Document;
 use ScyLabs\NeptuneBundle\Entity\Element;
@@ -72,27 +73,33 @@ class BaseController extends Controller
         return false;
 
     }
-    public function getEntities(AbstractElem $object,?string $typeParent = 'parent'){
+    public function getEntities(AbstractElem $object,?string $typeParent = null){
         $objects = null;
 
         $params = array('remove'=>false);
+        if($typeParent == null && $object instanceof AbstractChild){
+            $typeParent = $object->getParentType();
+        }
         if($typeParent !== null){
             $params[$typeParent] = ($object->getParent() === null) ? null : $object->getParent()->getId();
+        }
+        
+        else{
+            $params['parent'] = null;
         }
         $objects =  $this->getDoctrine()->getRepository(get_class($object))->findBy($params,['prio'=>'ASC']);
 
         return $objects;
     }
-    public function getLastPrio(AbstractElem $object,$typeParent = 'parent'){
+    public function getLastPrio(AbstractElem $object,$typeParent){
         $prio = 0;
 
-        if($typeParent != null)
-            $parentId = ($object->getParent() === null) ? null : $object->getParent()->getId();
-
+        $parentId = ($object->getParent() === null) ? null : $object->getParent()->getId();
 
         $params = array('remove'=>false);
-        if($typeParent !== null)
+        if($typeParent !== null){
             $params[$typeParent] = $parentId;
+        }
         $last = $this->getDoctrine()->getRepository(get_class($object))->findOneBy($params,['prio'=>'DESC']);
         if($last !== null)
         {

@@ -1,7 +1,7 @@
 {% import '@ScyLabsNeptune/admin/entity/macros.html.twig' as recursiveMacro %}
 <!-- Start Page Content -->
 <div class="row">
-    <div class="col-lg-10">
+    <div class="col-lg-{{  (app.request.attributes.get('_route') == 'admin_entity') ? '10' : '12'}}">
         <div id="tabs">
             <ul class="onglets">
                 <li><a href="#tabs-1">Gestion</a></li>
