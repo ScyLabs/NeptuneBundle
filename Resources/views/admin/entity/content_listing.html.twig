@@ -30,7 +30,7 @@
                             {% if objects is defined and objects | length %}
                                 {% for object in objects %}
                                     {% if app.request.attributes.get('type') == 'page' %}
-                                        {{ recursiveMacro.recursiveTabPage(object) }}
+                                        {{ recursiveMacro.recursiveTabPage(object,loop.first) }}
                                     {% else %}
                                         <tr>
                                             <td>
@@ -85,7 +85,7 @@
                                         {% if objects | length %}
                                             {% for object in objects %}
                                                 {% if app.request.attributes.get('type') == 'page' %}
-                                                    {{ recursiveMacro.recursivePage(object) }}
+                                                    {{ recursiveMacro.recursivePage(object,loop.first) }}
                                                 {% else %}
                                                     <li class="dd-item" data-id="{{ object.id }}">
                                                         <div class="dd-handle">

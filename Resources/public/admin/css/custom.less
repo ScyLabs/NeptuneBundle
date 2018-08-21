@@ -14,6 +14,14 @@
     > li.ui-state-active{background:#d1ecf1;}
 }
 
+.photo_mini{
+    display: flex;
+    justify-content: center;
+    img{
+        object-fit: cover;
+        object-position: 50% 50%;
+    }
+}
 #flashes {
     position: fixed;
     bottom:50px;
@@ -116,7 +124,23 @@
             opacity: 0;
             transition:all 500ms;
         }
-        
+        button {
+            color:#e74c3c;
+            font-size: 16px;
+        }
+    }
+    .fancy {
+        position: absolute;
+        left:0;
+        top:0;
+        padding:0.5rem;
+        font-size: 1.4rem;
+        color:#27ae60;
+        opacity: 0;
+        transition: opacity 500ms;
+        z-index: 999;
+
+
     }
 
     &:not(.active):hover > span::before {opacity: 1;background: rgba(255,255,255,0.3);}
@@ -133,6 +157,9 @@
     }
     &:hover {
         form { opacity: 1;}
+        .fancy {
+            opacity: 1;
+        }
     }
     &.active {
         > span  i {opacity: 1;}

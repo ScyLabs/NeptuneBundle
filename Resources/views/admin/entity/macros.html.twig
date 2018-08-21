@@ -1,5 +1,5 @@
 {% import _self as recursiveMacro %}
-{% macro recursivePage(page) %}
+{% macro recursivePage(page,first) %}
     {% import _self as self %}
     {% if page.remove == 0 %}
         <li class="dd-item" data-id="{{ page.id }}">
@@ -11,6 +11,9 @@
                         <i class="fa fa-times text-danger"></i>
                     {% endif %}
                 </a>
+                {% if first %}
+                    <i class="fa fa-home"></i>
+                {% endif %}
                 {{ page.name }}
             </div>
             {% if page.childs |length %}
@@ -24,11 +27,12 @@
     {% endif %}
 {% endmacro %}
 
-{% macro recursiveTabPage(page) %}
+{% macro recursiveTabPage(page,first) %}
     {% import _self as self %}
     {% if page.remove == 0 %}
         <tr>
             <td>
+
                 <a href="{{ path('admin_entity_active',{'id':page.id,'type':app.request.attributes.get('type')}) }}">
                     {% if page.active %}
                     <i class="fa fa-check text-success"></i>
@@ -39,6 +43,9 @@
             </td>
             <td>{{ page.type.title }}</td>
             <td>
+                {% if first %}
+                    <i class="fa fa-home"></i>
+                {% endif %}
                 {{ page.name }}
             </td>
             <td>

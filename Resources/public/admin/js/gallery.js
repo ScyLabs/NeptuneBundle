@@ -245,21 +245,27 @@ Dropzone.options.customdropzone = {
         $.edc.flashAlert('Fichier bien envoyé');
 
         let file = done;
-        let element = document.createElement('li');
-        element.id = file.id;
-        element.setAttribute('class',"relative image col-lg-2");
-        element.setAttribute('data-type',file.type);
-        let span = element.appendChild(document.createElement('span'));
-        let spanspan = document.createElement('span');
-        $(spanspan).addClass('boxing');
-        span.appendChild(spanspan);
-        let i = spanspan.appendChild(document.createElement('i'));
-        i.setAttribute('class','fa fa-check centerXY');
-        let img = spanspan.appendChild(document.createElement('img'));
+
+        let element = $('<li data-id="'+file.id+'" class="relative image col-lg-2 photo" data-type="'+file.type+'"></li>');
+
+        let span = $('<span></span>');
+        element.append(span);
+
+        let spanspan = $('<span class="boxing"></span>');
+        span.append(spanspan);
+
+        spanspan.append(file.actions.remove.content);
+
+        spanspan.append('<i class="fa fa-check centerXY"></i>');
+
+
+        let img = spanspan.append($('<img/>'));
+        spanspan.append($('<span class="date">'+file.date+'</span>'));
         let path = file.file;
         let exp  = path.split('.');
+
         if(exp[exp.length -1] == 'pdf'){
-            console.log(exp);
+
             path = 'thumbnails/';
             for(let i = 0; i < exp.length -1;i++ ){
                 path += exp[i];
@@ -269,13 +275,13 @@ Dropzone.options.customdropzone = {
                 }
             }
         }
-        img.src = url_site+'/uploads/'+path;
+        spanspan.append($('<img src="'+url_site+'/uploads/'+path+'" />'));
         if($('#cartouches').length)
         {
             $('#cartouches').prepend(element);
-            var eltJ = $(element);
-            eltJ.gallery();
-            console.log(eltJ);
+
+            element.gallery();
+
         }
 
 
@@ -290,10 +296,10 @@ if($('#modification_prio').length){
     if(typeof(files) != 'undefined'){
         let tab = JSON.parse(files);
         for(let i = 0;i < tab.length  ;i++){
-           $('#cartouches > li[data-id="'+tab[i]+'"]').addClass('active');
-           if(i == tab.length -1){
-               selection();
-           }
+            $('#cartouches > li[data-id="'+tab[i]+'"]').addClass('active');
+            if(i == tab.length -1){
+                selection();
+            }
         }
     }
 }

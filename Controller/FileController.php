@@ -184,16 +184,16 @@ class FileController extends BaseController
         }
 
         $minesok = array(
-            'ScyLabs\NeptuneBundlelication/pdf',
+            'application/pdf',
             'image/jpeg',
             'image/png',
             'image/svg+xml',
             'audio/*',
             'image/gif',
             'video/mp4',
-            'ScyLabs\NeptuneBundlelication/zip',
-            'ScyLabs\NeptuneBundlelication/x-7z-compressed',
-            'ScyLabs\NeptuneBundlelication/x-rar-compressed'
+            'application/zip',
+            'application/x-7z-compressed',
+            'application/x-rar-compressed'
         );
 
         $uploadFile = new SymfonyFile($res);
@@ -203,7 +203,7 @@ class FileController extends BaseController
         $typeRepo = $this->getDoctrine()->getRepository(FileType::class);
 
         switch($uploadFile->getMimeType()){
-            case 'ScyLabs\NeptuneBundlelication/pdf':
+            case 'application/pdf':
                 $name = 'document';
                 break;
             case 'image/jpeg':
@@ -239,6 +239,11 @@ class FileController extends BaseController
             'file'=>$file->getFile(),
             'id'=>$file->getId(),
             'type'=>$file->getType()->getName(),
+            'date'=>$file->getDate()->format('d/m/Y'),
+            'actions'=>array(
+                'remove' => $this->deleteAction(new Request(),$file->getId()),
+
+            )
         );
 
         return $this->json($result);

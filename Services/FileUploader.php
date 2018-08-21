@@ -45,7 +45,7 @@ class FileUploader
             }
 
         }
-        elseif($mime == "ScyLabs\NeptuneBundlelication/pdf") {
+        elseif($mime == "application/pdf") {
             $thumbsDir = $this->getTargetDirectory().'/thumbnails/';
             if(!file_exists($thumbsDir)){
                 mkdir($thumbsDir);
