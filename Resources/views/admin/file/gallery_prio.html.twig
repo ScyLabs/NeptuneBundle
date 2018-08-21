@@ -28,8 +28,11 @@
                         {% for photo in object.photos %}
                                 {% set file = photo.file %}
                                 <li data-id="{{ photo.id }}" class="col-lg-1 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
-                                    <span class="photo_mini">
-                                        <img src="{{ asset('uploads/'~file.file)}}"/>
+                                    <a href="{{ asset('uploads/'~file.file)}}" class="fancy fancy_box"></a>
+                                    <span>
+                                        <span class="boxing">
+                                            <img src="{{ asset('uploads/'~file.file) | thumb(200)}}"/>
+                                        </span>
                                     </span>
                                 </li>
                         {% endfor %}
@@ -43,9 +46,12 @@
                         {% for video in object.videos %}
                             {% set file = video.file %}
                             <li data-id="{{ video.id }}" class="col-lg-1 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
-                                    <span class="photo_mini">
-                                        <img src="{{ asset('uploads/'~file.file)}}" />
+                                <a href="{{ asset('uploads/'~file.file)}}" class="fancy fancy_box"></a>
+                                <span>
+                                    <span class="boxing">
+                                            <img src="{{ asset('uploads/'~file.file)}}"/>
                                     </span>
+                                </span>
                             </li>
                         {% endfor %}
                     {% endif %}
@@ -58,9 +64,12 @@
                         {% for document in object.documents %}
                             {% set file = document.file %}
                             <li data-id="{{ document.id }}" class="col-lg-1 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
-                                    <span class="photo_mini">
-                                        <img src="{{ asset('uploads/'~file.file)}}" />
+                                <a href="{{ asset('uploads/'~file.file)}}" class="fancy fancy_box"></a>
+                                <span>
+                                    <span class="boxing">
+                                            <img src="{{ asset('uploads/'~file.file) | thumb(200)}}"/>
                                     </span>
+                                </span>
                             </li>
                         {% endfor %}
                     {% endif %}

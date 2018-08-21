@@ -39,6 +39,8 @@
 }
 .actions > li {
     display: inline-block;
+    font-size: 18px;
+    margin:0 7px;
 }
 .relative {
     position: relative;
@@ -76,6 +78,7 @@
         overflow: hidden;
         position: relative;
         display: block;
+
         > .boxing {
             position: absolute;
             left: 0;
@@ -133,12 +136,17 @@
         position: absolute;
         left:0;
         top:0;
-        padding:0.5rem;
+        padding:1rem;
         font-size: 1.4rem;
         color:#27ae60;
         opacity: 0;
         transition: opacity 500ms;
         z-index: 999;
+        &.fancy_box{
+            padding:0;
+            width:100%;
+            height:100%;
+        }
 
 
     }

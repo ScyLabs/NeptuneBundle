@@ -87,9 +87,10 @@ function zonesAndElements(elem){
 /* Extension jquery pour affecté le on('click) d'action de cartouche. sur un element selectionné */
 $.fn.gallery = function(e){
     $(this).on('click',function (e) {
-        let parent = $(this).parent('#cartouches');
+        let parent = $('#cartouches');
         let tab = new Array();
         let nb = parent.find('> li.active').length;
+        let thisLi = $(this).parent('li');
 
         /*On affecte le tableau tab (remplis par selection() . Dans data-select de #container_cartouches
         * */
@@ -106,9 +107,9 @@ $.fn.gallery = function(e){
         if(toucheActive === 'Shift'){
             if(prevCartouche !== false){
                 /* Premier .eq() */
-                let start = (prevCartouche.index() < $(this).index()) ? prevCartouche.index() : $(this).index();
+                let start = (prevCartouche.index() < thisLi.index()) ? prevCartouche.index() : thisLi.index();
                 /* Denrier eq() de la selection*/
-                let end = (prevCartouche.index() < $(this).index()) ? $(this).index() : prevCartouche.index();
+                let end = (prevCartouche.index() < thisLi.index()) ? thisLi.index() : prevCartouche.index();
 
                 /*S'il y a  >=  de cartouches que le selection (pour eviter certains bugs) */
                 if(parent.find('> li').length >= end){
@@ -143,15 +144,15 @@ $.fn.gallery = function(e){
         }
         else{
             /*Si la touche SHIFT n'est pas pressée*/
-            $(this).toggleClass('active');
+            thisLi.toggleClass('active');
             nb = parent.find('>li.active').length;
-            if($(this).hasClass('active')){
+            if(thisLi.hasClass('active')){
                 /*On ajoute l'ID au tableau de selection*/
-                actualSelect.push($(this).attr('data-id'));
+                actualSelect.push(thisLi.attr('data-id'));
             }
             else{
                 /*On supprime lID du tableau de election*/
-                let index = actualSelect.indexOf($(this).attr('data-id'));
+                let index = actualSelect.indexOf(thisLi.attr('data-id'));
                 if(index > -1){
                     actualSelect.splice(index,1);
                 }
@@ -159,12 +160,12 @@ $.fn.gallery = function(e){
             callback();
         }
         /*On affecte la cartouche précedente*/
-        prevCartouche = $(this);
+        prevCartouche = thisLi;
     })
 
 };
 
-$('#cartouches > li').gallery();
+$('#cartouches > li > span').gallery();
 
 /*Si on clique sur le bouton d'envoi de formulaire .*/
 $('#valider_liaison').on('click',function (e) {
@@ -248,6 +249,7 @@ Dropzone.options.customdropzone = {
 
         let element = $('<li data-id="'+file.id+'" class="relative image col-lg-2 photo" data-type="'+file.type+'"></li>');
 
+
         let span = $('<span></span>');
         element.append(span);
 
@@ -263,6 +265,7 @@ Dropzone.options.customdropzone = {
         spanspan.append($('<span class="date">'+file.date+'</span>'));
         let path = file.file;
         let exp  = path.split('.');
+        element.append($('<a href="'+url_site+'/uploads/'+path+'" class="fancy"><i class="fa fa-search"></i></a>'));
 
         if(exp[exp.length -1] == 'pdf'){
 
@@ -280,7 +283,8 @@ Dropzone.options.customdropzone = {
         {
             $('#cartouches').prepend(element);
 
-            element.gallery();
+            element.find('>span').gallery();
+            element.find('.fancy').fancybox();
 
         }
 

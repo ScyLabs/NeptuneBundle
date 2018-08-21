@@ -653,7 +653,7 @@ h6 {
   .campaign {
     height: 365px !important;
   }
-}
+}#99abb4
 @media (max-width: 1370px) {
   .widget-app-columns {
     -webkit-column-count: 2;
@@ -665,7 +665,7 @@ a,
 button {
   outline: none!important;
   text-decoration: none!important;
-  color: #e74c3c;
+  color: #99abb4;
   transition: all 0.2s ease 0s;
 }
 a.active,
