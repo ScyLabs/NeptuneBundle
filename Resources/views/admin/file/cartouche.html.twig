@@ -1,5 +1,16 @@
 <li data-id="{{ file.id }}" class="col-lg-2 relative {{ file.type.name }}" data-type="{{ file.type.name }}">
-    <a href="{{ asset('uploads/'~file.file)}}" class="fancy"><i class="fa fa-search"></i></a>
+    <ul class="actions">
+        <li>
+            <a href="{{ asset('uploads/'~file.file)}}" class="fancy" data-fancybox="gallery"><i class="fa fa-search"></i></a>
+        </li>
+        <li>
+            {{ render(controller(
+                'ScyLabs\\NeptuneBundle\\Controller\\FileController::deleteAction',
+                {'id':file.id}
+            )) }}
+        </li>
+    </ul>
+
     <span>
         <span class="boxing">
 
@@ -7,10 +18,7 @@
             <img src="{{ asset('uploads/'~file.file)
             | thumb(400) }}"/>
             <span class="date">{{ file.date.format('d/m/Y')}}</span>
-            {{ render(controller(
-                'ScyLabs\\NeptuneBundle\\Controller\\FileController::deleteAction',
-                {'id':file.id}
-            )) }}
+
         </span>
     </span>
 </li>

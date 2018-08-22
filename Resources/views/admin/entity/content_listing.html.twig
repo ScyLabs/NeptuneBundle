@@ -59,7 +59,7 @@
                                                     <li><a href="{{ path('admin_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
                                                     <li class="">
                                                         {{ render(controller(
-                                                            'Scylabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
+                                                            'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
                                                             {'id':object.id,'type':app.request.attributes.get('type')}
                                                         )) }}
                                                     </li>

@@ -74,6 +74,22 @@
     overflow: hidden;
     padding:5px;
     cursor: pointer;
+    .actions {
+        position: absolute;
+        right:0;
+        top:0;
+        width:100%;
+        text-align: right;
+        padding:1rem;
+        z-index: 9999;
+        a,button{
+            color:#007bff !important;
+
+            &:hover{
+                color: #003d7b !important;
+            }
+        }
+    }
     > span {
         overflow: hidden;
         position: relative;
@@ -133,16 +149,16 @@
         }
     }
     .fancy {
-        position: absolute;
-        left:0;
-        top:0;
+        position: relative;
         padding:1rem;
         font-size: 1.4rem;
-        color:#27ae60;
         opacity: 0;
         transition: opacity 500ms;
         z-index: 999;
         &.fancy_box{
+            position: absolute;
+            left:0;
+            top:0;
             padding:0;
             width:100%;
             height:100%;
@@ -154,11 +170,7 @@
     &:not(.active):hover > span::before {opacity: 1;background: rgba(255,255,255,0.3);}
     &:hover > span .date {opacity: 1;}
     form {
-        position: absolute;
         z-index: 999;
-        right:0;
-        top:0;
-        padding:5px;
         display: block;
         transition:all 500ms;
         opacity: 0;
@@ -192,3 +204,9 @@
 .block {
     display: block;}
 textarea.form-control {height: auto;}
+
+button.form-control[type="submit"] {
+    background-color:#82ccdd;
+    text-transform: uppercase;
+    color:#fff;
+}
