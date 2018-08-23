@@ -15,6 +15,7 @@ use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping\PostUpdate;
+use Doctrine\ORM\Mapping\PreUpdate;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\PageDetail;
 use ScyLabs\NeptuneBundle\Entity\PageUrl;
@@ -37,29 +38,130 @@ class EntityListener
         if($entity instanceof Page) {
             foreach ($entity->getDetails() as $detail) {
                 $url = new PageUrl();
+                $urlParent = '';
+                if($entity->getParent() !== null){
+                    $urlParent = $entity->getParent()->getUrl($detail->getLang());
+                    if($urlParent === null){
+                        $urlParent = '';
+                    }
+                    else{
+                        $urlParent = $urlParent->getUrl().'/';
+                    }
+                }
                 $url->setLang($detail->getLang())
-                    ->setUrl($detail->getSlug());
+                    ->setUrl($urlParent.$detail->getSlug());
                 $entity->addUrl($url);
                 $em->persist($url);
+                $this->childsUrl($entity,$em);
             }
             $em->flush();
         }
     }
 
-    public function postUpdate(LifecycleEventArgs $args){
+    public function preUpdate(PreUpdateEventArgs $args){
 
         $entity = $args->getEntity();
         $em = $args->getEntityManager();
 
         if($entity instanceof PageDetail){
+
             $page = $entity->getPage();
+
             $url = $page->getUrl($entity->getLang());
+            if($url === null){
+                $url = new PageUrl();
+                $url->setLang($entity->getLang());
+                $page->addUrl($url);
+            }
 
-            $url->setUrl($entity->getSlug());
+            $urlParent = '';
+            if($page->getParent() !== null){
+                $urlParent = $page->getParent()->getUrl($entity->getLang());
+                if($urlParent === null){
+                    $urlParent = '';
+                }
+                else{
+                    $urlParent = $urlParent->getUrl().'/';
+                }
+            }
 
-            $em->persist($url);
+            $url->setUrl($urlParent.$entity->getSlug());
+            $this->childsUrl($page,$em);
+
+
+        }
+        elseif($entity instanceof  Page){
+            if($args->hasChangedField('parent')){
+
+                foreach($entity->getDetails() as $detail){
+
+                    $url = $entity->getUrl($detail->getLang());
+
+                    if($url === null){
+                        $url = new PageUrl();
+                        $url->setLang($detail->getLang());
+                        $entity->addUrl($url);
+                    }
+
+                    $urlParent = '';
+
+                    if($entity->getParent() !== null){
+                        $urlParent = $entity->getParent()->getUrl($detail->getLang());
+                        if($urlParent === null){
+                            $urlParent = '';
+                        }
+                        else{
+                            $urlParent = $urlParent->getUrl().'/';
+                        }
+                    }
+
+                    $url->setUrl($urlParent.$entity->getDetail($url->getLang())->getSlug());
+
+                    if($entity->getChilds()->count() > 0)
+                        $this->childsUrl($entity,$em);
+
+                }
+
+
+            }
+        }
+
+    }
+
+    public function postUpdate(LifecycleEventArgs $args){
+        $em = $args->getEntityManager();
+        $entity = $args->getEntity();
+        if($entity instanceof  Page || $entity instanceof PageDetail){
             $em->flush();
+        }
 
+    }
+
+    private function childsUrl(Page $page){
+
+        foreach ($page->getChilds() as $child){
+            foreach($child->getDetails() as $detail){
+
+                $url = $child->getUrl($detail->getLang());
+                if($url === null){
+                    $url = new PageUrl();
+                    $url->setLang($detail->getLang());
+                    $child->addUrl($url);
+                }
+                $urlParent = '';
+                $urlParent = $page->getUrl($url->getLang());
+                if($urlParent === null){
+                    $urlParent = '';
+                }
+                else{
+                    $urlParent = $urlParent->getUrl().'/';
+                }
+                $url->setUrl($urlParent.$child->getDetail($url->getLang())->getSlug());
+
+                if($child->getChilds()->count() > 0){
+                    $this->childsUrl($child);
+                }
+            }
         }
     }
 

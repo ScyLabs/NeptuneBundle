@@ -340,7 +340,7 @@ class EntityController extends BaseController
         $i = 0;
         foreach ($prios as $prio){
             $id = $prio->id;
-            if(is_object($objects[$id])){
+            if(isset($objects[$id]) && is_object($objects[$id])){
                 $objects[$id]->setPrio($i);
                 if($objects[$id] instanceof Page){
                     if($parent > 0 && is_object($objects[$parent])){

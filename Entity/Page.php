@@ -81,7 +81,7 @@ class Page extends AbstractElem
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\PageUrl", mappedBy="page",cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\PageUrl", mappedBy="page",cascade={"persist","remove","refresh"})
      */
 
     private $urls;
@@ -305,7 +305,7 @@ class Page extends AbstractElem
         return $this->urls;
     }
 
-    public function getUrl($locale) : PageUrl{
+    public function getUrl($locale) : ?PageUrl{
         foreach ($this->urls as $url){
             if($url->getLang() == $locale){
                 return $url;
