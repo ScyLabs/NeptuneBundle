@@ -101,6 +101,7 @@ class ThumbnailExtension extends AbstractExtension
             $img = new \Imagick($realPath);
             $img->setCompressionQuality($q);
             if($w != 0 || $h != 0){
+                
                 $img->thumbnailImage($w,$h);
             }
             $img->writeImage($localThumb.$wh.'.'.$ext);
