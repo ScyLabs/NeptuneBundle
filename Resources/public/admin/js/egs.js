@@ -24,8 +24,8 @@ $(window).on('keyup',function(e){
     if(egg == 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRight' || egg == 'soulpaprika'){
         encours = false;
 
-        window.location.href = url_eggs+'/eggs/runner.html';
-        $.edc.send(url_eggs+'/eggs/runner.html','GET','',function (e) {
+        window.location.href = url_asset+'/eggs/runner.html';
+        $.edc.send(url_asset+'/eggs/runner.html','GET','',function (e) {
             $('html').empty().append(e);
         })
 
@@ -33,7 +33,7 @@ $(window).on('keyup',function(e){
     else if (egg == 'nyan cat'){
         audio('nyan.ogg');
         let img = document.createElement('img');
-        img.src = url_eggs+'/eggs/nyan.gif';
+        img.src = url_asset+'/eggs/nyan.gif';
         img.id = 'image_suit_souris';
         img.style = "position:fixed;z-index:99999;display:block;";
         document.body.appendChild(img);
@@ -62,7 +62,7 @@ function audio(src= '',type ='ogg'){
     let audio = document.createElement('audio');
     audio.controls = 'controls';
     let source = document.createElement('source');
-    source.src = url_eggs+'/eggs/'+src;
+    source.src = url_asset+'/eggs/'+src;
     console.log(source.src)
     source.type = "audio/"+type;
     audio.appendChild(source);

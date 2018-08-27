@@ -28,6 +28,7 @@ Chargement de scripts de faÃ§on automatique :
 - Google recaptcha si #g-recaptcha est trouvÃ©
 */
 (function ($){
+    var url_asset_admin = url_asset+'/admin';
 
     $.fn.extend({
         setCustomValidity : function(message){
@@ -44,8 +45,8 @@ Chargement de scripts de faÃ§on automatique :
     /* DÃ©finition du namespace*/
     $.edc ={
         /* Variables */
-        fichiers_fancy:[url_site+"/css/lib/fancybox/fancybox.min.css",
-            url_site+"/js/lib/fancybox/fancybox.min.js"],
+        fichiers_fancy:[url_asset_admin+"/css/lib/fancybox/fancybox.min.css",
+            url_asset_admin+"/js/lib/fancybox/fancybox.min.js"],
         /* FIN VARIABLES */
         /* Functions */
         send:function(url,type='GET',data='',fn = function(e){}){

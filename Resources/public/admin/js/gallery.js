@@ -256,17 +256,18 @@ Dropzone.options.customdropzone = {
         let spanspan = $('<span class="boxing"></span>');
         span.append(spanspan);
 
-        spanspan.append(file.actions.remove.content);
+
 
         spanspan.append('<i class="fa fa-check centerXY"></i>');
 
-
-        let img = spanspan.append($('<img/>'));
         spanspan.append($('<span class="date">'+file.date+'</span>'));
         let path = file.file;
         let exp  = path.split('.');
-        element.append($('<a href="'+url_site+'/uploads/'+path+'" class="fancy"><i class="fa fa-search"></i></a>'));
+        let actions = $('<ul class="actions"></ul>');
+        actions.append($('<li><a href="'+url_site+'/uploads/'+path+'" class="fancy"><i class="fa fa-search"></i></a></li>'));
+        actions.append($('<li>'+file.actions.remove.content+'</li>'));
 
+        element.append(actions);
         if(exp[exp.length -1] == 'pdf'){
 
             path = 'thumbnails/';
