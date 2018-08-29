@@ -257,7 +257,7 @@ class EntityController extends BaseController
         $form = $this->createFormBuilder($object)->setMethod('post')
             ->setAction($this->generateUrl('admin_entity_delete',array('type'=>$type,'id'=>$id)))
             ->getForm();
-        $form->handleRequest($request);
+        $form->r($request);
         if($form->isSubmitted() && $form->isValid()){
             $object->setRemove(true);
             $em->persist($object);

@@ -264,7 +264,7 @@ Dropzone.options.customdropzone = {
         let path = file.file;
         let exp  = path.split('.');
         let actions = $('<ul class="actions"></ul>');
-        actions.append($('<li><a href="'+url_site+'/uploads/'+path+'" class="fancy"><i class="fa fa-search"></i></a></li>'));
+        actions.append($('<li><a href="'+url_site+'uploads/'+path+'" class="fancy"><i class="fa fa-search"></i></a></li>'));
         actions.append($('<li>'+file.actions.remove.content+'</li>'));
 
         element.append(actions);
@@ -275,11 +275,11 @@ Dropzone.options.customdropzone = {
                 path += exp[i];
                 if(i == exp.length -2 ){
                     path += ".jpg";
-                    img.src = url_site+'/uploads/'+path;
+                    img.src = url_site+'uploads/'+path;
                 }
             }
         }
-        spanspan.append($('<img src="'+url_site+'/uploads/'+path+'" />'));
+        spanspan.append($('<img src="'+url_site+'uploads/'+path+'" />'));
         if($('#cartouches').length)
         {
             $('#cartouches').prepend(element);
