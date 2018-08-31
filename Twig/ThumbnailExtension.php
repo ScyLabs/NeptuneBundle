@@ -66,7 +66,7 @@ class ThumbnailExtension extends AbstractExtension
 
         if($ext == 'pdf'){
 
-            if(file_exists($localThumb.'jpg') && ($w == 0 && $h == 0)){
+            if(file_exists($localThumb.'.jpg') && ($w == 0 && $h == 0)){
                 return $webThumb;
             }
             elseif(file_exists($localThumb.$wh.'.jpg')){
