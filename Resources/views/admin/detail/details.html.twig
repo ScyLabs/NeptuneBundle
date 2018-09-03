@@ -38,7 +38,7 @@
                             <div class="card">
                                 {% for object in tab %}
                                     {% set form = tab['form'] %}
-                                        {% include '@ScyLabsNeptune/admin/form.html.twig' %}
+                                    {% include '@ScyLabsNeptune/admin/form.html.twig' %}
                                 {% endfor %}
                             </div>
                         </div>
@@ -49,7 +49,21 @@
         {% if objects != null %}
             <div class="col-lg-6">
                 {% include '@ScyLabsNeptune/admin/entity/content_listing.html.twig' %}
+
+            </div>
+        {% endif %}
+
+        {% if object.parent is defined %}
+            <div id="preview" style="height:100vh;width:100%;display: flex;">
+                {% if app.request.attributes.get('type') == 'page'%}
+                    <iframe src="{{path('page',{'_locale':'fr','slug':object.url('fr').url})}}" style="flex:1"></iframe>
+                {% else %}
+                    <iframe src="{{path('page',{'_locale':'fr','slug':object.parent.url('fr').url})}}" style="flex:1"></iframe>
+                {% endif %}
+
+
             </div>
         {% endif %}
     </div>
+
 {% endblock %}

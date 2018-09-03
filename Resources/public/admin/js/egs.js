@@ -42,6 +42,9 @@ $(window).on('keyup',function(e){
         },200);
 
     }
+    else if (egg == 'ninochess'){
+        video('https://lichess.org/');
+    }
     else if (egg == 'meuporg'){
         audio('meuporg.ogg');
     }

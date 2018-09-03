@@ -85,19 +85,21 @@ class BaseController extends Controller
         }
         
         else{
+            if(!$object instanceof Partner)
             $params['parent'] = null;
         }
         $objects =  $this->getDoctrine()->getRepository(get_class($object))->findBy($params,['prio'=>'ASC']);
 
         return $objects;
     }
-    public function getLastPrio(AbstractElem $object,$typeParent){
+    public function getLastPrio(AbstractElem $object,$typeParent = null){
         $prio = 0;
 
-        $parentId = ($object->getParent() === null) ? null : $object->getParent()->getId();
+
 
         $params = array('remove'=>false);
         if($typeParent !== null){
+            $parentId = ($object->getParent() === null) ? null : $object->getParent()->getId();
             $params[$typeParent] = $parentId;
         }
         $last = $this->getDoctrine()->getRepository(get_class($object))->findOneBy($params,['prio'=>'DESC']);

@@ -101,7 +101,8 @@ class DetailController extends BaseController
         }
         $params = array(
             'title'         =>  'Details de l'.(($type == 'element') ? "'" : 'a').' '.$type.'  :  '.$object->getName(),
-            'collection'    =>  $collection
+            'collection'    =>  $collection,
+            'object'        => $object
         );
         $params['objects'] = $this->getEntities($object,$parentType);
 
