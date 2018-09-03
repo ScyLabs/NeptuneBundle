@@ -90,6 +90,17 @@ class ZoneDetail extends AbstractDetail
         return $this;
     }
 
+    public function getDescription3(): ?string
+    {
+        return $this->description3;
+    }
+
+    public function setDescription3(?string $description3): self
+    {
+        $this->description3 = $description3;
+
+        return $this;
+    }
     public function getDescription4(): ?string
     {
         return $this->description4;
