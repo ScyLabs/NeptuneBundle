@@ -30,6 +30,18 @@ class ZoneDetailForm extends AbstractType
             ->add('description2',TextareaType::class,array(
                 'required'=> false
             ))
+            ->add('title3',TextType::class,array(
+                'required'=> false
+            ))
+            ->add('description3',TextareaType::class,array(
+                'required'=> false
+            ))
+            ->add('title4',TextType::class,array(
+                'required'=> false
+            ))
+            ->add('description4',TextareaType::class,array(
+                'required'=> false
+            ))
             ->add('Valider',SubmitType::class)
         ;
     }

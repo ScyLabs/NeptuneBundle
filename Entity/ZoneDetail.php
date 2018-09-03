@@ -25,6 +25,24 @@ class ZoneDetail extends AbstractDetail
      * @ORM\Column(type="text", nullable=true,nullable = true)
      */
     private $description2;
+    /**
+     * @ORM\Column(type="string", length=255,nullable = true)
+     */
+    private $title3;
+
+    /**
+     * @ORM\Column(type="text", nullable=true,nullable = true)
+     */
+    private $description3;
+    /**
+     * @ORM\Column(type="string", length=255,nullable = true)
+     */
+    private $title4;
+
+    /**
+     * @ORM\Column(type="text", nullable=true,nullable = true)
+     */
+    private $description4;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Zone", inversedBy="details")
@@ -60,7 +78,29 @@ class ZoneDetail extends AbstractDetail
 
         return $this;
     }
+    public function getTitle3(): ?string
+    {
+        return $this->title3;
+    }
 
+    public function setTitle3(string $title3): self
+    {
+        $this->title3 = $title3;
+
+        return $this;
+    }
+
+    public function getDescription4(): ?string
+    {
+        return $this->description4;
+    }
+
+    public function setDescription4(?string $description4): self
+    {
+        $this->description4 = $description4;
+
+        return $this;
+    }
     public function getZone(): ?Zone
     {
         return $this->zone;
