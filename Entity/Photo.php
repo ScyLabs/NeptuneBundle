@@ -2,6 +2,8 @@
 
 namespace ScyLabs\NeptuneBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,9 +43,72 @@ class Photo extends AbstractFileLink
      */
     protected $partner;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\PhotoDetail", mappedBy="photo", orphanRemoval=true,cascade={"persist","remove"})
+     */
+    protected $details;
+
+    public function  __construct(){
+        $this->details = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|ZoneDetail[]
+     */
+    public function getDetails(): Collection
+    {
+        return $this->details;
+    }
+
+    public function addDetail(PhotoDetail $detail): self
+    {
+        if (!$this->details->contains($detail)) {
+            $this->details[] = $detail;
+            $detail->setPhoto($this);
+        }
+        return $this;
+    }
+
+    public function removeDetail(PhotoDetail $detail): self
+    {
+        if ($this->details->contains($detail)) {
+            $this->details->removeElement($detail);
+            // set the owning side to null (unless already changed)
+            if ($detail->getPhoto() === $this) {
+                $detail->setPhoto(null);
+            }
+        }
+
+        return $this;
+    }
+    public function getDetail($locale){
+        foreach ($this->details as $detail){
+            if($detail->getLang() == $locale){
+                return $detail;
+            }
+        }
+        return new PhotoDetail();
+    }
     public function getId()
     {
         return $this->id;
+    }
+    public function getParent() : ?AbstractElem{
+        if($this->page !== null){
+            return $this->page;
+        }
+        elseif($this->element !== null){
+            return $this->element;
+        }
+        elseif($this->zone !== null){
+            return $this->zone;
+        }
+        elseif($this->partner !== null){
+            return $this->partner;
+        }
+        else{
+            return null;
+        }
     }
 
 }

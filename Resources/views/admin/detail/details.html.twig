@@ -46,11 +46,13 @@
                 {% endif %}
             </div>
         </div>
-        {% if objects != null %}
-            <div class="col-lg-6">
-                {% include '@ScyLabsNeptune/admin/entity/content_listing.html.twig' %}
+        {% if objects is defined %}
+            {% if objects != null %}
+                <div class="col-lg-6">
+                    {% include '@ScyLabsNeptune/admin/entity/content_listing.html.twig' %}
 
-            </div>
+                </div>
+            {% endif %}
         {% endif %}
 
         {% if object.parent is defined %}

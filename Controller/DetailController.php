@@ -13,6 +13,7 @@ use ScyLabs\NeptuneBundle\Entity\Element;
 use ScyLabs\NeptuneBundle\Entity\ElementDetail;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\PageDetail;
+use ScyLabs\NeptuneBundle\Entity\Photo;
 use ScyLabs\NeptuneBundle\Entity\Zone;
 use ScyLabs\NeptuneBundle\Entity\ZoneDetail;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class DetailController extends BaseController
 {
 
-    const VALID_ENTITIES = "(page|element|zone|partner)";
+   //const VALID_ENTITIES = "(page|element|zone|partner|photo)";
+    const VALID_ENTITIES = "[a-z]{2,20}";
     /**
      * @Route("admin/{type}/details/{id}",defaults={"parentType"=null},name="admin_detail", requirements={"type"=DetailController::VALID_ENTITIES,"id"="\d+"})
      */
@@ -104,7 +106,8 @@ class DetailController extends BaseController
             'collection'    =>  $collection,
             'object'        => $object
         );
-        $params['objects'] = $this->getEntities($object,$parentType);
+        if(!$object instanceof Photo)
+            $params['objects'] = $this->getEntities($object,$parentType);
 
 
         $params['ariane'] = array(
