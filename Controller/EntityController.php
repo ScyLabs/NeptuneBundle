@@ -39,7 +39,7 @@ class EntityController extends BaseController
     const JSON_VALID_ENTITIES = "(page|element|zone|photo|video|document|partner)";
     /* Quelles Entités sont Acceptées dans la majorité de ce controller ? */
     //const VALID_ENTITIES = "(page|element|zone|partner)";
-    const VALID_ENTITIES = "[a-z]{2,20}";
+    const VALID_ENTITIES = "^(?!gallery|file)[a-z]{2,20}";
     /**
      * @param Request $request
      * @param $type

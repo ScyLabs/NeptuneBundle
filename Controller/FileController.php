@@ -250,7 +250,7 @@ class FileController extends BaseController
     }
 
     /**
-     * @Route("admin/{type}/{id}/files", name="admin_file_gallery_prio" , requirements={"id"="\d+","type"="(page|zone|element|partner)"})
+     * @Route("admin/{type}/{id}/files", name="admin_file_gallery_prio" , requirements={"id"="\d+","type"="[a-z]{2,20}"})
      */
     public function galleryprioAction(Request $request,$id,$type){
 
