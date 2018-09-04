@@ -16,10 +16,14 @@ class PageDetailForm extends AbstractType
     {
         $builder
             ->add('title',TextType::class,array(
-                'required'=>false
+                'required'=>false,
+
             ))
             ->add('description',TextareaType::class,array(
-                'required'=>false
+                'required'=>false,
+                'attr'   => array(
+                    'class'=> 'tiny'
+                )
             ))
             ->add('name',TextType::class,array(
                 'required'=>false

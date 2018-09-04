@@ -24,8 +24,14 @@
                 {% else %}
                     {% set select2 = '' %}
                 {% endif %}
+                {% if widget.vars.attr.class is defined %}
+                    {% set class = ' '~widget.vars.attr.class %}
+                {% else %}
+                    {% set class = '' %}
+                {% endif %}
 
-                {{ form_widget(widget,{'attr':{'class':'form-control'~select2}}) }}
+
+                {{ form_widget(widget,{'attr':{'class':'form-control'~select2~class}}) }}
 
                 {% if widget.vars.block_prefixes[1] != 'submit' and widget.vars.block_prefixes[1] != 'hidden' %}
                     {{ form_errors(widget) }}
