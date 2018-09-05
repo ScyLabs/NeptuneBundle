@@ -101,60 +101,7 @@
             <!-- Sidebar navigation-->
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
-                    <li class="nav-devider"></li>
-                    <li class="nav-label">Home</li>
-                    <li> <a href="{{ path('admin_home') }}" aria-expanded="false"><i class="fa fa-tachometer"></i><span class="hide-menu">Panneau de bords <span class="label label-rouded label-primary pull-right">2</span></span></a>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">Gestion des pages</span> </a>
-                        <ul aria-expanded="false" class="collapse">
-                            <li><a href="{{ path('admin_entity',{'type':'page'}) }}"><i class="fa fa-list-ul m-r-10"></i>Listing des pages</a> </li>
-                            <li><a href="{{ path('admin_entity_add',{'type':'page'}) }}"><i class="fa fa-plus m-r-10"></i>Créer une page</a> </li>
-                            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                <li><a href="{{ path('admin_type',{'type':'page'}) }}"><i class="fa fa-list-ul m-r-10"></i>Types de page</a> </li>
-                                <li><a href="{{ path('admin_type_add',{'type':'page'}) }}"><i class="fa fa-plus m-r-10"></i>Créer un type de page</a> </li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">Gestion des zones</span> </a>
-                        <ul aria-expanded="false" class="collapse">
-
-                            <li><a href="{{ path('admin_entity',{'type':'zone'}) }}">Listing des zones</a></li>
-                            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                <li><a href="{{ path('admin_type',{'type':'zone'}) }}"><i class="fa fa-list-ul m-r-10"></i>Types de Zones</a> </li>
-                                <li><a href="{{ path('admin_type_add',{'type':'zone'}) }}"><i class="fa fa-plus m-r-10"></i>Créer un type de zone</a> </li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">Gestion des Elements</span> </a>
-                        <ul aria-expanded="false" class="collapse">
-
-                            <li><a href="{{ path('admin_entity',{'type':'element'}) }}">Listing des éléments</a></li>
-                            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                <li><a href="{{ path('admin_type',{'type':'element'}) }}"><i class="fa fa-list-ul m-r-10"></i>Types d'Elements</a> </li>
-                                <li><a href="{{ path('admin_type_add',{'type':'element'}) }}"><i class="fa fa-plus m-r-10"></i>Créer un type d'élement</a> </li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">Gestion des Partenaires</span> </a>
-                        <ul aria-expanded="false" class="collapse">
-                            <li><a href="{{ path('admin_entity',{'type':'partner'}) }}"><i class="fa fa-list-ul m-r-10"></i>Listing des Partenaires</a> </li>
-                            <li><a href="{{ path('admin_entity_add',{'type':'partner'}) }}"><i class="fa fa-plus m-r-10"></i>Créer un Partenaire</a> </li>
-                        </ul>
-                    </li>
-                    <li class="nav-label">Medias</li>
-                    <li>
-                        <a href="{{ path('admin_file') }}"><i class="fa fa-photo"></i> Mediathèque</a>
-                        <a href="{{ path('admin_type',{'type':'file'}) }}"><i class="fa fa-photo"></i> Type de fichiers</a>
-                    </li>
-                    <li class="nav-label">Configuration</li>
-                    <li>
-                        <a href="{{ path('admin_infos_edit') }}"><i class="fa fa-photo"></i>Informations du site</a>
-                    </li>
-
+                    {{ include('@ScyLabsNeptune/admin/menu.html.twig') }}
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->
