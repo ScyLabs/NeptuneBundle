@@ -47,7 +47,7 @@
                                 </tr>
                                 <tr>
                                     <td data-color="text" data-size="size text" data-min="10" data-max="26" data-link-color="link text color" data-link-style="font-weight:bold; text-decoration:underline; color:#40aceb;" align="center" style="font:bold 16px/25px Arial, Helvetica, sans-serif; color:#888; padding:0 0 23px;">
-                                        {{ "Un compte à été créer pour vous sur votre site internet" | trans }} {{ app.request.server.get('HTTP_HOST') }}
+                                        {{ "Un compte à été créer pour vous sur votre site internet" | trans }} {{ (app.request.server is defined) ? app.request.server.get('HTTP_HOST') : '' }}
                                     </td>
                                 </tr>
                                 <tr>

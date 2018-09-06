@@ -21,7 +21,7 @@ class ThumbnailExtension extends AbstractExtension
           new TwigFilter('thumb',array($this,'thumbFilter'))
         );
     }
-    public function thumbFilter($path,$w=0,$h = 0,$q = 75){
+    public function thumbFilter($path,$w=0,$h = 0,$q = 90){
 
         if(!is_string($path))
             return '';
