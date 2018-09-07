@@ -50,6 +50,7 @@ class Photo extends AbstractFileLink
 
     public function  __construct(){
         $this->details = new ArrayCollection();
+        parent::__construct();
     }
 
     /**

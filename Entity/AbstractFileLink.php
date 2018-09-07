@@ -20,6 +20,9 @@ class AbstractFileLink extends AbstractElem
     protected $element;
     protected $partner;
 
+    public function __construct(){
+        parent::__construct();
+    }
     public function getFile(): ?File
     {
         return $this->file;
