@@ -135,7 +135,7 @@ class EntityController extends BaseController
             }
             $resultTab[] = array('object'=>$object,'actions'=>$actions);
         }
-        $normalizer->setIgnoredAttributes(array('page','pages','parent','document','zone','video','file','type','element'));
+        $normalizer->setIgnoredAttributes(array('page','pages','parent','document','zone','video','file','type','element','partner','photo'));
 
         return  new JsonResponse((new Serializer(array($normalizer),array($encoder)))->serialize($resultTab,'json'));
     }
