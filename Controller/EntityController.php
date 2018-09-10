@@ -37,6 +37,7 @@ class EntityController extends BaseController
 
     /* Quelles Entités sont acceptées pour un retour JSON avec la route admin_entity_json */
     const JSON_VALID_ENTITIES = "(page|element|zone|photo|video|document|partner)";
+    const JSON_IGNORED_ATTRIBUTES = array('page','pages','parent','document','zone','video','file','type','element','partner','photo','pageLink');
     /* Quelles Entités sont Acceptées dans la majorité de ce controller ? */
     //const VALID_ENTITIES = "(page|element|zone|partner)";
     const VALID_ENTITIES = "^(?!gallery|file)[a-z]{2,20}";
@@ -135,7 +136,7 @@ class EntityController extends BaseController
             }
             $resultTab[] = array('object'=>$object,'actions'=>$actions);
         }
-        $normalizer->setIgnoredAttributes(array('page','pages','parent','document','zone','video','file','type','element','partner','photo'));
+        $normalizer->setIgnoredAttributes(self::JSON_IGNORED_ATTRIBUTES);
 
         return  new JsonResponse((new Serializer(array($normalizer),array($encoder)))->serialize($resultTab,'json'));
     }
