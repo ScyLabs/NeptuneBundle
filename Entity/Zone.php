@@ -62,6 +62,16 @@ class Zone extends AbstractChild
      */
     protected $forms;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable = true)
+     */
+    private $icon;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\Page")
+     */
+    private $pageLink;
+
 
     public function __construct()
     {
@@ -69,12 +79,25 @@ class Zone extends AbstractChild
 
         parent::__construct();
     }
-
     public function getId()
     {
         return $this->id;
     }
+    public function getIcon() : ?string{
+        return $this->icon;
+    }
+    public function setIcon(?string $icon) : self{
+        $this->icon = $icon;
+        return $this;
+    }
+    public function setPageLink(?Page $page) : self{
+        $this->pageLink = $page;
+        return $this;
+    }
+    public function getPageLink() : ?Page{
+        return $this->pageLink;
 
+    }
     /**
      * @return Collection|ZoneDetail[]
      */

@@ -49,6 +49,19 @@ class ZoneForm extends AbstractType
                         ->where('t.remove = 0');
                 },
             ])
+            ->add('icon',TextType::class,array(
+                'required'=>false,
+                'label'=> 'Icone'
+            ))
+            ->add('pageLink',EntityType::class,array(
+                'label' => 'Page liée',
+                'class' => Page::class,
+                'choice_label'      => 'name',
+                'query_builder'     => function(PageRepository $r){
+                    return $r->createQueryBuilder('p')
+                        ->where('p.remove = 0');
+                }
+            ))
             ->add('submit',SubmitType::class,[
                 'label' => 'Envoyer'
             ]);
