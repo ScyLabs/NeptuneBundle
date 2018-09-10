@@ -57,6 +57,7 @@ class ZoneForm extends AbstractType
                 'label' => 'Page liée',
                 'class' => Page::class,
                 'choice_label'      => 'name',
+                'required'  => false,
                 'query_builder'     => function(PageRepository $r){
                     return $r->createQueryBuilder('p')
                         ->where('p.remove = 0');
