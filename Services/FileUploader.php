@@ -55,9 +55,8 @@ class FileUploader
             $image->setCompressionQuality(90);
 
             $image->writeImage($thumbsDir.$name.'.jpg');
-
+            return $thumbsDir.$name.'.jpg';
         }
-
 
         return $fileName;
     }

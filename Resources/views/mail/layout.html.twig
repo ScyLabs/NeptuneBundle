@@ -1,6 +1,12 @@
-{% set protocol =( app.request.server.get('SERVER_PROTOCOL') | split('/'))[0] | lower  %}
-{% set baseurl = protocol ~ '://' ~ app.request.server.get('HTTP_HOST') %}
-{% set website = baseurl ~ asset('') %}
+{% if  app.request.server is defined %}
+    {% set protocol = ( app.request.server.get('SERVER_PROTOCOL') | split('/'))[0] | lower  %}
+    {% set baseurl = protocol ~ '://' ~ app.request.server.get('HTTP_HOST') %}
+    {% set website = baseurl ~ asset('') %}
+{% else %}
+    {% set protocol = 'https'  %}
+    {% set baseurl = protocol ~ '://' ~ 'localhost:8080/' %}
+    {% set website = baseurl ~ asset('') %}
+{% endif %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>

@@ -50,6 +50,7 @@ class EntityController extends BaseController
     public function listingAction($type){
 
         $class = $this->getClass($type);
+
         $repo = $this->getDoctrine()->getRepository($class);
         $child = false;
         if($class === Page::class){
