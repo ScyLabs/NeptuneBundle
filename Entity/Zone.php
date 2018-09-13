@@ -68,7 +68,7 @@ class Zone extends AbstractChild
     private $icon;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Scylabs\NeptuneBundle\Entity\Page")
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page")
      */
     private $pageLink;
 
