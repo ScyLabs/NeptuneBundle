@@ -5,7 +5,7 @@ namespace ScyLabs\NeptuneBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\ORM\Mapping\OrderBy;
 /**
  * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\ZoneRepository")
  */
@@ -25,17 +25,20 @@ class Zone extends AbstractChild
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="zone",cascade={"persist","remove"})
+     * @OrderBy({"prio" = "ASC"})
      */
     protected $photos;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Document", mappedBy="zone",cascade={"persist","remove"})
+     * @OrderBy({"prio" = "ASC"})
      */
     protected $documents;
 
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Video", mappedBy="zone",cascade={"persist","remove"})
+     * @OrderBy({"prio" = "ASC"})
      */
     protected $videos;
 

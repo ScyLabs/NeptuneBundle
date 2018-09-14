@@ -28,13 +28,16 @@
                         {% for photo in object.photos %}
                                 {% set file = photo.file %}
                                 <li data-id="{{ photo.id }}" class="col-lg-2 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
-                                    <a href="{{ asset('uploads/'~file.file)}}" class="fancy fancy_box"></a>
+
                                     <span>
                                         <span class="boxing">
                                             <img src="{{ asset('uploads/'~file.file) | thumb(400)}}"/>
                                         </span>
                                     </span>
                                     <ul class="actions">
+                                        <li><a href="{{ asset('uploads/'~file.file)}}" class="fancy fancy_box"><i class="fa fa-search"></i> </a>
+
+                                        </li>
                                             <li>
                                                 <a href="{{ path('admin_detail',{'type':'photo','id':photo.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
                                             </li>

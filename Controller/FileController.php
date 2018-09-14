@@ -292,7 +292,6 @@ class FileController extends BaseController
             'remove'=>false,
         ));
 
-        dump($object);
         $params = array(
             'title'     => 'Gestion des fichiers de '.(($type == 'page' ||$type == 'zone') ? 'la ' : "l'").ucfirst($type).' : '.$object->getName(),
             'ariane'    => $ariane,
@@ -325,6 +324,7 @@ class FileController extends BaseController
             $files = $em->getRepository(Photo::class)->findBy(array(
                 'id'=>$prios,
             ));
+
         }
         elseif($type == 'video'){
             $files = $em->getRepository(Video::class)->findBy(array(
@@ -338,9 +338,11 @@ class FileController extends BaseController
         }
         $em = $this->getDoctrine()->getManager();
         $filesTab = array();
+
         foreach ($files as $file){
             $filesTab[$file->getId()] = $file;
         }
+
 
         $i = 0;
         foreach ($prios as $id){
