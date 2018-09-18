@@ -214,6 +214,15 @@ class Page extends AbstractElem
 
         return $this;
     }
+    public function getElementsTypes() : self{
+        $types = new ArrayCollection();
+        foreach ($this->elements as $element){
+            if(!$types->contains($element->getType())){
+                $types->add($element->getType());
+            }
+        }
+        return $types;
+    }
 
     public function removeElement(Element $element): self
     {

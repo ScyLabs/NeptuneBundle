@@ -353,7 +353,6 @@ class FileController extends BaseController
                 $i++;
             }
         }
-
         $em->flush();
         if($ajax){
             return new Response('');
