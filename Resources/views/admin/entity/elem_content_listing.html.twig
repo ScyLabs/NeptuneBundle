@@ -1,0 +1,123 @@
+{% import '@ScyLabsNeptune/admin/entity/macros.html.twig' as recursiveMacro %}
+<!-- Start Page Content -->
+<div class="row">
+    <div class="col-lg-{{  (app.request.attributes.get('_route') == 'admin_entity') ? '10' : '12'}}">
+        {% if objects is defined %}
+            <div class="tabs">
+                <ul class="onglets">
+                    {% for type in objects %}
+                        <li><a href="#tabs-{{ type.name }}">{{ type.title }}</a></li>
+                    {% endfor %}
+
+                </ul>
+                {% for type in objects %}
+
+                        <div class="tabs card" id="tabs-{{ type.name }}">
+                            <ul class="onglets">
+                                <li><a href="#tabs-{{ type.name }}-1">Gestion</a></li>
+                                <li><a href="#tabs-{{ type.name }}-2">Prios</a></li>
+                            </ul>
+                            <div id="tabs-{{ type.name }}-1">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
+                                            <thead>
+                                            <th>Actif</th>
+                                            <th>Type</th>
+                                            <th>Nom</th>
+                                            <th>Prio</th>
+                                            <th>Actions</th>
+                                            </thead>
+                                            <tbody>
+                                            {% if type.elements.count() > 0  %}
+                                                {% for object in type.elements %}
+
+                                                        <tr>
+                                                            <td>
+                                                                <a href="{{ path('admin_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}">
+                                                                    {% if object.active %}
+                                                                        <i class="fa fa-check text-success"></i>
+                                                                    {% else %}
+                                                                        <i class="fa fa-times text-danger"></i>
+                                                                    {% endif %}
+                                                                </a>
+                                                            </td>
+                                                            {% if object.type is defined %}
+                                                                <td>{{ object.type.name }}</td>
+                                                            {% endif %}
+                                                            <td>{{ object.name }}</td>
+                                                            <td>{{ object.prio }}</td>
+                                                            <td>
+                                                                <ul class="actions">
+                                                                    <li><a href="{{ path('admin_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
+                                                                    <li><a href="{{ path('admin_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
+                                                                    <li><a href="{{ path('admin_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
+                                                                    <li class="">
+                                                                        {{ render(controller(
+                                                                            'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
+                                                                            {'id':object.id,'type':app.request.attributes.get('type')}
+                                                                        )) }}
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                {% endfor %}
+                                            {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="tabs-{{ type.name }}-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Nestedable</h4>
+                                        <div class="card-content">
+                                            <div class="nestable">
+                                                <div class="dd" id="nestable{{ app.request.attributes.get('type') == 'page' ? '' : '1'}}" data-action="{{ path('admin_entity_prio',{'type':app.request.attributes.get('type')}) }}">
+                                                    <ol class="dd-list">
+                                                        {% if type.elements.count() > 0  %}
+                                                            {% for object in type.elements %}
+                                                                {% if app.request.attributes.get('type') == 'page' %}
+                                                                    {{ recursiveMacro.recursivePage(object,loop.first) }}
+                                                                {% else %}
+                                                                    <li class="dd-item" data-id="{{ object.id }}">
+                                                                        <div class="dd-handle">
+                                                                            <a href="{{ path('admin_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}">
+                                                                                {% if object.active %}
+                                                                                    <i class="fa fa-check text-success"></i>
+                                                                                {% else %}
+                                                                                    <i class="fa fa-times text-danger"></i>
+                                                                                {% endif %}
+                                                                            </a>
+                                                                            {{ object.name }}
+                                                                        </div>
+                                                                    </li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    {% if app.request.attributes.get('_route') == 'admin_entity' %}
+        <div class="col-lg-2 m-t-25">
+            <div class="card">
+                <button onclick="window.location.href = '{{ path('admin_entity_add',{'type':app.request.attributes.get('type')}) }}'" class="btn btn-pink m-b-10 m-l-5 show_form">Créer une {{ app.request.attributes.get('type') }}</button>
+            </div>
+        </div>
+    {% endif %}
+</div>
+<!-- End page Content -->

@@ -58,10 +58,9 @@ class Page extends AbstractElem
     private $zones;
 
     /**
-     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Element", mappedBy="page")
-     * @OrderBy({"prio" = "ASC"})
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\ElementType",mappedBy="page")
      */
-    private $elements;
+    private $elementTypes;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\PageDetail", mappedBy="page", orphanRemoval=true,cascade={"persist","remove"})
@@ -87,8 +86,6 @@ class Page extends AbstractElem
     private $urls;
 
 
-
-
     public function __construct()
     {
         parent::__construct();
@@ -100,6 +97,7 @@ class Page extends AbstractElem
         $this->elements = new ArrayCollection();
         $this->details = new ArrayCollection();
         $this->urls = new ArrayCollection();
+        $this->elementTypes = new ArrayCollection();
 
     }
     public function getId()
@@ -130,6 +128,36 @@ class Page extends AbstractElem
                 $page->setRemove($remove);
             }
         }
+        return $this;
+    }
+
+    /**
+     * @return Collection|Page[]
+     */
+    public function getElementsTypes(): Collection
+    {
+        return $this->elementTypes;
+    }
+
+    public function addElementType(ElementType $elementType): self
+    {
+        if (!$this->elementTypes->contains($elementType)) {
+            $this->elementTypes[] = $elementType;
+            $elementType->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeElementType(ElementType $elementType): self
+    {
+        if ($this->elementTypes->contains($elementType)) {
+            // set the owning side to null (unless already changed)
+            if ($elementType->getPage() === $this) {
+                $elementType->setPage(null);
+            }
+        }
+
         return $this;
     }
 
@@ -198,46 +226,6 @@ class Page extends AbstractElem
     }
 
     /**
-     * @return Collection|Element[]
-     */
-    public function getElements(): Collection
-    {
-        return $this->elements;
-    }
-
-    public function addElement(Element $element): self
-    {
-        if (!$this->elements->contains($element)) {
-            $this->elements[] = $element;
-            $element->setPage($this);
-        }
-
-        return $this;
-    }
-    public function getElementsTypes() : self{
-        $types = new ArrayCollection();
-        foreach ($this->elements as $element){
-            if(!$types->contains($element->getType())){
-                $types->add($element->getType());
-            }
-        }
-        return $types;
-    }
-
-    public function removeElement(Element $element): self
-    {
-        if ($this->elements->contains($element)) {
-            $this->elements->removeElement($element);
-            // set the owning side to null (unless already changed)
-            if ($element->getPage() === $this) {
-                $element->setPage(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|PageDetail[]
      */
     public function getDetails(): Collection
@@ -282,7 +270,7 @@ class Page extends AbstractElem
 
     public function getJsonZones(){
         $tab = array();
-        if($this->zones !== null){
+        if($this->zones->count() > 0){
             foreach ($this->zones as $zone){
                 $tab[] =  $zone->getId();
             }
@@ -291,9 +279,12 @@ class Page extends AbstractElem
     }
     public function getJsonElements(){
         $tab = array();
-        if($this->zones !== null){
-            foreach ($this->elements as $element){
-                $tab[] =  $element->getId();
+        if($this->elementTypes->count() > 0){
+            foreach ($this->elementTypes as $elementType){
+                foreach ($elementType->getElements() as $element){
+                    $tab[] = $element->getId();
+                }
+
             }
         }
         return json_encode($tab);

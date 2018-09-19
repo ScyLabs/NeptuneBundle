@@ -29,6 +29,8 @@
 {% block content %}
     {% if child %}
         {% include('@ScyLabsNeptune/admin/entity/child_content_listing.html.twig') %}
+    {% elseif elemLisiting %}
+        {% include('@ScyLabsNeptune/admin/entity/elem_content_listing.html.twig') %}
     {% else %}
         {% include '@ScyLabsNeptune/admin/entity/content_listing.html.twig' %}
     {% endif %}

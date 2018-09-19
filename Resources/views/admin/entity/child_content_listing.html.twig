@@ -98,7 +98,7 @@
                                                 <tr class="none" data-id="{{ object.id }}" data-type="{{ type }}" data-action="{{ path('admin_entity_json',{'type':app.request.attributes.get('type'),'parentType':type,'parentId':object.id}) }}">
                                                     <td>{{ object.name }}</td>
                                                     <td>
-                                                        {% if object.parent != null %}
+                                                        {% if object.parent is defined and object.parent != null %}
                                                             {{ object.parent.name }}
                                                         {% endif %}
                                                     </td>

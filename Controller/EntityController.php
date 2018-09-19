@@ -12,6 +12,7 @@ use ScyLabs\NeptuneBundle\Entity\AbstractChild;
 use ScyLabs\NeptuneBundle\Entity\AbstractFileLink;
 use ScyLabs\NeptuneBundle\Entity\Document;
 use ScyLabs\NeptuneBundle\Entity\Element;
+use ScyLabs\NeptuneBundle\Entity\ElementType;
 use ScyLabs\NeptuneBundle\Entity\File;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\Photo;
@@ -53,11 +54,18 @@ class EntityController extends BaseController
 
         $repo = $this->getDoctrine()->getRepository($class);
         $child = false;
+        $elemListing = false;
         if($class === Page::class){
             $objects = $repo->findBy(array(
                'parent' =>  null,
                'remove' =>  false,
             ),['prio'=>'ASC']);
+        }
+        elseif($class == Element::class){
+            $objects = $this->getDoctrine()->getRepository(ElementType::class)->findBy(array(
+                'remove'    =>  false
+            ));
+            $elemListing = true;
         }
         else{
             $objects = null;
@@ -71,9 +79,10 @@ class EntityController extends BaseController
             }
         }
         $params = array(
-            'title'     =>  ucfirst($type).'s',
-            'objects'   =>  $objects,
-            'child'     =>  $child
+            'title'         =>  ucfirst($type).'s',
+            'objects'       =>  $objects,
+            'child'         =>  $child,
+            'elemLisiting'  => $elemListing
         );
         $params['ariane'] = array(
             [

@@ -23,6 +23,12 @@ class ElementType extends AbstractElemType
      */
     private $elements;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page",inversedBy="elementTypes")
+     */
+    private $page;
+
+
     public function __construct()
     {
         $this->elements = new ArrayCollection();
@@ -62,6 +68,14 @@ class ElementType extends AbstractElemType
             }
         }
 
+        return $this;
+    }
+
+    public function getPage() : ?Page{
+        return $this->page;
+    }
+    public function setPage(?Page $page) : self{
+        $this->page = $page;
         return $this;
     }
 }

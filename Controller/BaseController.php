@@ -85,9 +85,8 @@ class BaseController extends Controller
         if($typeParent !== null){
             $params[$typeParent] = ($object->getParent() === null) ? null : $object->getParent()->getId();
         }
-        
         else{
-            if(!$object instanceof Partner)
+            if($object instanceof Page)
             $params['parent'] = null;
         }
         $objects =  $this->getDoctrine()->getRepository(get_class($object))->findBy($params,['prio'=>'ASC']);

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping\OrderBy;
 /**
  * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\ElementRepository")
  */
-class Element extends AbstractChild
+class Element extends AbstractElem
 {
     /**
      * @ORM\Id()
@@ -43,10 +43,6 @@ class Element extends AbstractChild
      */
     protected $videos;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page", inversedBy="elements")
-     */
-    protected $page;
 
 
     /**
@@ -102,6 +98,17 @@ class Element extends AbstractChild
 
         return $this;
     }
+    public function getType(): ?ElementType
+    {
+        return $this->type;
+    }
+
+    public function setType(?ElementType $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
 
     /**
      * @return Collection|ElementDetail[]
@@ -142,7 +149,5 @@ class Element extends AbstractChild
         return $this;
 
     }
-    public function getParent() : ?AbstractElem {
-        return $this->page;
-    }
+
 }

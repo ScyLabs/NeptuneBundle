@@ -50,20 +50,7 @@ class ElementForm extends AbstractType
             ->add('submit',SubmitType::class,[
                 'label' => 'Envoyer'
             ]);
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA,function(FormEvent $event){
-            $Element = $event->getData();
-
-            if(null === $Element){
-                return;
-            }
-
-            if($Element->getPage() !== null){
-                $event->getForm()->add('page',HiddenType::class,[
-                    'property_path' => 'page.name',
-                ]);
-            }
-        });
+        
 
     }
 

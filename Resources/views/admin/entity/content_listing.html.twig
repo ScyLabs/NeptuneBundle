@@ -20,7 +20,7 @@
                             {% if app.request.attributes.get('type') == 'partner' %}
                                 <th>Site du partenaire</th>
                             {% endif %}
-                            {% if app.request.attributes.get('type') != 'partner' %}
+                            {% if app.request.attributes.get('type') != 'partner' and app.request.attributes.get('type') != 'element' %}
                                 <th>Parent</th>
                             {% endif %}
 
