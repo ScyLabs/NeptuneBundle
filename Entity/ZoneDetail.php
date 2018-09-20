@@ -2,6 +2,7 @@
 
 namespace ScyLabs\NeptuneBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -133,5 +134,26 @@ class ZoneDetail extends AbstractDetail
         $this->zone = $zone;
 
         return $this;
+    }
+    public function getDescriptions(): array
+    {
+        $descriptions = array();
+        foreach ($this as $key => $value){
+            if(preg_match('#description#Ui',$key)){
+                $descriptions[$key] = $value;
+
+            }
+        }
+        return $descriptions;
+    }
+    public function getTitles() : array{
+        $titles = array();
+        foreach ($this as $key => $value){
+            if(preg_match('#title#Ui',$key)){
+                $titles[$key] = $value;
+
+            }
+        }
+        return $titles;
     }
 }

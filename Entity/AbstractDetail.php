@@ -2,6 +2,7 @@
 
 namespace ScyLabs\NeptuneBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -15,27 +16,27 @@ abstract class AbstractDetail
     /**
      * @ORM\Column(type="string", length=2)
      */
-    private $lang;
+    protected $lang;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $name;
+    protected $name;
     /**
      * @ORM\Column(type="string", length=255,nullable = true)
      */
-    private $title;
+    protected $title;
 
     /**
      * @ORM\Column(type="text",nullable = true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(length=128,unique=true)
      */
-    private $slug;
+    protected $slug;
     
 
     public function getId()
@@ -97,5 +98,17 @@ abstract class AbstractDetail
         $this->description = $description;
 
         return $this;
+    }
+
+    public function getDescriptions(): ?array
+    {
+        $descriptions = array();
+        foreach ($this as $key => $value){
+            if(preg_match('#description#Ui',$key)){
+                $descriptions[$key] = $value;
+
+            }
+        }
+        return $descriptions;
     }
 }
