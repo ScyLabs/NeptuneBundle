@@ -140,6 +140,14 @@ class Element extends AbstractElem
 
         return $this;
     }
+    public function getDetail($locale): ElementDetail {
+        foreach ($this->details as $detail){
+            if($detail->getLang() == $locale){
+                return $detail;
+            }
+        }
+        return new ElementDetail();
+    }
 
     public function setParent(AbstractElem $parent) : self{
 
