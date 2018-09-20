@@ -96,9 +96,7 @@ class BaseController extends Controller
     }
     public function getLastPrio(AbstractElem $object,$typeParent = null){
         $prio = 0;
-
-
-
+        
         $params = array('remove'=>false);
         if($typeParent !== null){
             $parentId = ($object->getParent() === null) ? null : $object->getParent()->getId();

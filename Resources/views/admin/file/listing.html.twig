@@ -97,7 +97,7 @@
                                             <thead>
                                             <th>Name</th>
                                             <th>Type</th>
-                                            {% if tab.count() > 0 and tab[0].parent is defined %}
+                                            {% if tab | length and tab[0].parent is defined %}
                                                 <th>Parent</th>
                                             {% endif %}
                                             </thead>
