@@ -19,7 +19,10 @@ class ElementDetailForm extends AbstractType
                 'required'=> false
             ))
             ->add('description',TextareaType::class,array(
-                'required'=> false
+                'required'=> false,
+                'attr'   => array(
+                    'class'=> 'tiny'
+                )
             ))
             ->add('name',TextType::class,array(
                 'required'=> false
