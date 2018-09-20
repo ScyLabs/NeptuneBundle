@@ -96,7 +96,10 @@
                                         <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
                                             <thead>
                                             <th>Name</th>
-                                            <th>Parent</th>
+                                            <th>Type</th>
+                                            {% if tab.count() > 0 and tab[0].parent is defined %}
+                                                <th>Parent</th>
+                                            {% endif %}
                                             </thead>
                                             <tbody>
                                             {% for object in tab %}
@@ -105,7 +108,10 @@
                                                 {% else %}
                                                     <tr class="none" data-files="{{ object.jsonFiles }}" data-type="{{ key | trim('s', 'right') | lower  }}" data-id="{{ object.id }}">
                                                         <td>{{ object.name }}</td>
-                                                        <td>{{ object.parent.name }}</td>
+                                                        <td>{{ object.type.name }}</td>
+                                                        {% if object.parent is defined %}
+                                                            <td>{{ object.parent.name }}</td>
+                                                        {% endif %}
                                                     </tr>
                                                 {% endif %}
                                             {% endfor %}
