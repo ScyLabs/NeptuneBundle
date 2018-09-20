@@ -26,19 +26,19 @@ class Element extends AbstractElem
     protected $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="element")
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="element",cascade={"persist","remove"})
      * @OrderBy({"prio" = "ASC"})
      */
     protected $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Document", mappedBy="element")
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Document", mappedBy="element",cascade={"persist","remove"})
      * @OrderBy({"prio" = "ASC"})
      */
     protected $documents;
 
     /**
-     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Video", mappedBy="element")
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Video", mappedBy="element",cascade={"persist","remove"})
      * @OrderBy({"prio" = "ASC"})
      */
     protected $videos;
