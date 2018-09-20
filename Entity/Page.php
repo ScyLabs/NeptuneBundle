@@ -134,7 +134,7 @@ class Page extends AbstractElem
     /**
      * @return Collection|Page[]
      */
-    public function getElementsTypes(): Collection
+    public function getElementTypes(): Collection
     {
         return $this->elementTypes;
     }
