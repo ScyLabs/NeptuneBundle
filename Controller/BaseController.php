@@ -9,6 +9,7 @@
 namespace ScyLabs\NeptuneBundle\Controller;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use ScyLabs\NeptuneBundle\Entity\AbstractChild;
 use ScyLabs\NeptuneBundle\Entity\AbstractElem;
 use ScyLabs\NeptuneBundle\Entity\Document;
@@ -111,7 +112,7 @@ class BaseController extends Controller
         return $prio;
     }
     public function getAllEntities($class){
-        $collection = array();
+        $collection = new ArrayCollection();
         $em  = $this->getDoctrine()->getManager();
         if($class === Page::class){
             return null;
