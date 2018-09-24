@@ -45,6 +45,10 @@ class Infos
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $tel;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $fax;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -141,6 +145,17 @@ class Infos
     public function setTel(?string $tel): self
     {
         $this->tel = $tel;
+
+        return $this;
+    }
+    public function getFax(): ?string
+    {
+        return $this->fax;
+    }
+
+    public function setFax(?string $fax): self
+    {
+        $this->fax = $fax;
 
         return $this;
     }
