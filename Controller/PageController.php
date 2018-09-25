@@ -10,6 +10,7 @@ namespace ScyLabs\NeptuneBundle\Controller;
 
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use ScyLabs\NeptuneBundle\Entity\Infos;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\PageUrl;
@@ -41,8 +42,14 @@ class PageController extends Controller
 
         $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
         $partners = $em->getRepository(Partner::class)->findAll();
-
-        $params = array('pages'=>$pages,'page'=>$page,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale());
+        $contactPages = new ArrayCollection();
+        foreach ($pages as $page){
+            if($page->getType()->getName() == 'contact'){
+                $contactPages->add($page);
+                break;
+            }
+        }
+        $params = array('pages'=>$pages,'page'=>$page,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale(),'contactPages'=>$contactPages);
         return $this->render('page/home.html.twig',$params);
     }
 
@@ -75,6 +82,7 @@ class PageController extends Controller
 
 
         $page = $url->getPage();
+
         if($page->getActive() === false){
             return $this->redirectToRoute('homepage');
         }
@@ -94,7 +102,16 @@ class PageController extends Controller
         $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
         $partners = $em->getRepository(Partner::class)->findAll();
 
-        $params = array('pages'=>$pages,'page'=>$page,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale());
+        $contactPages = new ArrayCollection();
+
+        foreach ($pages as $page){
+            if($page->getType()->getName() == 'contact'){
+                $contactPages->add($page);
+                break;
+            }
+        }
+
+        $params = array('pages'=>$pages,'page'=>$page,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale(),'contactPages'=>$contactPages);
 
 
 

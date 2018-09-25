@@ -4,6 +4,7 @@ namespace ScyLabs\NeptuneBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\FormFactory;
 use Doctrine\ORM\Mapping\OrderBy;
@@ -197,9 +198,17 @@ class Page extends AbstractElem
     /**
      * @return Collection|Zone[]
      */
-    public function getZones(): Collection
+    public function getZones(bool $showAll = false): Collection
     {
-        return $this->zones;
+        $critaria = Criteria::create();
+        $critaria->orderBy(array(
+            'prio'=>Criteria::ASC
+        ));
+        if($showAll !== true){
+            $critaria->where(Criteria::expr()->eq('remove',false));
+        }
+
+        return $this->zones->matching($critaria);
     }
 
     public function addZone(Zone $zone): self
