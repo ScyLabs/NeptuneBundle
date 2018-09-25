@@ -43,9 +43,9 @@ class PageController extends Controller
         $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
         $partners = $em->getRepository(Partner::class)->findAll();
         $contactPages = new ArrayCollection();
-        foreach ($pages as $page){
-            if($page->getType()->getName() == 'contact'){
-                $contactPages->add($page);
+        foreach ($pages as $thisPage){
+            if($thisPage->getType()->getName() == 'contact'){
+                $contactPages->add($thisPage);
                 break;
             }
         }
@@ -104,9 +104,9 @@ class PageController extends Controller
 
         $contactPages = new ArrayCollection();
 
-        foreach ($pages as $page){
-            if($page->getType()->getName() == 'contact'){
-                $contactPages->add($page);
+        foreach ($pages as $thisPage){
+            if($thisPage->getType()->getName() == 'contact'){
+                $contactPages->add($thisPage);
                 break;
             }
         }
