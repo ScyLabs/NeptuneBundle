@@ -56,6 +56,7 @@ class FileListener
         $file = $entity->getFile();
         if($file instanceof UploadedFile){
             $fileName = $this->uploader->upload($file);
+
             $entity->setFile($fileName);
             $entity->setDate(new \DateTime('now'));
         }

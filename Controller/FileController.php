@@ -197,6 +197,7 @@ class FileController extends BaseController
         );
 
         $uploadFile = new SymfonyFile($res);
+
         if(!in_array($uploadFile->getMimeType(),$minesok))
             return new Response('Type de fichier non autorisé',403);
 
@@ -226,6 +227,7 @@ class FileController extends BaseController
 
         $file = new File();
 
+        $file->setOriginalName($res->getClientOriginalName());
 
         $file->setFile($res)
             ->setExt($uploadFile->guessExtension())
@@ -242,7 +244,6 @@ class FileController extends BaseController
             'date'=>$file->getDate()->format('d/m/Y'),
             'actions'=>array(
                 'remove' => $this->deleteAction(new Request(),$file->getId()),
-
             )
         );
 

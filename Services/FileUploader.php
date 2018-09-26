@@ -20,7 +20,6 @@ class FileUploader
     public function upload(UploadedFile $file){
         $mime = $file->getMimeType();
         $filesize = $file->getSize();
-
         $name = md5(uniqid());
         $fileName = $name.'.'.$file->guessExtension();
 
@@ -45,19 +44,6 @@ class FileUploader
             }
 
         }
-        elseif($mime == "application/pdf") {
-            $thumbsDir = $this->getTargetDirectory().'/thumbnails/';
-            if(!file_exists($thumbsDir)){
-                mkdir($thumbsDir);
-            }
-            $image = new \Imagick($this->getTargetDirectory().'/'.$fileName);
-            $image->setIteratorIndex(0);
-            $image->setCompressionQuality(90);
-
-            $image->writeImage($thumbsDir.$name.'.jpg');
-            return $thumbsDir.$name.'.jpg';
-        }
-
         return $fileName;
     }
     public function unlink($fileName){

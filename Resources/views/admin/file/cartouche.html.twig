@@ -15,8 +15,17 @@
         <span class="boxing">
 
             <i class="fa fa-check centerXY"></i>
-            <img src="{{ asset('uploads/'~file.file)
-            | thumb(400) }}"/>
+            {% if file.type.name == 'photo' %}
+                <img src="{{ asset('uploads/'~file.file)
+                | thumb(400) }}"/>
+            {% else %}
+                <i class="fa {% if file.ext == 'pdf' %}
+                fa-file-pdf
+                {% endif %} centerXY iconFile">
+                    {{ file.originalName }}
+                </i>
+                <span class="name"></span>
+            {% endif %}
             <span class="date">{{ file.date.format('d/m/Y')}}</span>
 
         </span>

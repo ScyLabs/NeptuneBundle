@@ -55,6 +55,13 @@ class File
      */
     private $ext;
 
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $originalName;
+
+    
+
     public function __construct()
     {
         $this->photos = new ArrayCollection();
@@ -221,5 +228,18 @@ class File
         $this->ext = $ext;
 
         return $this;
+    }
+
+    public function getOriginalName() : string{
+
+        return $this->originalName;
+
+    }
+
+    public function setOriginalName(string $originalName) : self{
+
+        $this->originalName = $originalName;
+        return $this;
+
     }
 }
