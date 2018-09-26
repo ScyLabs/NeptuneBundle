@@ -94,6 +94,7 @@
         overflow: hidden;
         position: relative;
         display: block;
+        background: #666;
 
         > .boxing {
             position: absolute;
@@ -114,7 +115,18 @@
             position: relative;
             display: block;
         }
-        > .boxing > i {
+        > .boxing > .iconFile{
+            text-align: center;
+            color:#fff;
+            font-size: 1rem;
+            &::before{
+                font-size: 4rem;
+                color:red;
+                display: block;
+            }
+
+        }
+        > .boxing > i.fa-check {
             opacity: 0;
             font-size: 60px;
             color:green;
