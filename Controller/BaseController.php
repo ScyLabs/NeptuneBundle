@@ -97,7 +97,7 @@ class BaseController extends Controller
         return $objects;
     }
     public function getLastPrio(AbstractElem $object,$typeParent = null){
-        $prio = 0;
+        $prio = - 1;
         
         $params = array('remove'=>false);
         if($typeParent !== null){
@@ -109,6 +109,7 @@ class BaseController extends Controller
         {
             $prio = $last->getPrio();
         }
+        
         return $prio;
     }
     public function getAllEntities($class){
