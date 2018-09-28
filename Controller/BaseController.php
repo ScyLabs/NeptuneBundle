@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use ScyLabs\NeptuneBundle\Entity\AbstractChild;
 use ScyLabs\NeptuneBundle\Entity\AbstractElem;
 use ScyLabs\NeptuneBundle\Entity\Document;
+use ScyLabs\NeptuneBundle\Entity\DocumentDetail;
 use ScyLabs\NeptuneBundle\Entity\Element;
 use ScyLabs\NeptuneBundle\Entity\ElementDetail;
 use ScyLabs\NeptuneBundle\Entity\ElementType;
@@ -28,6 +29,7 @@ use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
 use ScyLabs\NeptuneBundle\Entity\ZoneDetail;
 use ScyLabs\NeptuneBundle\Entity\ZoneType;
+use ScyLabs\NeptuneBundle\Form\DocumentDetailForm;
 use ScyLabs\NeptuneBundle\Form\ElementDetailForm;
 use ScyLabs\NeptuneBundle\Form\ElementForm;
 use ScyLabs\NeptuneBundle\Form\ElementTypeForm;
@@ -214,6 +216,10 @@ class BaseController extends Controller
         elseif($name == Photo::class){
             $form = PhotoDetailForm::class;
             return PhotoDetail::class;
+        }
+        elseif($name == Document::class){
+            $form = DocumentDetailForm::class;
+            return DocumentDetail::class;
         }
         return null;
 
