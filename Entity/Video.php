@@ -41,6 +41,41 @@ class Video extends AbstractFileLink
      */
     protected $partner;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\VideoDetail", mappedBy="document", orphanRemoval=true,cascade={"persist","remove"})
+     */
+    protected $details;
+
+    public function addDetail(VideoDetail $detail): self
+    {
+        if (!$this->details->contains($detail)) {
+            $this->details[] = $detail;
+            $detail->setVideo($this);
+        }
+        return $this;
+    }
+
+    public function removeDetail(VideoDetail $detail): self
+    {
+        if ($this->details->contains($detail)) {
+            $this->details->removeElement($detail);
+            // set the owning side to null (unless already changed)
+            if ($detail->getVideo() === $this) {
+                $detail->setVideo(null);
+            }
+        }
+
+        return $this;
+    }
+    public function getDetail($locale){
+        foreach ($this->details as $detail){
+            if($detail->getLang() == $locale){
+                return $detail;
+            }
+        }
+        return new VideoDetail();
+    }
     public function getId()
     {
         return $this->id;

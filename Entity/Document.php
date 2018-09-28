@@ -41,6 +41,41 @@ class Document extends AbstractFileLink
      */
     protected $partner;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\DocumentDetail", mappedBy="document", orphanRemoval=true,cascade={"persist","remove"})
+     */
+    protected $details;
+
+    public function addDetail(DocumentDetail $detail): self
+    {
+        if (!$this->details->contains($detail)) {
+            $this->details[] = $detail;
+            $detail->setDocument($this);
+        }
+        return $this;
+    }
+
+    public function removeDetail(DocumentDetail $detail): self
+    {
+        if ($this->details->contains($detail)) {
+            $this->details->removeElement($detail);
+            // set the owning side to null (unless already changed)
+            if ($detail->getDocument() === $this) {
+                $detail->setDocument(null);
+            }
+        }
+
+        return $this;
+    }
+    public function getDetail($locale){
+        foreach ($this->details as $detail){
+            if($detail->getLang() == $locale){
+                return $detail;
+            }
+        }
+        return new DocumentDetail();
+    }
+
     public function getId()
     {
         return $this->id;
