@@ -2,6 +2,7 @@
 
 namespace ScyLabs\NeptuneBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,6 +54,13 @@ class Document extends AbstractFileLink
             $detail->setDocument($this);
         }
         return $this;
+    }
+    /**
+     * @return Collection|ZoneDetail[]
+     */
+    public function getDetails(): Collection
+    {
+        return $this->details;
     }
 
     public function removeDetail(DocumentDetail $detail): self
