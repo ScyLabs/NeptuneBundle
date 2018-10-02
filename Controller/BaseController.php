@@ -109,7 +109,7 @@ class BaseController extends Controller
         {
             $prio = $last->getPrio();
         }
-        
+
         return $prio;
     }
     public function getAllEntities($class){

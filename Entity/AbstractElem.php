@@ -38,6 +38,11 @@ abstract class AbstractElem
      */
     private $remove;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $creationDate;
+
     protected $photos;
     protected $videos;
     protected $documents;
@@ -53,13 +58,21 @@ abstract class AbstractElem
         $this->photos = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->documents = new ArrayCollection();
+        
+        $this->creationDate = new \DateTime('now');
     }
 
-    public function getId()
+    public function getCreationDate(): ?\DateTimeInterface
     {
-        return $this->id;
+        return $this->creationDate;
     }
 
+    public function setCreationDate(\DateTimeInterface $creationDate): self
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
     public function getName(): ?string
     {
         return $this->name;

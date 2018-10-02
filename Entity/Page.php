@@ -86,6 +86,29 @@ class Page extends AbstractElem
 
     private $urls;
 
+    private $elements;
+
+
+
+    public function getElements(array $orderBy = array('creationDate'=>Criteria::DESC,'prio'=>Criteria::ASC),bool $showAll = false){
+        if($this->elements === null){
+            $this->elements = new ArrayCollection();
+            foreach ($this->elementTypes as $elementType){
+                foreach ($elementType->getElements() as $element){
+                    if( !$this->elements->contains($element)){
+                        $this->elements->add($element);
+                    }
+                }
+            }
+        }
+        $criteria = Criteria::create();
+        $criteria->orderBy($orderBy);
+        if($showAll !== true){
+            $criteria->where(Criteria::expr()->eq('remove',false));
+        }
+
+        return $this->elements->matching($criteria);
+    }
 
     public function __construct()
     {
@@ -200,15 +223,15 @@ class Page extends AbstractElem
      */
     public function getZones(bool $showAll = false): Collection
     {
-        $critaria = Criteria::create();
-        $critaria->orderBy(array(
+        $criteria = Criteria::create();
+        $criteria->orderBy(array(
             'prio'=>Criteria::ASC
         ));
         if($showAll !== true){
-            $critaria->where(Criteria::expr()->eq('remove',false));
+            $criteria->where(Criteria::expr()->eq('remove',false));
         }
 
-        return $this->zones->matching($critaria);
+        return $this->zones->matching($criteria);
     }
 
     public function addZone(Zone $zone): self
