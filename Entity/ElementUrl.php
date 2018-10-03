@@ -1,15 +1,20 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: alex
+ * Date: 02/10/2018
+ * Time: 16:03
+ */
 
 namespace ScyLabs\NeptuneBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
- * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\PageUrlRepository")
+ * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\ElementUrlRepository")
  */
-class PageUrl
+class ElementUrl
 {
     /**
      * @ORM\Id()
@@ -30,9 +35,9 @@ class PageUrl
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page",inversedBy="urls")
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Element",inversedBy="urls")
      */
-    private $page;
+    private $element;
 
     public function getId()
     {
@@ -62,13 +67,12 @@ class PageUrl
 
         return $this;
     }
-    public function setPage(?Page $page) : self{
-        $this->page = $page;
+    public function setElement(?Element $element) : self{
+        $this->element = $element;
         return $this;
     }
-    public function getPage() : Page{
-        return $this->page;
+    public function getElement() : Element{
+        return $this->element;
     }
-
 
 }

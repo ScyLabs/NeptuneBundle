@@ -43,8 +43,6 @@ class Element extends AbstractElem
      */
     protected $videos;
 
-
-
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\ElementDetail", mappedBy="element", orphanRemoval=true,cascade={"persist","remove"})
      */
@@ -54,6 +52,12 @@ class Element extends AbstractElem
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Zone", mappedBy="element")
      */
     private $zones;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\PageUrl", mappedBy="page",cascade={"persist","remove","refresh"})
+     */
+
+    private $urls;
 
     public function __construct()
     {
@@ -158,6 +162,46 @@ class Element extends AbstractElem
         return $this;
 
     }
-    
+
+    /**
+     * @return Collection|ElementUrl[]
+     */
+    public function getUrls(): Collection
+    {
+        return $this->urls;
+    }
+
+    public function getUrl($locale) : ?ElementUrl{
+        foreach ($this->urls as $url){
+            if($url->getLang() == $locale){
+                return $url;
+            }
+        }
+        return null;
+    }
+
+    public function addUrl(ElementUrl $url): self
+    {
+        if (!$this->urls->contains($url)) {
+            $this->urls[] = $url;
+            $url->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUrl(ElementUrl $url): self
+    {
+        if ($this->urls->contains($url)) {
+            $this->urls->removeElement($url);
+            // set the owning side to null (unless already changed)
+            if ($url->getPage() === $this) {
+                $url->setPage(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 }

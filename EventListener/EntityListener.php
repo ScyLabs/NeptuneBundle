@@ -16,6 +16,9 @@ use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping\PostUpdate;
 use Doctrine\ORM\Mapping\PreUpdate;
+use ScyLabs\NeptuneBundle\Entity\Element;
+use ScyLabs\NeptuneBundle\Entity\ElementDetail;
+use ScyLabs\NeptuneBundle\Entity\ElementUrl;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\PageDetail;
 use ScyLabs\NeptuneBundle\Entity\PageUrl;
@@ -35,6 +38,7 @@ class EntityListener
     public function postPersist(LifecycleEventArgs $args){
         $entity = $args->getEntity();
         $em = $args->getEntityManager();
+
         if($entity instanceof Page) {
             foreach ($entity->getDetails() as $detail) {
                 $url = new PageUrl();
@@ -56,6 +60,17 @@ class EntityListener
             }
             $em->flush();
         }
+        elseif($entity instanceof Element){
+            foreach ($entity->getDetails() as $detail) {
+                $url = new ElementUrl();
+                $url->setLang($detail->getLang())
+                    ->setUrl($detail->getSlug());
+                $entity->addUrl($url);
+                $em->persist($url);
+
+            }
+            $em->flush();
+        }
     }
 
     public function preUpdate(PreUpdateEventArgs $args){
@@ -63,7 +78,7 @@ class EntityListener
         $entity = $args->getEntity();
         $em = $args->getEntityManager();
 
-        if($entity instanceof PageDetail){
+        if($entity instanceof PageDetail ){
 
             $page = $entity->getPage();
 
@@ -89,6 +104,16 @@ class EntityListener
             $this->childsUrl($page,$em);
 
 
+        }
+        elseif($entity instanceof ElementDetail){
+            $element = $entity->getElement();
+            $url = $element->getUrl($entity->getLang());
+            if($url === null){
+                $url = new ElementUrl();
+                $url->setLang($entity->getLang());
+                $element->addUrl($url);
+            }
+            $url->setUrl($entity->getSlug());
         }
         elseif($entity instanceof  Page){
             if($args->hasChangedField('parent')){
@@ -131,7 +156,7 @@ class EntityListener
     public function postUpdate(LifecycleEventArgs $args){
         $em = $args->getEntityManager();
         $entity = $args->getEntity();
-        if($entity instanceof  Page || $entity instanceof PageDetail){
+        if($entity instanceof  Page || $entity instanceof PageDetail || $entity instanceof  Element || $entity instanceof ElementDetail){
             $em->flush();
         }
 
