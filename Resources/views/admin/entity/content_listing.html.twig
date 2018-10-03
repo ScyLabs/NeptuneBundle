@@ -49,9 +49,12 @@
                                             {% if object.parent is defined %}
                                                 <td>{{ object.parent.name }}</td>
                                             {% endif %}
-                                            {% if object.url is defined %}
+
+                                            {% if object.url is defined and object.url is iterable %}
                                                 <td><a href="{{ object.url }}">{{ object.url }}</a></td>
                                             {% endif %}
+
+
                                             <td>
                                                 <ul class="actions">
                                                     <li><a href="{{ path('admin_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>

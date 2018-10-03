@@ -54,7 +54,7 @@ class Element extends AbstractElem
     private $zones;
 
     /**
-     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\PageUrl", mappedBy="page",cascade={"persist","remove","refresh"})
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\ElementUrl", mappedBy="element",cascade={"persist","remove","refresh"})
      */
 
     private $urls;
@@ -63,6 +63,7 @@ class Element extends AbstractElem
     {
         $this->zones = new ArrayCollection();
         $this->details = new ArrayCollection();
+        $this->urls = new ArrayCollection();
         parent::__construct();
     }
 
@@ -171,7 +172,7 @@ class Element extends AbstractElem
         return $this->urls;
     }
 
-    public function getUrl($locale) : ?ElementUrl{
+    public function getUrl(?string$locale = 'fr') : ?ElementUrl{
         foreach ($this->urls as $url){
             if($url->getLang() == $locale){
                 return $url;
@@ -184,7 +185,7 @@ class Element extends AbstractElem
     {
         if (!$this->urls->contains($url)) {
             $this->urls[] = $url;
-            $url->setPage($this);
+            $url->setElement($this);
         }
 
         return $this;
@@ -195,8 +196,8 @@ class Element extends AbstractElem
         if ($this->urls->contains($url)) {
             $this->urls->removeElement($url);
             // set the owning side to null (unless already changed)
-            if ($url->getPage() === $this) {
-                $url->setPage(null);
+            if ($url->getUrl() === $this) {
+                $url->setElement(null);
             }
         }
 
