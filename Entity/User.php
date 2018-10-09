@@ -28,12 +28,12 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      */
-    private $name;
+    private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      */
-    private $lastname;
+    private $name;
 
 
     /**
@@ -50,6 +50,19 @@ class User extends BaseUser
      * @ORM\Column(type="boolean")
      */
     private $firstConnexion;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $remove;
+
+    private $tmpRole;
+    public function setTmpRole(string $role) : self{
+        $this->tmpRole = $role;
+        return $this;
+    }
+    public function getTmpRole(){
+        return $this->tmpRole;
+    }
 
     public function __construct(){
         if($this->firstConnexion === null){
@@ -58,6 +71,18 @@ class User extends BaseUser
         if($this->enabled === null){
             $this->enabled = true;
         }
+        if($this->remove === null){
+            $this->remove = false;
+        }
+    }
+
+
+    public function getRemove(){
+        return $this->remove;
+    }
+    public function setRemove(bool $remove) : self{
+        $this->remove = $remove;
+        return $this;
     }
 
 
@@ -88,14 +113,14 @@ class User extends BaseUser
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function getFirstname(): ?string
     {
-        return $this->lastname;
+        return $this->firstname;
     }
 
-    public function setLastname(string $lastname): self
+    public function setFirstname(string $firstname): self
     {
-        $this->lastname = $lastname;
+        $this->firstname = $firstname;
 
         return $this;
     }
@@ -134,6 +159,10 @@ class User extends BaseUser
         $this->firstConnexion = $firstConnexion;
 
         return $this;
+    }
+
+    public function getEnabled() : bool {
+        return $this->enabled;
     }
 
 

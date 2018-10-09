@@ -1,0 +1,55 @@
+{% import '@ScyLabsNeptune/admin/entity/macros.html.twig' as recursiveMacro %}
+<!-- Start Page Content -->
+<div class="row">
+    <div class="col-lg-10">
+
+        <div class="card">
+            <div class="card-body">
+                <table id="myTable" class="user_table table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
+                    <thead>
+                    <th>Actif</th>
+                    <th>Rôle</th>
+                    <th>Email</th>
+                    <th>Dernière connexion</th>
+                    <th>Actions</th>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr class="user {{ (user.firstConnexion) ? 'firstCo' : '' }} {{ (user.enabled == false) ? 'disabled' : '' }}">
+                                <td width="50px" style="text-align: center">
+                                    {% if user.hasRole('ROLE_SUPER_ADMIN') == false %}
+                                        <a href="{{ path('admin_user_active',{'id':user.id}) }}" onclick="return confirm('Etes vous sur de vouloir bloquer le compte {{ user.email }}?');">
+                                            {% if user.enabled %}
+                                                <i class="fa fa-check text-success"></i>
+                                            {% else %}
+                                                <i class="fa fa-times text-danger"></i>
+                                            {% endif %}
+                                        </a>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if user.hasRole('ROLE_SUPER_ADMIN') %}
+                                        {{ 'Super Administrateur' | trans }}
+                                    {% elseif user.hasRole('ROLE_ADMIN') %}
+                                        {{ 'Administrateur' | trans }}
+                                    {% else %}
+                                        {{ 'Utilisateur' | trans }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ (user.lastLogin is not null) ? user.lastLogin.format('d/m/Y : H:i:s') : '' }}</td>
+                                <td></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="card">
+            <button onclick="window.location.href = '{{ path('admin_user_add') }}'" class="btn btn-pink m-b-10 m-l-5 show_form">Créer un utilisateur</button>
+        </div>
+    </div>
+</div>
+<!-- End page Content -->

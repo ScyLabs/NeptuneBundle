@@ -20,7 +20,7 @@ class ElementTypeRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return ElementType[] Returns an array of ElementType objects
+//     * @return ElementForm[] Returns an array of ElementForm objects
 //     */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class ElementTypeRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?ElementType
+    public function findOneBySomeField($value): ?ElementForm
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

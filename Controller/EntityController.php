@@ -41,7 +41,7 @@ class EntityController extends BaseController
     const JSON_IGNORED_ATTRIBUTES = array('page','pages','parent','document','zone','video','file','type','element','partner','photo','pageLink');
     /* Quelles Entités sont Acceptées dans la majorité de ce controller ? */
     //const VALID_ENTITIES = "(page|element|zone|partner)";
-    const VALID_ENTITIES = "^(?!gallery|file)[a-z]{2,20}";
+    const VALID_ENTITIES = "^(?!gallery|file|user)[a-z]{2,20}";
     /**
      * @param Request $request
      * @param $type
@@ -97,7 +97,6 @@ class EntityController extends BaseController
         if(null !== $collection = $this->getAllEntities($class)){
             $params['collection'] = $collection;
         }
-
 
         return $this->render('@ScyLabsNeptune/admin/entity/listing.html.twig',$params);
 
@@ -163,6 +162,7 @@ class EntityController extends BaseController
 
         $class = $this->getClass($type,$form);
         $object = new $class();
+
         if($parentType !== null && $parentId !== null && in_array($parentType,['page','element'])){
             $classParent = $this->getClass($parentType);
 
@@ -200,6 +200,8 @@ class EntityController extends BaseController
             $paramsRoute['parentId'] = $parentId;$paramsRoute['parentType'] = $parentType;
         }
         $route = $this->generateUrl('admin_entity_add',$paramsRoute);
+
+
         if($this->validForm($form,$object,$request,$params['form'],$route) === true){
             return $this->redirectToRoute('admin_entity_add',$paramsRoute);
         }

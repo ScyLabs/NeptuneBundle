@@ -1,7 +1,7 @@
 {{ form_start(form) }}
         {% for widget in form %}
             <div class="form-group">
-                {% if widget.vars.block_prefixes[1] != 'hidden' %}
+                {% if widget.vars.block_prefixes[1] not in  ['hidden','repeated']  %}
                     <label class="block">
                         {{ form_label(widget) }}
 
@@ -31,7 +31,7 @@
                 {% endif %}
 
 
-                {{ form_widget(widget,{'attr':{'class':'form-control'~select2~class}}) }}
+                {{ form_widget(widget,{'attr':{'class':((widget.vars.block_prefixes[1] != 'repeated') ?'form-control'~select2~class : 'repeated')}}) }}
 
                 {% if widget.vars.block_prefixes[1] != 'submit' and widget.vars.block_prefixes[1] != 'hidden' %}
                     {{ form_errors(widget) }}

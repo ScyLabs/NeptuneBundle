@@ -1,11 +1,11 @@
-{% extends '@ScyLabsNeptune/admin/add.html.twig' %}
+{% extends '@ScyLabsNeptune/admin/layout.html.twig' %}
+
 
 {% block css %}
-    {{ parent() }}
     <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/nestable/nestable.css') }}" rel="stylesheet">
-{% endblock %}
+
+{% endblock css %}
 {% block js %}
-    {{ parent() }}
     <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/nestable/jquery.nestable.js') }}"></script>
     <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/nestable/nestable.init.js') }}"></script>
     <!-- scripit init-->
@@ -20,19 +20,14 @@
     <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js') }}></script>
     <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js') }}></script>
     <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables-init.js') }}></script>
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/listing.js') }}"></script>
 
+{% endblock js %}
+
+
+
+{% block content %}
+    {% include '@ScyLabsNeptune/admin/user/content_listing.html.twig' %}
 {% endblock %}
 
-{% block content%}
-    <div class="row">
-        {{ parent() }}
 
-
-        {% if objects is defined and objects != null %}
-        <div class="col-lg-8">
-            {% include '@ScyLabsNeptune/admin/entity/content_listing.html.twig' %}
-        </div>
-        {% endif %}
-
-    </div>
-{% endblock %}

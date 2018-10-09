@@ -25,6 +25,7 @@ use ScyLabs\NeptuneBundle\Entity\Partner;
 use ScyLabs\NeptuneBundle\Entity\PartnerDetail;
 use ScyLabs\NeptuneBundle\Entity\Photo;
 use ScyLabs\NeptuneBundle\Entity\PhotoDetail;
+use ScyLabs\NeptuneBundle\Entity\User;
 use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
 use ScyLabs\NeptuneBundle\Entity\ZoneDetail;
@@ -40,6 +41,7 @@ use ScyLabs\NeptuneBundle\Form\PageTypeForm;
 use ScyLabs\NeptuneBundle\Form\PartnerDetailForm;
 use ScyLabs\NeptuneBundle\Form\PartnerForm;
 use ScyLabs\NeptuneBundle\Form\PhotoDetailForm;
+use ScyLabs\NeptuneBundle\Form\UserForm;
 use ScyLabs\NeptuneBundle\Form\ZoneDetailForm;
 use ScyLabs\NeptuneBundle\Form\ZoneForm;
 use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
@@ -164,15 +166,20 @@ class BaseController extends Controller
             $form = PartnerForm::class;
             return Partner::class;
         }
+        elseif($name == 'user'){
+            $form = UserForm::class;
+            return User::class;
+        }
         elseif($name == 'photo'){
             return Photo::class;
         }
         elseif($name == 'video'){
             return Video::class;
         }
-        elseif($name = 'document'){
+        elseif($name == 'document'){
             return Document::class;
         }
+
         else{
             return null;
         }
