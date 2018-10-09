@@ -2,10 +2,12 @@
 
 namespace ScyLabs\NeptuneBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\UserRepository")
@@ -20,6 +22,7 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -44,16 +47,32 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $adress;
+    private $address;
 
     /**
      * @ORM\Column(type="boolean")
      */
     private $firstConnexion;
+
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="user",cascade={"persist","remove"})
+     * @OrderBy({"prio" = "ASC"})
      */
-    private $remove;
+    protected $photos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Document", mappedBy="user",cascade={"persist","remove"})
+     * @OrderBy({"prio" = "ASC"})
+     */
+    protected $documents;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Video", mappedBy="user",cascade={"persist","remove"})
+     * @OrderBy({"prio" = "ASC"})
+     */
+    protected $videos;
+
+
 
     private $tmpRole;
     public function setTmpRole(string $role) : self{
@@ -75,20 +94,11 @@ class User extends BaseUser
             $this->remove = false;
         }
     }
-
-
-    public function getRemove(){
-        return $this->remove;
-    }
-    public function setRemove(bool $remove) : self{
-        $this->remove = $remove;
-        return $this;
-    }
-
-
+    
     public function getId() :?int{
         return $this->id;
     }
+
     public function getCivility(): ?string
     {
         return $this->civility;
@@ -137,14 +147,14 @@ class User extends BaseUser
         return $this;
     }
 
-    public function getAdress(): ?string
+    public function getAddress(): ?string
     {
-        return $this->adress;
+        return $this->address;
     }
 
-    public function setAdress(?string $adress): self
+    public function setAddress(?string $address): self
     {
-        $this->adress = $adress;
+        $this->address = $address;
 
         return $this;
     }
@@ -165,5 +175,118 @@ class User extends BaseUser
         return $this->enabled;
     }
 
+    /**
+     * @return Collection|Photo[]
+     */
+    public function getPhotos(): ?Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(Photo $photo): self
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos[] = $photo;
+            $photo->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): self
+    {
+        if ($this->photos->contains($photo)) {
+            $this->photos->removeElement($photo);
+            // set the owning side to null (unless already changed)
+            if ($photo->getParent() === $this) {
+                $photo->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Document[]
+     */
+    public function getDocuments(): ?Collection
+    {
+        return $this->documents;
+    }
+
+    public function addDocument(Document $document): self
+    {
+        if (!$this->documents->contains($document)) {
+            $this->documents[] = $document;
+            $document->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocument(Document $document): self
+    {
+        if ($this->documents->contains($document)) {
+            $this->documents->removeElement($document);
+            // set the owning side to null (unless already changed)
+            if ($document->getParent() === $this) {
+                $document->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Video[]
+     */
+    public function getVideos(): ?Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->videos->contains($video)) {
+            $this->videos->removeElement($video);
+            // set the owning side to null (unless already changed)
+            if ($video->getPage() === $this) {
+                $video->setPage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getJsonFiles(){
+        $tab = array();
+        if($this->photos != null){
+
+            foreach ($this->photos as $photo){
+                $tab[] = $photo->getFile()->getId();
+            }
+        }
+        if($this->documents != null){
+            foreach ($this->documents as $document){
+                $tab[] = $document->getFile()->getId();
+            }
+        }
+        if($this->videos != null){
+            foreach ($this->videos as $video){
+                $tab[] = $video->getFile()->getId();
+            }
+        }
+        return json_encode($tab);
+    }
 
 }

@@ -10,8 +10,8 @@ namespace ScyLabs\NeptuneBundle\Controller;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use ScyLabs\NeptuneBundle\Entity\AbstractChild;
-use ScyLabs\NeptuneBundle\Entity\AbstractElem;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractChild;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractElem;
 use ScyLabs\NeptuneBundle\Entity\Document;
 use ScyLabs\NeptuneBundle\Entity\DocumentDetail;
 use ScyLabs\NeptuneBundle\Entity\Element;

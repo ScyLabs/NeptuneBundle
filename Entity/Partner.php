@@ -12,6 +12,7 @@ namespace ScyLabs\NeptuneBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractElem;
 use Symfony\Component\Form\FormFactory;
 use Doctrine\ORM\Mapping\OrderBy;
 use Doctrine\ORM\Mapping\Annotation;

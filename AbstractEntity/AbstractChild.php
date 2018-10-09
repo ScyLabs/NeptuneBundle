@@ -6,11 +6,13 @@
  * Time: 14:11
  */
 
-namespace ScyLabs\NeptuneBundle\Entity;
+namespace ScyLabs\NeptuneBundle\AbstractEntity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\MappedSuperclass;
+use ScyLabs\NeptuneBundle\Entity\Form;
+use ScyLabs\NeptuneBundle\Entity\Page;
 
 
 abstract class AbstractChild extends AbstractElem

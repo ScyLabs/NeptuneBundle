@@ -1,6 +1,6 @@
 <?php
 
-namespace ScyLabs\NeptuneBundle\Entity;
+namespace ScyLabs\NeptuneBundle\AbstractEntity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\FormFactory;
@@ -16,6 +16,27 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 abstract class AbstractElemType
 {
+
+    /**
+     * @ORM\Column(type="string", length=191,unique=true)
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $title;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $remove;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $removable;
+
     public function __construct(){
         if($this->remove === NULL){
             $this->remove = false;
@@ -23,31 +44,6 @@ abstract class AbstractElemType
         if($this->removable === null){
             $this->removable = true;
         }
-    }
-
-    /**
-     * @ORM\Column(type="string", length=191,unique=true)
-     */
-    private $name;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $title;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $remove;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $removable;
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function getName(): ?string

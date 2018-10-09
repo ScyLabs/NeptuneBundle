@@ -39,8 +39,8 @@ $('#selection_elements table tbody tr').on('click',function(){
                         '<td>'+response[i].object.name+'</td>'+
                         '<td>' +
                         '<ul class="actions">' +
-                        '<li><a href="'+response[i].actions.detail+'" title="Gestion des details"><i class="fa fa-newspaper"></i></a></li>' +
                         '<li><a href="'+response[i].actions.gallery+'" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>' +
+                        '<li><a href="'+response[i].actions.detail+'" title="Gestion des details"><i class="fa fa-newspaper"></i></a></li>' +
                         '<li><a href="'+response[i].actions.edit+'" title="Modifier"><i class="fa fa-pencil"></i></a></li>' +
                         '<li>'+response[i].actions.remove.content+'</li>'+
                         '</ul>' +

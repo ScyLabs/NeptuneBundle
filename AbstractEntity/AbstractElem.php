@@ -1,8 +1,11 @@
 <?php
 
-namespace ScyLabs\NeptuneBundle\Entity;
+namespace ScyLabs\NeptuneBundle\AbstractEntity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use ScyLabs\NeptuneBundle\Entity\Document;
+use ScyLabs\NeptuneBundle\Entity\Photo;
+use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Form\ValidForm;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,27 +24,27 @@ abstract class AbstractElem
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="integer",nullable = true)
      */
-    private $prio;
+    protected $prio;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $active;
+    protected $active;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $remove;
+    protected $remove;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $creationDate;
+    protected $creationDate;
 
     protected $photos;
     protected $videos;
@@ -78,7 +81,7 @@ abstract class AbstractElem
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 

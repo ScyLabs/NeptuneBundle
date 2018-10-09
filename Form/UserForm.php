@@ -31,12 +31,13 @@ class UserForm extends AbstractType
                 'label'     => 'Prénom',
                 'required'  => false
             ))
-            ->add('email',RepeatedType::class,array(
+            ->add('username',RepeatedType::class,array(
                 'type'              => EmailType::class,
                 'invalid_message'   => 'Les 2 emails ne correspondent pas',
                 'required'          => true,
                 'first_options'     => array('label'    =>  'E-mail','attr'=>array('class'=>'form-control')),
-                'second_options'    => array('label'    =>  'Vérification de l\'E-mail','attr'=>array('class'=>'form-control'))
+                'second_options'    => array('label'    =>  'Vérification de l\'E-mail','attr'=>array('class'=>'form-control')),
+
 
             ))
             ->add('tmpRole',ChoiceType::class,array(
@@ -50,7 +51,8 @@ class UserForm extends AbstractType
 
             ))
             ->add('adress',TextType::class,array(
-                'label'     => 'Adresse'
+                'label'     => 'Adresse',
+                'required'  => false
             ))
             ->add('submit',SubmitType::class)
         ;

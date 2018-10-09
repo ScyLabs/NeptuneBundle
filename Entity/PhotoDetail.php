@@ -9,6 +9,8 @@
 namespace ScyLabs\NeptuneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractDetail;
+
 /**
  * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\PhotoDetailRepository")
  */

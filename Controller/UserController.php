@@ -16,16 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends BaseController
 {
     /**
-     * @Route("/admin/user",name="admin_user")
+     * @Route("admin/user",name="admin_user")
      */
     public function listingAction(Request $request){
 
         $repo = $this->getDoctrine()->getRepository(User::class);
-        $users = $repo->findBy(
-            array(
-                'remove'    => false
-            )
-        );
+        $users = $repo->findAll();
 
         $params = array(
             'users' => $users
@@ -74,12 +70,7 @@ class UserController extends BaseController
 
 
     /**
-     * @param Request $request
-     * @param $type
-     * @param $parentType
-     * @param $parentId
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Route("/admin/user/add", name="admin_user_add", requirements={"type"=EntityController::VALID_ENTITIES} )
+     * @Route("/admin/user/add", name="admin_user_add")
      */
     public function addAction(Request $request){
 
@@ -106,8 +97,8 @@ class UserController extends BaseController
             $pass = substr(hash('sha256',random_bytes(10)),0,10);
 
             $user = $userManager->createUser()
-                ->setUsername($object->getEmail())
-                ->setEmail($object->getEmail())
+                ->setUsername($object->getUsername())
+                ->setEmail($object->getUsername())
                 ->setFirstConnexion(true)
                 ->setRoles(array($object->getTmpRole()))
                 ->setPlainPassword($pass);
@@ -127,8 +118,9 @@ class UserController extends BaseController
                     ,'text/html');
             $mailer->send($message);
             $userManager->updateUser($user);
+            $this->get('session')->getFlashBag()->add('notice','Votre Utilisateur à bien été ajouté');
 
-            return $this->redirectToRoute('admin_user_add');
+            return $this->redirectToRoute('admin_user');
         }
 
         $params['form'] = $form->createView();
@@ -136,5 +128,6 @@ class UserController extends BaseController
         return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
 
     }
+    
 
 }

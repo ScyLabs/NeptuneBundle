@@ -20,6 +20,7 @@ use ScyLabs\NeptuneBundle\Entity\FileType;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\Partner;
 use ScyLabs\NeptuneBundle\Entity\Photo;
+use ScyLabs\NeptuneBundle\Entity\User;
 use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
 use ScyLabs\NeptuneBundle\Services\FileUploader;
@@ -100,6 +101,10 @@ class FileController extends BaseController
             $repo = $em->getRepository(Partner::class);
             $obj = $repo->find($id);
         }
+        elseif($typeElement == 'user'){
+            $repo = $em->getRepository(User::class);
+            $obj = $repo->find($id);
+        }
         else{
             $repo = $em->getRepository(Element::class);
             $obj = $repo->find($id);
@@ -141,6 +146,7 @@ class FileController extends BaseController
         $prioVideo = 0;
         foreach ($files as $file){
             $type = $file->getType()->getName();
+
             if($type == 'photo'){
                 $photo = (new Photo())
                     ->setName($obj->getName())
@@ -268,6 +274,10 @@ class FileController extends BaseController
         }
         elseif($type == 'partner'){
             $repo = $em->getRepository(Partner::class);
+            $object = $repo->find($id);
+        }
+        elseif($type == 'user'){
+            $repo = $em->getRepository(User::class);
             $object = $repo->find($id);
         }
         else{

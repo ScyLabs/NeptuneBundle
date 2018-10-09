@@ -5,6 +5,7 @@ namespace ScyLabs\NeptuneBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractFileLink;
 
 /**
  * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\PhotoRepository")
@@ -38,6 +39,10 @@ class Photo extends AbstractFileLink
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Element", inversedBy="photos")
      */
     protected $element;
+    /**
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\User", inversedBy="photos")
+     */
+    protected $user;
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Partner", inversedBy="photos")
      */
@@ -93,23 +98,6 @@ class Photo extends AbstractFileLink
     public function getId()
     {
         return $this->id;
-    }
-    public function getParent() : ?AbstractElem{
-        if($this->page !== null){
-            return $this->page;
-        }
-        elseif($this->element !== null){
-            return $this->element;
-        }
-        elseif($this->zone !== null){
-            return $this->zone;
-        }
-        elseif($this->partner !== null){
-            return $this->partner;
-        }
-        else{
-            return null;
-        }
     }
 
 }

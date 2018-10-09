@@ -5,6 +5,7 @@ namespace ScyLabs\NeptuneBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractElemType;
 
 /**
  * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\ZoneTypeRepository")

@@ -1,6 +1,6 @@
 <?php
 
-namespace ScyLabs\NeptuneBundle\Entity;
+namespace ScyLabs\NeptuneBundle\AbstractEntity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +11,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 abstract class AbstractDetail
 {
-
 
     /**
      * @ORM\Column(type="string", length=2)
@@ -37,12 +36,7 @@ abstract class AbstractDetail
      * @ORM\Column(length=128,unique=true)
      */
     protected $slug;
-    
 
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function getLang(): ?string
     {

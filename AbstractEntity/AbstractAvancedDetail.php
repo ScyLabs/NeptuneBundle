@@ -1,6 +1,7 @@
 <?php
 
-namespace ScyLabs\NeptuneBundle\Entity;
+namespace ScyLabs\NeptuneBundle\AbstractEntity;
+
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\MappedSuperclass;
@@ -10,34 +11,25 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
  */
 abstract class AbstractAvancedDetail extends AbstractDetail
 {
-
-
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $h1;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $h1;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $metaTitle;
+    protected $metaTitle;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $metaDesc;
+    protected $metaDesc;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $metaKeys;
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
+    protected $metaKeys;
 
 
     public function getH1(): ?string

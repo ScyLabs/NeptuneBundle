@@ -6,19 +6,35 @@
  * Time: 17:14
  */
 
-namespace ScyLabs\NeptuneBundle\Entity;
+namespace ScyLabs\NeptuneBundle\AbstractEntity;
 
 use Doctrine\ORM\Mapping\MappedSuperclass;
+use ScyLabs\NeptuneBundle\Entity\Element;
+use ScyLabs\NeptuneBundle\Entity\File;
+use ScyLabs\NeptuneBundle\Entity\Page;
+use ScyLabs\NeptuneBundle\Entity\Partner;
+use ScyLabs\NeptuneBundle\Entity\User;
+use ScyLabs\NeptuneBundle\Entity\Zone;
+use Doctrine\ORM\Mapping as ORM;
+
+
 /**
  *  @MappedSuperclass
  */
 class AbstractFileLink extends AbstractElem
 {
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+
+    protected $name;
     protected $file;
     protected $page;
     protected $zone;
     protected $element;
     protected $partner;
+    protected $user;
 
     public function __construct(){
         parent::__construct();
@@ -88,11 +104,14 @@ class AbstractFileLink extends AbstractElem
         elseif($this->partner !== null){
             return $this->partner;
         }
+        elseif($this->user != null){
+            return $this->user;
+        }
         else{
             return $this->element;
         }
     }
-    public function setParent(?AbstractElem $parent){
+    public function setParent($parent){
         if($parent instanceof  Page){
             $this->page = $parent;
         }
@@ -101,6 +120,9 @@ class AbstractFileLink extends AbstractElem
         }
         elseif($parent instanceof Partner){
             $this->partner = $parent;
+        }
+        elseif($parent instanceof User){
+            $this->user = $parent;
         }
         else{
             $this->element = $parent;

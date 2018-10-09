@@ -58,14 +58,16 @@
                                             <td>
                                                 <ul class="actions">
                                                     <li><a href="{{ path('admin_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
-                                                    <li><a href="{{ path('admin_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
                                                     <li><a href="{{ path('admin_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
+                                                    <li><a href="{{ path('admin_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
                                                     <li class="">
                                                         {{ render(controller(
                                                             'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
                                                             {'id':object.id,'type':app.request.attributes.get('type')}
                                                         )) }}
                                                     </li>
+
+
                                                 </ul>
                                             </td>
                                         </tr>

@@ -3,6 +3,7 @@
 namespace ScyLabs\NeptuneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractFileLink;
 
 /**
  * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\VideoRepository")
@@ -41,6 +42,11 @@ class Video extends AbstractFileLink
      */
     protected $partner;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\User", inversedBy="videos")
+     */
+    protected $user;
+    /**
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\VideoDetail", mappedBy="document", orphanRemoval=true,cascade={"persist","remove"})
@@ -80,6 +86,5 @@ class Video extends AbstractFileLink
     {
         return $this->id;
     }
-
 
 }

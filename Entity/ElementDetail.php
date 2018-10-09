@@ -3,6 +3,7 @@
 namespace ScyLabs\NeptuneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractAvancedDetail;
 
 /**
  * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\ElementDetailRepository")

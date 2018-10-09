@@ -16,6 +16,7 @@ use ScyLabs\NeptuneBundle\Entity\ElementType;
 use ScyLabs\NeptuneBundle\Entity\File;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\Photo;
+use ScyLabs\NeptuneBundle\Entity\User;
 use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
 use ScyLabs\NeptuneBundle\Form\ElementForm;
@@ -41,7 +42,7 @@ class EntityController extends BaseController
     const JSON_IGNORED_ATTRIBUTES = array('page','pages','parent','document','zone','video','file','type','element','partner','photo','pageLink');
     /* Quelles Entités sont Acceptées dans la majorité de ce controller ? */
     //const VALID_ENTITIES = "(page|element|zone|partner)";
-    const VALID_ENTITIES = "^(?!gallery|file|user)[a-z]{2,20}";
+    const VALID_ENTITIES = "^(?!gallery|file)[a-z]{2,20}";
     /**
      * @param Request $request
      * @param $type
@@ -234,10 +235,13 @@ class EntityController extends BaseController
                 'parent'    =>  null
             ));
         }
-        else{
+        elseif(!$object instanceof User){
             $objects = $repo->findBy(array(
                 'remove'    =>  false
             ));
+        }
+        else{
+            $objects = null;
         }
         $params = array(
             'title'     =>  'Modification de '.(($object instanceof Element) ? "l'" : 'la').ucfirst($type).' : '.$object->getName(),
@@ -273,6 +277,11 @@ class EntityController extends BaseController
             ->getForm();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            if($object instanceof User && !$object->hasRole('ROLE_SUPER_ADMIN') && $object !== $this->getUser()){
+                $em->remove($object);
+                $em->flush();
+                return $this->redirect($request->headers->get('referer'));
+            }
             $object->setRemove(true);
             $em->persist($object);
             $em->flush();
