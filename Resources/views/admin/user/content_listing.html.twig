@@ -45,12 +45,14 @@
                                             <li><a href="{{ path('admin_file_gallery_prio',{'type':'user','id':user.id}) }}" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
                                             <li><a href="{{ path('admin_entity_edit',{'id':user.id,'type':'user'}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
 
-                                            <li class="">
-                                                {{ render(controller(
-                                                    'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
-                                                    {'id':user.id,'type':'user'}
-                                                )) }}
-                                            </li>
+                                            {% if user.hasRole('ROLE_SUPER_ADMIN') == false %}
+                                                <li class="">
+                                                    {{ render(controller(
+                                                        'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
+                                                        {'id':user.id,'type':'user'}
+                                                    )) }}
+                                                </li>
+                                            {% endif %}
                                         {% endif %}
                                     </ul>
                                 </td>

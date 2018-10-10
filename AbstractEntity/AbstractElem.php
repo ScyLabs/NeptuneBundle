@@ -15,9 +15,7 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\FormTypeInterface;
 
-/**
- *  @MappedSuperclass
- */
+
 abstract class AbstractElem
 {
 

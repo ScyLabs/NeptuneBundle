@@ -8,8 +8,8 @@
 
 namespace ScyLabs\NeptuneBundle\Controller;
 
-use ScyLabs\NeptuneBundle\Entity\AbstractChild;
-use ScyLabs\NeptuneBundle\Entity\AbstractFileLink;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractChild;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractFileLink;
 use ScyLabs\NeptuneBundle\Entity\Document;
 use ScyLabs\NeptuneBundle\Entity\Element;
 use ScyLabs\NeptuneBundle\Entity\ElementType;
