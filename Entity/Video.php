@@ -49,7 +49,7 @@ class Video extends AbstractFileLink
     /**
 
     /**
-     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\VideoDetail", mappedBy="document", orphanRemoval=true,cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\VideoDetail", mappedBy="video", orphanRemoval=true,cascade={"persist","remove"})
      */
     protected $details;
 
