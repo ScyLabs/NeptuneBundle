@@ -90,9 +90,6 @@ class User extends BaseUser
         if($this->enabled === null){
             $this->enabled = true;
         }
-        if($this->remove === null){
-            $this->remove = false;
-        }
     }
     
     public function getId() :?int{
