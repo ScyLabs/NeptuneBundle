@@ -13,18 +13,21 @@ $(document).ready(function()
     };
 
     // activate Nestable for list 1
-    $('#nestable').nestable({
+    $('#nestable,.nestable').nestable({
         group: 1
     })
 
-    $('#nestable1').nestable({
-    maxDepth:1
+
+    $('#nestable1,.nestable1').nestable({
+        maxDepth:1
     })
 // activate Nestable for list 2
     $('#nestable2').nestable({
         group: 1
     })
-        .on('change',);
+        .on('change',function (e) {
+            
+        });
 
 // output initial serialised data
     //updateOutput($('#nestable').data('output', $('#nestable-output')));

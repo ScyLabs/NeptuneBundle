@@ -75,7 +75,7 @@
                                         <h4 class="card-title">Nestedable</h4>
                                         <div class="card-content">
                                             <div class="nestable">
-                                                <div class="dd" id="nestable{{ app.request.attributes.get('type') == 'page' ? '' : '1'}}" data-action="{{ path('admin_entity_prio',{'type':app.request.attributes.get('type')}) }}">
+                                                <div class="dd nestable{{ app.request.attributes.get('type') == 'page' ? '' : '1'}}" id="nestable{{ app.request.attributes.get('type') == 'page' ? '' : '1'}}" data-action="{{ path('admin_entity_prio',{'type':app.request.attributes.get('type')}) }}">
                                                     <ol class="dd-list">
                                                         {% if type.elements.count() > 0  %}
                                                             {% for object in type.elements %}
