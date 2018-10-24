@@ -164,7 +164,7 @@ class Page extends AbstractElem
         if($showAll !== true){
             $criteria->where(Criteria::expr()->eq('remove',false));
         }
-        return $this->elementTypes;
+        return $this->elementTypes->matching($criteria);
     }
 
     public function addElementType(ElementType $elementType): self
@@ -235,7 +235,7 @@ class Page extends AbstractElem
             $criteria->where(Criteria::expr()->eq('remove',false));
         }
 
-        return $this->zones->matching($criteria);
+        return $this->elements->matching($criteria);
     }
 
     public function addZone(Zone $zone): self
