@@ -90,8 +90,7 @@ class Page extends AbstractElem
     private $elements;
 
 
-
-    public function getElements(array $orderBy = array('creationDate'=>Criteria::DESC,'prio'=>Criteria::ASC),bool $showAll = false){
+    public function getElements(array $orderBy = array('prio'=>Criteria::ASC),bool $showAll = false){
         if($this->elements === null){
             $this->elements = new ArrayCollection();
             foreach ($this->elementTypes as $elementType){
@@ -159,8 +158,12 @@ class Page extends AbstractElem
     /**
      * @return Collection|Page[]
      */
-    public function getElementTypes(): Collection
+    public function getElementTypes(bool $showAll = false) : Collection
     {
+        $criteria = Criteria::create();
+        if($showAll !== true){
+            $criteria->where(Criteria::expr()->eq('remove',false));
+        }
         return $this->elementTypes;
     }
 
