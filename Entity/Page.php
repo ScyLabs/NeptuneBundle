@@ -235,7 +235,7 @@ class Page extends AbstractElem
             $criteria->where(Criteria::expr()->eq('remove',false));
         }
 
-        return $this->elements->matching($criteria);
+        return $this->zones->matching($criteria);
     }
 
     public function addZone(Zone $zone): self
