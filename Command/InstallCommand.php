@@ -79,7 +79,7 @@ class InstallCommand extends Command
         $this->verbose = !$input->getOption('shutup');
 
 
-        $envDist = $rootDir . '/.env.dist';
+        $envDist = $rootDir . '/.env.install';
         $envFile = $rootDir . '/.env';
         $tmpEnv = $rootDir . '/.env.tmp';
 
