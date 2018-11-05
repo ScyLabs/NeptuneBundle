@@ -148,6 +148,9 @@ class InstallCommand extends Command
         $f = fopen($tmpEnv, 'w+');
         fwrite($f, $env);
         fclose($f);
+        if(file_exists($envFile)){
+            unlink($envFile);
+        }
         copy($tmpEnv, $envFile);
         unlink($tmpEnv);
         $this->say("The configuration i'ts okay . and the file i'ts ready to work ... But ...");
