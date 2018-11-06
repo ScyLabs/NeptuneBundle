@@ -135,9 +135,9 @@ class FileController extends BaseController
 
         foreach ($actualFiles as $file){
             if(!$files->contains($file)){
-                $this->unlink($em,$file,$obj->getPhotos(),$obj);
-                $this->unlink($em,$file,$obj->getDocuments(),$obj);
-                $this->unlink($em,$file,$obj->getVideos(),$obj);
+                $this->unlinkAll($em,$file,$obj->getPhotos(),$obj);
+                $this->unlinkAll($em,$file,$obj->getDocuments(),$obj);
+                $this->unlinkAll($em,$file,$obj->getVideos(),$obj);
             }
         }
 
@@ -191,7 +191,7 @@ class FileController extends BaseController
 
     }
 
-    public function unlink(EntityManager $em,File $file,PersistentCollection $links,AbstractElem &$obj){
+    private function unlinkAll(EntityManager $em,File $file,PersistentCollection $links,AbstractElem &$obj){
         foreach ($links as $link){
             if(!$link instanceof AbstractFileLink)
                 return;
@@ -210,6 +210,55 @@ class FileController extends BaseController
             }
         }
     }
+    /**
+     * @Route("/admin/{type}/remove/{id}",name="admin_file_link_remove",requirements={"type"="(photo|video|document)","id"="\d+"})
+     */
+    public function removeLinkAction(Request $request,$type,$id){
+        $class = $this->getClass($type);
+        $em = $this->getDoctrine()->getManager();
+        $object = $em->getRepository($class)->find($id);
+
+        if($object === null || !$object instanceof AbstractFileLink){
+            if($request->headers->get('referer') !== null){
+                return $this->redirect($request->headers->get('referer'));
+            }
+            return $this->redirectToRoute('admin_file');
+        }
+        //$em->remove($object);
+        $parent = $object->getParent();
+        $inc = 0;
+        if($type == 'photo'){
+            $parent->removePhoto($object);
+
+            foreach ($parent->getPhotos() as $photo){
+                $photo->setPrio($inc);
+                $inc++;
+            }
+        }
+        elseif($type == 'video'){
+            $parent->removeVideo($object);
+            foreach ($parent->getVideos() as $video){
+                $video->setPrio($inc);
+                $inc++;
+            }
+        }
+        else{
+            $parent->removeDocument($object);
+            foreach ($parent->getDocuments() as $document){
+                $document->setPrio($inc);
+                $inc++;
+            }
+        }
+        $em->remove($object);
+        $em->persist($parent);
+        $em->flush();
+        if($request->headers->get('referer') !== null){
+            return $this->redirect($request->headers->get('referer'));
+        }
+        return $this->redirectToRoute('admin_file');
+    }
+
+
     /**
      * @Route("/admin/file/upload",name="admin_file_upload")
      */
