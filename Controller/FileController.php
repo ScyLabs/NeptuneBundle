@@ -12,6 +12,12 @@ namespace ScyLabs\NeptuneBundle\Controller;
 
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\PersistentCollection;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractElem;
+use ScyLabs\NeptuneBundle\AbstractEntity\AbstractFileLink;
 use ScyLabs\NeptuneBundle\Entity\Document;
 use ScyLabs\NeptuneBundle\Entity\Element;
 use ScyLabs\NeptuneBundle\Entity\File;
@@ -79,37 +85,23 @@ class FileController extends BaseController
         $select = $request->request->get('selection');
         $id = $request->request->get('id');
         $typeElement = $request->request->get('type');
+
         if($select === null || $id === null ||$typeElement === ''){
             $this->get('session')->getFlashBag()->add('notice',"Une erreur est survenue lors de la liaison de vos fichiers");
             return $this->redirectToRoute('admin_file');
         }
-        if(null ===  $files = json_decode($select)){
+        if(null ===  $filesTab = json_decode($select)){
             $this->get('session')->getFlashBag()->add('notice',"Une erreur est survenue lors de la liaison de vos fichiers");
             return $this->redirectToRoute('admin_file');
         }
 
+
         $em = $this->getDoctrine()->getManager();
-        if($typeElement == 'page'){
-            $repo = $em->getRepository(Page::class);
-            $obj = $repo->find($id);
-        }
-        elseif($typeElement == 'zone'){
-            $repo = $em->getRepository(Zone::class);
-            $obj = $repo->find($id);
-        }
-        elseif($typeElement == 'partner'){
-            $repo = $em->getRepository(Partner::class);
-            $obj = $repo->find($id);
-        }
-        elseif($typeElement == 'user'){
-            $repo = $em->getRepository(User::class);
-            $obj = $repo->find($id);
-        }
-        else{
-            $repo = $em->getRepository(Element::class);
-            $obj = $repo->find($id);
-            $typeElement = 'element';
-        }
+
+        $class = $this->getClass($typeElement);
+
+        $obj = $em->getRepository($class)->find($id);
+
         if($obj === null){
 
             $this->get('session')->getFlashBag()->add('notice',"Une erreur est survenue lors de la liaison de vos fichiers");
@@ -120,64 +112,103 @@ class FileController extends BaseController
 
         $files = $repoFiles->findBy(
             array(
-                'id'=>$files,
+                'id'=>$filesTab,
             )
         );
-
+        if($files !== null)
+            $files = new ArrayCollection($files);
 
         /* On supprime les valeurs déjà rentrées */
         /*Si l'utilisateur ne les a pas déselectionnés , ils se re-rentrerons quoi qu'il arrive */
+
+        $actualFiles = new ArrayCollection();
+
         foreach ($obj->getPhotos() as $photo){
-            $obj->removePhoto($photo);
-            $em->remove($photo);
+            $actualFiles->add($photo->getFile());
         }
         foreach ($obj->getDocuments() as $document){
-            $obj->removeDocument($document);
-            $em->remove($document);
+            $actualFiles->add($document->getFile());
         }
         foreach ($obj->getVideos() as $video){
-            $obj->removeVideo($video);
-            $em->remove($video);
+            $actualFiles->add($video->getFile());
+        }
+
+        foreach ($actualFiles as $file){
+            if(!$files->contains($file)){
+                $this->unlink($em,$file,$obj->getPhotos(),$obj);
+                $this->unlink($em,$file,$obj->getDocuments(),$obj);
+                $this->unlink($em,$file,$obj->getVideos(),$obj);
+            }
         }
 
         // On parcours les fichiers et on affecte a l'élément selectionné .
+
+
+        foreach ($files as $file){
+
+            if(!$actualFiles->contains($file)){
+                $type = $file->getType()->getName();
+                if($type == 'photo'){
+                    $link = new Photo();
+                    $link->setPrio($obj->getPhotos()->count());
+                }
+                elseif($type == 'video'){
+                    $link = new Video();
+                    $link->setPrio($obj->getVideos()->count());
+                }
+                else{
+                    $link = new Document();
+                    $link->setPrio($obj->getDocuments()->count());
+                }
+
+                $link->setName($obj->getName())
+                    ->setFile($file);
+
+                $obj->addFile($link);
+            }
+        }
+
         $prioPhoto = 0;
         $prioDocument = 0;
         $prioVideo = 0;
-        foreach ($files as $file){
-            $type = $file->getType()->getName();
-
-            if($type == 'photo'){
-                $photo = (new Photo())
-                    ->setName($obj->getName())
-                    ->setFile($file)
-                    ->setPrio($prioPhoto++);
-                ;
-
-                $obj->addPhoto($photo);
-            }
-            elseif($type == 'video'){
-                $video = (new Video())
-                    ->setName($obj->getName())
-                    ->setFile($file)
-                    ->setPrio($prioDocument++);
-                $obj->addVideo($video);
-            }
-            else{
-                $document = (new Document())
-                    ->setName($obj->getName())
-                    ->setFile($file)
-                    ->setPrio($prioVideo++)
-                ;
-
-                $obj->addDocument($document);
-            }
+        foreach ($obj->getPhotos() as $photo){
+            $photo->setPrio($prioPhoto);
+            $prioPhoto++;
+        }
+        foreach ($obj->getDocuments() as $document){
+            $document->setPrio($prioDocument);
+            $prioDocument++;
+        }
+        foreach ($obj->getVideos() as $video){
+            $video->setPrio($prioVideo);
+            $prioVideo++;
         }
         $em->persist($obj);
         $em->flush();
         $this->get('session')->getFlashBag()->add('notice',"Vos fichiers ont bien été liés.");
+
         return $this->redirectToRoute('admin_file_gallery_prio',array('type'=>$typeElement,'id'=>$obj->getId()));
 
+    }
+
+    public function unlink(EntityManager $em,File $file,PersistentCollection $links,AbstractElem &$obj){
+        foreach ($links as $link){
+            if(!$link instanceof AbstractFileLink)
+                return;
+            if($link->getFile()->getId() == $file->getId()){
+
+                if($link instanceof Photo){
+                    $obj->removePhoto($link);
+                }
+                elseif($link instanceof Document){
+                    $obj->removeDocument($link);
+                }
+                else{
+                    $obj->removeVideo($link);
+                }
+                $em->remove($link);
+            }
+        }
     }
     /**
      * @Route("/admin/file/upload",name="admin_file_upload")
