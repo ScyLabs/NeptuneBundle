@@ -1,0 +1,4 @@
+neptune_file:
+    resource: './routing/file.yaml'
+neptune_entity:
+    resource: './routing/entity.yaml'

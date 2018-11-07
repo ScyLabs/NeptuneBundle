@@ -39,17 +39,19 @@ class EntityController extends BaseController
 
     /* Quelles Entités sont acceptées pour un retour JSON avec la route admin_entity_json */
     const JSON_VALID_ENTITIES = "(page|element|zone|photo|video|document|partner)";
-    const JSON_IGNORED_ATTRIBUTES = array('page','pages','parent','document','zone','video','file','type','element','partner','photo','pageLink');
+    const JSON_IGNORED_ATTRIBUTES = array('page','pages','parent','document','zone','video','file','type','element','partner','photo','pageLink','files');
+
     /* Quelles Entités sont Acceptées dans la majorité de ce controller ? */
-    //const VALID_ENTITIES = "(page|element|zone|partner)";
-    const VALID_ENTITIES = "^(?!gallery|file)[a-z]{2,20}";
-    /**
+
+
+
+    /*
      * @param Request $request
      * @param $type
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("admin/{type}",name="admin_entity", requirements={"type"=EntityController::VALID_ENTITIES})
      */
-    public function listingAction($type){
+    public function listAction($type){
 
         $class = $this->getClass($type);
 
@@ -103,7 +105,7 @@ class EntityController extends BaseController
 
     }
 
-    /**
+    /*
      * @param $type
      * @return bool|float|int|string
      * @Route("admin/{type}/json/{parentType}/{parentId}",defaults={"parentType"=null,"parentId"=null}, name="admin_entity_json", requirements={"type"=EntityController::JSON_VALID_ENTITIES})
@@ -151,7 +153,8 @@ class EntityController extends BaseController
         return  new JsonResponse((new Serializer(array($normalizer),array($encoder)))->serialize($resultTab,'json'));
     }
 
-    /**
+
+    /*
      * @param Request $request
      * @param $type
      * @param $parentType
@@ -174,7 +177,6 @@ class EntityController extends BaseController
         $lastPrio = $this->getLastPrio($object,$parentType) +1;
         $object->setPrio($lastPrio);
         $objects = $this->getEntities($object,$parentType);
-
 
         $params = array(
             'title'     =>  "Ajout d'un".(($object instanceof Element) ? '' : 'e').' '.ucfirst($type),
@@ -212,7 +214,8 @@ class EntityController extends BaseController
 
     }
 
-    /**
+
+    /*
      * @param Request $request
      * @param $id
      * @param $type
@@ -257,7 +260,7 @@ class EntityController extends BaseController
         }
     }
 
-    /**
+    /*
      * @param Request $request
      * @param $type
      * @param $id
@@ -294,7 +297,7 @@ class EntityController extends BaseController
     }
 
 
-    /**
+    /*
      * @param Request $request
      * @param $type
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -332,7 +335,7 @@ class EntityController extends BaseController
     }
 
 
-    /**
+    /*
      * @param Request $request
      * @param $id
      * @param $type
