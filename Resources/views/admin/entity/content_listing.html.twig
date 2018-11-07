@@ -50,7 +50,7 @@
                                                 <td>{{ object.parent.name }}</td>
                                             {% endif %}
 
-                                            {% if object.url is defined and object.url is iterable %}
+                                            {% if object.url is defined and object.url is not iterable %}
                                                 <td><a href="{{ object.url }}">{{ object.url }}</a></td>
                                             {% endif %}
 

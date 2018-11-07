@@ -139,6 +139,17 @@ abstract class AbstractElem
 
         return $this;
     }
+    public function addFile(AbstractFileLink $file){
+        if($file instanceof Photo){
+            $this->addPhoto($file);
+        }
+        elseif($file instanceof Document){
+            $this->addDocument($file);
+        }
+        else{
+            $this->addVideo($file);
+        }
+    }
 
     public function removePhoto(Photo $photo): self
     {
@@ -151,6 +162,30 @@ abstract class AbstractElem
         }
 
         return $this;
+    }
+
+    public function getFiles(){
+        $files = new ArrayCollection();
+        if($this->photos != null)
+        foreach ($this->photos as $photo){
+            if($photo instanceof Photo){
+                if(!$files->contains($photo->getFile()))
+                    $files->add($photo->getFile());
+            }
+        }
+        foreach ($this->documents as $document){
+            if($document instanceof Document){
+                if(!$files->contains($document->getFile()))
+                    $files->add($document->getFile());
+            }
+        }
+        foreach ($this->videos as $video){
+            if($video instanceof Video){
+                if(!$files->contains($video->getFile()))
+                    $files->add($video->getFile());
+            }
+        }
+        return $files;
     }
 
     /**

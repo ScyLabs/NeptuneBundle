@@ -38,9 +38,12 @@
                                         <li><a href="{{ asset('uploads/'~file.file)}}" class="fancy fancy_box"><i class="fa fa-search"></i> </a>
 
                                         </li>
-                                            <li>
-                                                <a href="{{ path('admin_detail',{'type':'photo','id':photo.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
-                                            </li>
+                                        <li>
+                                            <a href="{{ path('admin_detail',{'type':'photo','id':photo.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('admin_file_link_remove',{'type':'photo','id':photo.id}) }}"><i class="fa fa-times" style="color: red;"></i></a>
+                                        </li>
                                     </ul>
                                 </li>
                         {% endfor %}
@@ -64,7 +67,10 @@
 
                                     </li>
                                     <li>
-                                        <a href="{{ path('admin_detail',{'type':'document','id':document.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
+                                        <a href="{{ path('admin_detail',{'type':'video','id':video.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('admin_file_link_remove',{'type':'video','id':video.id}) }}"><i class="fa fa-times" style="color: red;"></i></a>
                                     </li>
                                 </ul>
                             </li>
@@ -90,10 +96,12 @@
                                 </span>
                                 <ul class="actions">
                                     <li><a href="{{ asset('uploads/'~file.file)}}" class="fancy fancy_box"><i class="fa fa-search"></i> </a>
-
                                     </li>
                                     <li>
                                         <a href="{{ path('admin_detail',{'type':'document','id':document.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('admin_file_link_remove',{'type':'document','id':document.id}) }}"><i class="fa fa-times" style="color: red;"></i></a>
                                     </li>
                                 </ul>
                             </li>
