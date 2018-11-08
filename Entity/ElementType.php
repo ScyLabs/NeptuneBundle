@@ -4,6 +4,7 @@ namespace ScyLabs\NeptuneBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractElemType;
 
@@ -44,9 +45,14 @@ class ElementType extends AbstractElemType
     /**
      * @return Collection|Element[]
      */
-    public function getElements(): Collection
+    public function getElements(array $orderBy = array('prio' => Criteria::ASC),bool $showAll = false): Collection
     {
-        return $this->elements;
+        $criteria = Criteria::create();
+        $criteria->orderBy($orderBy);
+        if($showAll !== true){
+            $criteria->where(Criteria::expr()->eq('remove',false));
+        }
+        return $this->elements->matching($criteria);
     }
 
     public function addElement(Element $element): self
