@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    {% if  app.request.server is defined %}
+        {% set protocol = ( app.request.server.get('SERVER_PROTOCOL') | split('/'))[0] | lower  %}
+        {% set baseurl = protocol ~ '://' ~ (app.request.server is defined) ? app.request.server.get('HTTP_HOST') : 'localhost:8080' %}
+        {% set website = baseurl ~ asset('') %}
+    {% else %}
+        {% set protocol = 'https'  %}
+        {% set baseurl = protocol ~ '://' ~ 'localhost:8080/' %}
+        {% set website = baseurl ~ asset('') %}
+    {% endif %}
+    {% for url in urls %}
+        <url>
+            <loc>{{ baseurl }}{{ url.loc }}</loc>
+        </url>
+    {% endfor %}
+</urlset>

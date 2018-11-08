@@ -17,8 +17,8 @@
                                 <th>Type</th>
                             {% endif %}
                             <th>Name</th>
-                            {% if app.request.attributes.get('type') == 'partner' %}
-                                <th>Site du partenaire</th>
+                            {% if object.url is defined and not (object.url | is_object) and object.url is not null %}
+                                <th>Url</th>
                             {% endif %}
                             {% if app.request.attributes.get('type') != 'partner' and app.request.attributes.get('type') != 'element' %}
                                 <th>Parent</th>
@@ -50,7 +50,9 @@
                                                 <td>{{ object.parent.name }}</td>
                                             {% endif %}
 
-                                            {% if object.url is defined and object.url is not iterable %}
+
+
+                                            {% if object.url is defined and not (object.url | is_object) and object.url is not null %}
                                                 <td><a href="{{ object.url }}">{{ object.url }}</a></td>
                                             {% endif %}
 
