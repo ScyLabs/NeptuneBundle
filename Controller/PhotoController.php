@@ -128,7 +128,7 @@ class PhotoController extends Controller
         // Si jpg , deviens Jpeg (pour norme HTTP)
         $this->headers($file,$path);
 
-
+        $img->destroy();
         return new Response(readfile($path));
 
     }

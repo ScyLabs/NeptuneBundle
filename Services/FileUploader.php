@@ -41,9 +41,11 @@ class FileUploader
                 $image = new \Imagick($this->getTargetDirectory().'/'.$fileName);
                 $image->setImageCompressionQuality(75);
                 $image->writeImage();
+                $image->destroy();
             }
 
         }
+
         return $fileName;
     }
     public function unlink($fileName){
