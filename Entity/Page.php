@@ -343,7 +343,7 @@ class Page extends AbstractElem
         return $this->urls;
     }
 
-    public function getUrl($locale) : ?PageUrl{
+    public function getUrl(string $locale = 'fr') : ?PageUrl{
         foreach ($this->urls as $url){
             if($url->getLang() == $locale){
                 return $url;
