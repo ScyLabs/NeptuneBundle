@@ -4,6 +4,7 @@ namespace ScyLabs\NeptuneBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractElem;
@@ -78,9 +79,17 @@ class Element extends AbstractElem
     /**
      * @return Collection|Zone[]
      */
-    public function getZones(): Collection
+    public function getZones(bool $showAll = false): Collection
     {
-        return $this->zones;
+        $criteria = Criteria::create();
+        $criteria->orderBy(array(
+            'prio'=>Criteria::ASC
+        ));
+        if($showAll !== true){
+            $criteria->where(Criteria::expr()->eq('remove',false));
+        }
+
+        return $this->zones->matching($criteria);
     }
 
     public function addZone(Zone $zone): self
