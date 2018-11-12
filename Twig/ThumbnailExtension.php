@@ -88,6 +88,7 @@ class ThumbnailExtension extends AbstractExtension
                 $webThumb .= $wh.'.jpg';
 
             }
+            $img->destroy();
 
             return $webThumb;
 
@@ -105,6 +106,7 @@ class ThumbnailExtension extends AbstractExtension
                 $img->thumbnailImage($w,$h);
             }
             $img->writeImage($localThumb.$wh.'.'.$ext);
+            $img->destroy();
             return $webThumb.$wh.'.'.$ext;
         }
 
