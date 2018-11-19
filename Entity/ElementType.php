@@ -30,6 +30,11 @@ class ElementType extends AbstractElemType
      */
     private $page;
 
+    /**
+     * @ORM\Column(type="integer",nullable = true)
+     */
+    protected $prio;
+
 
     public function __construct()
     {
@@ -83,6 +88,18 @@ class ElementType extends AbstractElemType
     }
     public function setPage(?Page $page) : self{
         $this->page = $page;
+        return $this;
+    }
+
+    public function getPrio(): ?int
+    {
+        return $this->prio;
+    }
+
+    public function setPrio(int $prio): self
+    {
+        $this->prio = $prio;
+
         return $this;
     }
 }
