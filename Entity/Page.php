@@ -161,6 +161,9 @@ class Page extends AbstractElem
     public function getElementTypes(bool $showAll = false) : Collection
     {
         $criteria = Criteria::create();
+        $criteria->orderBy(array(
+            'prio'  =>  Criteria::ASC
+        ));
         if($showAll !== true){
             $criteria->where(Criteria::expr()->eq('remove',false));
         }
