@@ -1,0 +1,15 @@
+admin_user:
+    path: /admin/user
+    controller: ScyLabs\NeptuneBundle\Controller\UserController::listingAction
+
+admin_user_active:
+    path: /admin/user/active/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\UserController::switchActiveAction
+    requirements:
+        type: "[a-z]{2,20}"
+        id: "[0-9]+"
+
+admin_user_add:
+    path: /admin/user/add
+    controller: ScyLabs\NeptuneBundle\Controller\UserController::addAction
+

@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends BaseController
 {
-    /**
+    /*
      * @Route("admin/user",name="admin_user")
      */
     public function listingAction(Request $request){
@@ -40,7 +40,7 @@ class UserController extends BaseController
 
     }
 
-    /**
+    /*
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -69,7 +69,7 @@ class UserController extends BaseController
     }
 
 
-    /**
+    /*
      * @Route("/admin/user/add", name="admin_user_add")
      */
     public function addAction(Request $request){

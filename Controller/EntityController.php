@@ -51,13 +51,17 @@ class EntityController extends BaseController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("admin/{type}",name="admin_entity", requirements={"type"=EntityController::VALID_ENTITIES})
      */
-    public function listAction($type){
+    public function listAction($type,$parentType,$parentId){
+        if($parentType !== null && $parentId === null){
+            return $this->redirectToRoute('admin_entity',array('type'=>$type));
+        }
 
         $class = $this->getClass($type);
 
         $repo = $this->getDoctrine()->getRepository($class);
         $child = false;
         $elemListing = false;
+
         if($class === Page::class){
             $objects = $repo->findBy(array(
                'parent' =>  null,
@@ -72,7 +76,7 @@ class EntityController extends BaseController
         }
         else{
             $objects = null;
-            if(!(new $class() instanceof AbstractChild)){
+            if(!(new $class() instanceof AbstractChild) || ($parentType !== null && $parentId !== null)){
                 $objects = $repo->findBy(array(
                     'remove'=>false,
                 ),['prio'=>'ASC']);

@@ -29,15 +29,9 @@ class TypeController extends BaseController
 
     const VALID_ENTITIES = "(page|element|zone|file)";
 
-    /**
-     * @Route("/admin", name="admin_home")
-     */
-    public function indexAction(){
 
-        return $this->render('@ScyLabsNeptune/admin/index.html.twig');
-    }
 
-    /**
+    /*
      * @Route("/admin/{type}/type/add" , name="admin_type_add" , requirements={"type"=TypeController::VALID_ENTITIES})
      */
     public function addAction(Request $request,$type){
@@ -84,7 +78,7 @@ class TypeController extends BaseController
 
     }
 
-    /**
+    /*
      * @Route("/admin/{type}/type",name="admin_type",requirements={"type"=TypeController::VALID_ENTITIES})
      */
     public function listAction(Request $request,$type){
@@ -114,7 +108,7 @@ class TypeController extends BaseController
         return $this->render('@ScyLabsNeptune/admin/type/listing.html.twig',$params);
     }
 
-    /**
+    /*
      * @Route("/admin/{type}/type/{id}",name="admin_type_edit" , requirements={"id":"\d+","type"=TypeController::VALID_ENTITIES})
      */
     public function editAction(Request $request,$id,$type){
@@ -147,7 +141,7 @@ class TypeController extends BaseController
     }
 
 
-    /**
+    /*
      * @Route("admin/{type}/type/delete/{id}",name="admin_type_delete",requirements={"id" = "\d+","type"=TypeController::VALID_ENTITIES})
      * @Method({"GET","POST"})
      */

@@ -1,0 +1,14 @@
+admin_detail:
+    path: /admin/{type}/details/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\DetailController::listAction
+    requirements:
+        type: "[a-z]{2,20}"
+        id: "[0-9]+"
+
+admin_detail_edit:
+    path: /admin/{type}/detail/{lang}/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\DetailController::editAction
+    requirements:
+        type: "[a-z]{2,20}"
+        id: "[0-9]+"
+        lang: "[a-z]{2}"

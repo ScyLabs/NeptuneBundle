@@ -46,7 +46,7 @@ class SecurityController extends Controller
         $this->userManager = $userManager;
 
     }
-    /**
+    /*
      * @Route("/check_redirect",name="check_redirect")
      */
     public function checkRedirectAction(AuthorizationCheckerInterface $authChecker){
@@ -65,7 +65,7 @@ class SecurityController extends Controller
         }
     }
 
-    /**
+    /*
      * @Route("/first-connexion",name="security_first_connexion")
      */
     public function firstConnexionAction(Request $request){

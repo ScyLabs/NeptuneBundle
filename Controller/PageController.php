@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PageController extends Controller
 {
-    /**
+    /*
      * @Route("/{_locale}",name="homepage",requirements={"_locale"="[a-z]{2}"},defaults={"_locale"="fr"})
      */
     public function homeAction(Request $request){
@@ -55,7 +55,7 @@ class PageController extends Controller
 
 
 
-    /**
+    /*
      * @Route("/{_locale}/{slug}",name="page",requirements={"slug"="^(?!admin)[a-z-_0-9/]+$","_locale"="[a-z]{2}"})
      */
     public function pageAction(Request $request,$slug){
