@@ -29,7 +29,7 @@ class TypeController extends BaseController
 
     public function addAction(Request $request,$type){
 
-        $route = $this->generateUrl('admin_type_add',array('type'=>$type));
+        $route = $this->generateUrl('neptune_type_add',array('type'=>$type));
         $params = array("title"=>"Ajout d'un type de ".$type);
 
         $em = $this->getDoctrine()->getManager();
@@ -47,11 +47,11 @@ class TypeController extends BaseController
 
         $ariane = array(
             [
-                'link'=>$this->generateUrl('admin_home'),
+                'link'=>$this->generateUrl('neptune_home'),
                 'name'=>'Accueil'
             ],
             [
-                'link'=>$this->generateUrl('admin_type',array('type'=>$type)),
+                'link'=>$this->generateUrl('neptune_type',array('type'=>$type)),
                 'name'=>'Types de '.$type.'s'
             ],
             [
@@ -62,7 +62,7 @@ class TypeController extends BaseController
         $params['ariane'] = $ariane;
         if($result === true){
 
-            return $this->redirectToRoute('admin_type',array('type'=>$type));
+            return $this->redirectToRoute('neptune_type',array('type'=>$type));
         }
         else{
 
@@ -85,7 +85,7 @@ class TypeController extends BaseController
         // Génération du fil d'ariane
         $ariane = array(
             [
-                'link'=>$this->generateUrl('admin_home'),
+                'link'=>$this->generateUrl('neptune_home'),
                 'name'=>'Accueil'
             ],
             [
@@ -105,7 +105,7 @@ class TypeController extends BaseController
         $oType = $repo->find($id);
 
         if(null === $oType || ( is_object($oType) && $oType->getRemovable() === false)){
-            return $this->redirectToRoute('admin_type',array('type'=>$type));
+            return $this->redirectToRoute('neptune_type',array('type'=>$type));
         }
         $types = $repo->findBy(array(
             'remove'=>false,
@@ -115,12 +115,12 @@ class TypeController extends BaseController
             'types' => $types
         );
 
-        $route = $this->generateUrl('admin_type_edit',['id'=>$oType->getId(),'type'=>$type]);
+        $route = $this->generateUrl('neptune_type_edit',['id'=>$oType->getId(),'type'=>$type]);
 
         if($this->validForm($form,$oType,$request,$params['form'],$route) === true){
 
             $this->get('session')->getFlashBag()->add('notice',"Votre type de page à bien été modifié");
-            return $this->redirectToRoute('admin_type',array('type'=>$type));
+            return $this->redirectToRoute('neptune_type',array('type'=>$type));
         }
         else{
             return $this->render('@ScyLabsNeptune/admin/type/add.html.twig',$params);
@@ -135,12 +135,12 @@ class TypeController extends BaseController
         $oType = $repo->find($id);
 
         if(null === $oType ||( is_object($oType) && $oType->getRemovable() === false)){
-            $this->redirectToRoute('admin_type');
+            $this->redirectToRoute('neptune_type');
         }
 
 
         $form = $this->createFormBuilder($type)->setMethod('POST')
-            ->setAction($this->generateUrl('admin_type_delete',array('id'=>$oType->getId(),'type'=>$type)))
+            ->setAction($this->generateUrl('neptune_type_delete',array('id'=>$oType->getId(),'type'=>$type)))
             ->getForm();
         $form->handleRequest($request);
 

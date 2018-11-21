@@ -36,11 +36,11 @@ class InfosController extends BaseController
             'title'     =>  'Modification des Informations du site ',
             'objects'   =>  null
         );
-        $route = $this->generateUrl('admin_infos_edit');
+        $route = $this->generateUrl('neptune_infos_edit');
 
         if($this->validForm($form,$object,$request,$params['form'],$route)){
             $this->get('session')->getFlashBag()->add('notice','Les informations de votre site ont bien été modifiées');
-            return $this->redirectToRoute('admin_infos_edit');
+            return $this->redirectToRoute('neptune_infos_edit');
         }
         else{
             return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);

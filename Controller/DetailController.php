@@ -27,7 +27,7 @@ class DetailController extends BaseController
     public function listAction(Request $request,$type,$id){
         $class = $this->getClass($type);
         if($class === null){
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('neptune_home');
         }
         $langs = $this->getParameter('langs');
         $classDetail = $this->getDetailClass($class,$form);
@@ -35,7 +35,7 @@ class DetailController extends BaseController
         $object = $em->getRepository($class)->find($id);
 
         if(null === $object){
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('neptune_home');
         }
         $details = $object->getDetails();
 
@@ -89,7 +89,7 @@ class DetailController extends BaseController
         $collection = array();
 
         foreach ($details as $detail){
-            $route = $this->generateUrl('admin_detail_edit',array(
+            $route = $this->generateUrl('neptune_detail_edit',array(
                 'type'  =>  $type,
                 'id'    =>  $id,
                 'lang'  => $detail->getLang(),
@@ -107,11 +107,11 @@ class DetailController extends BaseController
 
         $params['ariane'] = array(
             [
-                'link'  =>  $this->generateUrl('admin_home'),
+                'link'  =>  $this->generateUrl('neptune_home'),
                 'name' =>  'Accueil'
             ],
             [
-                'link'  =>  $this->generateUrl('admin_entity',array('type'=>$type)),
+                'link'  =>  $this->generateUrl('neptune_entity',array('type'=>$type)),
                 'name' =>  ucfirst($type).'s',
             ],
             [
@@ -128,15 +128,15 @@ class DetailController extends BaseController
 
         $class = $this->getClass($type);
         if(null === $class){
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('neptune_home');
         }
         if(null === $object = $this->getDoctrine()->getRepository($class)->find($id)){
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('neptune_home');
         }
 
         $classDetail = $this->getDetailClass($class,$form);
         if(null === $classDetail){
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('neptune_home');
         }
         $detail = $object->getDetail($lang);
 

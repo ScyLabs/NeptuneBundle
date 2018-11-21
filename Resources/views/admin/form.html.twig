@@ -7,7 +7,7 @@
 
                         {% if widget.vars.name == "type" %}
                             {% set fullname = widget.vars.full_name %}
-                            {% set href = path('admin_type_add',{'type':app.request.attributes.get('type')}) %}
+                            {% set href = path('neptune_type_add',{'type':app.request.attributes.get('type')}) %}
                             {% if fullname == "page_form[type]"  %}
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                                     <a href="{{ href }}"><i class="fa fa-plus text-success m-l-5"></i> </a>

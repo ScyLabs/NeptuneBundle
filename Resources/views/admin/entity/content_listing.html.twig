@@ -1,7 +1,7 @@
 {% import '@ScyLabsNeptune/admin/entity/macros.html.twig' as recursiveMacro %}
 <!-- Start Page Content -->
 <div class="row">
-    <div class="col-lg-{{  (app.request.attributes.get('_route') == 'admin_entity') ? '10' : '12'}}">
+    <div class="col-lg-{{  (app.request.attributes.get('_route') == 'neptune_entity') ? '10' : '12'}}">
         <div id="tabs">
             <ul class="onglets">
                 <li><a href="#tabs-1">Gestion</a></li>
@@ -34,7 +34,7 @@
                                     {% else %}
                                         <tr>
                                             <td>
-                                                <a href="{{ path('admin_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}">
+                                                <a href="{{ path('neptune_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}">
                                                     {% if object.active %}
                                                         <i class="fa fa-check text-success"></i>
                                                     {% else %}
@@ -57,9 +57,9 @@
 
                                             <td>
                                                 <ul class="actions">
-                                                    <li><a href="{{ path('admin_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
-                                                    <li><a href="{{ path('admin_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
-                                                    <li><a href="{{ path('admin_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
+                                                    <li><a href="{{ path('neptune_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
+                                                    <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
+                                                    <li><a href="{{ path('neptune_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
                                                     <li class="">
                                                         {{ render(controller(
                                                             'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
@@ -85,7 +85,7 @@
                         <h4 class="card-title">Nestedable</h4>
                         <div class="card-content">
                             <div class="nestable">
-                                <div class="dd" id="nestable{{ app.request.attributes.get('type') == 'page' ? '' : '1'}}" data-action="{{ path('admin_entity_prio',{'type':app.request.attributes.get('type')}) }}">
+                                <div class="dd" id="nestable{{ app.request.attributes.get('type') == 'page' ? '' : '1'}}" data-action="{{ path('neptune_entity_prio',{'type':app.request.attributes.get('type')}) }}">
                                     <ol class="dd-list">
                                         {% if objects | length %}
                                             {% for object in objects %}
@@ -94,7 +94,7 @@
                                                 {% else %}
                                                     <li class="dd-item" data-id="{{ object.id }}">
                                                         <div class="dd-handle">
-                                                            <a href="{{ path('admin_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}">
+                                                            <a href="{{ path('neptune_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}">
                                                                 {% if object.active %}
                                                                     <i class="fa fa-check text-success"></i>
                                                                 {% else %}
@@ -117,10 +117,10 @@
 
         </div>
     </div>
-    {% if app.request.attributes.get('_route') == 'admin_entity' %}
+    {% if app.request.attributes.get('_route') == 'neptune_entity' %}
         <div class="col-lg-2 m-t-25">
             <div class="card">
-                <button onclick="window.location.href = '{{ path('admin_entity_add',{'type':app.request.attributes.get('type')}) }}'" class="btn btn-pink m-b-10 m-l-5 show_form">Créer une {{ app.request.attributes.get('type') }}</button>
+                <button onclick="window.location.href = '{{ path('neptune_entity_add',{'type':app.request.attributes.get('type')}) }}'" class="btn btn-pink m-b-10 m-l-5 show_form">Créer une {{ app.request.attributes.get('type') }}</button>
             </div>
         </div>
     {% endif %}

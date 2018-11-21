@@ -57,7 +57,7 @@ class SecurityController extends Controller
             if($this->getUser()->getFirstConnexion() == true){
                 return $this->redirectToRoute('security_first_connexion');
             }
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('neptune_home');
         }else{
             return $this->redirectToRoute('index');
         }
@@ -99,7 +99,7 @@ class SecurityController extends Controller
             $user->setFirstConnexion(false);
             $this->userManager->updateUser($user);
 
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('neptune_home');
         }
 
         return $this->render('@ScyLabsNeptune/security/first_connexion.html.twig', array(

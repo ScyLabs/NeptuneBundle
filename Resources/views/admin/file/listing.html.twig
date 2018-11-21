@@ -40,7 +40,7 @@
 {% endblock %}
 {% block content %}
     <div id="addfile_form">
-        <form action="{{ path('admin_file_upload') }}"
+        <form action="{{ path('neptune_file_upload') }}"
               class="dropzone"
               id="customdropzone"></form>
     </div>
@@ -122,7 +122,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                <button id="valider_liaison" class="btn btn-pink m-b-10 m-l-5" data-action="{{ path('admin_file_link') }}">Valider</button>
+                <button id="valider_liaison" class="btn btn-pink m-b-10 m-l-5" data-action="{{ path('neptune_file_link') }}">Valider</button>
             </div>
 
         </div>

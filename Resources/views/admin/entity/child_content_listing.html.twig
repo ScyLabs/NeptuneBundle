@@ -2,7 +2,7 @@
 {% macro recursiveTabPage(page) %}
     {% import _self as self %}
     {% if page.remove == 0 %}
-        <tr data-id="{{ page.id }}" data-type="page" data-files="{{ page.jsonFiles }}" data-action="{{ path('admin_entity_json',{'type':app.request.attributes.get('type'),'parentType':'page','parentId':page.id}) }}" data-zones="{{ page.jsonZones }}" data-elements="{{ page.jsonElements }}">
+        <tr data-id="{{ page.id }}" data-type="page" data-files="{{ page.jsonFiles }}" data-action="{{ path('neptune_entity_json',{'type':app.request.attributes.get('type'),'parentType':'page','parentId':page.id}) }}" data-zones="{{ page.jsonZones }}" data-elements="{{ page.jsonElements }}">
             <td>
                 {{ page.name }}
             </td>
@@ -52,7 +52,7 @@
                     <div class="card-body">
                         <span id="initial_message">Cliquez sur un element pour afficher les {{ app.request.attributes.get('type') }}s qui y sont liées</span>
                         <div class="nestable">
-                            <div class="dd" id="nestable1" data-action="{{ path('admin_entity_prio',{'type':app.request.attributes.get('type')}) }}">
+                            <div class="dd" id="nestable1" data-action="{{ path('neptune_entity_prio',{'type':app.request.attributes.get('type')}) }}">
                                 <ol class="dd-list" id="objects">
                                     {% if objects | length %}
                                         {% for object in objects %}
@@ -69,7 +69,7 @@
     </div>
     <div class="col-md-6 trans500" id="gallery_actions">
         <div class="card">
-            <button id="button_add" data-action="{{ path('admin_entity_add',{'type':app.request.attributes.get('type')})}}" class="btn btn-pink m-b-10 m-l-5 show_form">Ajouter un{{ ((app.request.attributes.get('type') == 'element') ? ' ' : 'e ') ~ app.request.attributes.get('type') }}</button>
+            <button id="button_add" data-action="{{ path('neptune_entity_add',{'type':app.request.attributes.get('type')})}}" class="btn btn-pink m-b-10 m-l-5 show_form">Ajouter un{{ ((app.request.attributes.get('type') == 'element') ? ' ' : 'e ') ~ app.request.attributes.get('type') }}</button>
         </div>
         <div id="selection_elements" class="card">
             <br/>
@@ -95,7 +95,7 @@
                                                 {{ recursiveMacro.recursiveTabPage(object) }}
                                             {% else %}
                                                 {% set type = (key | trim('s', 'right') | lower) %}
-                                                <tr class="none" data-id="{{ object.id }}" data-type="{{ type }}" data-action="{{ path('admin_entity_json',{'type':app.request.attributes.get('type'),'parentType':type,'parentId':object.id}) }}">
+                                                <tr class="none" data-id="{{ object.id }}" data-type="{{ type }}" data-action="{{ path('neptune_entity_json',{'type':app.request.attributes.get('type'),'parentType':type,'parentId':object.id}) }}">
                                                     <td>{{ object.name }}</td>
                                                     <td>
                                                         {% if object.parent is defined and object.parent != null %}
