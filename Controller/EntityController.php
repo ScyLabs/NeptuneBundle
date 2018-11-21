@@ -38,19 +38,12 @@ class EntityController extends BaseController
 {
 
     /* Quelles Entités sont acceptées pour un retour JSON avec la route admin_entity_json */
-    const JSON_VALID_ENTITIES = "(page|element|zone|photo|video|document|partner)";
+
     const JSON_IGNORED_ATTRIBUTES = array('page','pages','parent','document','zone','video','file','type','element','partner','photo','pageLink','files');
 
     /* Quelles Entités sont Acceptées dans la majorité de ce controller ? */
 
 
-
-    /*
-     * @param Request $request
-     * @param $type
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("admin/{type}",name="admin_entity", requirements={"type"=EntityController::VALID_ENTITIES})
-     */
     public function listAction($type,$parentType,$parentId){
         if($parentType !== null && $parentId === null){
             return $this->redirectToRoute('admin_entity',array('type'=>$type));
@@ -109,11 +102,6 @@ class EntityController extends BaseController
 
     }
 
-    /*
-     * @param $type
-     * @return bool|float|int|string
-     * @Route("admin/{type}/json/{parentType}/{parentId}",defaults={"parentType"=null,"parentId"=null}, name="admin_entity_json", requirements={"type"=EntityController::JSON_VALID_ENTITIES})
-     */
     public function jsonListingAction($type,$parentType,$parentId){
         $class = $this->getClass($type);
         $repo = $this->getDoctrine()->getRepository($class);
@@ -157,15 +145,6 @@ class EntityController extends BaseController
         return  new JsonResponse((new Serializer(array($normalizer),array($encoder)))->serialize($resultTab,'json'));
     }
 
-
-    /*
-     * @param Request $request
-     * @param $type
-     * @param $parentType
-     * @param $parentId
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Route("/admin/{type}/add/{parentType}/{parentId}", defaults={"parentType"=null,"parentId"=null},name="admin_entity_add", requirements={"type"=EntityController::VALID_ENTITIES} )
-     */
     public function addAction(Request $request,$type,$parentType,$parentId){
 
         $class = $this->getClass($type,$form);
@@ -218,14 +197,6 @@ class EntityController extends BaseController
 
     }
 
-
-    /*
-     * @param Request $request
-     * @param $id
-     * @param $type
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Route("/admin/{type}/{id}",name="admin_entity_edit", requirements={"type"=EntityController::VALID_ENTITIES,"id"="\d+"})
-     */
     public function editAction(Request $request,$id,$type){
 
         $class = $this->getClass($type,$form);
@@ -264,14 +235,6 @@ class EntityController extends BaseController
         }
     }
 
-    /*
-     * @param Request $request
-     * @param $type
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Route("/admin/{type}/delete/{id}",name="admin_entity_delete", requirements={"type"=EntityController::VALID_ENTITIES,"id"="\d+"})
-     * @Method({"GET","POST"})
-     */
     public function deleteAction(Request $request,$type,$id){
         $class = $this->getClass($type);
         $em = $this->getDoctrine()->getManager();
@@ -300,13 +263,6 @@ class EntityController extends BaseController
         return $this->render('@ScyLabsNeptune/admin/delete.html.twig',$params);
     }
 
-
-    /*
-     * @param Request $request
-     * @param $type
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Route("/admin/{type}/prio",name="admin_entity_prio", requirements={"type"=EntityController::VALID_ENTITIES})
-     */
     public function prioAction(Request $request,$type){
         $ajax = $request->isXmlHttpRequest();
         $prio = $request->request->get('prio');
@@ -338,14 +294,6 @@ class EntityController extends BaseController
 
     }
 
-
-    /*
-     * @param Request $request
-     * @param $id
-     * @param $type
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route("/admin/{type}/active/{id}", name="admin_entity_active" ,requirements={"type"=EntityController::VALID_ENTITIES,"id"="\d+"})
-     */
     public function switchActiveAction(Request $request,$id,$type){
         $em = $this->getDoctrine()->getManager();
         $class =$this->getClass($type);

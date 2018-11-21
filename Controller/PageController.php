@@ -26,9 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PageController extends Controller
 {
-    /*
-     * @Route("/{_locale}",name="homepage",requirements={"_locale"="[a-z]{2}"},defaults={"_locale"="fr"})
-     */
+
     public function homeAction(Request $request){
 
         $em = $this->getDoctrine()->getManager();
@@ -53,11 +51,6 @@ class PageController extends Controller
         return $this->render('page/home.html.twig',$params);
     }
 
-
-
-    /*
-     * @Route("/{_locale}/{slug}",name="page",requirements={"slug"="^(?!admin)[a-z-_0-9/]+$","_locale"="[a-z]{2}"})
-     */
     public function pageAction(Request $request,$slug){
         $em = $this->getDoctrine()->getManager();
         $url = $em->getRepository(PageUrl::class)->findOneBy(array(

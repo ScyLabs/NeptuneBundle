@@ -21,13 +21,8 @@ class PhotoController extends Controller
 
 
     private $photoQuality = 90;
-    /*
-     * @Route("/photo/{id}/{width}/{height}/{multiplicator}/{truncate}/{name}",
-     *  name="generatePhoto",
-     *  requirements={"id"="\d+","width"="[0-9]{1,4}","height"="[0-9]{0,4}","truncate" = "[01]","multiplicator"="[0-9]{2,3}"},
-     *  defaults={"height"=0,"multiplicator"=100,"truncate"=0,"name"=""}
-     * )
-     */
+
+
     public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate){
 
         if($width == 0 && $height == 0) {

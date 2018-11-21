@@ -18,10 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class InfosController extends BaseController
 {
 
-    /*
-     *
-     * @Route("admin/infos/edit",name="admin_infos_edit")
-     */
     public function editAction(Request $request){
         $class = Infos::class;
         $form = InfosForm::class;

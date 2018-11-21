@@ -24,11 +24,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class DetailController extends BaseController
 {
 
-   //const VALID_ENTITIES = "(page|element|zone|partner|photo)";
-    const VALID_ENTITIES = "[a-z]{2,20}";
-    /*
-     * @Route("admin/{type}/details/{id}",defaults={"parentType"=null},name="admin_detail", requirements={"type"=DetailController::VALID_ENTITIES,"id"="\d+"})
-     */
     public function listAction(Request $request,$type,$id){
         $class = $this->getClass($type);
         if($class === null){
@@ -127,10 +122,8 @@ class DetailController extends BaseController
 
         return $this->render('@ScyLabsNeptune/admin/detail/details.html.twig',$params);
     }
-    /*
-     * @Method("POST")
-     * @Route("/admin/{type}/detail/{lang}/{id}",name="admin_detail_edit",requirements={"type"=DetailController::VALID_ENTITIES,"id"="\d+","lang"="[a-z]{2}"})
-     */
+
+
     public function editAction(Request $request,$type,$id,$lang){
 
         $class = $this->getClass($type);

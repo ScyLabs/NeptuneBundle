@@ -39,9 +39,7 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
 class FileController extends BaseController
 {
-    /*
-     * @Route("/admin/gallery",name="admin_file")
-     */
+
     public function addAction(Request $request){
         $em = $this->getDoctrine();
         $repoFiles = $em->getRepository(File::class);
@@ -76,10 +74,6 @@ class FileController extends BaseController
         return $this->render('@ScyLabsNeptune/admin/file/listing.html.twig',$params);
     }
 
-    /*
-     * @Route("/admin/file/link" , name="admin_file_link")
-     * @Method("POST")
-     */
     public function linkAction(Request $request){
 
         $select = $request->request->get('selection');
@@ -210,9 +204,7 @@ class FileController extends BaseController
             }
         }
     }
-    /*
-     * @Route("/admin/{type}/remove/{id}",name="admin_file_link_remove",requirements={"type"="(photo|video|document)","id"="\d+"})
-     */
+
     public function removeLinkAction(Request $request,$type,$id){
         $class = $this->getClass($type);
         $em = $this->getDoctrine()->getManager();
@@ -258,10 +250,6 @@ class FileController extends BaseController
         return $this->redirectToRoute('admin_file');
     }
 
-
-    /*
-     * @Route("/admin/file/upload",name="admin_file_upload")
-     */
     public function uploadAction(Request $request,FileUploader $fileUploader){
 
 
@@ -336,9 +324,6 @@ class FileController extends BaseController
         return $this->json($result);
     }
 
-    /*
-     * @Route("admin/{type}/{id}/files", name="admin_file_gallery_prio" , requirements={"id"="\d+","type"="[a-z]{2,20}"})
-     */
     public function galleryPrioAction(Request $request,$id,$type){
 
         $em = $this->getDoctrine()->getManager();
@@ -395,10 +380,6 @@ class FileController extends BaseController
         return $this->render('@ScyLabsNeptune/admin/file/gallery_prio.html.twig',$params);
     }
 
-    /*
-     * @Route("admin/file/prio",name="admin_file_prio")
-     * @Method("POST")
-     */
     public function prioAction(Request $request){
         $ajax = $request->isXmlHttpRequest();
         $prios = json_decode($request->request->get('prio'),true);
@@ -452,10 +433,7 @@ class FileController extends BaseController
             return $this->redirectToRoute('admin_file_gallery_prio');
         }
     }
-
-    /*
-     * @Route("admin/file/delete/{id}",name="admin_file_delete",requirements={"id" = "\d+"})
-     */
+    
     public function deleteAction(Request $request,$id){
         $repo = $this->getDoctrine()->getRepository(File::class);
         $file = $repo->find($id);

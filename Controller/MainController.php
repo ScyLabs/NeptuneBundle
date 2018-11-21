@@ -13,9 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class MainController extends Controller
 {
-    /*
-     * @Route("/admin", name="admin_home")
-     */
+
     public function indexAction(){
 
         return $this->render('@ScyLabsNeptune/admin/index.html.twig');
