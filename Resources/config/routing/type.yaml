@@ -1,0 +1,26 @@
+admin_type_add:
+    path: /admin/{type}/type/add
+    controller: ScyLabs\NeptuneBundle\Controller\TypeController::addAction
+    requirements:
+        type: "[a-z]{2,20}"
+
+admin_type:
+    path: /admin/{type}/type
+    controller: ScyLabs\NeptuneBundle\Controller\TypeController::listAction
+    requirements:
+        type: "[a-z]{2,20}"
+
+admin_type_edit:
+    path: /admin/{type}/type/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\TypeController::editAction
+    requirements:
+        id: "[0-9]+"
+        type: "[a-z]{2,20}"
+
+admin_type_delete:
+    path: /admin/{type}/type/delete/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\TypeController::deleteAction
+    requirements:
+        id: "[0-9]+"
+        type: "[a-z]{2,20}"
+    methods: [POST,GET]

@@ -1,0 +1,19 @@
+neptune_user:
+    resource: 'routing/user.yaml'
+neptune_type:
+    resource: 'routing/type.yaml'
+neptune_infos:
+    resource: 'routing/infos.yaml'
+neptune_detail:
+    resource: 'routing/detail.yaml'
+neptune_file:
+    resource: 'routing/file.yaml'
+neptune_entity:
+    resource: 'routing/entity.yaml'
+neptune_security:
+    resource: 'routing/security.yaml'
+
+
+admin_home:
+    path: /admin
+    controller: ScyLabs\NeptuneBundle\Controller\MainController::indexAction

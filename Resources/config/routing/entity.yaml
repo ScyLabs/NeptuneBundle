@@ -1,0 +1,54 @@
+admin_entity_add:
+    path: /admin/{type}/add/{parentType}/{parentId}
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::addAction
+    defaults:
+        parentType: null
+        parentId: null
+    requirements:
+        type: "[a-z]{2,20}"
+
+admin_entity_delete:
+    path: /admin/{type}/delete/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::deleteAction
+    requirements:
+        type: "[a-z]{2,20}"
+        id: "[0-9]+"
+
+admin_entity_edit:
+    path: /admin/{type}/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::editAction
+    requirements:
+        type: "[a-z]{2,20}"
+        id: "[0-9]+"
+
+admin_entity_json:
+    path: /admin/{type}/json/{parentType}/{parentId}
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::jsonListingAction
+    defaults:
+        parentType: null
+        parentId: null
+    requirements:
+        type: "[a-z]{2,20}"
+
+admin_entity:
+    path: /admin/{type}/{parentType}/{parentId}
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::listAction
+    requirements:
+        type: "[a-z]{2,20}"
+        parentTypme: "[a-z]{2,20}"
+    defaults:
+        parentType: null
+        parentId: null
+
+admin_entity_prio:
+    path: /admin/{type}/prio
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::prioAction
+    requirements:
+        type: "[a-z]{2,20}"
+
+admin_entity_active:
+    path: /admin/{type}/active/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::switchActiveAction
+    requirements:
+        type: "[a-z]{2,20}"
+        id: "[0-9]+"

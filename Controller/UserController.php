@@ -15,9 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends BaseController
 {
-    /**
-     * @Route("admin/user",name="admin_user")
-     */
+
     public function listingAction(Request $request){
 
         $repo = $this->getDoctrine()->getRepository(User::class);
@@ -40,12 +38,6 @@ class UserController extends BaseController
 
     }
 
-    /**
-     * @param Request $request
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route("/admin/user/active/{id}", name="admin_user_active" ,requirements={"type"=EntityController::VALID_ENTITIES,"id"="\d+"})
-     */
     public function switchActiveAction(Request $request,$id){
 
         $em = $this->getDoctrine()->getManager();
@@ -67,11 +59,7 @@ class UserController extends BaseController
         $em->flush();
         return $this->redirect($referer);
     }
-
-
-    /**
-     * @Route("/admin/user/add", name="admin_user_add")
-     */
+    
     public function addAction(Request $request){
 
         $class = $this->getClass('user',$form);
