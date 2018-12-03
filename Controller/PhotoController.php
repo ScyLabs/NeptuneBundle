@@ -31,7 +31,7 @@ class PhotoController extends Controller
     public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate){
 
         if($width == 0 && $height == 0) {
-            throw new HttpException(302);
+           $width = 1000;
         }
 
         // Récupération de la photo
@@ -141,7 +141,7 @@ class PhotoController extends Controller
         $etag = 'W/"' . md5($last_modified_time) . '"';
 
         $result = ($file->getExt() == 'jpg') ? 'jpeg' : $file->getExt();
-        header('Content-Type: image/'.$result);
+        //header('Content-Type: image/'.$result);
         header('Content-Length: '.filesize($path));
 
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $last_modified_time) . " GMT");
