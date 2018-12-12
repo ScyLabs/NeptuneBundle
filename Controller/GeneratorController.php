@@ -66,11 +66,11 @@ class GeneratorController extends BaseController
                                 'slug'  =>  $urlObj->getUrl()
                             ));
                         }
-                        else{
+                        else{/*
                             $url = $this->generateUrl('detail_element',array(
                                 '_locale'   =>  $urlObj->getLang(),
                                 'slug'      =>  $urlObj->getUrl()
-                            ));
+                            ));*/
                         }
 
 
