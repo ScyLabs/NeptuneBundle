@@ -58,7 +58,7 @@ class GeneratorController extends BaseController
 
                 if(in_array($urlObj->getLang(),$this->getParameter('langs'))){
 
-                        if($object instanceof Page){
+                        if($object instanceof Page && $object->getType()->getName() != 'not_accessible'){
                             $url = ($object->getPrio() === 0 && $object->getParent() === null) ?  $this->generateUrl('homepage',array(
                                 '_locale'  =>  $urlObj->getLang(),
                             )) :  $this->generateUrl('page',array(
