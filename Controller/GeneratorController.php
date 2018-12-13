@@ -74,10 +74,12 @@ class GeneratorController extends BaseController
                         }
 
 
+                    if(isset($url)){
+                        $urls[] = array(
+                            'loc'   => $url
+                        );
+                    }
 
-                    $urls[] = array(
-                        'loc'   => $url
-                    );
                 }
             }
         }
