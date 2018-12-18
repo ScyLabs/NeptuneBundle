@@ -41,7 +41,7 @@ class PageController extends Controller
         $page = $pages[0];
 
         $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
-        $partners = $em->getRepository(Partner::class)->findAll();
+        $partners = $em->getRepository(Partner::class)->findBy(['remove'=>false]);
         $contactPages = new ArrayCollection();
         foreach ($pages as $thisPage){
             if($thisPage->getType()->getName() == 'contact'){
@@ -100,7 +100,7 @@ class PageController extends Controller
 
 
         $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
-        $partners = $em->getRepository(Partner::class)->findAll();
+        $partners = $em->getRepository(Partner::class)->findBy(['remove'=>false]);
 
         $contactPages = new ArrayCollection();
 
