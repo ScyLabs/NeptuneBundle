@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -31,6 +32,11 @@ class ElementForm extends AbstractType
     {
 
         $builder
+            ->add('creationDate',DateType::class,array(
+                'label'     => 'Date',
+                'html5'     =>  true,
+                'widget'    =>  'single_text'
+            ))
             ->add('name',TextType::class,[
                 'label'=>'Nom de la Element'
             ]);
