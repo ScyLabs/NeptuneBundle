@@ -16,6 +16,7 @@ use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\PageUrl;
 use ScyLabs\NeptuneBundle\Entity\Partner;
 use ScyLabs\NeptuneBundle\Entity\User;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\FormError;
