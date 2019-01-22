@@ -84,7 +84,7 @@ function zonesAndElements(elem){
 
     let type = elem.attr('data-type');
     let zones = JSON.parse(elem.attr('data-zones'));
-    let elements = JSON(elem.attr('data-elements'));
+    let elements = JSON.parse(elem.attr('data-elements'));
     if(type == 'page'){
         if(tabs.find('.ui-tabs-tab').hasClass('ui-state-disabled')){
             tabs.tabs('enable')
