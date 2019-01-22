@@ -49,7 +49,9 @@ class EntityController extends BaseController
             return $this->redirectToRoute('neptune_entity',array('type'=>$type));
         }
 
-        $class = $this->getClass($type);
+        if(null === $class = $this->getClass($type)){
+            return $this->redirectToRoute('neptune_home');
+        }
 
         $repo = $this->getDoctrine()->getRepository($class);
         $child = false;
@@ -103,7 +105,10 @@ class EntityController extends BaseController
     }
 
     public function jsonListingAction($type,$parentType,$parentId){
-        $class = $this->getClass($type);
+
+        if(null === $class = $this->getClass($type)){
+            return $this->redirectToRoute('neptune_home');
+        }
         $repo = $this->getDoctrine()->getRepository($class);
         $encoder = new JsonEncoder();
         $normalizer =new ObjectNormalizer();
@@ -147,7 +152,10 @@ class EntityController extends BaseController
 
     public function addAction(Request $request,$type,$parentType,$parentId){
 
-        $class = $this->getClass($type,$form);
+        if(null === $class = $this->getClass($type,$form)){
+            return $this->redirectToRoute('neptune_home');
+        }
+
         $object = new $class();
 
         if($parentType !== null && $parentId !== null && in_array($parentType,['page','element'])){
@@ -199,7 +207,10 @@ class EntityController extends BaseController
 
     public function editAction(Request $request,$id,$type){
 
-        $class = $this->getClass($type,$form);
+        if(null === $class = $this->getClass($type,$form)){
+            return $this->redirectToRoute('neptune_home');
+        }
+
         $repo = $this->getDoctrine()->getRepository($class);
         $object = $repo->find($id);
 
@@ -236,7 +247,10 @@ class EntityController extends BaseController
     }
 
     public function deleteAction(Request $request,$type,$id){
-        $class = $this->getClass($type);
+
+        if(null === $class = $this->getClass($type,$form)){
+            return $this->redirectToRoute('neptune_home');
+        }
         $em = $this->getDoctrine()->getManager();
         $object = $em->getRepository($class)->find($id);
         if($object === null){
@@ -275,7 +289,10 @@ class EntityController extends BaseController
             }
         }
         $em = $this->getDoctrine()->getManager();
-        $class = $this->getClass($type,$form);
+
+        if(null === $class = $this->getClass($type)){
+            return new Response('');
+        }
         $repo = $em->getRepository($class);
         $objects = $repo->findAll();
         $tabObjects = array();
@@ -295,8 +312,12 @@ class EntityController extends BaseController
     }
 
     public function switchActiveAction(Request $request,$id,$type){
+
+        if(null === $class = $this->getClass($type)){
+            return $this->redirectToRoute('neptune_home');
+        }
+
         $em = $this->getDoctrine()->getManager();
-        $class =$this->getClass($type);
         $object = $em->getRepository($class)->find($id);
 
         if(null === $object){

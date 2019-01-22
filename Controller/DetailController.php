@@ -25,10 +25,11 @@ class DetailController extends BaseController
 {
 
     public function listAction(Request $request,$type,$id){
-        $class = $this->getClass($type);
-        if($class === null){
+
+        if(null === $class = $this->getClass($type)){
             return $this->redirectToRoute('neptune_home');
         }
+
         $langs = $this->getParameter('langs');
         $classDetail = $this->getDetailClass($class,$form);
         $em = $this->getDoctrine()->getManager();
@@ -126,8 +127,7 @@ class DetailController extends BaseController
 
     public function editAction(Request $request,$type,$id,$lang){
 
-        $class = $this->getClass($type);
-        if(null === $class){
+        if(null === $class = $this->getClass($type)){
             return $this->redirectToRoute('neptune_home');
         }
         if(null === $object = $this->getDoctrine()->getRepository($class)->find($id)){
