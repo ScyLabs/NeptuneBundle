@@ -1,55 +1,54 @@
 <li class="nav-devider"></li>
-<li class="nav-label">Home</li>
-<li> <a href="{{ path('admin_home') }}" aria-expanded="false"><i class="fa fa-tachometer"></i><span class="hide-menu">Panneau de bords <span class="label label-rouded label-primary pull-right">2</span></span></a>
+<li> <a href="{{ path('neptune_home') }}" aria-expanded="false"><i class="fa fa-tachometer"></i><span class="hide-menu">{{ 'Tableau de bord' | trans }}<span class="label label-rouded label-primary pull-right">2</span></span></a>
 </li>
 <li>
-    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">Gestion des pages</span> </a>
+    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{ 'Gérer vos pages' | trans }}</span> </a>
     <ul aria-expanded="false" class="collapse">
-        <li><a href="{{ path('admin_entity',{'type':'page'}) }}"><i class="fa fa-list-ul m-r-10"></i>Listing des pages</a> </li>
-        <li><a href="{{ path('admin_entity_add',{'type':'page'}) }}"><i class="fa fa-plus m-r-10"></i>Créer une page</a> </li>
+        <li><a href="{{ path('neptune_entity',{'type':'page'}) }}"><i class="fa fa-list-ul m-r-10"></i>{{ 'Toutes les pages' | trans }}</a> </li>
+        <li><a href="{{ path('neptune_entity_add',{'type':'page'}) }}"><i class="fa fa-plus m-r-10"></i>{{'Créer une page' | trans}}</a> </li>
         {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <li><a href="{{ path('admin_type',{'type':'page'}) }}"><i class="fa fa-list-ul m-r-10"></i>Types de page</a> </li>
-            <li><a href="{{ path('admin_type_add',{'type':'page'}) }}"><i class="fa fa-plus m-r-10"></i>Créer un type de page</a> </li>
+            <li><a href="{{ path('neptune_type',{'type':'page'}) }}"><i class="fa fa-list-ul m-r-10"></i>{{'Types de pages' | trans}}</a> </li>
+            <li><a href="{{ path('neptune_type_add',{'type':'page'}) }}"><i class="fa fa-plus m-r-10"></i>{{'Créer un type de page' | trans}}</a> </li>
         {% endif %}
     </ul>
 </li>
 <li>
-    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">Gestion des zones</span> </a>
+    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{'Gérer le contenu' | trans}}</span> </a>
     <ul aria-expanded="false" class="collapse">
 
-        <li><a href="{{ path('admin_entity',{'type':'zone'}) }}">Listing des zones</a></li>
+        <li><a href="{{ path('neptune_entity',{'type':'zone'}) }}">{{'Tout le contenu' | trans}}</a></li>
         {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <li><a href="{{ path('admin_type',{'type':'zone'}) }}"><i class="fa fa-list-ul m-r-10"></i>Types de Zones</a> </li>
-            <li><a href="{{ path('admin_type_add',{'type':'zone'}) }}"><i class="fa fa-plus m-r-10"></i>Créer un type de zone</a> </li>
+            <li><a href="{{ path('neptune_type',{'type':'zone'}) }}"><i class="fa fa-list-ul m-r-10"></i>{{'Types de Zones' | trans}}</a> </li>
+            <li><a href="{{ path('neptune_type_add',{'type':'zone'}) }}"><i class="fa fa-plus m-r-10"></i>{{'Créer un type de zone' | trans}}</a> </li>
         {% endif %}
     </ul>
 </li>
 <li>
-    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">Gestion des Elements</span> </a>
+    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{ 'Gérer vos' }}{{'element_title' | trans}}</span> </a>
     <ul aria-expanded="false" class="collapse">
 
-        <li><a href="{{ path('admin_entity',{'type':'element'}) }}">Listing des éléments</a></li>
+        <li><a href="{{ path('neptune_entity',{'type':'element'}) }}">{{'Listing des' | trans }} {{'element_titles'}}</a></li>
         {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <li><a href="{{ path('admin_type',{'type':'element'}) }}"><i class="fa fa-list-ul m-r-10"></i>Types d'Elements</a> </li>
-            <li><a href="{{ path('admin_type_add',{'type':'element'}) }}"><i class="fa fa-plus m-r-10"></i>Créer un type d'élement</a> </li>
+            <li><a href="{{ path('neptune_type',{'type':'element'}) }}"><i class="fa fa-list-ul m-r-10"></i>{{"type_element" | trans}}</a> </li>
+            <li><a href="{{ path('neptune_type_add',{'type':'element'}) }}"><i class="fa fa-plus m-r-10"></i>{{"creer_type_element" | trans}}</a> </li>
         {% endif %}
     </ul>
 </li>
 <li>
-    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">Gestion des Partenaires</span> </a>
+    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{"Partenaires" | trans}}</span> </a>
     <ul aria-expanded="false" class="collapse">
-        <li><a href="{{ path('admin_entity',{'type':'partner'}) }}"><i class="fa fa-list-ul m-r-10"></i>Listing des Partenaires</a> </li>
-        <li><a href="{{ path('admin_entity_add',{'type':'partner'}) }}"><i class="fa fa-plus m-r-10"></i>Créer un Partenaire</a> </li>
+        <li><a href="{{ path('neptune_entity',{'type':'partner'}) }}"><i class="fa fa-list-ul m-r-10"></i>{{"Gérer vos Partenaires" | trans}}</a> </li>
+        <li><a href="{{ path('neptune_entity_add',{'type':'partner'}) }}"><i class="fa fa-plus m-r-10"></i>{{"Créer un Partenaire" | trans}}</a> </li>
     </ul>
 </li>
-<li class="nav-label">Medias</li>
+<li class="nav-label">{{"Medias" | trans}}</li>
 <li>
-    <a href="{{ path('admin_file') }}"><i class="fa fa-photo"></i> Mediathèque</a>
-    <a href="{{ path('admin_type',{'type':'file'}) }}"><i class="fa fa-photo"></i> Type de fichiers</a>
+    <a href="{{ path('neptune_file') }}"><i class="fa fa-photo"></i> {{"Gérer vos medias" | trans}}</a>
+    <a href="{{ path('neptune_type',{'type':'file'}) }}"><i class="fa fa-photo"></i> {{"Type de fichier" | trans}}</a>
 </li>
-<li class="nav-label">Configuration</li>
+<li class="nav-label">{{"Coordonnées et utilisateurs" | trans}}</li>
 <li>
-    <a href="{{ path('admin_infos_edit') }}"><i class="fa fa-photo"></i>Informations du site</a>
+    <a href="{{ path('neptune_infos_edit') }}"><i class="fa fa-photo"></i>{{"Gérer vos coordonnées" | trans}}</a>
 </li>
-<li><a href="{{ path('admin_user') }}"><i class="fa fa-user"></i>Gestion des utilisateurs</a> </li>
+<li><a href="{{ path('neptune_user') }}"><i class="fa fa-user"></i>{{"Gérer vos utilisateurs" | trans}}</a> </li>
 {{ include('@ScyLabsNeptune/admin/menu.html.twig') }}

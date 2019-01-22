@@ -1,0 +1,14 @@
+page:
+    path: /{_locale}/{slug}
+    controller: ScyLabs\NeptuneBundle\Controller\Front\PageController::pageAction
+    requirements:
+        slug: "^[a-z-_0-9/]+$"
+        locale: "[a-z]{2}"
+
+homepage:
+    path: /{_locale}
+    controller: ScyLabs\NeptuneBundle\Controller\Front\PageController::homeAction
+    requirements:
+        _locale: "[a-z]{2}"
+    defaults:
+        _locale: "fr"

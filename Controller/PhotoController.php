@@ -10,13 +10,14 @@ namespace ScyLabs\NeptuneBundle\Controller;
 
 use ScyLabs\NeptuneBundle\Entity\File;
 use ScyLabs\NeptuneBundle\Entity\Photo;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PhotoController extends Controller
+class PhotoController extends AbstractController
 {
 
 

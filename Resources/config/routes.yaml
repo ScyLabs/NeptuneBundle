@@ -14,6 +14,6 @@ neptune_security:
     resource: 'routing/security.yaml'
 
 
-admin_home:
-    path: /admin
+neptune_home:
+    path: /
     controller: ScyLabs\NeptuneBundle\Controller\MainController::indexAction

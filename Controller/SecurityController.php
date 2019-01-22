@@ -12,6 +12,7 @@ namespace ScyLabs\NeptuneBundle\Controller;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -33,7 +34,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class SecurityController extends Controller
+class SecurityController extends AbstractController
 {
 
     private $eventDispatcher;
@@ -57,7 +58,7 @@ class SecurityController extends Controller
             if($this->getUser()->getFirstConnexion() == true){
                 return $this->redirectToRoute('security_first_connexion');
             }
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('neptune_home');
         }else{
             return $this->redirectToRoute('index');
         }
@@ -99,7 +100,7 @@ class SecurityController extends Controller
             $user->setFirstConnexion(false);
             $this->userManager->updateUser($user);
 
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('neptune_home');
         }
 
         return $this->render('@ScyLabsNeptune/security/first_connexion.html.twig', array(

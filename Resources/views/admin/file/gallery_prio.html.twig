@@ -23,7 +23,7 @@
         <div class="col-md-12 trans500">
             <h4>Gestions des photos</h4>
             <div class="card">
-                <ul class="cartouches hack-inline sortable" data-action="{{ path('admin_file_prio') }}" data-type="photo">
+                <ul class="cartouches hack-inline sortable" data-action="{{ path('neptune_file_prio') }}" data-type="photo">
                     {% if object is defined %}
                         {% for photo in object.photos %}
                                 {% set file = photo.file %}
@@ -39,10 +39,10 @@
 
                                         </li>
                                         <li>
-                                            <a href="{{ path('admin_detail',{'type':'photo','id':photo.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
+                                            <a href="{{ path('neptune_detail',{'type':'photo','id':photo.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
                                         </li>
                                         <li>
-                                            <a href="{{ path('admin_file_link_remove',{'type':'photo','id':photo.id}) }}"><i class="fa fa-times" style="color: red;"></i></a>
+                                            <a href="{{ path('neptune_file_link_remove',{'type':'photo','id':photo.id}) }}"><i class="fa fa-times" style="color: red;"></i></a>
                                         </li>
                                     </ul>
                                 </li>
@@ -52,7 +52,7 @@
             </div>
             <h4>Gestions des Videos</h4>
             <div class="card">
-                <ul class="cartouches hack-inline sortable" data-action="{{ path('admin_file_prio') }}" data-type="video">
+                <ul class="cartouches hack-inline sortable" data-action="{{ path('neptune_file_prio') }}" data-type="video">
                     {% if object is defined %}
                         {% for video in object.videos %}
                             {% set file = video.file %}
@@ -67,10 +67,10 @@
 
                                     </li>
                                     <li>
-                                        <a href="{{ path('admin_detail',{'type':'video','id':video.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
+                                        <a href="{{ path('neptune_detail',{'type':'video','id':video.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
                                     </li>
                                     <li>
-                                        <a href="{{ path('admin_file_link_remove',{'type':'video','id':video.id}) }}"><i class="fa fa-times" style="color: red;"></i></a>
+                                        <a href="{{ path('neptune_file_link_remove',{'type':'video','id':video.id}) }}"><i class="fa fa-times" style="color: red;"></i></a>
                                     </li>
                                 </ul>
                             </li>
@@ -80,7 +80,7 @@
             </div>
             <h4>Gestions des Documents</h4>
             <div class="card">
-                <ul class="cartouches hack-inline sortable" data-action="{{ path('admin_file_prio') }}" data-type="document">
+                <ul class="cartouches hack-inline sortable" data-action="{{ path('neptune_file_prio') }}" data-type="document">
                     {% if object is defined %}
                         {% for document in object.documents %}
                             {% set file = document.file %}
@@ -98,10 +98,10 @@
                                     <li><a href="{{ asset('uploads/'~file.file)}}" class="fancy fancy_box"><i class="fa fa-search"></i> </a>
                                     </li>
                                     <li>
-                                        <a href="{{ path('admin_detail',{'type':'document','id':document.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
+                                        <a href="{{ path('neptune_detail',{'type':'document','id':document.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
                                     </li>
                                     <li>
-                                        <a href="{{ path('admin_file_link_remove',{'type':'document','id':document.id}) }}"><i class="fa fa-times" style="color: red;"></i></a>
+                                        <a href="{{ path('neptune_file_link_remove',{'type':'document','id':document.id}) }}"><i class="fa fa-times" style="color: red;"></i></a>
                                     </li>
                                 </ul>
                             </li>
@@ -113,7 +113,7 @@
     </div>
 
     <div id="addfile_form">
-        <form action="{{ path('admin_file_upload') }}"
+        <form action="{{ path('neptune_file_upload') }}"
               class="dropzone"
               id="customdropzone"></form>
     </div>
@@ -147,7 +147,7 @@
         <div class="col-md-2 trans500" id="gallery_actions">
             <div class="card">
                 <button onclick="$('#addfile_form').slideToggle(500)" class="btn btn-pink m-b-10 m-l-5 show_form">Ajouter des fichiers</button>
-                <button id="valider_liaison" data-action="{{ path('admin_file_link') }}" class="btn btn-pink m-b-10 m-l-5 show_form">Lier</button>
+                <button id="valider_liaison" data-action="{{ path('neptune_file_link') }}" class="btn btn-pink m-b-10 m-l-5 show_form">Lier</button>
             </div>
             <div id="selection_elements" class="card none">
                 <div class="card">

@@ -1,38 +1,38 @@
-admin_file:
-    path: /admin/gallery
+neptune_file:
+    path: /gallery
     controller: ScyLabs\NeptuneBundle\Controller\FileController::addAction
 
-admin_file_delete:
-    path: /admin/file/delete/{id}
+neptune_file_delete:
+    path: /file/delete/{id}
     controller: ScyLabs\NeptuneBundle\Controller\FileController::deleteAction
     requirements:
         id : "[0-9]+"
 
-admin_file_link:
-    path: /admin/file/link
+neptune_file_link:
+    path: /file/link
     controller: ScyLabs\NeptuneBundle\Controller\FileController::linkAction
     methods: [POST]
 
-admin_file_link_remove:
-    path: /admin/{type}/remove/{id}
+neptune_file_link_remove:
+    path: /{type}/remove/{id}
     controller: ScyLabs\NeptuneBundle\Controller\FileController::removeLinkAction
     requirements:
         type: "(photo|video|document)"
         id: "[0-9]+"
 
-admin_file_upload:
-    path: /admin/file/upload
+neptune_file_upload:
+    path: /file/upload
     controller: ScyLabs\NeptuneBundle\Controller\FileController::uploadAction
 
-admin_file_gallery_prio:
-    path: /admin/{type}/{id}/files
+neptune_file_gallery_prio:
+    path: /{type}/{id}/files
     controller: ScyLabs\NeptuneBundle\Controller\FileController::galleryPrioAction
     requirements:
         type: "[a-z]{2,20}"
         id: "[0-9]+"
 
-admin_file_prio:
-    path: /admin/file/prio
+neptune_file_prio:
+    path: /file/prio
     controller: ScyLabs\NeptuneBundle\Controller\FileController::prioAction
     methods: [POST]
 

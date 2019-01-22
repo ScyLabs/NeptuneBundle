@@ -1,0 +1,7 @@
+detail_element:
+    path: /{_locale}/element/{slug}
+    requirements:
+        _locale: "[a-z]{2}"
+        slug: "^[a-z-_0-9/]+$"
+    defaults:
+        _locale: "fr"

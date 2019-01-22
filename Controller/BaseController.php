@@ -45,9 +45,9 @@ use ScyLabs\NeptuneBundle\Form\UserForm;
 use ScyLabs\NeptuneBundle\Form\ZoneDetailForm;
 use ScyLabs\NeptuneBundle\Form\ZoneForm;
 use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class BaseController extends Controller
+class BaseController extends AbstractController
 {
     /* Fonction de génération de formulaire (surement future service)*/
     protected function validForm($type,$object,$request,&$param,$action = null){

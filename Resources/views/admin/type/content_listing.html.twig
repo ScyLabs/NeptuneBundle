@@ -18,7 +18,7 @@
                                 <td>
                                     <ul class="actions">
                                         {% if type.removable %}
-                                            <li><a href="{{ path('admin_type_edit',{'id':type.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
+                                            <li><a href="{{ path('neptune_type_edit',{'id':type.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
                                             <li class="">
                                                 {{ render(controller(
                                                     'ScyLabs\\NeptuneBundle\\Controller\\TypeController::deleteAction',
@@ -36,10 +36,10 @@
             </div>
         </div>
     </div>
-    {% if app.request.attributes.get('_route') == 'admin_type' %}
+    {% if app.request.attributes.get('_route') == 'neptune_type' %}
         <div class="col-lg-2 m-t-25">
             <div class="card">
-                <button onclick="window.location.href = '{{ path('admin_type_add',{'type':app.request.attributes.get('type')}) }}'" class="btn btn-pink m-b-10 m-l-5 show_form">Créer un type</button>
+                <button onclick="window.location.href = '{{ path('neptune_type_add',{'type':app.request.attributes.get('type')}) }}'" class="btn btn-pink m-b-10 m-l-5 show_form">Créer un type</button>
             </div>
         </div>
     {% endif %}

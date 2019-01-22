@@ -62,7 +62,7 @@ class FileController extends BaseController
 
         $ariane = array(
             [
-                'link'=>$this->generateUrl('admin_home'),
+                'link'=>$this->generateUrl('neptune_home'),
                 'name'=>'Accueil'
             ],
             [
@@ -82,11 +82,11 @@ class FileController extends BaseController
 
         if($select === null || $id === null ||$typeElement === ''){
             $this->get('session')->getFlashBag()->add('notice',"Une erreur est survenue lors de la liaison de vos fichiers");
-            return $this->redirectToRoute('admin_file');
+            return $this->redirectToRoute('neptune_file');
         }
         if(null ===  $filesTab = json_decode($select)){
             $this->get('session')->getFlashBag()->add('notice',"Une erreur est survenue lors de la liaison de vos fichiers");
-            return $this->redirectToRoute('admin_file');
+            return $this->redirectToRoute('neptune_file');
         }
 
 
@@ -99,7 +99,7 @@ class FileController extends BaseController
         if($obj === null){
 
             $this->get('session')->getFlashBag()->add('notice',"Une erreur est survenue lors de la liaison de vos fichiers");
-            return $this->redirectToRoute('admin_file');
+            return $this->redirectToRoute('neptune_file');
         }
 
         $repoFiles = $em->getRepository(File::class);
@@ -181,7 +181,7 @@ class FileController extends BaseController
         $em->flush();
         $this->get('session')->getFlashBag()->add('notice',"Vos fichiers ont bien été liés.");
 
-        return $this->redirectToRoute('admin_file_gallery_prio',array('type'=>$typeElement,'id'=>$obj->getId()));
+        return $this->redirectToRoute('neptune_file_gallery_prio',array('type'=>$typeElement,'id'=>$obj->getId()));
 
     }
 
@@ -214,7 +214,7 @@ class FileController extends BaseController
             if($request->headers->get('referer') !== null){
                 return $this->redirect($request->headers->get('referer'));
             }
-            return $this->redirectToRoute('admin_file');
+            return $this->redirectToRoute('neptune_file');
         }
         //$em->remove($object);
         $parent = $object->getParent();
@@ -247,7 +247,7 @@ class FileController extends BaseController
         if($request->headers->get('referer') !== null){
             return $this->redirect($request->headers->get('referer'));
         }
-        return $this->redirectToRoute('admin_file');
+        return $this->redirectToRoute('neptune_file');
     }
 
     public function uploadAction(Request $request,FileUploader $fileUploader){
@@ -351,9 +351,9 @@ class FileController extends BaseController
         }
 
         $ariane = array(
-            ['link'=>$this->generateUrl('admin_home'),'name'=>'Accueil'],
+            ['link'=>$this->generateUrl('neptune_home'),'name'=>'Accueil'],
             [
-                'link'=>$this->generateUrl('admin_entity',array('type'=>$type)),
+                'link'=>$this->generateUrl('neptune_entity',array('type'=>$type)),
                 'name'=>'Pages'
             ],
             [
@@ -388,7 +388,7 @@ class FileController extends BaseController
             if($ajax)
                 return new Response('');
             else
-                return $this->redirectToRoute('admin_page');
+                return $this->redirectToRoute('neptune_page');
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -430,7 +430,7 @@ class FileController extends BaseController
             return new Response('');
         }
         else{
-            return $this->redirectToRoute('admin_file_gallery_prio');
+            return $this->redirectToRoute('neptune_file_gallery_prio');
         }
     }
     
@@ -438,11 +438,11 @@ class FileController extends BaseController
         $repo = $this->getDoctrine()->getRepository(File::class);
         $file = $repo->find($id);
         if(null === $file){
-            $this->redirectToRoute('admin_file');
+            $this->redirectToRoute('neptune_file');
         }
 
         $form = $this->createFormBuilder($file)->setMethod('PUT')
-            ->setAction($this->generateUrl('admin_file_delete',array('id'=>$file->getId())))
+            ->setAction($this->generateUrl('neptune_file_delete',array('id'=>$file->getId())))
             ->getForm();
 
         $form->handleRequest($request);
