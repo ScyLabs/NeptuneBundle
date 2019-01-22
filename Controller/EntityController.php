@@ -37,25 +37,26 @@ use Symfony\Component\Serializer\Serializer;
 class EntityController extends BaseController
 {
 
-    /* Quelles Entités sont acceptées pour un retour JSON avec la route admin_entity_json */
-    const JSON_VALID_ENTITIES = "(page|element|zone|photo|video|document|partner)";
-    const JSON_IGNORED_ATTRIBUTES = array('page','pages','parent','document','zone','video','file','type','element','partner','photo','pageLink','files');
-    /* Quelles Entités sont Acceptées dans la majorité de ce controller ? */
-    //const VALID_ENTITIES = "(page|element|zone|partner)";
-    const VALID_ENTITIES = "^(?!gallery|file)[a-z]{2,20}";
-    /**
-     * @param Request $request
-     * @param $type
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("admin/{type}",name="admin_entity", requirements={"type"=EntityController::VALID_ENTITIES})
-     */
-    public function listingAction($type){
+    /* Quelles Entités sont acceptées pour un retour JSON avec la route neptune_entity_json */
 
-        $class = $this->getClass($type);
+    const JSON_IGNORED_ATTRIBUTES = array('page','pages','parent','document','zone','video','file','type','element','partner','photo','pageLink','files');
+
+    /* Quelles Entités sont Acceptées dans la majorité de ce controller ? */
+
+
+    public function listAction($type,$parentType,$parentId){
+        if($parentType !== null && $parentId === null){
+            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
+        }
+
+        if(null === $class = $this->getClass($type)){
+            return $this->redirectToRoute('neptune_home');
+        }
 
         $repo = $this->getDoctrine()->getRepository($class);
         $child = false;
         $elemListing = false;
+
         if($class === Page::class){
             $objects = $repo->findBy(array(
                'parent' =>  null,
@@ -70,7 +71,7 @@ class EntityController extends BaseController
         }
         else{
             $objects = null;
-            if(!(new $class() instanceof AbstractChild)){
+            if(!(new $class() instanceof AbstractChild) || ($parentType !== null && $parentId !== null)){
                 $objects = $repo->findBy(array(
                     'remove'=>false,
                 ),['prio'=>'ASC']);
@@ -87,7 +88,7 @@ class EntityController extends BaseController
         );
         $params['ariane'] = array(
             [
-                'link'  => $this->generateUrl('admin_home'),
+                'link'  => $this->generateUrl('neptune_home'),
                 'name'  => 'Accueil'
             ],
             [
@@ -103,13 +104,11 @@ class EntityController extends BaseController
 
     }
 
-    /**
-     * @param $type
-     * @return bool|float|int|string
-     * @Route("admin/{type}/json/{parentType}/{parentId}",defaults={"parentType"=null,"parentId"=null}, name="admin_entity_json", requirements={"type"=EntityController::JSON_VALID_ENTITIES})
-     */
     public function jsonListingAction($type,$parentType,$parentId){
-        $class = $this->getClass($type);
+
+        if(null === $class = $this->getClass($type)){
+            return $this->redirectToRoute('neptune_home');
+        }
         $repo = $this->getDoctrine()->getRepository($class);
         $encoder = new JsonEncoder();
         $normalizer =new ObjectNormalizer();
@@ -137,10 +136,10 @@ class EntityController extends BaseController
             $actions = null;
             if(!($object instanceof AbstractFileLink)){
                 $actions = array(
-                    'active'    =>  $this->generateUrl('admin_entity_active',array('type'=>$type,'id'=>$object->getId())),
-                    'detail'    =>  $this->generateUrl('admin_detail',array('type'=>$type,'id'=>$object->getId())),
-                    'edit'      =>  $this->generateUrl('admin_entity_edit',array('type'=>$type,'id'=>$object->getId())),
-                    'gallery'   =>  $this->generateUrl('admin_file_gallery_prio',array('type'=>$type,'id'=>$object->getId())),
+                    'active'    =>  $this->generateUrl('neptune_entity_active',array('type'=>$type,'id'=>$object->getId())),
+                    'detail'    =>  $this->generateUrl('neptune_detail',array('type'=>$type,'id'=>$object->getId())),
+                    'edit'      =>  $this->generateUrl('neptune_entity_edit',array('type'=>$type,'id'=>$object->getId())),
+                    'gallery'   =>  $this->generateUrl('neptune_file_gallery_prio',array('type'=>$type,'id'=>$object->getId())),
                     'remove'    =>  $this->deleteAction(new Request(),$type,$object->getId()),
                 );
             }
@@ -151,17 +150,12 @@ class EntityController extends BaseController
         return  new JsonResponse((new Serializer(array($normalizer),array($encoder)))->serialize($resultTab,'json'));
     }
 
-    /**
-     * @param Request $request
-     * @param $type
-     * @param $parentType
-     * @param $parentId
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Route("/admin/{type}/add/{parentType}/{parentId}", defaults={"parentType"=null,"parentId"=null},name="admin_entity_add", requirements={"type"=EntityController::VALID_ENTITIES} )
-     */
     public function addAction(Request $request,$type,$parentType,$parentId){
 
-        $class = $this->getClass($type,$form);
+        if(null === $class = $this->getClass($type,$form)){
+            return $this->redirectToRoute('neptune_home');
+        }
+
         $object = new $class();
 
         if($parentType !== null && $parentId !== null && in_array($parentType,['page','element'])){
@@ -184,11 +178,11 @@ class EntityController extends BaseController
 
         $params['ariane'] = array(
             [
-                'link'  =>  $this->generateUrl('admin_home'),
+                'link'  =>  $this->generateUrl('neptune_home'),
                 'name' =>  'Accueil'
             ],
             [
-                'link'  =>  $this->generateUrl('admin_entity',array('type'=>$type)),
+                'link'  =>  $this->generateUrl('neptune_entity',array('type'=>$type)),
                 'name' =>  ucfirst($type).'s',
             ],
             [
@@ -200,11 +194,11 @@ class EntityController extends BaseController
         if($parentType !== null && $parentId !== null && in_array($parentType,['page','element'])){
             $paramsRoute['parentId'] = $parentId;$paramsRoute['parentType'] = $parentType;
         }
-        $route = $this->generateUrl('admin_entity_add',$paramsRoute);
+        $route = $this->generateUrl('neptune_entity_add',$paramsRoute);
 
 
         if($this->validForm($form,$object,$request,$params['form'],$route) === true){
-            return $this->redirectToRoute('admin_entity_add',$paramsRoute);
+            return $this->redirectToRoute('neptune_entity_add',$paramsRoute);
         }
         else{
             return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
@@ -212,21 +206,17 @@ class EntityController extends BaseController
 
     }
 
-    /**
-     * @param Request $request
-     * @param $id
-     * @param $type
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Route("/admin/{type}/{id}",name="admin_entity_edit", requirements={"type"=EntityController::VALID_ENTITIES,"id"="\d+"})
-     */
     public function editAction(Request $request,$id,$type){
 
-        $class = $this->getClass($type,$form);
+        if(null === $class = $this->getClass($type,$form)){
+            return $this->redirectToRoute('neptune_home');
+        }
+
         $repo = $this->getDoctrine()->getRepository($class);
         $object = $repo->find($id);
 
         if($object === null){
-            return $this->redirectToRoute('admin_entity',array('type'=>$type));
+            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
         }
 
         if($object instanceof Page){
@@ -247,33 +237,28 @@ class EntityController extends BaseController
             'title'     =>  'Modification de '.(($object instanceof Element) ? "l'" : 'la').ucfirst($type).' : '.$object->getName(),
             'objects'   =>  $objects
         );
-        $route = $this->generateUrl('admin_entity_edit',array('type'=>$type,'id'=>$object->getId()));
+        $route = $this->generateUrl('neptune_entity_edit',array('type'=>$type,'id'=>$object->getId()));
         if($this->validForm($form,$object,$request,$params['form'],$route)){
             $this->get('session')->getFlashBag()->add('notice','Votre '.$type.' à bien été modifié');
-            return $this->redirectToRoute('admin_entity',array('type'=>$type));
+            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
         }
         else{
             return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
         }
     }
 
-    /**
-     * @param Request $request
-     * @param $type
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Route("/admin/{type}/delete/{id}",name="admin_entity_delete", requirements={"type"=EntityController::VALID_ENTITIES,"id"="\d+"})
-     * @Method({"GET","POST"})
-     */
     public function deleteAction(Request $request,$type,$id){
-        $class = $this->getClass($type);
+
+        if(null === $class = $this->getClass($type,$form)){
+            return $this->redirectToRoute('neptune_home');
+        }
         $em = $this->getDoctrine()->getManager();
         $object = $em->getRepository($class)->find($id);
         if($object === null){
-            return $this->redirectToRoute('admin_entity',array('type'=>$type));
+            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
         }
         $form = $this->createFormBuilder($object)->setMethod('post')
-            ->setAction($this->generateUrl('admin_entity_delete',array('type'=>$type,'id'=>$id)))
+            ->setAction($this->generateUrl('neptune_entity_delete',array('type'=>$type,'id'=>$id)))
             ->getForm();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
@@ -293,13 +278,6 @@ class EntityController extends BaseController
         return $this->render('@ScyLabsNeptune/admin/delete.html.twig',$params);
     }
 
-
-    /**
-     * @param Request $request
-     * @param $type
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Route("/admin/{type}/prio",name="admin_entity_prio", requirements={"type"=EntityController::VALID_ENTITIES})
-     */
     public function prioAction(Request $request,$type){
         $ajax = $request->isXmlHttpRequest();
         $prio = $request->request->get('prio');
@@ -308,11 +286,14 @@ class EntityController extends BaseController
                 return new Response('');
             }
             else{
-                return $this->redirectToRoute('admin_entity',array('type'=>$type));
+                return $this->redirectToRoute('neptune_entity',array('type'=>$type));
             }
         }
         $em = $this->getDoctrine()->getManager();
-        $class = $this->getClass($type,$form);
+
+        if(null === $class = $this->getClass($type)){
+            return new Response('');
+        }
         $repo = $em->getRepository($class);
         $objects = $repo->findAll();
         $tabObjects = array();
@@ -326,26 +307,22 @@ class EntityController extends BaseController
             return new Response('success');
         }
         else{
-            return $this->redirectToRoute('admin_entity',array('type'=>$type));
+            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
         }
 
     }
 
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @param $type
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route("/admin/{type}/active/{id}", name="admin_entity_active" ,requirements={"type"=EntityController::VALID_ENTITIES,"id"="\d+"})
-     */
     public function switchActiveAction(Request $request,$id,$type){
+
+        if(null === $class = $this->getClass($type)){
+            return $this->redirectToRoute('neptune_home');
+        }
+
         $em = $this->getDoctrine()->getManager();
-        $class =$this->getClass($type);
         $object = $em->getRepository($class)->find($id);
 
         if(null === $object){
-            $this->redirectToRoute('admin_entity',array('type'=>$type));
+            $this->redirectToRoute('neptune_entity',array('type'=>$type));
         }
         $referer = $request->headers->get('referer');
         $object->setActive(!$object->getActive());

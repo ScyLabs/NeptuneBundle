@@ -6,7 +6,7 @@
  * Time: 14:25
  */
 
-namespace ScyLabs\NeptuneBundle\Controller;
+namespace ScyLabs\NeptuneBundle\Controller\Front;
 
 
 
@@ -24,58 +24,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PageController extends Controller
+class PageController extends AbstractController
 {
 
-    /**
-     * @Route("{_locale}/element/{slug}",name="detail_element",requirements={"slug"="^(?!admin)[a-z-_0-9/]+$","_locale"="[a-z]{2}"},defaults={"_locale"="fr"})
-     */
-    public function detailElememController(Request $request,$slug){
-
-        $em = $this->getDoctrine()->getManager();
-        $url = $em->getRepository(ElementUrl::class)->findOneBy(array(
-            'url' => $slug
-        ));
-
-        if($url === null)
-            return $this->redirectToRoute('homepage');
-
-        if($url->getLang() !== $request->getLocale()){
-            $url = $em->getRepository(ElementUrl::class)->findOneBy(
-                array(
-                    'lang'  => $request->getLocale(),
-                    'element'  => $url->getElement()
-                )
-            );
-            if($url === null){
-                return $this->redirectToRoute('homepage');
-            }
-            return $this->redirectToRoute('detail_actuality',array('_locale'=>$request->getLocale(),'slug' => $url->getUrl()));
-        }
-
-        $element = $url->getElement();
-        if($element->getActive() === false){
-            return $this->redirectToRoute('homepage');
-        }
-
-        $pages = $em->getRepository(Page::class)->findBy(array(
-            'parent'    =>  null,
-            'remove'    =>  false,
-        ),
-            ['prio'=>'ASC']
-        );
-
-
-        $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
-        $partners = $em->getRepository(Partner::class)->findAll();
-
-        $params = array('pages'=>$pages,'page'=>$element,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale());
-
-        return $this->render('page/page.html.twig',$params);
-    }
-    /**
-     * @Route("/{_locale}",name="homepage",requirements={"_locale"="[a-z]{2}"},defaults={"_locale"="fr"})
-     */
     public function homeAction(Request $request){
 
         $em = $this->getDoctrine()->getManager();
@@ -88,7 +39,7 @@ class PageController extends Controller
         $page = $pages[0];
 
         $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
-        $partners = $em->getRepository(Partner::class)->findBy(['remove'=>false]);
+        $partners = $em->getRepository(Partner::class)->findAll();
         $contactPages = new ArrayCollection();
         foreach ($pages as $thisPage){
             if($thisPage->getType()->getName() == 'contact'){
@@ -100,11 +51,6 @@ class PageController extends Controller
         return $this->render('page/home.html.twig',$params);
     }
 
-
-
-    /**
-     * @Route("/{_locale}/{slug}",name="page",requirements={"slug"="^(?!admin)[a-z-_0-9/]+$","_locale"="[a-z]{2}"})
-     */
     public function pageAction(Request $request,$slug){
         $em = $this->getDoctrine()->getManager();
         $url = $em->getRepository(PageUrl::class)->findOneBy(array(
@@ -169,7 +115,39 @@ class PageController extends Controller
         return $this->render('page/page.html.twig',$params);
     }
 
-
-
+    public function detailElememController(Request $request,$slug){
+        $em = $this->getDoctrine()->getManager();
+        $url = $em->getRepository(ElementUrl::class)->findOneBy(array(
+            'url' => $slug
+        ));
+        if($url === null)
+            return $this->redirectToRoute('homepage');
+        if($url->getLang() !== $request->getLocale()){
+            $url = $em->getRepository(ElementUrl::class)->findOneBy(
+                array(
+                    'lang'  => $request->getLocale(),
+                    'element'  => $url->getElement()
+                )
+            );
+            if($url === null){
+                return $this->redirectToRoute('homepage');
+            }
+            return $this->redirectToRoute('detail_actuality',array('_locale'=>$request->getLocale(),'slug' => $url->getUrl()));
+        }
+        $element = $url->getElement();
+        if($element->getActive() === false){
+            return $this->redirectToRoute('homepage');
+        }
+        $pages = $em->getRepository(Page::class)->findBy(array(
+            'parent'    =>  null,
+            'remove'    =>  false,
+        ),
+            ['prio'=>'ASC']
+        );
+        $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
+        $partners = $em->getRepository(Partner::class)->findAll();
+        $params = array('pages'=>$pages,'page'=>$element,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale());
+        return $this->render('page/page.html.twig',$params);
+    }
 
 }

@@ -1,0 +1,55 @@
+neptune_entity_add:
+    path: /{type}/add/{parentType}/{parentId}
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::addAction
+    defaults:
+        parentType: null
+        parentId: null
+    requirements:
+        type: "[a-z]{2,20}"
+
+neptune_entity_delete:
+    path: /{type}/delete/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::deleteAction
+    requirements:
+        type: "[a-z]{2,20}"
+        id: "[0-9]+"
+
+neptune_entity_edit:
+    path: /{type}/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::editAction
+    requirements:
+        type: "[a-z]{2,20}"
+        id: "[0-9]+"
+
+neptune_entity_json:
+    path: /{type}/json/{parentType}/{parentId}
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::jsonListingAction
+    defaults:
+        parentType: null
+        parentId: null
+    requirements:
+        type: "[a-z]{2,20}"
+
+neptune_entity_prio:
+    path: /{type}/prio
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::prioAction
+    requirements:
+        type: "[a-z]{2,20}"
+
+neptune_entity_active:
+    path: /{type}/active/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::switchActiveAction
+    requirements:
+        type: "[a-z]{2,20}"
+        id: "[0-9]+"
+
+neptune_entity:
+    path: /{type}/{parentType}/{parentId}
+    controller: ScyLabs\NeptuneBundle\Controller\EntityController::listAction
+    requirements:
+        type: "[a-z]{2,20}"
+        parentTypme: "[a-z]{2,20}"
+    defaults:
+        parentType: null
+        parentId: null
+

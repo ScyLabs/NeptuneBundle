@@ -4,7 +4,7 @@
     {% if page.remove == 0 %}
         <li class="dd-item" data-id="{{ page.id }}">
             <div class="dd-handle">
-                <a href="{{ path('admin_entity_active',{'id':page.id,'type':app.request.attributes.get('type')}) }}">
+                <a href="{{ path('neptune_entity_active',{'id':page.id,'type':app.request.attributes.get('type')}) }}">
                     {% if page.active %}
                         <i class="fa fa-check text-success"></i>
                     {% else %}
@@ -33,7 +33,7 @@
         <tr>
             <td>
 
-                <a href="{{ path('admin_entity_active',{'id':page.id,'type':app.request.attributes.get('type')}) }}">
+                <a href="{{ path('neptune_entity_active',{'id':page.id,'type':app.request.attributes.get('type')}) }}">
                     {% if page.active %}
                     <i class="fa fa-check text-success"></i>
                     {% else %}
@@ -55,9 +55,9 @@
             </td>
             <td>
                 <ul class="actions">
-                    <li><a href="{{ path('admin_file_gallery_prio',{'type':'page','id':page.id}) }}" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
-                    <li><a href="{{ path('admin_detail',{'type':app.request.attributes.get('type'),'id':page.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
-                    <li><a href="{{ path('admin_entity_edit',{'id':page.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
+                    <li><a href="{{ path('neptune_file_gallery_prio',{'type':'page','id':page.id}) }}" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
+                    <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':page.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
+                    <li><a href="{{ path('neptune_entity_edit',{'id':page.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
                     <li class="">
                         {{ render(controller(
                             'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',

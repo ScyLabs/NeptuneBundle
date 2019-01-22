@@ -1,0 +1,6 @@
+check_redirect:
+    path: /check_redirect
+    controller: ScyLabs\NeptuneBundle\Controller\SecurityController::checkRedirectAction
+security_first_connexion:
+    path: /first-connexion
+    controller: ScyLabs\NeptuneBundle\Controller\SecurityController::firstConnexionAction

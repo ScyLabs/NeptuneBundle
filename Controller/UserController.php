@@ -15,9 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends BaseController
 {
-    /**
-     * @Route("admin/user",name="admin_user")
-     */
+
     public function listingAction(Request $request){
 
         $repo = $this->getDoctrine()->getRepository(User::class);
@@ -28,7 +26,7 @@ class UserController extends BaseController
         );
         $params['ariane'] = array(
         [
-            'link'  =>  $this->generateUrl('admin_home'),
+            'link'  =>  $this->generateUrl('neptune_home'),
             'name'  => 'Accueil'
         ],
         [
@@ -40,12 +38,6 @@ class UserController extends BaseController
 
     }
 
-    /**
-     * @param Request $request
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route("/admin/user/active/{id}", name="admin_user_active" ,requirements={"type"=EntityController::VALID_ENTITIES,"id"="\d+"})
-     */
     public function switchActiveAction(Request $request,$id){
 
         $em = $this->getDoctrine()->getManager();
@@ -54,7 +46,7 @@ class UserController extends BaseController
 
 
         if(null === $user  || ! $user instanceof User){
-            $this->redirectToRoute('admin_user');
+            $this->redirectToRoute('neptune_user');
         }
 
         $referer = $request->headers->get('referer');
@@ -67,18 +59,14 @@ class UserController extends BaseController
         $em->flush();
         return $this->redirect($referer);
     }
-
-
-    /**
-     * @Route("/admin/user/add", name="admin_user_add")
-     */
+    
     public function addAction(Request $request){
 
         $class = $this->getClass('user',$form);
         $object = new $class();
         $params = array();
 
-        $route = $this->generateUrl('admin_user_add');
+        $route = $this->generateUrl('neptune_user_add');
         $form = $this->createForm($form,$object,['action'=>$route]);
 
 
@@ -120,7 +108,7 @@ class UserController extends BaseController
             $userManager->updateUser($user);
             $this->get('session')->getFlashBag()->add('notice','Votre Utilisateur à bien été ajouté');
 
-            return $this->redirectToRoute('admin_user');
+            return $this->redirectToRoute('neptune_user');
         }
 
         $params['form'] = $form->createView();

@@ -24,23 +24,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class DetailController extends BaseController
 {
 
-   //const VALID_ENTITIES = "(page|element|zone|partner|photo)";
-    const VALID_ENTITIES = "[a-z]{2,20}";
-    /**
-     * @Route("admin/{type}/details/{id}",defaults={"parentType"=null},name="admin_detail", requirements={"type"=DetailController::VALID_ENTITIES,"id"="\d+"})
-     */
-    public function listAction(Request $request,$type,$id,$parentType){
-        $class = $this->getClass($type);
-        if($class === null){
-            return $this->redirectToRoute('admin_home');
+    public function listAction(Request $request,$type,$id){
+
+        if(null === $class = $this->getClass($type)){
+            return $this->redirectToRoute('neptune_home');
         }
+
         $langs = $this->getParameter('langs');
         $classDetail = $this->getDetailClass($class,$form);
         $em = $this->getDoctrine()->getManager();
         $object = $em->getRepository($class)->find($id);
 
         if(null === $object){
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('neptune_home');
         }
         $details = $object->getDetails();
 
@@ -94,7 +90,7 @@ class DetailController extends BaseController
         $collection = array();
 
         foreach ($details as $detail){
-            $route = $this->generateUrl('admin_detail_edit',array(
+            $route = $this->generateUrl('neptune_detail_edit',array(
                 'type'  =>  $type,
                 'id'    =>  $id,
                 'lang'  => $detail->getLang(),
@@ -107,16 +103,16 @@ class DetailController extends BaseController
             'object'        => $object
         );
         if(!$object instanceof Photo)
-            $params['objects'] = $this->getEntities($object,$parentType);
+            $params['objects'] = $this->getEntities($object);
 
 
         $params['ariane'] = array(
             [
-                'link'  =>  $this->generateUrl('admin_home'),
+                'link'  =>  $this->generateUrl('neptune_home'),
                 'name' =>  'Accueil'
             ],
             [
-                'link'  =>  $this->generateUrl('admin_entity',array('type'=>$type)),
+                'link'  =>  $this->generateUrl('neptune_entity',array('type'=>$type)),
                 'name' =>  ucfirst($type).'s',
             ],
             [
@@ -127,23 +123,20 @@ class DetailController extends BaseController
 
         return $this->render('@ScyLabsNeptune/admin/detail/details.html.twig',$params);
     }
-    /**
-     * @Method("POST")
-     * @Route("/admin/{type}/detail/{lang}/{id}",name="admin_detail_edit",requirements={"type"=DetailController::VALID_ENTITIES,"id"="\d+","lang"="[a-z]{2}"})
-     */
+
+
     public function editAction(Request $request,$type,$id,$lang){
 
-        $class = $this->getClass($type);
-        if(null === $class){
-            return $this->redirectToRoute('admin_home');
+        if(null === $class = $this->getClass($type)){
+            return $this->redirectToRoute('neptune_home');
         }
         if(null === $object = $this->getDoctrine()->getRepository($class)->find($id)){
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('neptune_home');
         }
 
         $classDetail = $this->getDetailClass($class,$form);
         if(null === $classDetail){
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('neptune_home');
         }
         $detail = $object->getDetail($lang);
 

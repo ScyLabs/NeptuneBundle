@@ -1,0 +1,5 @@
+framework:
+    translator:
+        pathsd:
+            - '../translations/'
+

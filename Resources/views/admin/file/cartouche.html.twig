@@ -13,11 +13,9 @@
 
     <span>
         <span class="boxing">
-
             <i class="fa fa-check centerXY"></i>
             {% if file.type.name == 'photo' %}
-                <img src="{{ asset('uploads/'~file.file)
-                | thumb(400) }}"/>
+                <img src="{{ asset('uploads/'~file.file) | thumb(400) }}"/>
             {% else %}
                 <i class="fa {% if file.ext == 'pdf' %}
                 fa-file-pdf

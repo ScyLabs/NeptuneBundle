@@ -10,24 +10,20 @@ namespace ScyLabs\NeptuneBundle\Controller;
 
 use ScyLabs\NeptuneBundle\Entity\File;
 use ScyLabs\NeptuneBundle\Entity\Photo;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PhotoController extends Controller
+class PhotoController extends AbstractController
 {
 
 
     private $photoQuality = 90;
-    /**
-     * @Route("/photo/{id}/{width}/{height}/{multiplicator}/{truncate}/{name}",
-     *  name="generatePhoto",
-     *  requirements={"id"="\d+","width"="[0-9]{1,4}","height"="[0-9]{0,4}","truncate" = "[01]","multiplicator"="[0-9]{2,3}"},
-     *  defaults={"height"=0,"multiplicator"=100,"truncate"=0,"name"=""}
-     * )
-     */
+
+
     public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate){
 
         if($width == 0 && $height == 0) {
