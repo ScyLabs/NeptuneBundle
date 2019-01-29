@@ -78,8 +78,9 @@ class PhotoController extends AbstractController
 
 
         $path = $localThumb.'/'.$fileName.$wh.'.'.$file->getExt();
-        if(file_exists($path) && ($height == 0 || $height == 0 && $truncate == 1)){
+        if(file_exists($path)){
             $this->headers($file,$path);
+            return new Response(readfile($path));
         }
 
         // On récupère L'image de base
@@ -137,9 +138,7 @@ class PhotoController extends AbstractController
         $etag = 'W/"' . md5($last_modified_time) . '"';
 
         $result = ($file->getExt() == 'jpg') ? 'jpeg' : $file->getExt();
-        //header('Content-Type: image/'.$result);
-        header('Content-Length: '.filesize($path));
-
+        header('Content-Type: image/'.$result);
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $last_modified_time) . " GMT");
         header('Cache-Control: public, max-age=604800'); // On peut ici changer la durée de validité du cache
         header("Etag: $etag");
