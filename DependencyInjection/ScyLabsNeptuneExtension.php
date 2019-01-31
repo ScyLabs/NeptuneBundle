@@ -33,6 +33,9 @@ class ScyLabsNeptuneExtension extends Extension
         $loader = new YamlFileLoader($container,$bundleRoot);
 
 
+        $loader->load('services.yaml');
+
+
 
     }
 }
