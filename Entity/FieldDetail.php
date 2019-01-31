@@ -14,28 +14,28 @@ class FieldDetail
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Field", inversedBy="details")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $field;
+    protected $field;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $placeholder;
+    protected $placeholder;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $label;
+    protected $label;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $error;
+    protected $error;
 
     public function getId()
     {

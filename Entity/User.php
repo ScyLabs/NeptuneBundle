@@ -26,33 +26,33 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $civility;
+    protected $civility;
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      */
-    private $firstname;
+    protected $firstname;
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      */
-    private $name;
+    protected $name;
 
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $country;
+    protected $country;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $address;
+    protected $address;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $firstConnexion;
+    protected $firstConnexion;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="user",cascade={"persist","remove"})

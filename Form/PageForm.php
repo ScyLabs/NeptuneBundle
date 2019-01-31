@@ -2,7 +2,7 @@
 
 namespace ScyLabs\NeptuneBundle\Form;
 
-use ScyLabs\NeptuneBundle\Controller\Admin\PageController;
+
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\PageType;
 use ScyLabs\NeptuneBundle\Repository\PageRepository;
@@ -31,6 +31,7 @@ class PageForm extends AbstractType
             if($options['action'] !== null){
                 $builder->setAction($options['action']);
             }
+
             $builder->add('parent',EntityType::class,[
                 'label'=> 'Parent',
                 'class'         =>  Page::class,

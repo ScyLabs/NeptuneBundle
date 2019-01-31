@@ -15,13 +15,13 @@ class PageDetail extends AbstractAvancedDetail
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page", inversedBy="details",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $page;
+    protected $page;
 
     public function getId()
     {

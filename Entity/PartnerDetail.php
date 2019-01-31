@@ -27,13 +27,13 @@ class PartnerDetail extends AbstractDetail
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Partner", inversedBy="details")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $partner;
+    protected $partner;
 
 
     public function getId()

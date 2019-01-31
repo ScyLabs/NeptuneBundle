@@ -18,17 +18,17 @@ class ElementType extends AbstractElemType
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer",length=191)
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Element", mappedBy="type", orphanRemoval=true)
      */
-    private $elements;
+    protected $elements;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page",inversedBy="elementTypes")
      */
-    private $page;
+    protected $page;
 
     /**
      * @ORM\Column(type="integer",nullable = true)

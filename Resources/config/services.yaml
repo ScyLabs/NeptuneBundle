@@ -27,21 +27,26 @@ services:
 
 
     ScyLabs\NeptuneBundle\Services\FileUploader:
-            arguments:
-                $targetDirectory: '%uploads_directory%'
+        arguments:
+            $targetDirectory: '%uploads_directory%'
     ScyLabs\NeptuneBundle\EventListener\FileListener:
-            tags:
-                - { name: doctrine.event_listener,event: prePersist }
-                - { name: doctrine.event_listener,event: preUpdate }
-                - { name: doctrine.event_listener,event: preRemove }
+        tags:
+            - { name: doctrine.event_listener,event: prePersist }
+            - { name: doctrine.event_listener,event: preUpdate }
+            - { name: doctrine.event_listener,event: preRemove }
 
+    ScyLabs\NeptuneBundle\EventListener\LoadORMMetadataSubscriber:
+        arguments:
+            - "@service_container"
+        tags:
+            - { name: doctrine.event_subscriber }
 
     ScyLabs\NeptuneBundle\EventListener\EntityListener:
-          arguments:
-              $langs: '%langs%'
-          tags:
-              - { name: doctrine.event_listener,event: postPersist }
-              - { name: doctrine.event_listener,event: preUpdate }
-              - { name: doctrine.event_listener,event: postUpdate }
+        arguments:
+            $langs: '%langs%'
+        tags:
+            - { name: doctrine.event_listener,event: postPersist }
+            - { name: doctrine.event_listener,event: preUpdate }
+            - { name: doctrine.event_listener,event: postUpdate }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

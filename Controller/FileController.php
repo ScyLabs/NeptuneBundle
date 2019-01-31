@@ -42,11 +42,12 @@ class FileController extends BaseController
 
     public function addAction(Request $request){
         $em = $this->getDoctrine();
-        $repoFiles = $em->getRepository(File::class);
+        $class= $this->getClass('file');
+        $repoFiles = $em->getRepository($class);
 
         $files = $repoFiles->findBy(array(),['id'=>'DESC']);
 
-        $filesTypes = $em->getRepository(FileType::class)->findBy(array(
+        $filesTypes = $em->getRepository($this->getClass('fileType'))->findBy(array(
             'remove'=>false,
         ));
         $params = array(
@@ -54,7 +55,7 @@ class FileController extends BaseController
             'files' => $files,
             'fileTypes'=>$filesTypes
         );
-        $collection = $this->getAllEntities(File::class);
+        $collection = $this->getAllEntities($class);
         if($collection !== null){
             $params['collection'] = $collection;
         }
@@ -92,7 +93,9 @@ class FileController extends BaseController
 
         $em = $this->getDoctrine()->getManager();
 
-        $class = $this->getClass($typeElement);
+        if(null === $class = $this->getClass($typeElement)){
+            return$this->redirectToRoute('neptune_home');
+        }
 
         $obj = $em->getRepository($class)->find($id);
 
@@ -102,7 +105,10 @@ class FileController extends BaseController
             return $this->redirectToRoute('neptune_file');
         }
 
-        $repoFiles = $em->getRepository(File::class);
+        if(null === $fileClass = $this->getClass($typeElement)){
+            return$this->redirectToRoute('neptune_home');
+        }
+        $repoFiles = $em->getRepository($fileClass);
 
         $files = $repoFiles->findBy(
             array(
@@ -142,16 +148,20 @@ class FileController extends BaseController
 
             if(!$actualFiles->contains($file)){
                 $type = $file->getType()->getName();
+
+                if(null !== $linkClass = $this->getClass($type)){
+                    $link = new $linkClass();
+                }
+                else{
+                    return $this->redirectToRoute('neptune_home');
+                }
                 if($type == 'photo'){
-                    $link = new Photo();
                     $link->setPrio($obj->getPhotos()->count());
                 }
                 elseif($type == 'video'){
-                    $link = new Video();
                     $link->setPrio($obj->getVideos()->count());
                 }
                 else{
-                    $link = new Document();
                     $link->setPrio($obj->getDocuments()->count());
                 }
 
@@ -206,7 +216,11 @@ class FileController extends BaseController
     }
 
     public function removeLinkAction(Request $request,$type,$id){
-        $class = $this->getClass($type);
+
+        if(null === $class = $this->getClass($type)){
+            return$this->redirectToRoute('neptune_home');
+        }
+
         $em = $this->getDoctrine()->getManager();
         $object = $em->getRepository($class)->find($id);
 
@@ -275,7 +289,7 @@ class FileController extends BaseController
         if(!in_array($uploadFile->getMimeType(),$minesok))
             return new Response('Type de fichier non autorisé',403);
 
-        $typeRepo = $this->getDoctrine()->getRepository(FileType::class);
+        $typeRepo = $this->getDoctrine()->getRepository($this->getClass('fileType'));
 
         switch($uploadFile->getMimeType()){
             case 'application/pdf':
@@ -299,7 +313,8 @@ class FileController extends BaseController
         }
         $type = $typeRepo->findOneByName($name);
 
-        $file = new File();
+        $fileClass = $this->getClass('file');
+        $file = new $fileClass();
 
         $file->setOriginalName($res->getClientOriginalName());
 
@@ -328,27 +343,12 @@ class FileController extends BaseController
 
         $em = $this->getDoctrine()->getManager();
 
+        if(null === $class = $this->getClass($type)){
+            return $this->redirectToRoute('neptune_file');
+        }
 
-        if($type == 'page'){
-            $repo = $em->getRepository(Page::class);
-            $object = $repo->find($id);
-        }
-        elseif($type == 'zone'){
-            $repo = $em->getRepository(Zone::class);
-            $object = $repo->find($id);
-        }
-        elseif($type == 'partner'){
-            $repo = $em->getRepository(Partner::class);
-            $object = $repo->find($id);
-        }
-        elseif($type == 'user'){
-            $repo = $em->getRepository(User::class);
-            $object = $repo->find($id);
-        }
-        else{
-            $repo = $em->getRepository(Element::class);
-            $object = $repo->find($id);
-        }
+        $repo = $em->getRepository($class);
+        $object = $repo->find($id);
 
         $ariane = array(
             ['link'=>$this->generateUrl('neptune_home'),'name'=>'Accueil'],
@@ -361,10 +361,10 @@ class FileController extends BaseController
                 'name' => 'Fichiers'
             ]
         );
-        $repoFiles = $em->getRepository(File::class);
+        $repoFiles = $em->getRepository($this->getClass('file'));
 
         $files = $repoFiles->findBy(array(),['id'=>'DESC']);
-        $filesTypes = $em->getRepository(FileType::class)->findBy(array(
+        $filesTypes = $em->getRepository($this->getClass('fileType'))->findBy(array(
             'remove'=>false,
         ));
 
@@ -381,33 +381,30 @@ class FileController extends BaseController
     }
 
     public function prioAction(Request $request){
-        $ajax = $request->isXmlHttpRequest();
+
         $prios = json_decode($request->request->get('prio'),true);
         $type = $request->request->get('type');
         if($request->request->get('prio') === null || $prios === false || $type === null){
-            if($ajax)
+            if($request->isXmlHttpRequest()){
                 return new Response('');
-            else
-                return $this->redirectToRoute('neptune_page');
+            }
+            return $this->redirectToRoute('neptune_page');
         }
 
         $em = $this->getDoctrine()->getManager();
-        if($type == 'photo'){
-            $files = $em->getRepository(Photo::class)->findBy(array(
-                'id'=>$prios,
-            ));
+
+        if(null ===$class = $this->getClass($type)){
+            if($request->isXmlHttpRequest()){
+                return new Response('');
+            }
+            return $this->redirectToRoute('neptune_file_gallery_prio');
 
         }
-        elseif($type == 'video'){
-            $files = $em->getRepository(Video::class)->findBy(array(
-                'id'=>$prios
-            ));
-        }
-        else{
-            $files = $em->getRepository(Document::class)->findBy(array(
-                'id'=>$prios
-            ));
-        }
+
+        $files = $em->getRepository($class)->findBy(array(
+            'id'=>$prios,
+        ));
+
         $em = $this->getDoctrine()->getManager();
         $filesTab = array();
 
@@ -426,16 +423,14 @@ class FileController extends BaseController
             }
         }
         $em->flush();
-        if($ajax){
+        if($request->isXmlHttpRequest()){
             return new Response('');
         }
-        else{
-            return $this->redirectToRoute('neptune_file_gallery_prio');
-        }
+        return $this->redirectToRoute('neptune_file_gallery_prio');
     }
     
     public function deleteAction(Request $request,$id){
-        $repo = $this->getDoctrine()->getRepository(File::class);
+        $repo = $this->getDoctrine()->getRepository($this->getClass('file'));
         $file = $repo->find($id);
         if(null === $file){
             $this->redirectToRoute('neptune_file');

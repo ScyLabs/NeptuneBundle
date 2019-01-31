@@ -30,15 +30,21 @@ class DetailController extends BaseController
             return $this->redirectToRoute('neptune_home');
         }
 
+        $classType = $type.'Detail';
         $langs = $this->getParameter('langs');
-        $classDetail = $this->getDetailClass($class,$form);
+        if(null === $classDetail = $this->getClass($classType,$form)){
+            return$this->redirectToRoute('neptune_home');
+        }
+
         $em = $this->getDoctrine()->getManager();
         $object = $em->getRepository($class)->find($id);
+        dump($object);
 
         if(null === $object){
             return $this->redirectToRoute('neptune_home');
         }
         $details = $object->getDetails();
+
 
         /*Si l'objet n'a aucun details */
 
@@ -95,7 +101,9 @@ class DetailController extends BaseController
                 'id'    =>  $id,
                 'lang'  => $detail->getLang(),
             ));
-            $this->validForm($form,$detail,$request,$collection[$detail->getLang()]['form'],$route);
+
+            dump($form);
+            $this->validForm($classType,$form,$detail,$request,$collection[$detail->getLang()]['form'],$route);
         }
         $params = array(
             'title'         =>  'Details de l'.(($type == 'element') ? "'" : 'a').' '.$type.'  :  '.$object->getName(),
@@ -134,14 +142,16 @@ class DetailController extends BaseController
             return $this->redirectToRoute('neptune_home');
         }
 
-        $classDetail = $this->getDetailClass($class,$form);
-        if(null === $classDetail){
+        if(null === $classDetail = $this->getClass($type.'Detail',$form)){
             return $this->redirectToRoute('neptune_home');
         }
+
+
         $detail = $object->getDetail($lang);
 
         $params = array();
-        $this->validForm($form,$detail,$request,$params['form']);
+        dump($type);
+        $this->validForm($type.'Detail',$form,$detail,$request,$params['form']);
         return $this->redirect($request->headers->get('referer'));
 
     }

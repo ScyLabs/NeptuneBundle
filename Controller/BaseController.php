@@ -47,18 +47,21 @@ use ScyLabs\NeptuneBundle\Form\ZoneForm;
 use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class BaseController extends AbstractController
+abstract class BaseController extends AbstractController
 {
-    /* Fonction de génération de formulaire (surement future service)*/
-    protected function validForm($type,$object,$request,&$param,$action = null){
 
-        $form = $this->createForm($type,$object,['action'=>$action]);
+
+    /* Fonction de génération de formulaire (surement future service)*/
+    protected function validForm($type,$formClass,$object,$request,&$param,$action = null){
+
+
+        $form = $this->createForm($formClass,$object,['action'=>$action,'data_class'=>$this->getClass($type)]);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $object = $form->getData();
             if($object->getid() == null){
-                if(null !== $classDetail = $this->getDetailClass(get_class($object))){
+                if(null !== $classDetail = $this->getClass($type.'Detail')){
                     $langs = $this->getParameter('langs');
                     if(is_array($langs)){
                         foreach ($langs as $lang){
@@ -120,7 +123,7 @@ class BaseController extends AbstractController
         if($class === Page::class){
             return null;
         }
-        $pages = $em->getRepository(Page::class)->findBy(array(
+        $pages = $em->getRepository($this->getClass('page'))->findBy(array(
             'remove'=>false,
             'parent'=>null
         ),['prio'=>'ASC']);
@@ -128,16 +131,16 @@ class BaseController extends AbstractController
         if($pages !== null){
             $collection['Pages'] = $pages;
         }
-        if($class !== Zone::class && $class !== Element::class){
-            $zones = $em->getRepository(Zone::class)->findBy(array(
+        if($class !== $this->getClass('zone') && $class !== $this->getClass('element')){
+            $zones = $em->getRepository($this->getClass('zone'))->findBy(array(
                 'remove'=>false,
             ),['prio'=>'ASC']);
             if($zones !== null){
                 $collection['Zones'] = $zones;
             }
         }
-        if($class !== Element::class){
-            $elements = $em->getRepository(Element::class)->findBy(array(
+        if($class !== $this->getClass('element')){
+            $elements = $em->getRepository($this->getClass('element'))->findBy(array(
                 'remove'=>false
             ),['prio'=>'ASC']);
             if($elements !== null){
@@ -149,88 +152,20 @@ class BaseController extends AbstractController
 
 
     protected function getClass($name,&$form = null){
-        if($name == 'page'){
-            $form = PageForm::class;
-            return Page::class;
-        }
-        elseif($name == 'element'){
-            $form = ElementForm::class;
-            return Element::class;
 
-        }
-        elseif($name == 'zone'){
-            $form = ZoneForm::class;
-            return Zone::class;
-        }
-        elseif($name == 'partner'){
-            $form = PartnerForm::class;
-            return Partner::class;
-        }
-        elseif($name == 'user'){
-            $form = UserForm::class;
-            return User::class;
-        }
-        elseif($name == 'photo'){
-            return Photo::class;
-        }
-        elseif($name == 'video'){
-            return Video::class;
-        }
-        elseif($name == 'document'){
-            return Document::class;
-        }
+        $classes = $this->getParameter('scy_labs_neptune.classes');
+        if(isset($classes[$name])){
+            if(!isset($classes[$name.'Form'])){
+                $form = null;
+            }else{
 
-        else{
-            return null;
-        }
-    }
+                $form = (class_exists($classes[$name.'Form']['class'])) ? $classes[$name.'Form']['class'] : $classes[$name.'Form']['original'];
+            }
+            return (class_exists($classes[$name]['class'])) ? $classes[$name]['class'] : $classes[$name]['original'];
 
-    protected function getTypeClass($name,&$form = null){
-        if($name == 'page'){
-            $form = PageTypeForm::class;
-            return PageType::class;
-        }
-        elseif($name == 'element'){
-            $form = ElementTypeForm::class;
-            return ElementType::class;
-
-        }
-        elseif($name == 'zone'){
-            $form = ZoneTypeForm::class;
-            return ZoneType::class;
-        }
-        else{
-            $form = FileTypeForm::class;
-            return FileType::class;
-        }
-    }
-    protected function getDetailClass($name,&$form = null){
-        if($name == Page::class){
-            $form = PageDetailForm::class;
-            return PageDetail::class;
-        }
-        elseif($name == Element::class){
-            $form = ElementDetailForm::class;
-            return ElementDetail::class;
-        }
-        elseif($name == Partner::class){
-            $form = PartnerDetailForm::class;
-            return PartnerDetail::class;
-        }
-        elseif($name == Zone::class){
-            $form = ZoneDetailForm::class;
-            return ZoneDetail::class;
-        }
-        elseif($name == Photo::class){
-            $form = PhotoDetailForm::class;
-            return PhotoDetail::class;
-        }
-        elseif($name == Document::class){
-            $form = DocumentDetailForm::class;
-            return DocumentDetail::class;
         }
         return null;
-
     }
+
 
 }

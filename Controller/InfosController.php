@@ -19,8 +19,8 @@ class InfosController extends BaseController
 {
 
     public function editAction(Request $request){
-        $class = Infos::class;
-        $form = InfosForm::class;
+        $class = $this->getClass('infos');
+        $form = $this->getClass('infosForm');
         $repo = $this->getDoctrine()->getRepository($class);
 
         $object = $repo->findOneBy([],['id'=>'ASC']);
@@ -38,7 +38,7 @@ class InfosController extends BaseController
         );
         $route = $this->generateUrl('neptune_infos_edit');
 
-        if($this->validForm($form,$object,$request,$params['form'],$route)){
+        if($this->validForm('infos',$form,$object,$request,$params['form'],$route)){
             $this->get('session')->getFlashBag()->add('notice','Les informations de votre site ont bien été modifiées');
             return $this->redirectToRoute('neptune_infos_edit');
         }

@@ -16,43 +16,43 @@ class Field
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Form", inversedBy="fields")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $form;
+    protected $form;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $value;
+    protected $value;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\FieldDetail", mappedBy="field", orphanRemoval=true)
      */
-    private $details;
+    protected $details;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Field", mappedBy="parent")
      */
-    private $childs;
+    protected $childs;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Field", inversedBy="childs")
      */
-    private $parent;
+    protected $parent;
 
     public function __construct()
     {

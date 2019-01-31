@@ -17,12 +17,12 @@ class FileType extends AbstractElemType
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\File", mappedBy="type")
      */
-    private $files;
+    protected $files;
 
     public function __construct()
     {

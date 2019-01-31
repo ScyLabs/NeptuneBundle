@@ -1,11 +1,8 @@
 <?php
-
 namespace ScyLabs\NeptuneBundle\Repository;
-
 use ScyLabs\NeptuneBundle\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
@@ -18,7 +15,6 @@ class UserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, User::class);
     }
-
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
@@ -35,7 +31,6 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
-
     /*
     public function findOneBySomeField($value): ?User
     {

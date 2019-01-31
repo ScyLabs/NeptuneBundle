@@ -22,13 +22,13 @@ class VideoDetail extends AbstractDetail
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Video", inversedBy="details")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $video;
+    protected $video;
 
     public function getId(){
         return $this->id;

@@ -19,7 +19,7 @@ class Element extends AbstractElem
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\ElementType", inversedBy="elements")
@@ -53,13 +53,13 @@ class Element extends AbstractElem
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Zone", mappedBy="element")
      */
-    private $zones;
+    protected $zones;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\ElementUrl", mappedBy="element",cascade={"persist","remove","refresh"})
      */
 
-    private $urls;
+    protected $urls;
 
     public function __construct()
     {

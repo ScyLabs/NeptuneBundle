@@ -18,7 +18,8 @@ class UserController extends BaseController
 
     public function listingAction(Request $request){
 
-        $repo = $this->getDoctrine()->getRepository(User::class);
+        $class = $this->getClass('user');
+        $repo = $this->getDoctrine()->getRepository($class);
         $users = $repo->findAll();
 
         $params = array(

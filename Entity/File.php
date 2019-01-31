@@ -17,48 +17,48 @@ class File
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
     
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $file;
+    protected $file;
     
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\FileType", inversedBy="files")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="file", orphanRemoval=true,cascade={"remove"})
      */
-    private $photos;
+    protected $photos;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Document", mappedBy="file", orphanRemoval=true,cascade={"remove"})
      */
-    private $documents;
+    protected $documents;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Video", mappedBy="file", orphanRemoval=true,cascade={"remove"})
      */
-    private $videos;
+    protected $videos;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date;
+    protected $date;
 
     /**
      * @ORM\Column(type="string", length=5)
      */
-    private $ext;
+    protected $ext;
 
     /**
      * @ORM\Column(type="string",length=255)
      */
-    private $originalName;
+    protected $originalName;
 
     
 
