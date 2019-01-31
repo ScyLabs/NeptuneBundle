@@ -1,0 +1,49 @@
+page: ScyLabs\NeptuneBundle\Entity\Page
+pageForm: ScyLabs\NeptuneBundle\Entity\PageForm
+pageUrl: ScyLabs\NeptuneBundle\Entity\PageUrl
+pageDetail: ScyLabs\NeptuneBundle\Entity\PageDetail
+pageDetailForm: ScyLabs\NeptuneBundle\Entity\PageDetailForm
+pageType: ScyLabs\NeptuneBundle\Entity\PageType
+pageTypeForm: ScyLabs\NeptuneBundle\Entity\PageTypeForm
+
+element: ScyLabs\NeptuneBundle\Entity\Element
+elementUrl: ScyLabs\NeptuneBundle\Entity\ElementUrl
+elementForm: ScyLabs\NeptuneBundle\Entity\ElementForm
+elementDetail: ScyLabs\NeptuneBundle\Entity\ElementDetail
+elementDetailForm: ScyLabs\NeptuneBundle\Entity\ElementDetailForm
+elementType: ScyLabs\NeptuneBundle\Entity\ElementType
+elementTypeForm: ScyLabs\NeptuneBundle\Entity\ElementTypeForm
+
+zone: ScyLabs\NeptuneBundle\Entity\Zone
+zoneForm: ScyLabs\NeptuneBundle\Entity\ZoneForm
+zoneDetail: ScyLabs\NeptuneBundle\Entity\ZoneDetail
+zoneDetailForm: ScyLabs\NeptuneBundle\Entity\ZoneDetailForm
+zoneType: ScyLabs\NeptuneBundle\Entity\ZoneType
+zoneTypeForm: ScyLabs\NeptuneBundle\Entity\ZoneTypeForm
+
+partner: ScyLabs\NeptuneBundle\Entity\Partner
+partnerForm: ScyLabs\NeptuneBundle\Entity\PartnerForm
+partnerDetail: ScyLabs\NeptuneBundle\Entity\PartnerDetail
+partnerDetailForm: ScyLabs\NeptuneBundle\Entity\PartnerDetailForm
+
+file: ScyLabs\NeptuneBundle\Entity\File
+fileForm: ScyLabs\NeptuneBundle\Entity\FileForm
+fileType: ScyLabs\NeptuneBundle\Entity\FileType
+fileTypeForm: ScyLabs\NeptuneBundle\Entity\FileTypeForm
+
+photo: ScyLabs\NeptuneBundle\Entity\Photo
+photoDetail: ScyLabs\NeptuneBundle\Entity\PhotoDetail
+photoDetailForm: ScyLabs\NeptuneBundle\Entity\PhotoDetailForm
+
+document: ScyLabs\NeptuneBundle\Entity\Document
+documentDetail: ScyLabs\NeptuneBundle\Entity\DocumentDetail
+documentDetailForm: ScyLabs\NeptuneBundle\Entity\DocumentDetailForm
+
+video: ScyLabs\NeptuneBundle\Entity\Video
+videoDetail: ScyLabs\NeptuneBundle\Entity\VideoDetail
+
+infos: ScyLabs\NeptuneBundle\Entity\Infos
+infosForm: ScyLabs\NeptuneBundle\Entity\InfosForm
+
+user: ScyLabs\NeptuneBundle\Entity\User
+userForm: ScyLabs\NeptuneBundle\Entity\UserForm

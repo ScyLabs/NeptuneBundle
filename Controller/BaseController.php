@@ -46,6 +46,7 @@ use ScyLabs\NeptuneBundle\Form\ZoneDetailForm;
 use ScyLabs\NeptuneBundle\Form\ZoneForm;
 use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Yaml\Yaml;
 
 abstract class BaseController extends AbstractController
 {
@@ -153,15 +154,17 @@ abstract class BaseController extends AbstractController
 
     protected function getClass($name,&$form = null){
 
-        $classes = $this->getParameter('scy_labs_neptune.classes');
+        $originalClasses = Yaml::parseFile(dirname(__DIR__).'/Resources/config/original_classes.yaml');
+        $classes = $this->getParameter('scy_labs_neptune.override');
         if(isset($classes[$name])){
             if(!isset($classes[$name.'Form'])){
                 $form = null;
             }else{
-
-                $form = (class_exists($classes[$name.'Form']['class'])) ? $classes[$name.'Form']['class'] : $classes[$name.'Form']['original'];
+                // If New Class Exist . Use new Class , else if original Class Exist use Original class Else set null
+                $form = (class_exists($classes[$name.'Form'])) ? $classes[$name.'Form'] : ((class_exists($originalClasses[$name.'Form'])) ? $originalClasses[$name.'Form'] : null ) ;
             }
-            return (class_exists($classes[$name]['class'])) ? $classes[$name]['class'] : $classes[$name]['original'];
+
+            return (class_exists($classes[$name])) ? $classes[$name] : (class_exists($originalClasses[$name]) ? $originalClasses[$name] : null);
 
         }
         return null;

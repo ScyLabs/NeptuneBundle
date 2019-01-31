@@ -23,7 +23,7 @@ services:
 
     ScyLabs\NeptuneBundle\Repository\:
         resource: '../../Repository'
-        #tags: ['doctrine.repository_service']
+        tags: ['doctrine.repository_service']
 
 
     ScyLabs\NeptuneBundle\Services\FileUploader:

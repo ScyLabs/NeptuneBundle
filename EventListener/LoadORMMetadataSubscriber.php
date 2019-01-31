@@ -21,6 +21,7 @@ use Doctrine\ORM\Id\BigIntegerIdentityGenerator;
 use Doctrine\ORM\Id\IdentityGenerator;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\ORMException;
+use Symfony\Component\Yaml\Yaml;
 
 
 class LoadORMMetadataSubscriber implements EventSubscriber
@@ -47,10 +48,12 @@ class LoadORMMetadataSubscriber implements EventSubscriber
     public function __construct(ContainerInterface $container)
     {
         $overriddenEntities = array();
-        $classes = $container->getParameter('scy_labs_neptune.classes');
-        foreach ($classes as $class){
-            if($class['original'] != $class['class'] && class_exists($class['class']))
-                $overriddenEntities[$class['original']] = $class['class'];
+        $classes = $container->getParameter('scy_labs_neptune.override');
+        $originalClasses = Yaml::parseFile(dirname(__DIR__).'/Resources/config/original_classes.yaml');
+
+        foreach ($classes as $key => $class){
+            if(class_exists($originalClasses[$key]) && $class != $originalClasses[$key]  && class_exists($class))
+                $overriddenEntities[$originalClasses[$key]] = $class;
         }
         
         $this->container = $container;

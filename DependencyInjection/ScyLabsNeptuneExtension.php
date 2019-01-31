@@ -14,6 +14,7 @@ use Symfony\Component\Translation\Loader\YamlFileLoader as TranslationLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Yaml\Yaml;
 
 
 class ScyLabsNeptuneExtension extends Extension
@@ -23,19 +24,15 @@ class ScyLabsNeptuneExtension extends Extension
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration,$configs);
-        $container->setParameter($this->getAlias().'.classes',$config['classes']);
+        $container->setParameter($this->getAlias().'.override',$config['override']);
 
 
 
         $bundleRoot = new FileLocator(dirname(__DIR__));
-        $loader = new YamlFileLoader(
-            $container,$bundleRoot
+
+        $loader = new YamlFileLoader($container,$bundleRoot);
 
 
-        );
-        $transLoader = new TranslationLoader($container,$bundleRoot);
-
-        //$transLoader->load('translations/messages-fr.yaml','fr');
 
     }
 }

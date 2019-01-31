@@ -12,6 +12,7 @@ namespace ScyLabs\NeptuneBundle\DependencyInjection;
 use Doctrine\ORM\Version;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Yaml\Yaml;
 
 class DoctrineTargetEntitiesResolver
 {
@@ -26,13 +27,15 @@ class DoctrineTargetEntitiesResolver
         $resolveTargetEntityListener = $container->findDefinition('doctrine.orm.listeners.resolve_target_entity');
 
 
-        $classes = $container->getParameter('scy_labs_neptune.classes');
-        foreach ($classes as $class){
-            if($class['class'] != $class['original'] && class_exists($class['class'])){
+        $classes = $container->getParameter('scy_labs_neptune.override');
+        $originalClasses = Yaml::parseFile(dirname(__DIR__).'/Resources/config/original_classes.yaml');
+
+        foreach ($classes as $key => $class){
+            if(class_exists($originalClasses[$key]) && $class != $originalClasses[$key] && class_exists($class)){
                 $resolveTargetEntityListener
                     ->addMethodCall('addResolveTargetEntity', array(
-                        $this->getInterface($container,$class['original']),
-                        $this->getClass($container,$class['class']),
+                        $this->getInterface($container,$originalClasses[$key]),
+                        $this->getClass($container,$class),
                         array()
                     ))
                 ;
@@ -47,7 +50,6 @@ class DoctrineTargetEntitiesResolver
         }
         
     }
-
 
     private function getInterface(ContainerBuilder $container, $key)
     {
