@@ -105,7 +105,7 @@ class FileController extends BaseController
             return $this->redirectToRoute('neptune_file');
         }
 
-        if(null === $fileClass = $this->getClass($typeElement)){
+        if(null === $fileClass = $this->getClass('file')){
             return$this->redirectToRoute('neptune_home');
         }
         $repoFiles = $em->getRepository($fileClass);
@@ -149,12 +149,12 @@ class FileController extends BaseController
             if(!$actualFiles->contains($file)){
                 $type = $file->getType()->getName();
 
-                if(null !== $linkClass = $this->getClass($type)){
-                    $link = new $linkClass();
-                }
-                else{
+                if(null === $linkClass = $this->getClass($type)){
                     return $this->redirectToRoute('neptune_home');
                 }
+
+                $link = new $linkClass();
+
                 if($type == 'photo'){
                     $link->setPrio($obj->getPhotos()->count());
                 }
@@ -169,6 +169,7 @@ class FileController extends BaseController
                     ->setFile($file);
 
                 $obj->addFile($link);
+
             }
         }
 
