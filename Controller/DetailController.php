@@ -38,7 +38,7 @@ class DetailController extends BaseController
 
         $em = $this->getDoctrine()->getManager();
         $object = $em->getRepository($class)->find($id);
-        dump($object);
+
 
         if(null === $object){
             return $this->redirectToRoute('neptune_home');
@@ -102,7 +102,6 @@ class DetailController extends BaseController
                 'lang'  => $detail->getLang(),
             ));
 
-            dump($form);
             $this->validForm($classType,$form,$detail,$request,$collection[$detail->getLang()]['form'],$route);
         }
         $params = array(
