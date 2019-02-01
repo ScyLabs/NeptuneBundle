@@ -17,12 +17,12 @@ class PageType extends AbstractElemType
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Page", mappedBy="type", orphanRemoval=true,cascade={"persist","remove"})
      */
-    private $pages;
+    protected $pages;
 
     public function __construct()
     {

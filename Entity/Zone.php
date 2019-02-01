@@ -19,7 +19,7 @@ class Zone extends AbstractChild
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page", inversedBy="zones")
@@ -71,12 +71,12 @@ class Zone extends AbstractChild
     /**
      * @ORM\Column(type="string", length=255, nullable = true)
      */
-    private $icon;
+    protected $icon;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page")
      */
-    private $pageLink;
+    protected $pageLink;
 
 
     public function __construct()

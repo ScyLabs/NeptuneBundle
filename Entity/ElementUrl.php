@@ -21,23 +21,23 @@ class ElementUrl
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $url;
+    protected $url;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $lang;
+    protected $lang;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Element",inversedBy="urls")
      */
-    private $element;
+    protected $element;
 
     public function getId()
     {

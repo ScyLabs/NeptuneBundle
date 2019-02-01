@@ -22,18 +22,18 @@ class Page extends AbstractElem
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page", inversedBy="childs")
      */
-    private $parent;
+    protected $parent;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Page", mappedBy="parent",orphanRemoval=true,cascade={"persist","remove"})
      * @OrderBy({"prio" = "ASC"})
      */
-    private $childs;
+    protected $childs;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="page",cascade={"persist","remove"})
@@ -50,44 +50,44 @@ class Page extends AbstractElem
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Video", mappedBy="page",cascade={"persist","remove"})
      * @OrderBy({"prio" = "ASC"})
-     */
+     */ 
     protected $videos;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Zone", mappedBy="page")
      * @OrderBy({"prio" = "ASC"})
      */
-    private $zones;
+    protected $zones;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\ElementType",mappedBy="page")
      */
-    private $elementTypes;
+    protected $elementTypes;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\PageDetail", mappedBy="page", orphanRemoval=true,cascade={"persist","remove"})
      */
-    private $details;
+    protected $details;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\PageType", inversedBy="pages")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $type;
+    protected $type;
 
     /**
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(length=128,unique=true)
      */
-    private $slug;
+    protected $slug;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\PageUrl", mappedBy="page",cascade={"persist","remove","refresh"})
      */
 
-    private $urls;
+    protected $urls;
 
-    private $elements;
+    protected $elements;
 
 
     public function getElements(array $orderBy = array('prio'=>Criteria::ASC),bool $showAll = false){

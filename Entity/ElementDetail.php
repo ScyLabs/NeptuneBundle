@@ -15,13 +15,13 @@ class ElementDetail extends AbstractAvancedDetail
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Element", inversedBy="details")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $element;
+    protected $element;
 
     public function getId()
     {

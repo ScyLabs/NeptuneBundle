@@ -14,63 +14,63 @@ class Infos
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $adress;
+    protected $adress;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $cp;
+    protected $cp;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $city;
+    protected $city;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $mail;
+    protected $mail;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $tel;
+    protected $tel;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $fax;
+    protected $fax;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $mobile;
+    protected $mobile;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $gmap;
+    protected $gmap;
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $facebook;
+    protected $facebook;
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $twitter;
+    protected $twitter;
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $insta;
+    protected $insta;
 
     public function getId()
     {

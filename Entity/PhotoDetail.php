@@ -22,13 +22,13 @@ class PhotoDetail extends AbstractDetail
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Photo", inversedBy="details")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $photo;
+    protected $photo;
 
     public function getId(){
         return $this->id;

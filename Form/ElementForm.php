@@ -65,7 +65,6 @@ class ElementForm extends AbstractType
         $resolver->setDefaults([
             'action' => null,
             'data_class' => Element::class,
-        ])
-        ;
+        ]);
     }
 }

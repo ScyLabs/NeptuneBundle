@@ -29,13 +29,13 @@ class Partner extends AbstractElem
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var
      * @ORM\Column(type="string",nullable=true)
      */
-    private $url;
+    protected $url;
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\PartnerDetail", mappedBy="partner", orphanRemoval=true,cascade={"persist","remove"})
      */

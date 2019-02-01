@@ -62,6 +62,7 @@ class EntityController extends BaseController
                'parent' =>  null,
                'remove' =>  false,
             ),['prio'=>'ASC']);
+
         }
         elseif($class == Element::class){
             $objects = $this->getDoctrine()->getRepository(ElementType::class)->findBy(array(
@@ -197,7 +198,7 @@ class EntityController extends BaseController
         $route = $this->generateUrl('neptune_entity_add',$paramsRoute);
 
 
-        if($this->validForm($form,$object,$request,$params['form'],$route) === true){
+        if($this->validForm($type,$form,$object,$request,$params['form'],$route) === true){
             return $this->redirectToRoute('neptune_entity_add',$paramsRoute);
         }
         else{
@@ -238,7 +239,7 @@ class EntityController extends BaseController
             'objects'   =>  $objects
         );
         $route = $this->generateUrl('neptune_entity_edit',array('type'=>$type,'id'=>$object->getId()));
-        if($this->validForm($form,$object,$request,$params['form'],$route)){
+        if($this->validForm($type,$form,$object,$request,$params['form'],$route)){
             $this->get('session')->getFlashBag()->add('notice','Votre '.$type.' à bien été modifié');
             return $this->redirectToRoute('neptune_entity',array('type'=>$type));
         }

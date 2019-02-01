@@ -17,12 +17,12 @@ class ZoneType extends AbstractElemType
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Zone", mappedBy="type", orphanRemoval=true)
      */
-    private $zones;
+    protected $zones;
 
 
     public function __construct()

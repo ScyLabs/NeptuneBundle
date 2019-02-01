@@ -16,41 +16,41 @@ class ZoneDetail extends AbstractDetail
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255,nullable = true)
      */
-    private $title2;
+    protected $title2;
 
     /**
      * @ORM\Column(type="text", nullable=true,nullable = true)
      */
-    private $description2;
+    protected $description2;
     /**
      * @ORM\Column(type="string", length=255,nullable = true)
      */
-    private $title3;
+    protected $title3;
 
     /**
      * @ORM\Column(type="text", nullable=true,nullable = true)
      */
-    private $description3;
+    protected $description3;
     /**
      * @ORM\Column(type="string", length=255,nullable = true)
      */
-    private $title4;
+    protected $title4;
 
     /**
      * @ORM\Column(type="text", nullable=true,nullable = true)
      */
-    private $description4;
+    protected $description4;
 
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Zone", inversedBy="details")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $zone;
+    protected $zone;
 
     public function getId()
     {

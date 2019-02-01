@@ -29,16 +29,23 @@ class TypeController extends BaseController
 
     public function addAction(Request $request,$type){
 
+        $classType = $type.'Type';
+        $class = $this->getClass($classType,$form);
+        if($class === null){
+            return $this->redirectToRoute('neptune_home');
+        }
+
+
         $route = $this->generateUrl('neptune_type_add',array('type'=>$type));
         $params = array("title"=>"Ajout d'un type de ".$type);
 
         $em = $this->getDoctrine()->getManager();
 
-        $class = $this->getTypeClass($type,$form);
+
 
         $types = $em->getRepository($class)->findByRemove(0);
 
-        $result = $this->validForm($form,new $class(),$request,$params['form'],$route);
+        $result = $this->validForm($classType,$form,new $class(),$request,$params['form'],$route);
 
 
         $params['types'] = $types;
@@ -72,8 +79,12 @@ class TypeController extends BaseController
     }
 
     public function listAction(Request $request,$type){
+        $classType = $type.'Type';
+        $class = $this->getClass($classType);
 
-        $class = $this->getTypeClass($type);
+        if($class === null){
+            return $this->redirectToRoute('neptune_home');
+        }
         $types = $this->getDoctrine()->getRepository($class)->findByRemove(false);
 
 
@@ -99,8 +110,11 @@ class TypeController extends BaseController
     }
 
     public function editAction(Request $request,$id,$type){
-
-        $class = $this->getTypeClass($type,$form);
+        $classType = $type.'Type';
+        $class = $this->getClass($classType,$form);
+        if($class === null){
+            return $this->redirectToRoute('neptune_home');
+        }
         $repo = $this->getDoctrine()->getRepository($class);
         $oType = $repo->find($id);
 
@@ -117,7 +131,7 @@ class TypeController extends BaseController
 
         $route = $this->generateUrl('neptune_type_edit',['id'=>$oType->getId(),'type'=>$type]);
 
-        if($this->validForm($form,$oType,$request,$params['form'],$route) === true){
+        if($this->validForm($classType,$form,$oType,$request,$params['form'],$route) === true){
 
             $this->get('session')->getFlashBag()->add('notice',"Votre type de page à bien été modifié");
             return $this->redirectToRoute('neptune_type',array('type'=>$type));
@@ -128,8 +142,11 @@ class TypeController extends BaseController
     }
 
     public function deleteAction(Request $request,$id,$type){
-
-        $class = $this->getTypeClass($type,$form);
+        $classType = $type.'Type';
+        $class = $this->getClass($classType,$form);
+        if($class === null){
+            return $this->redirectToRoute('neptune_home');
+        }
         $repo = $this->getDoctrine()->getRepository($class);
 
         $oType = $repo->find($id);

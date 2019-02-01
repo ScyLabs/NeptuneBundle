@@ -17,22 +17,22 @@ class Form
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\ManyToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Zone", inversedBy="forms")
      */
-    private $zones;
+    protected $zones;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Field", mappedBy="form", orphanRemoval=true)
      */
-    private $fields;
+    protected $fields;
 
     public function __construct()
     {
