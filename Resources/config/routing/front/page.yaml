@@ -2,7 +2,7 @@ page:
     path: /{_locale}/{slug}
     controller: ScyLabs\NeptuneBundle\Controller\Front\PageController::pageAction
     requirements:
-        slug: "^[a-z-_0-9/#]+$"
+        slug: "^[a-z-_0-9\#/]+$"
         locale: "[a-z]{2}"
 
 homepage:
