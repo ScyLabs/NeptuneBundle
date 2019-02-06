@@ -33,7 +33,8 @@ class PageController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $pages = $em->getRepository(Page::class)->findBy(array(
             'parent' => null,
-            'remove' => false
+            'remove' => false,
+            'active' => true
             ),
             ['prio'=>'ASC']
         );
@@ -88,6 +89,7 @@ class PageController extends AbstractController
         $pages = $em->getRepository(Page::class)->findBy(array(
             'parent'    =>  null,
             'remove'    =>  false,
+            'active'    => true,
             ),
             ['prio'=>'ASC']
         );
@@ -142,6 +144,7 @@ class PageController extends AbstractController
         $pages = $em->getRepository(Page::class)->findBy(array(
             'parent'    =>  null,
             'remove'    =>  false,
+            'active'    => true
         ),
             ['prio'=>'ASC']
         );
