@@ -63,6 +63,7 @@ class UserForm extends AbstractType
         $resolver->setDefaults([
             'action'     => null,
             'data_class' => User::class,
+            'roles'     => ['ROLE_ADMIN']
         ]);
     }
 }

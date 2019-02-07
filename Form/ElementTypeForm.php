@@ -40,6 +40,7 @@ class ElementTypeForm extends AbstractType
         $resolver->setDefaults([
             'action'     => null,
             'data_class' => ElementType::class,
+            'roles'     => ['ROLE_ADMIN']
         ]);
     }
 }

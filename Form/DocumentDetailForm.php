@@ -29,6 +29,7 @@ class DocumentDetailForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => DocumentDetail::class,
+            'roles'     => ['ROLE_ADMIN']
         ]);
     }
 }

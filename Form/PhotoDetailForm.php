@@ -29,6 +29,7 @@ class PhotoDetailForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => PhotoDetail::class,
+            'roles'     => ['ROLE_ADMIN']
         ]);
     }
 }

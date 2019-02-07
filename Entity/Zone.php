@@ -78,16 +78,39 @@ class Zone extends AbstractChild
      */
     protected $pageLink;
 
+    /**
+     * @ORM\Column(type="string",length=255,nullable = false)
+     */
+    protected $subType;
+
+    /**
+     * @ORM\Column(type="string",length=255,nullable=false)
+     */
+    protected $typeHead;
+
 
     public function __construct()
     {
         $this->details = new ArrayCollection();
+        if($this->subType === null){
+            $this->subType = 'subtype1';
+        }
+        if($this->typeHead === null){
+            $this->typeHead = 'h2';
+        }
 
         parent::__construct();
     }
     public function getId()
     {
         return $this->id;
+    }
+    public function getTypeHead() : string{
+        return $this->typeHead;
+    }
+    public function setTypeHead(string $typeHead) :self{
+        $this->typeHead = $typeHead;
+        return $this;
     }
     public function getIcon() : ?string{
         return $this->icon;
@@ -102,7 +125,14 @@ class Zone extends AbstractChild
     }
     public function getPageLink() : ?Page{
         return $this->pageLink;
+    }
 
+    public function getSubType() : string{
+        return $this->subType;
+    }
+    public function setSubType(string $subType) : self{
+        $this->subType = $subType;
+        return $this;
     }
     /**
      * @return Collection|ZoneDetail[]

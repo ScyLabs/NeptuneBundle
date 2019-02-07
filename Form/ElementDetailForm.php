@@ -47,6 +47,7 @@ class ElementDetailForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ElementDetail::class,
+            'roles'     => ['ROLE_ADMIN']
         ]);
     }
 }

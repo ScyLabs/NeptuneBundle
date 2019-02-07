@@ -58,7 +58,11 @@ abstract class BaseController extends AbstractController
     protected function validForm($type,$formClass,$object,$request,&$param,$action = null){
 
 
-        $form = $this->createForm($formClass,$object,['action'=>$action,'data_class'=>$this->getClass($type)]);
+        $options = ['action'=>$action,'data_class'=>$this->getClass($type)];
+        if($this->getUser() !== null){
+            $options['roles'] = $this->getUser()->getRoles();
+        }
+        $form = $this->createForm($formClass,$object,$options);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){

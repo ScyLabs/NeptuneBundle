@@ -90,6 +90,7 @@ class InfosForm extends AbstractType
         $resolver->setDefaults([
             'action' => null,
             'data_class' => Infos::class,
+            'roles'     => ['ROLE_ADMIN']
         ])
         ;
     }

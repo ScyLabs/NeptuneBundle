@@ -21,6 +21,7 @@ class FileForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => File::class,
+            'roles'     => ['ROLE_ADMIN']
         ]);
     }
 }

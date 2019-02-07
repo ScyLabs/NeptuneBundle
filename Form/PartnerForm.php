@@ -42,6 +42,7 @@ class PartnerForm extends AbstractType
         $resolver->setDefaults([
             'action' => null,
             'data_class' => Partner::class,
+            'roles'     => ['ROLE_ADMIN']
         ])
         ;
     }

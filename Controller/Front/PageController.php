@@ -40,6 +40,10 @@ class PageController extends AbstractController
         );
         $page = $pages[0];
 
+        if($page->getZones()->count() > 0){
+            $page->getZones()[0]->setTypeHead('h1');
+        }
+
         $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
         $partners = $em->getRepository(Partner::class)->findAll();
         $contactPages = new ArrayCollection();
@@ -77,6 +81,9 @@ class PageController extends AbstractController
 
 
         $page = $url->getPage();
+        if($page->getZones()->count() > 0){
+            $page->getZones()[0]->setTypeHead('h1');
+        }
 
         if($page->getActive() === false){
             return $this->redirectToRoute('homepage');

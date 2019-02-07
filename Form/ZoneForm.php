@@ -16,6 +16,7 @@ use Doctrine\ORM\MScyLabs\NeptuneBundleing\Entity;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -49,7 +50,25 @@ class ZoneForm extends AbstractType
                         ->where('t.remove = 0');
                 },
             ])
-            ->add('icon',TextType::class,array(
+            ->add('subType',ChoiceType::class,array(
+                'choices'=> array(
+                    'Type 1'    => 'subtype1',
+                    'Type 2'    => 'subtype2',
+                    'Type 3'    => 'subtype3'
+                )
+            ));
+            if(in_array('ROLE_SUPER_ADMIN',$options['roles'])){
+                $builder->add('typeHead',ChoiceType::class,array(
+                    'choices'=> array(
+                        'H2'    => 'h2',
+                        'H3'    => 'h3',
+                        'H4'    => 'h4',
+                        'H5'    => 'h5',
+                        'H6'    => 'h6',
+                    )
+                ));
+            }
+            $builder->add('icon',TextType::class,array(
                 'required'=>false,
                 'label'=> 'Icone'
             ))
@@ -74,6 +93,17 @@ class ZoneForm extends AbstractType
                 return;
             }
 
+            if($zone->getType() !== null){
+
+                $event->getForm()->add('subType',ChoiceType::class,array(
+                   'choices'    => array(
+                       $zone->getType()->getTitle().' - Type 1'    => 'subtype1',
+                       $zone->getType()->getTitle().' - Type 2'    => 'subtype2',
+                       $zone->getType()->getTitle().' - Type 3'    => 'subtype3'
+                   )
+                ));
+            }
+
             if($zone->getPage() !== null){
                 $event->getForm()->add('page',HiddenType::class,[
                     'property_path' => 'page.name',
@@ -93,6 +123,7 @@ class ZoneForm extends AbstractType
         $resolver->setDefaults([
             'action' => null,
             'data_class' => Zone::class,
+            'roles'     => ['ROLE_ADMIN']
         ])
         ;
     }

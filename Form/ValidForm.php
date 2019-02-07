@@ -22,7 +22,8 @@ class ValidForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-           'allow_extra_fields' =>true,
+            'allow_extra_fields' =>true,
+            'roles'     => ['ROLE_ADMIN']
         ));
     }
 }

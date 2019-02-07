@@ -27,6 +27,7 @@ class ZoneTypeForm extends AbstractType
         $resolver->setDefaults([
             'action'     => null,
             'data_class' => ZoneType::class,
+            'roles'     => ['ROLE_ADMIN']
         ]);
     }
 }

@@ -63,6 +63,7 @@ class PageForm extends AbstractType
         $resolver->setDefaults([
             'action' => null,
             'data_class' => Page::class,
+            'roles'     => ['ROLE_ADMIN']
         ])
         ;
     }
