@@ -41,7 +41,7 @@ class PageController extends AbstractController
         $page = $pages[0];
 
         if($page->getZones()->count() > 0){
-            $page->getZones()[0]->setTypeHead('h1');
+            $page->getZones()[0]->setTypeHead(1);
         }
 
         $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
@@ -82,7 +82,7 @@ class PageController extends AbstractController
 
         $page = $url->getPage();
         if($page->getZones()->count() > 0){
-            $page->getZones()[0]->setTypeHead('h1');
+            $page->getZones()[0]->setTypeHead(1);
         }
 
         if($page->getActive() === false){
@@ -147,6 +147,9 @@ class PageController extends AbstractController
         $element = $url->getElement();
         if($element->getActive() === false){
             return $this->redirectToRoute('homepage');
+        }
+        if($element->getZones()->count() > 0){
+            $element->getZones()[0]->setTypeHead(1);
         }
         $pages = $em->getRepository(Page::class)->findBy(array(
             'parent'    =>  null,

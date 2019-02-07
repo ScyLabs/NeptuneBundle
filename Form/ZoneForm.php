@@ -60,11 +60,11 @@ class ZoneForm extends AbstractType
             if(in_array('ROLE_SUPER_ADMIN',$options['roles'])){
                 $builder->add('typeHead',ChoiceType::class,array(
                     'choices'=> array(
-                        'H2'    => '2',
-                        'H3'    => '3',
-                        'H4'    => '4',
-                        'H5'    => '5',
-                        'H6'    => '6',
+                        'H2'    => 2,
+                        'H3'    => 3,
+                        'H4'    => 4,
+                        'H5'    => 5,
+                        'H6'    => 6,
                     )
                 ));
             }
