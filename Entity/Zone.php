@@ -84,7 +84,7 @@ class Zone extends AbstractChild
     protected $subType;
 
     /**
-     * @ORM\Column(type="string",length=255,nullable=false)
+     * @ORM\Column(type="integer",length=255,nullable=false)
      */
     protected $typeHead;
 
@@ -96,7 +96,7 @@ class Zone extends AbstractChild
             $this->subType = 'subtype1';
         }
         if($this->typeHead === null){
-            $this->typeHead = 'h2';
+            $this->typeHead = '2';
         }
 
         parent::__construct();
@@ -105,10 +105,10 @@ class Zone extends AbstractChild
     {
         return $this->id;
     }
-    public function getTypeHead() : string{
+    public function getTypeHead() : int{
         return $this->typeHead;
     }
-    public function setTypeHead(string $typeHead) :self{
+    public function setTypeHead(int $typeHead) :self{
         $this->typeHead = $typeHead;
         return $this;
     }
