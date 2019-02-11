@@ -82,9 +82,15 @@ $('#button_add').on('click',function (e) {
 
 function zonesAndElements(elem){
 
+
     let type = elem.attr('data-type');
     let zones = JSON.parse(elem.attr('data-zones'));
-    let elements = JSON.parse(elem.attr('data-elements'));
+    var elements = null;
+    if(typeof(elem.attr('data-elements')) != 'undefined'){
+        elements = JSON.parse(elem.attr('data-elements'));
+    }
+
+
     if(type == 'page'){
         if(tabs.find('.ui-tabs-tab').hasClass('ui-state-disabled')){
             tabs.tabs('enable')
@@ -95,9 +101,12 @@ function zonesAndElements(elem){
             let id = zones[i];
             $('#selection_elements table tbody tr[data-id="'+id+'"][data-type="zone"]').removeClass('none');
         }
-        for(let i = 0; i < elements.length;i++){
-            let id = elements[i];
-            $('#selection_elements table tbody tr[data-id="'+id+'"][data-type="element"]').removeClass('none');
+        if(elements != null){
+
+            for(let i = 0; i < elements.length;i++){
+                let id = elements[i];
+                $('#selection_elements table tbody tr[data-id="'+id+'"][data-type="element"]').removeClass('none');
+            }
         }
 
 
