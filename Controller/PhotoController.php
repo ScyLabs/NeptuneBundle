@@ -111,7 +111,7 @@ class PhotoController extends AbstractController
 
         if(!file_exists($path)){
             $img->setCompressionQuality($this->photoQuality);
-            if($truncate === 0)
+            if($truncate == 0)
                 $img->thumbnailImage($width,$height);
             else{
                 $img->cropThumbnailImage($width,$height);
