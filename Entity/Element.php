@@ -91,7 +91,15 @@ class Element extends AbstractElem
 
         return $this->zones->matching($criteria);
     }
-
+    public function getJsonZones(){
+        $tab = array();
+        if($this->zones->count() > 0){
+            foreach ($this->zones as $zone){
+                $tab[] =  $zone->getId();
+            }
+        }
+        return json_encode($tab);
+    }
     public function addZone(Zone $zone): self
     {
         if (!$this->zones->contains($zone)) {

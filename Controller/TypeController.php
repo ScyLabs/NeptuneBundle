@@ -118,7 +118,7 @@ class TypeController extends BaseController
         $repo = $this->getDoctrine()->getRepository($class);
         $oType = $repo->find($id);
 
-        if(null === $oType || ( is_object($oType) && $oType->getRemovable() === false)){
+        if(null === $oType){
             return $this->redirectToRoute('neptune_type',array('type'=>$type));
         }
         $types = $repo->findBy(array(

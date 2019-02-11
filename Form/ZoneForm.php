@@ -73,7 +73,7 @@ class ZoneForm extends AbstractType
                 'label'=> 'Icone'
             ))
             ->add('pageLink',EntityType::class,array(
-                'label' => 'Page liée',
+                'label' => 'Page liée (PageLink)',
                 'class' => Page::class,
                 'choice_label'      => 'name',
                 'required'  => false,

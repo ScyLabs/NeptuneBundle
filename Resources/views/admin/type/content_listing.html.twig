@@ -17,8 +17,9 @@
                                 <td>{{ type.title }}</td>
                                 <td>
                                     <ul class="actions">
-                                        {% if type.removable %}
+
                                             <li><a href="{{ path('neptune_type_edit',{'id':type.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
+                                        {% if type.removable %}
                                             <li class="">
                                                 {{ render(controller(
                                                     'ScyLabs\\NeptuneBundle\\Controller\\TypeController::deleteAction',

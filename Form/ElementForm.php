@@ -53,10 +53,10 @@ class ElementForm extends AbstractType
                     ->where('t.remove = 0');
             },
         ])
-            ->add('submit',SubmitType::class,[
-                'label' => 'Envoyer'
-            ]);
-        
+        ->add('submit',SubmitType::class,[
+            'label' => 'Envoyer'
+        ]);
+
 
     }
 

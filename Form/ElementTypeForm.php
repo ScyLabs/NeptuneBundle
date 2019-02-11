@@ -2,13 +2,17 @@
 
 namespace ScyLabs\NeptuneBundle\Form;
 
+
 use ScyLabs\NeptuneBundle\Entity\ElementType;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Repository\PageRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ElementTypeForm extends AbstractType
@@ -19,8 +23,8 @@ class ElementTypeForm extends AbstractType
             $builder->setAction($options['action']);
         }
         $builder
-            ->add('name')
-            ->add('title')
+            ->add('name',TextType::class)
+            ->add('title',TextType::class)
             ->add('page',EntityType::class,[
                 'label'         => 'Liée à la page',
                 'class'         => Page::class,
@@ -33,6 +37,29 @@ class ElementTypeForm extends AbstractType
             ])
             ->add('submit',SubmitType::class)
         ;
+        $builder->addEventListener(FormEvents::PRE_SET_DATA,function(FormEvent $event){
+
+            $elementType = $event->getData();
+            $form = $event->getForm();
+            if(null === $elementType ){
+                return;
+            }
+            if( ! $elementType instanceof ElementType){
+                return;
+            }
+            if($elementType->getRemovable() === false){
+                $form
+                    ->add('name',TextType::class,array(
+                        'disabled'  =>  true
+                    ))
+                    ->add('title',TextType::class,array(
+                        'disabled'  =>  true
+                    ))
+                ;
+            }
+
+
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver)
