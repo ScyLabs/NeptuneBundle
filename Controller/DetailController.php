@@ -149,7 +149,6 @@ class DetailController extends BaseController
         $detail = $object->getDetail($lang);
 
         $params = array();
-        dump($type);
         $this->validForm($type.'Detail',$form,$detail,$request,$params['form']);
         return $this->redirect($request->headers->get('referer'));
 

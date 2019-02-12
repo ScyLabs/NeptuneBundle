@@ -8,6 +8,7 @@
 
 namespace ScyLabs\NeptuneBundle\Controller;
 
+use FOS\UserBundle\Model\UserManagerInterface;
 use ScyLabs\NeptuneBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,8 +61,8 @@ class UserController extends BaseController
         $em->flush();
         return $this->redirect($referer);
     }
-    
-    public function addAction(Request $request){
+
+    public function addAction(Request $request,UserManagerInterface $userManager,\Swift_Mailer $mailer){
 
         $class = $this->getClass('user',$form);
         $object = new $class();
@@ -79,9 +80,8 @@ class UserController extends BaseController
                 return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
             }
 
-            $userManager = $this->container->get('fos_user.user_manager');
+
             $templating = $this->container->get('templating');
-            $mailer = $this->container->get('mailer');
 
             $pass = substr(hash('sha256',random_bytes(10)),0,10);
 
@@ -117,6 +117,6 @@ class UserController extends BaseController
         return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
 
     }
-    
+
 
 }
