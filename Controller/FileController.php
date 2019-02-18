@@ -94,8 +94,6 @@ class FileController extends BaseController
         $em = $this->getDoctrine()->getManager();
 
         if(null === $class = $this->getClass($typeElement)){
-            dump($typeElement);
-            return new Response('<html><body></body></html>');
             return$this->redirectToRoute('neptune_home');
         }
 
@@ -108,8 +106,7 @@ class FileController extends BaseController
         }
 
         if(null === $fileClass = $this->getClass('file')){
-            dump($fileClass);
-            return new Response('<html><body></body></html>');
+
             return$this->redirectToRoute('neptune_home');
         }
         $repoFiles = $em->getRepository($fileClass);
@@ -154,9 +151,7 @@ class FileController extends BaseController
                 $type = $file->getType()->getName();
 
                 if(null === $linkClass = $this->getClass($type)){
-                    dump($type);
-                    dump($linkClass);
-                    return new Response('<html><body></body></html>');
+
                     return $this->redirectToRoute('neptune_home');
                 }
 
