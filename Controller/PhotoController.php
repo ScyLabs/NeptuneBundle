@@ -24,10 +24,16 @@ class PhotoController extends AbstractController
     private $photoQuality = 90;
 
 
-    public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate){
+    public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome){
+
+
+        $monochrome = trim($monochrome,'/');
+
+        $monochrome = (empty($monochrome)) ? false : $monochrome;
+
 
         if($width == 0 && $height == 0) {
-           $width = 1000;
+            $width = 1000;
         }
 
         // Récupération de la photo
@@ -58,7 +64,10 @@ class PhotoController extends AbstractController
         // Si Height n'est pas vide , on calcule la meilleure taille
         elseif($height != 0 && $truncate == 0){
             $height = $this->calcScale($height);
+
         }
+
+
 
         $localThumb = $dir.'thumbnails';
 
@@ -76,9 +85,13 @@ class PhotoController extends AbstractController
         if($width != 0 || $height != 0)
             $wh = '_'.(($width != 0) ? $width : 'auto').'x'.(($height != 0) ? $height : 'auto');
 
-
+        if($monochrome !== false){
+            $monochrome = explode('-',$monochrome);
+            $wh .= '_monochrome_'.$monochrome[0].'_'.$monochrome[1];
+        }
         $path = $localThumb.'/'.$fileName.$wh.'.'.$file->getExt();
-        if(file_exists($path)){
+        if(file_exists($path) && false){
+
             $this->headers($file,$path);
             return new Response(readfile($path));
         }
@@ -100,14 +113,13 @@ class PhotoController extends AbstractController
                 // Si l'image doit être en paysage on défini  heightr a 0
                 $height = 0;
             }
+
         }
 
 
         if(!file_exists($localThumb)){
             mkdir($localThumb);
         }
-
-
 
         if(!file_exists($path)){
             $img->setCompressionQuality($this->photoQuality);
@@ -116,6 +128,16 @@ class PhotoController extends AbstractController
             else{
                 $img->cropThumbnailImage($width,$height);
 
+            }
+
+            if($monochrome !== false){
+
+                $img->modulateImage(100,0,100);
+                $clut = new \Imagick();
+                $clut->newPseudoImage(255,1,"gradient:#".$monochrome[0]."-#".$monochrome[1]);
+                // Apply duotone CLUT to image
+                $img->clutImage($clut);
+                $clut->destroy();
             }
             $img->writeImage($path);
         }

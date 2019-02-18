@@ -51,6 +51,21 @@ $(window).on('keyup',function(e){
     else if (egg == 'caramel song'){
         video('https://www.youtube.com/watch?v=A67ZkAd1wmI');
     }
+    else if (egg == 'resident evil'){
+        audio('mr-x.ogg');
+
+        video(url_asset+'/eggs/concentr.gif','image');
+
+
+
+        setTimeout(function () {
+            audio('cri.ogg')
+            video(url_asset+'/eggs/x.png','image');
+        },10000);
+    }
+    else if(egg == 'quentin pierotti'){
+        audio('barbie.mp3');
+    }
     if(encours === false){
 
         encours = true;
