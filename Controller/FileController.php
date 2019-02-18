@@ -169,7 +169,6 @@ class FileController extends BaseController
 
                 $link->setName($obj->getName())
                     ->setFile($file);
-
                 $obj->addFile($link);
 
             }

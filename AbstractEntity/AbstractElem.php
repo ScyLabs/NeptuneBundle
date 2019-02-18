@@ -4,6 +4,7 @@ namespace ScyLabs\NeptuneBundle\AbstractEntity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use ScyLabs\NeptuneBundle\Entity\Document;
+use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\Photo;
 use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Form\ValidForm;
@@ -231,7 +232,8 @@ abstract class AbstractElem
     {
         if (!$this->videos->contains($video)) {
             $this->videos[] = $video;
-            $video->setPage($this);
+            $video->setParent($this);
+
         }
 
         return $this;
