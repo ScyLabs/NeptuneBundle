@@ -17,11 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GeneratorController extends BaseController
 {
-    /**
-     * @param Response $response
-     * @return Response
-     * @Route("/sitemap.{_format}",requirements={"_format" = "xml"})
-     */
+
     public function generateSiteMapAction(Request $request){
 
         $em = $this->getDoctrine()->getManager();

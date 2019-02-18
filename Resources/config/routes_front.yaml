@@ -5,3 +5,8 @@ neptune_front_element:
     resource: 'routing/front/element.yaml'
 neptune_front_page:
     resource: 'routing/front/page.yaml'
+neptune_sitemap:
+    path: /sitemap.{_format}
+    controller: ScyLabs\NeptuneBundle\Controller\GeneratorController::generateSiteMapAction
+    requirements:
+        _format: xml
