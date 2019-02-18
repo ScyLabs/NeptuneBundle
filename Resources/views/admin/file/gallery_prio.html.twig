@@ -57,10 +57,10 @@
                         {% for video in object.videos %}
                             {% set file = video.file %}
                             <li data-id="{{ video.id }}" class="col-lg-2 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
-                                <span>
-                                    <span class="boxing">
-                                            <img src="{{ asset('uploads/'~file.file)}}"/>
-                                    </span>
+
+                                <span class="boxing">
+                                    <i class="centerXY iconFile" style="color: #fff;">{{ file.originalName }}</i>
+
                                 </span>
                                 <ul class="actions">
                                     <li><a href="{{ asset('uploads/'~file.file)}}" class="fancy fancy_box"><i class="fa fa-search"></i> </a>
