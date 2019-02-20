@@ -11,6 +11,7 @@ namespace ScyLabs\NeptuneBundle\Controller\Front;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
+use ScyLabs\NeptuneBundle\Entity\ElementUrl;
 use ScyLabs\NeptuneBundle\Entity\Infos;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\PageUrl;
