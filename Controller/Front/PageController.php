@@ -125,7 +125,7 @@ class PageController extends AbstractController
         return $this->render('page/page.html.twig',$params);
     }
 
-    public function detailElememController(Request $request,$slug){
+    public function detailElementAction(Request $request,$slug){
         $em = $this->getDoctrine()->getManager();
         $url = $em->getRepository(ElementUrl::class)->findOneBy(array(
             'url' => $slug

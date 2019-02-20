@@ -1,4 +1,5 @@
 detail_element:
+    controller: ScyLabs\NeptuneBundle\Controller\Front\PageController::detailElementAction
     path: /{_locale}/element/{slug}{anchor}
     requirements:
         _locale: "[a-z]{2}"
