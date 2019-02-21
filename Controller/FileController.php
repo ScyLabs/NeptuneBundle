@@ -268,7 +268,8 @@ class FileController extends BaseController
 
     public function uploadAction(Request $request,FileUploader $fileUploader){
 
-
+        ini_set('memory_limit',-1);
+        set_time_limit(-1);
         if(!$res = $request->files->get('file')){
             return new Response('Type de fichier non pris en compte',403);
         }
