@@ -180,9 +180,8 @@ class PageController extends AbstractController
                     $tabJs[] = $zone->getType()->getName();
                 }
                 if(isset($import_less) && isset($new_import)){
-                    dump($publicDir.'/css/zone/'.$zone->getType()->getName().'.less');
+
                     if(!preg_match("#zone\/".$zone->getType()->getName()."\.less#",$new_import) && file_exists($publicDir.'/css/zone/'.$zone->getType()->getName().'.less')){
-                        dump('ok');
                         $new_import .= "\n".'@import "zone/'.$zone->getType()->getName().'.less";';
                     }
                 }
