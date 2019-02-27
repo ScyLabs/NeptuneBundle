@@ -176,6 +176,7 @@ class PageController extends AbstractController
         }
 
         foreach ($page->getZones() as $zone) {
+
                 if (!in_array($zone->getType()->getName(), $tabJs) && file_exists($publicDir.'/js/zone/'.$zone->getType()->getName().'.js')) {
                     $tabJs[] = $zone->getType()->getName();
                 }

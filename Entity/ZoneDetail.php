@@ -62,7 +62,7 @@ class ZoneDetail extends AbstractDetail
         return $this->title2;
     }
 
-    public function setTitle2(string $title2): self
+    public function setTitle2(?string $title2): self
     {
         $this->title2 = $title2;
 
@@ -85,7 +85,7 @@ class ZoneDetail extends AbstractDetail
         return $this->title3;
     }
 
-    public function setTitle3(string $title3): self
+    public function setTitle3(?string $title3): self
     {
         $this->title3 = $title3;
 
@@ -107,7 +107,7 @@ class ZoneDetail extends AbstractDetail
         return $this->title4;
     }
 
-    public function setTitle4(string $title4): self
+    public function setTitle4(?string $title4): self
     {
         $this->title4 = $title4;
 
