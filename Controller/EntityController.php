@@ -72,17 +72,24 @@ class EntityController extends BaseController
         }
         else{
             $objects = null;
+
             if(!(new $class() instanceof AbstractChild) || ($parentType !== null && $parentId !== null)){
                 $objects = $repo->findBy(array(
                     'remove'=>false,
                 ),['prio'=>'ASC']);
+
+                if(null !== $classParent = $this->getClass($parentType)){
+                    $parent = $this->getDoctrine()->getRepository($classParent)->find($parentId);
+                }
             }
             else{
+
                 $child = true;
+
             }
         }
         $params = array(
-            'title'         =>  ucfirst($type).'s',
+            'title'         =>  ucfirst($type).'s'.((isset($parent) && $parent != null) ? ' de - '.ucfirst($parentType).' : '.$parent->getName() : ''),
             'objects'       =>  $objects,
             'child'         =>  $child,
             'elemLisiting'  => $elemListing

@@ -51,7 +51,7 @@
                 <div class="card">
                     <div class="card-body">
                         <span id="initial_message">Cliquez sur un element pour afficher les {{ app.request.attributes.get('type') }}s qui y sont liées</span>
-                        <div class="nestable">
+                        <div class="">
                             <div class="dd" id="nestable1" data-action="{{ path('neptune_entity_prio',{'type':app.request.attributes.get('type')}) }}">
                                 <ol class="dd-list" id="objects">
                                     {% if objects | length %}

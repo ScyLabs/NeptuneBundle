@@ -50,18 +50,17 @@
                                                 <td>{{ object.parent.name }}</td>
                                             {% endif %}
 
-
-
                                             {% if object.url is defined and not (object.url | is_object) and object.url is not null %}
                                                 <td><a href="{{ object.url }}">{{ object.url }}</a></td>
                                             {% endif %}
-
-
                                             <td>
                                                 <ul class="actions">
                                                     <li><a href="{{ path('neptune_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
                                                     <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
                                                     <li><a href="{{ path('neptune_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
+                                                    {% if object.zones is defined %}
+                                                        <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':app.request.attributes.get('type'),'parentId':object.id}) }}" title="Contenu"><i class="fa fa-align-left"></i></a></li>`
+                                                    {% endif %}
                                                     <li class="">
                                                         {{ render(controller(
                                                             'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
@@ -86,7 +85,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Nestedable</h4>
                         <div class="card-content">
-                            <div class="nestable">
+                            <div class="">
                                 <div class="dd" id="nestable{{ app.request.attributes.get('type') == 'page' ? '' : '1'}}" data-action="{{ path('neptune_entity_prio',{'type':app.request.attributes.get('type')}) }}">
                                     <ol class="dd-list">
                                         {% if objects | length %}

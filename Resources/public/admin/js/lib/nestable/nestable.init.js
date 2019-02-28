@@ -26,7 +26,7 @@ $(document).ready(function()
         group: 1
     })
         .on('change',function (e) {
-            
+
         });
 
 // output initial serialised data
