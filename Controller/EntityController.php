@@ -26,6 +26,8 @@ use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Test\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -108,6 +110,7 @@ class EntityController extends BaseController
             $params['collection'] = $collection;
         }
 
+
         return $this->render('@ScyLabsNeptune/admin/entity/listing.html.twig',$params);
 
     }
@@ -160,7 +163,7 @@ class EntityController extends BaseController
 
     public function addAction(Request $request,$type,$parentType,$parentId){
 
-        if(null === $class = $this->getClass($type,$form)){
+        if(null === $class = $this->getClass($type,$formClass)){
             return $this->redirectToRoute('neptune_home');
         }
 
@@ -205,10 +208,17 @@ class EntityController extends BaseController
         $route = $this->generateUrl('neptune_entity_add',$paramsRoute);
 
 
-        if($this->validForm($type,$form,$object,$request,$params['form'],$route) === true){
+        if(true === $result = $this->validForm($type,$formClass,$object,$request,$form,$route)){
+            if($request->isXmlHttpRequest()){
+                return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été ajouté'));
+            }
             return $this->redirectToRoute('neptune_entity_add',$paramsRoute);
         }
         else{
+           if($result !== false){
+               return $this->json($result);
+           }
+            $params['form'] = $form->createView();
             return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
         }
 
@@ -216,7 +226,7 @@ class EntityController extends BaseController
 
     public function editAction(Request $request,$id,$type){
 
-        if(null === $class = $this->getClass($type,$form)){
+        if(null === $class = $this->getClass($type,$formClass)){
             return $this->redirectToRoute('neptune_home');
         }
 
@@ -246,11 +256,18 @@ class EntityController extends BaseController
             'objects'   =>  $objects
         );
         $route = $this->generateUrl('neptune_entity_edit',array('type'=>$type,'id'=>$object->getId()));
-        if($this->validForm($type,$form,$object,$request,$params['form'],$route)){
+        if(true === $result = $this->validForm($type,$formClass,$object,$request,$form,$route)){
+            if($request->isXmlHttpRequest()){
+                return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été ajouté'));
+            }
             $this->get('session')->getFlashBag()->add('notice','Votre '.$type.' à bien été modifié');
             return $this->redirectToRoute('neptune_entity',array('type'=>$type));
         }
         else{
+            if($result !== false){
+                return $this->json($result);
+            }
+            $params['form'] = $form->createView();
             return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
         }
     }

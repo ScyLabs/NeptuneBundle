@@ -17,6 +17,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\ArrayLoader;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
 class PageForm extends AbstractType
 {
 
@@ -25,7 +27,10 @@ class PageForm extends AbstractType
 
         $builder
             ->add('name',TextType::class,[
-                'label'=>'Nom de la page'
+                'label'=>'Nom de la page',
+                'constraints'   => array(
+                    new NotBlank()
+                )
             ]);
 
             if($options['action'] !== null){

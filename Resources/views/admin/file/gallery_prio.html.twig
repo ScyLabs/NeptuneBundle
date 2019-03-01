@@ -1,41 +1,30 @@
-{% extends '@ScyLabsNeptune/admin/layout.html.twig' %}
+{% extends app.request.XmlHttpRequest ? '@ScyLabsNeptune/admin/ajax.html.twig' :  '@ScyLabsNeptune/admin/layout.html.twig' %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ asset('bundles/scylabsneptune/admin/css/lib/dropzone/dropzone.css') }}"/>
+
 {% endblock %}
 {% block js %}
-    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/dropzone/dropzone.js') }}"></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min') }}></script>
-    <script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables-init') }}></script>
 
-    <script src="{{ asset('bundles/scylabsneptune/admin/js/gallery.js') }}"></script>
 {% endblock %}
 
 {% block content %}
     <div class="row" id="modification_prio">
         <div class="col-md-12 trans500">
-            <h4>Gestions des photos</h4>
+            <h4>Photos</h4>
             <div class="card">
                 <ul class="cartouches hack-inline sortable" data-action="{{ path('neptune_file_prio') }}" data-type="photo">
                     {% if object is defined %}
                         {% for photo in object.photos %}
                                 {% set file = photo.file %}
-                                <li data-id="{{ photo.id }}" class="col-lg-2 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
+                                <li data-id="{{ photo.id }}" class="col-lg-4 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
 
                                     <span>
                                         <span class="boxing">
-                                            <img src="{{ asset('uploads/'~file.file) | thumb(400)}}"/>
+                                            <img src="{{ asset('uploads/'~file.file)}}"/>
                                         </span>
                                     </span>
                                     <ul class="actions">
-                                        <li><a href="{{ asset('uploads/'~file.file)}}" class="fancy fancy_box"><i class="fa fa-search"></i> </a>
+                                        <li><a href="{{ asset('uploads/'~file.file) | thumb(400)}}" class="fancy fancy_box"><i class="fa fa-search"></i> </a>
 
                                         </li>
                                         <li>
@@ -50,13 +39,13 @@
                     {% endif %}
                 </ul>
             </div>
-            <h4>Gestions des Videos</h4>
+            <h4>Videos</h4>
             <div class="card">
                 <ul class="cartouches hack-inline sortable" data-action="{{ path('neptune_file_prio') }}" data-type="video">
                     {% if object is defined %}
                         {% for video in object.videos %}
                             {% set file = video.file %}
-                            <li data-id="{{ video.id }}" class="col-lg-2 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
+                            <li data-id="{{ video.id }}" class="col-lg-3 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
 
                                 <span class="boxing">
                                     <i class="centerXY iconFile" style="color: #fff;">{{ file.originalName }}</i>
@@ -67,7 +56,7 @@
 
                                     </li>
                                     <li>
-                                        <a href="{{ path('neptune_detail',{'type':'video','id':video.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
+                                        <a href="{{ path('neptune_detail',{'type':'video','id':video.id}) }}" class="ajax edit" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
                                     </li>
                                     <li>
                                         <a href="{{ path('neptune_file_link_remove',{'type':'video','id':video.id}) }}"><i class="fa fa-times" style="color: red;"></i></a>
@@ -78,13 +67,13 @@
                     {% endif %}
                 </ul>
             </div>
-            <h4>Gestions des Documents</h4>
+            <h4>Documents</h4>
             <div class="card">
                 <ul class="cartouches hack-inline sortable" data-action="{{ path('neptune_file_prio') }}" data-type="document">
                     {% if object is defined %}
                         {% for document in object.documents %}
                             {% set file = document.file %}
-                            <li data-id="{{ document.id }}" class="col-lg-2 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
+                            <li data-id="{{ document.id }}" class="col-lg-3 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
 
                                 <span>
                                     <span class="boxing">
@@ -112,11 +101,6 @@
         </div>
     </div>
 
-    <div id="addfile_form">
-        <form action="{{ path('neptune_file_upload') }}"
-              class="dropzone"
-              id="customdropzone"></form>
-    </div>
     <h4>Gérez vos fichiers</h4>
     <form>
         <label>Filtres : </label>
@@ -129,11 +113,13 @@
             {% endif %}
         </select>
     </form>
-    <div class="row">
+    <button id="valider_liaison" data-action="{{ path('neptune_file_link') }}" class="btn btn-blue m-b-10 m-l-5 show_form">{{ 'Valider vos modifications' | trans }}</button>
 
-        <div id="container_cartouches" class="col-md-10 trans500" data-select="[]">
-            <div class="card">
-                <div class="card-body">
+
+    <div class="row">
+        <div id="container_cartouches" class="col-md-12 trans500 dropzone" data-action="{{ path('neptune_file_upload') }}" data-select="[]">
+            <div class="mw100">
+                <div class="">
                     <ul id="cartouches" class="hack-inline cartouches">
                         {% if files is defined %}
                             {% for file in files %}
@@ -144,15 +130,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 trans500" id="gallery_actions">
-            <div class="card">
-                <button onclick="$('#addfile_form').slideToggle(500)" class="btn btn-pink m-b-10 m-l-5 show_form">Ajouter des fichiers</button>
-                <button id="valider_liaison" data-action="{{ path('neptune_file_link') }}" class="btn btn-pink m-b-10 m-l-5 show_form">Lier</button>
-            </div>
+        <div class="col-md-2 trans500" style="display: none;" id="gallery_actions">
             <div id="selection_elements" class="card none">
                 <div class="card">
                     <div class="card-body">
-                        <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
+                        <table class="table table-bordered table-striped no-footer" role="grid" aria-describedby="myTable_info">
                             <thead>
                             <th>Name</th>
                             <th>Parent</th>
@@ -162,7 +144,6 @@
                                 <td>
                                     {{ object.name }}
                                 </td>
-
                             </tr>
                             </tbody>
                         </table>

@@ -46,6 +46,8 @@ use ScyLabs\NeptuneBundle\Form\ZoneDetailForm;
 use ScyLabs\NeptuneBundle\Form\ZoneForm;
 use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Yaml\Yaml;
 
 abstract class BaseController extends AbstractController
@@ -55,7 +57,13 @@ abstract class BaseController extends AbstractController
 
 
     /* Fonction de génération de formulaire (surement future service)*/
-    protected function validForm($type,$formClass,$object,$request,&$param,$action = null){
+
+    protected function ajaxFormResult(FormInterface $form){
+
+
+
+    }
+    protected function validForm($type,$formClass,$object,Request $request,&$form,$action = null){
 
 
         $options = ['action'=>$action,'data_class'=>$this->getClass($type)];
@@ -81,13 +89,29 @@ abstract class BaseController extends AbstractController
                 }
             }
             $em = $this->getDoctrine()->getManager();
+
             $em->persist($object);
             $em->flush();
 
             return true;
         }
-        $param = $form->createView();
+        if($request->isXmlHttpRequest() && $form->isSubmitted() && !$form->isValid()){
+            $result = array('success'   =>  false,'errors'=>new ArrayCollection());
+
+            foreach ($object->toArray() as $data ){
+                if($form->has($data))   {
+                    $input = $form->get($data);
+
+                    if($input->getErrors()->count() > 0) {
+
+                        $result['errors']->add(array($data => $input->getErrors()));
+                    }
+                }
+            }
+            return $result;
+        }
         return false;
+
 
     }
     public function getEntities(AbstractElem $object,?string $typeParent = null){

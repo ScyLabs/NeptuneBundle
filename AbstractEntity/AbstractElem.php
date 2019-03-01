@@ -273,4 +273,13 @@ abstract class AbstractElem
         return json_encode($tab);
     }
 
+    public function toArray(){
+        $array = new ArrayCollection();
+        foreach ($this as $key => $value){
+            $array->add($key);
+        }
+
+        return $array;
+    }
+
 }

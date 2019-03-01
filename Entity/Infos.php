@@ -2,6 +2,7 @@
 
 namespace ScyLabs\NeptuneBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -214,5 +215,13 @@ class Infos
         $this->insta = $insta;
 
         return $this;
+    }
+    public function toArray(){
+        $array = new ArrayCollection();
+        foreach ($this as $key => $value){
+            $array->add($key);
+        }
+
+        return $array;
     }
 }

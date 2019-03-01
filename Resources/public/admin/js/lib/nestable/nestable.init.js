@@ -21,7 +21,7 @@ $(document).ready(function()
     $('#nestable1,.nestable1').nestable({
         maxDepth:1
     })
-// activate Nestable for list 2
+    // activate Nestable for list 2
     $('#nestable2').nestable({
         group: 1
     })
@@ -29,7 +29,7 @@ $(document).ready(function()
 
         });
 
-// output initial serialised data
+    // output initial serialised data
     //updateOutput($('#nestable').data('output', $('#nestable-output')));
     //updateOutput($('#nestable2').data('output', $('#nestable2-output')));
 

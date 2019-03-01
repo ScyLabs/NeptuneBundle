@@ -113,6 +113,7 @@ class UserController extends BaseController
         }
 
         $params['form'] = $form->createView();
+        $params['title'] = "Ajout d'un utilisateur";
 
         return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
 

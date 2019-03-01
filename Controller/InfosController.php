@@ -19,8 +19,7 @@ class InfosController extends BaseController
 {
 
     public function editAction(Request $request){
-        $class = $this->getClass('infos');
-        $form = $this->getClass('infosForm');
+        $class = $this->getClass('infos',$formClass);
         $repo = $this->getDoctrine()->getRepository($class);
 
         $object = $repo->findOneBy([],['id'=>'ASC']);
@@ -38,11 +37,19 @@ class InfosController extends BaseController
         );
         $route = $this->generateUrl('neptune_infos_edit');
 
-        if($this->validForm('infos',$form,$object,$request,$params['form'],$route)){
+        if(true === $result = $this->validForm('infos',$formClass,$object,$request,$form,$route)){
+            if($request->isXmlHttpRequest()){
+                dump('wah?');
+                return $this->json(array('success'=>true,'message'=>'Vos Coordonnées ont bien été modifiées'));
+            }
             $this->get('session')->getFlashBag()->add('notice','Les informations de votre site ont bien été modifiées');
             return $this->redirectToRoute('neptune_infos_edit');
         }
         else{
+            if($result !== false){
+                return $this->json($result);
+            }
+            $params['form'] = $form->createView();
             return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
         }
     }

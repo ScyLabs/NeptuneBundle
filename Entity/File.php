@@ -18,6 +18,11 @@ class File
      * @ORM\Column(type="integer")
      */
     protected $id;
+
+    /**
+     @ORM\Column(type="string",length=255,nullable=true)
+     */
+    protected $name;
     
     /**
      * @ORM\Column(type="string", length=255)
@@ -60,6 +65,10 @@ class File
      */
     protected $originalName;
 
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    protected  $remove;
     
 
     public function __construct()
@@ -67,6 +76,16 @@ class File
         $this->photos = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->videos = new ArrayCollection();
+        if($this->remove === null){
+            $this->remove = false;
+        }
+    }
+    public function getRemove(): bool {
+        return $this->remove;
+    }
+    public function setRemove(bool $remove) :self{
+        $this->remove = $remove;
+        return $this;
     }
 
     public function getId()
@@ -75,19 +94,17 @@ class File
     }
 
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
-
-    public function setRemove(bool $remove): self
-    {
-        $this->remove = $remove;
-
-        return $this;
+    public function getName(): ? string{
+        return $this->name;
     }
+
+
 
     public function getType(): ?FileType
     {
