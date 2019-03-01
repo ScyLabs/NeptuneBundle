@@ -16,7 +16,7 @@
                     {% if object is defined %}
                         {% for photo in object.photos %}
                                 {% set file = photo.file %}
-                                <li data-id="{{ photo.id }}" class="col-lg-4 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
+                                <li data-id="{{ photo.id }}" class="col-lg-3 ui-state-default relative {{ file.type.name }}" data-type="{{ file.type.name }}">
 
                                     <span>
                                         <span class="boxing">
@@ -28,7 +28,7 @@
 
                                         </li>
                                         <li>
-                                            <a href="{{ path('neptune_detail',{'type':'photo','id':photo.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
+                                            <a href="{{ path('neptune_detail',{'type':'photo','id':photo.id}) }}" class="ajax edit" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
                                         </li>
                                         <li>
                                             <a href="{{ path('neptune_file_link_remove',{'type':'photo','id':photo.id}) }}"><i class="fa fa-times" style="color: red;"></i></a>
@@ -87,7 +87,7 @@
                                     <li><a href="{{ asset('uploads/'~file.file)}}" class="fancy fancy_box"><i class="fa fa-search"></i> </a>
                                     </li>
                                     <li>
-                                        <a href="{{ path('neptune_detail',{'type':'document','id':document.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
+                                        <a href="{{ path('neptune_detail',{'type':'document','id':document.id}) }}" class="ajax edit" title="Gestion des détails"><i class="fal fa-newspaper"></i></a>
                                     </li>
                                     <li>
                                         <a href="{{ path('neptune_file_link_remove',{'type':'document','id':document.id}) }}"><i class="fa fa-times" style="color: red;"></i></a>

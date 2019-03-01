@@ -130,7 +130,7 @@
     {% if app.request.attributes.get('_route') == 'neptune_entity' and not app.request.XmlHttpRequest %}
         <div class="col-lg-2 m-t-25">
             <div class="card">
-                <a class="btn btn-pink m-b-10 m-l-5 show_form ajax edit" href="{{ path('neptune_entity_add',{'type':app.request.attributes.get('type')}) }}" >Créer une {{ app.request.attributes.get('type') }}</a>
+                <a class="btn btn-pink m-b-10 m-l-5 show_form ajax add" href="{{ path('neptune_entity_add',{'type':app.request.attributes.get('type')}) }}" >Créer une {{ app.request.attributes.get('type') }}</a>
             </div>
         </div>
     {% endif %}

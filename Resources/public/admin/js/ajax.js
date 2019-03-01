@@ -3,74 +3,143 @@ var prevCartouche = false;
 var actualSelect = new Array();
 
 
-$.fn.neptuneAjaxEvent = function(){
+$.fn.neptuneAjaxEvent = function(parentObject,parentAction){
+
+    var parentObject = (typeof(parentObject) == 'undefined') ? null : parentObject;
+    var parentAction = (typeof(parentObject) == 'undefined') ? null : parentAction;
     this.on('click',function(e){
         e.preventDefault();
         let action = $(this).attr('href');
         let button = $(this);
+
         if(action !== null){
+            var success = function (result) {
+                if($.fn.fancybox){
+                    $.fancybox.open([{
+                        src: result,
+                        type: 'inline',
+
+                        opts: {
+                            touch: false,
+                            afterShow: function(instance , current){
+
+
+                                let container =  current.$content;
+                                let forms = container.find('form');
+                                initialisations(container,instance,current,action);
+
+                                container.find('#valider_liaison').on('click',function (e) {
+
+                                    let sel = container.find('#container_cartouches').attr('data-select');
+                                    if(typeof(sel) != 'undefined'){
+
+                                        let element = $('#selection_elements').find('tr.active').eq(0);
+                                        let id_elem = element.attr('data-id');
+                                        let type_elem = element.attr('data-type');
+                                        if(typeof(id_elem) != 'undefined' && typeof(type_elem) != 'udefined'){
+
+                                            /* ON GENERE LE FORMULAIRE ET ON LE SUBMIT*/
+
+                                            let form = $('<form method="post"></form>').attr('action',$(this).attr('data-action'));
+                                            $('body').append(form);
+                                            form.append($('<input type="hidden" name="selection"/>').attr('value',sel));
+                                            form.append($('<input type="hidden" name="id"/>').attr('value',id_elem));
+                                            form.append($('<input type="hidden" name="type"/>').attr('value',type_elem));
+                                            form.on('submit',function (e) {
+                                                e.preventDefault();
+                                                let form = $(this);
+                                                let data = new FormData(this);
+
+                                                $.edc.send($(this).attr('action'),$(this).attr('method'),data,function (result) {
+                                                    $.edc.flashAlert(result.message);
+                                                    instance.close();
+                                                    $.ajax({
+                                                        type:'GET',
+                                                        url:action,
+                                                        success:success
+                                                    });
+                                                });
+                                            });
+                                            form.submit();
+
+                                            /* ON GENERE LE FORMULAIRE ET ON LE SUBMIT*/
+                                        }
+                                    }
+
+                                });
+
+                                if(forms.length){
+
+                                    forms.on('submit',function (e) {
+                                        e.preventDefault();
+                                        let form = $(this);
+                                        let data = new FormData(this);
+                                        let nameForm = $(this).attr("name");
+                                        $.edc.send($(this).attr('action'),$(this).attr('method'),data,function (result) {
+                                            if(result.success === true){
+                                                $.fancybox.close();
+                                                if(button.hasClass('add') ){
+                                                    if(parentObject !== null){
+                                                        parentObject.close();
+                                                        $.ajax({
+                                                            type:'GET',
+                                                            url:parentAction,
+                                                            success:success
+                                                        });
+                                                    }else{
+                                                        location.reload();
+                                                    }
+                                                }
+                                                else if (forms.find('#form_form_remove').length){
+                                                    instance.close();
+                                                    $.ajax({
+                                                        type:'GET',
+                                                        url:action,
+                                                        success:success
+                                                    });
+                                                }
+                                                $.edc.flashAlert(result.message);
+
+
+                                                return;
+                                            }
+                                            result.errors.forEach(function (key) {
+                                                let keyName = Object.keys(key);
+                                                let keyValue = Object.values(key)[0][0].message;
+                                                let input = nameForm + "_" + keyName;
+                                                if(form.find('#'+input).next('.error').length){
+                                                    form.find('#'+input).next('.error').empty().append("<div class='error'>" + keyValue + "</div>");
+                                                }
+                                                else{
+                                                    form.find("#" + input).after("<div class='error'>" + keyValue + "</div>");
+                                                }
+                                            })
+                                        })
+                                    })
+                                }
+                            },
+                            'beforeClose': function() {
+                                tinyMCE.remove('.div-ajax textarea.tiny');
+                            }
+                        }
+                    }]);
+                }
+            }
+
             $.ajax({
                 type:'GET',
                 url:action,
-                success: function (result) {
-                    if($.fn.fancybox){
-                        $.fancybox.open([{
-                            src: result,
-                            type: 'inline',
-                            opts: {
-                                afterShow: function(instance , current){
+                success: success
+            });
 
-
-                                    let container =  current.$content;
-                                    let forms = container.find('form');
-                                    initialisations(container);
-
-                                    if(forms.length){
-
-                                        forms.on('submit',function (e) {
-                                            e.preventDefault();
-                                            let form = $(this);
-                                            let data = new FormData(this);
-                                            let nameForm = $(this).attr("name");
-                                            $.edc.send($(this).attr('action'),$(this).attr('method'),data,function (result) {
-                                                if(result.success === true){
-                                                    $.fancybox.close();
-                                                    $.edc.flashAlert(result.message);
-
-
-                                                    return;
-                                                }
-                                                result.errors.forEach(function (key) {
-                                                    let keyName = Object.keys(key);
-                                                    let keyValue = Object.values(key)[0][0].message;
-                                                    let input = nameForm + "_" + keyName;
-                                                    if(form.find('#'+input).next('.error').length){
-                                                        form.find('#'+input).next('.error').empty().append("<div class='error'>" + keyValue + "</div>");
-                                                    }
-                                                    else{
-                                                        form.find("#" + input).after("<div class='error'>" + keyValue + "</div>");
-                                                    }
-                                                })
-                                            })
-                                        })
-                                    }
-                                },
-                                'beforeClose': function() {
-                                    tinyMCE.remove('.div-ajax textarea.tiny');
-                                }
-                            }
-                        }]);
-                    }
-                }
-            })
         }
     });
 };
 $('.ajax').neptuneAjaxEvent();
 
 
-function initialisations(container){
-    container.find('.ajax').neptuneAjaxEvent();
+function initialisations(container,instance,current,action){
+    container.find('.ajax').neptuneAjaxEvent(instance,action);
 
     if(container.find('#modification_prio').length){
         let files = $('#selection_elements tr.active').attr('data-files');
@@ -115,39 +184,7 @@ function initialisations(container){
     container.find('#cartouches > li > span').gallery();
 
 
-    container.find('#valider_liaison').on('click',function (e) {
 
-        let sel = container.find('#container_cartouches').attr('data-select');
-        if(typeof(sel) != 'undefined'){
-
-            let element = $('#selection_elements').find('tr.active').eq(0);
-            let id_elem = element.attr('data-id');
-            let type_elem = element.attr('data-type');
-            if(typeof(id_elem) != 'undefined' && typeof(type_elem) != 'udefined'){
-
-                /* ON GENERE LE FORMULAIRE ET ON LE SUBMIT*/
-
-                let form = $('<form method="post"></form>').attr('action',$(this).attr('data-action'));
-                $('body').append(form);
-                form.append($('<input type="hidden" name="selection"/>').attr('value',sel));
-                form.append($('<input type="hidden" name="id"/>').attr('value',id_elem));
-                form.append($('<input type="hidden" name="type"/>').attr('value',type_elem));
-                form.on('submit',function (e) {
-                    e.preventDefault();
-                    let form = $(this);
-                    let data = new FormData(this);
-
-                    $.edc.send($(this).attr('action'),$(this).attr('method'),data,function (result) {
-                        $.edc.flashAlert(result.message);
-                    });
-                });
-                form.submit();
-
-                /* ON GENERE LE FORMULAIRE ET ON LE SUBMIT*/
-            }
-        }
-
-    });
     container.find('#filter_type').on('change',function () {
         let val = $(this).val();
         if(val == 'all'){
@@ -156,6 +193,28 @@ function initialisations(container){
         else{
             container.find('#cartouches').find('>li').show()
             container.find('#cartouches').find('>li:not(.'+val+')').hide();
+        }
+    });
+
+    container.find('.sortable').sortable({
+        stop: function(e,ui){
+
+            let lis = $(this).find('> li');
+            let table = new Array();
+
+            for(let i = 0;i < lis.length ;i++){
+                if(typeof(lis.eq(i).attr('data-id')) != 'undefined'){
+                    table.push(lis.eq(i).attr('data-id'));
+                }
+                if(i == lis.length -1){
+                    let data = new FormData();
+                    let type = $(this).data('type');
+                    data.append('prio',JSON.stringify(table));
+                    data.append('type',type);
+                    $.edc.send($(this).attr('data-action'),'POST',data);
+
+                }
+            }
         }
     });
 

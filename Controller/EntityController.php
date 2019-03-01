@@ -26,6 +26,7 @@ use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Test\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -75,20 +76,20 @@ class EntityController extends BaseController
         else{
             $objects = null;
 
-            if(!(new $class() instanceof AbstractChild) || ($parentType !== null && $parentId !== null)){
-                $objects = $repo->findBy(array(
+
+                $repoParams = array(
                     'remove'=>false,
-                ),['prio'=>'ASC']);
+
+                );
+                if($parentType !== null && $parentId !== null && (new $class()) instanceof AbstractChild){
+                    $repoParams[$parentType]  = $parentId;
+                }
+                $objects = $repo->findBy($repoParams,['prio'=>'ASC']);
 
                 if(null !== $classParent = $this->getClass($parentType)){
                     $parent = $this->getDoctrine()->getRepository($classParent)->find($parentId);
                 }
-            }
-            else{
 
-                $child = true;
-
-            }
         }
         $params = array(
             'title'         =>  ucfirst($type).'s'.((isset($parent) && $parent != null) ? ' de - '.ucfirst($parentType).' : '.$parent->getName() : ''),
@@ -106,10 +107,6 @@ class EntityController extends BaseController
                 'name'  =>  ucfirst($type).'s'
             ]
         );
-        if(null !== $collection = $this->getAllEntities($class)){
-            $params['collection'] = $collection;
-        }
-
 
         return $this->render('@ScyLabsNeptune/admin/entity/listing.html.twig',$params);
 
@@ -275,26 +272,42 @@ class EntityController extends BaseController
     public function deleteAction(Request $request,$type,$id){
 
         if(null === $class = $this->getClass($type,$form)){
+            if($request->isXmlHttpRequest()){
+                return $this->json(array('success'=>false,'message'=>'Une erreur est survenue lors de la supression'));
+            }
             return $this->redirectToRoute('neptune_home');
         }
         $em = $this->getDoctrine()->getManager();
         $object = $em->getRepository($class)->find($id);
         if($object === null){
+            if($request->isXmlHttpRequest()){
+                return $this->json(array('success'=>false,'message'=>'Une erreur est survenue lors de la supression'));
+            }
             return $this->redirectToRoute('neptune_entity',array('type'=>$type));
         }
         $form = $this->createFormBuilder($object)->setMethod('post')
             ->setAction($this->generateUrl('neptune_entity_delete',array('type'=>$type,'id'=>$id)))
+            ->add('form_remove',HiddenType::class,array(
+                'mapped'    =>  false,
+                'required'  => false
+            ))
             ->getForm();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             if($object instanceof User && !$object->hasRole('ROLE_SUPER_ADMIN') && $object !== $this->getUser()){
                 $em->remove($object);
                 $em->flush();
+                if($request->isXmlHttpRequest()){
+                    return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été supprimé'));
+                }
                 return $this->redirect($request->headers->get('referer'));
             }
             $object->setRemove(true);
             $em->persist($object);
             $em->flush();
+            if($request->isXmlHttpRequest()){
+                return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été supprimé'));
+            }
             return $this->redirect($request->headers->get('referer'));
         }
         $params = array(
