@@ -1,6 +1,7 @@
 {
-  "active": true,
-  "version": "1.0",
+  "active": {{ (changelogs.active) ? 'true' : 'false' }},
+  "version": "{{ changelogs.version }}",
+  "cookieAction":"{{ path('neptune_changelog_cookie',{'version':changelogs.version}) }}",
   "title" : "Des changements conséquents ont été apportés",
   "changes": [
     "Des changements conséquents ont été apportés a votre outil d'aministration<br/>",
