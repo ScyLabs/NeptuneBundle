@@ -33,6 +33,10 @@ class PageController extends AbstractController
     public function homeAction(Request $request){
 
         $em = $this->getDoctrine()->getManager();
+        $locale = $request->getLocale();
+        if(!in_array($locale,$this->getParameter('langs'))){
+            return $this->redirectToRoute("homepage");
+        }
         $pages = $em->getRepository(Page::class)->findBy(array(
             'parent' => null,
             'remove' => false,
