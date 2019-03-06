@@ -19,10 +19,6 @@ class File
      */
     protected $id;
 
-    /**
-     @ORM\Column(type="string",length=255,nullable=true)
-     */
-    protected $name;
     
     /**
      * @ORM\Column(type="string", length=255)
@@ -92,18 +88,6 @@ class File
     {
         return $this->id;
     }
-
-
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-    public function getName(): ? string{
-        return $this->name;
-    }
-
 
 
     public function getType(): ?FileType
