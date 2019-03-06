@@ -46,6 +46,7 @@ use ScyLabs\NeptuneBundle\Form\PartnerDetailForm;
 use ScyLabs\NeptuneBundle\Form\PartnerForm;
 use ScyLabs\NeptuneBundle\Form\PhotoDetailForm;
 use ScyLabs\NeptuneBundle\Form\UserForm;
+use ScyLabs\NeptuneBundle\Form\VideoDetailForm;
 use ScyLabs\NeptuneBundle\Form\ZoneDetailForm;
 use ScyLabs\NeptuneBundle\Form\ZoneForm;
 use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
@@ -195,6 +196,9 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->children()
                         ->variableNode('videoDetail')->defaultValue(VideoDetail::class)->end()
+                    ->end()
+                    ->children()
+                        ->variableNode('videoDetailForm')->defaultValue(VideoDetailForm::class)->end()
                     ->end()
                     // FIN VIDEO
                     // INFOS

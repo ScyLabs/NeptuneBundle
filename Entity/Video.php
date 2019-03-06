@@ -2,6 +2,8 @@
 
 namespace ScyLabs\NeptuneBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractFileLink;
 
@@ -73,6 +75,9 @@ class Video extends AbstractFileLink
         }
 
         return $this;
+    }
+    public function getDetails() : Collection{
+        return $this->details;
     }
     public function getDetail($locale){
         foreach ($this->details as $detail){

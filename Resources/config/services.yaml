@@ -1,7 +1,7 @@
 parameters:
-    locale: 'fr'
-    uploads_directory: '%kernel.project_dir%/public/uploads/'
-    langs: ['fr','en','ru','de']
+    changelogs:
+        active: true
+        version: "1.0"
 
 services:
 

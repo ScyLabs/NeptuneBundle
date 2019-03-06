@@ -32,6 +32,10 @@ class PageController extends AbstractController
 
     public function homeAction(Request $request){
 
+        $locale = $request->getLocale();
+        if(!in_array($locale,$this->getParameter('langs'))){
+            return $this->redirectToRoute("homepage");
+        }
         $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();
         if(!in_array($locale,$this->getParameter('langs'))){

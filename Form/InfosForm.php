@@ -22,6 +22,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 
 
 class InfosForm extends AbstractType
@@ -39,9 +40,10 @@ class InfosForm extends AbstractType
                 'label'=>'Adresse',
                 'required'=>false,
             ])
-            ->add('cp',NumberType::class,[
+            ->add('cp',TextType::class,[
                 'label'=>'Code postal',
                 'required'=>false,
+
             ])
             ->add('city',TextType::class,[
                 'label'=>'Ville',
@@ -50,6 +52,9 @@ class InfosForm extends AbstractType
             ->add('mail', EmailType::class,[
                 'label'=>'E-mail',
                 'required'=>false,
+                'constraints' => array(
+                    new Email(),
+                )
             ])
             ->add('tel',TelType::class,[
                 'label'=>'Tel',

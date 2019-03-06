@@ -32,7 +32,6 @@
     {% if page.remove == 0 %}
         <tr>
             <td>
-
                 <a href="{{ path('neptune_entity_active',{'id':page.id,'type':app.request.attributes.get('type')}) }}">
                     {% if page.active %}
                     <i class="fa fa-check text-success"></i>
@@ -53,12 +52,13 @@
                     {{ page.parent.name }}
                 {% endif %}
             </td>
+            <td>{{ page.prio }}</td>
             <td>
                 <ul class="actions">
-                    <li><a href="{{ path('neptune_file_gallery_prio',{'type':'page','id':page.id}) }}" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
-                    <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':page.id}) }}" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
-                    <li><a href="{{ path('neptune_entity_edit',{'id':page.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
-                    <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':'page','parentId':page.id}) }}" title="Contenu"><i class="fa fa-align-left"></i></a></li>`
+                    <li><a href="{{ path('neptune_file_gallery_prio',{'type':'page','id':page.id}) }}" class="ajax" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
+                    <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':page.id}) }}" class="ajax edit" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
+                    <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':'page','parentId':page.id}) }}" class="ajax" title="Contenu"><i class="fa fa-align-left"></i></a></li>
+                    <li><a href="{{ path('neptune_entity_edit',{'id':page.id,'type':app.request.attributes.get('type')}) }}" class="ajax edit" title="Modifier"><i class="fa fa-pencil"></i></a></li>
                     <li class="">
                         {{ render(controller(
                             'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',

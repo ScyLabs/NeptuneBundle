@@ -82,10 +82,16 @@ class FileController extends BaseController
         $typeElement = $request->request->get('type');
 
         if($select === null || $id === null ||$typeElement === ''){
+            if($request->isXmlHttpRequest()){
+                return $this->json(array('success'=> false,'message'=>'Une erreur est survenue lors de la liaison de vos fichiers'));
+            }
             $this->get('session')->getFlashBag()->add('notice',"Une erreur est survenue lors de la liaison de vos fichiers");
             return $this->redirectToRoute('neptune_file');
         }
         if(null ===  $filesTab = json_decode($select)){
+            if($request->isXmlHttpRequest()){
+                return $this->json(array('success'=> false,'message'=>'Une erreur est survenue lors de la liaison de vos fichiers'));
+            }
             $this->get('session')->getFlashBag()->add('notice',"Une erreur est survenue lors de la liaison de vos fichiers");
             return $this->redirectToRoute('neptune_file');
         }
@@ -94,6 +100,9 @@ class FileController extends BaseController
         $em = $this->getDoctrine()->getManager();
 
         if(null === $class = $this->getClass($typeElement)){
+            if($request->isXmlHttpRequest()){
+                return $this->json(array('success'=> false,'message'=>'Une erreur est survenue lors de la liaison de vos fichiers'));
+            }
             return$this->redirectToRoute('neptune_home');
         }
 
@@ -101,6 +110,9 @@ class FileController extends BaseController
 
         if($obj === null){
 
+            if($request->isXmlHttpRequest()){
+                return $this->json(array('success'=> false,'message'=>'Une erreur est survenue lors de la liaison de vos fichiers'));
+            }
             $this->get('session')->getFlashBag()->add('notice',"Une erreur est survenue lors de la liaison de vos fichiers");
             return $this->redirectToRoute('neptune_file');
         }
@@ -149,10 +161,8 @@ class FileController extends BaseController
 
             if(!$actualFiles->contains($file)){
                 $type = $file->getType()->getName();
-
                 if(null === $linkClass = $this->getClass($type)){
-
-                    return $this->redirectToRoute('neptune_home');
+                    continue;
                 }
 
                 $link = new $linkClass();
@@ -191,8 +201,11 @@ class FileController extends BaseController
         }
         $em->persist($obj);
         $em->flush();
-        $this->get('session')->getFlashBag()->add('notice',"Vos fichiers ont bien été liés.");
 
+        if($request->isXmlHttpRequest()){
+            return $this->json(array('success'=> true,'message'=>'Vos modifications ont bien été mises à jour'));
+        }
+        $this->get('session')->getFlashBag()->add('notice',"Vos fichiers ont bien été liés.");
         return $this->redirectToRoute('neptune_file_gallery_prio',array('type'=>$typeElement,'id'=>$obj->getId()));
 
     }
@@ -378,7 +391,7 @@ class FileController extends BaseController
         ));
 
         $params = array(
-            'title'     => 'Gestion des fichiers de '.(($type == 'page' ||$type == 'zone') ? 'la ' : "l'").ucfirst($type).' : '.$object->getName(),
+            'title'     => 'Fichiers de '.(($type == 'page' ||$type == 'zone') ? 'la ' : "l'").ucfirst($type).' : '.$object->getName(),
             'ariane'    => $ariane,
             'object'    => $object,
             'files'     => $files,

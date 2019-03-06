@@ -92,6 +92,7 @@ Chargement de scripts de faÃ§on automatique :
                     src: data,
                     type: type,
                     opts: {
+                        touch: false,
                         afterShow: function(instance , current){
                             fn(data);
                         }

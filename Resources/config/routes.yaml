@@ -1,3 +1,10 @@
+neptune_changelogs:
+    path: /changelogs
+    controller: ScyLabs\NeptuneBundle\Controller\MainController::changelogsAction
+neptune_changelog_cookie:
+    path: /changelogs/{version}
+    controller: ScyLabs\NeptuneBundle\Controller\MainController::setCookieChangelogsAction
+
 neptune_user:
     resource: 'routing/user.yaml'
 neptune_type:

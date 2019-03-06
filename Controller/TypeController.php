@@ -30,7 +30,7 @@ class TypeController extends BaseController
     public function addAction(Request $request,$type){
 
         $classType = $type.'Type';
-        $class = $this->getClass($classType,$form);
+        $class = $this->getClass($classType,$formClass);
         if($class === null){
             return $this->redirectToRoute('neptune_home');
         }
@@ -45,7 +45,7 @@ class TypeController extends BaseController
 
         $types = $em->getRepository($class)->findByRemove(0);
 
-        $result = $this->validForm($classType,$form,new $class(),$request,$params['form'],$route);
+
 
 
         $params['types'] = $types;
@@ -67,12 +67,17 @@ class TypeController extends BaseController
             ]
         );
         $params['ariane'] = $ariane;
-        if($result === true){
-
+        if(true === $result = $this->validForm($classType,$formClass,new $class(),$request,$form,$route)){
+            if($request->isXmlHttpRequest()){
+                return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été ajouté'));
+            }
             return $this->redirectToRoute('neptune_type',array('type'=>$type));
         }
         else{
-
+            if($result !== false){
+                return $this->json($result);
+            }
+            $params['form'] = $form->createview();
             return $this->render('@ScyLabsNeptune/admin/type/add.html.twig',$params);
         }
 

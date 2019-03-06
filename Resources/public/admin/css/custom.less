@@ -1,3 +1,62 @@
+.select2-container.select2-container--open{
+    z-index: 9999999;
+}
+.btn{
+    padding:1rem 2rem;
+    min-width: 20rem;
+    background: #82ccdd;
+    color:#fff;
+    margin:0 auto!important;
+    display: block;
+}
+.margin_bottom_30{
+    margin-bottom: 30px;
+}
+#container_cartouches.dropzone{
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    > * {
+        flex:0;
+        &.mw100{
+            min-width: 100%;
+            order:99;
+        }
+        &.dz-message{
+            min-width: 100%;
+        }
+    }
+}
+
+.dd-list.dd-dragel{
+    z-index: 9999999;
+}
+.div-ajax{
+    max-width: 1600px;
+    width:100%;
+    &.add,&.edit{
+        max-width: 400px;
+    }
+    .row{
+        margin:0;
+        width: 100%;
+        >div {
+            width: 100%;
+        }
+        form{
+            width: 100%;
+        }
+    }
+    #tabs,.tabs{
+        > *:not(:nth-child(2)):not(.onglets){
+            display: none;
+        }
+    }
+    #cartouches > li > span{
+        z-index: 99;
+    }
+}
 .onglets {
     display: block;
     width:100%;
@@ -28,7 +87,7 @@
     right:0;
     width:100%;
     max-width: 300px;
-    z-index: 999;
+    z-index: 9999999;
     .flash { margin:10px;}
     .alert p {color:#000!important;}
 }
@@ -73,7 +132,7 @@
     display:inline-block;
     overflow: hidden;
     padding:5px;
-    cursor: pointer;
+    cursor: pointer!important;
     .actions {
         position: absolute;
         right:0;
@@ -95,6 +154,8 @@
         position: relative;
         display: block;
         background: #666;
+        cursor: pointer!important;
+
 
         > .boxing {
             position: absolute;
@@ -107,6 +168,8 @@
             > img {
                 object-fit: cover;
                 object-position: 50% 50%;
+                width:100%;
+
             }
         }
         &::after {
@@ -132,6 +195,7 @@
             color:green;
             transition: all 500ms;
             z-index: 3;
+            cursor: pointer!important;
         }
         &::before{
             content:'';
@@ -236,4 +300,3 @@ button.form-control[type="submit"] {
     }
 }
 
-@import "user/user.less";

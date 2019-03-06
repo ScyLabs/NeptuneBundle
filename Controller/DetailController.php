@@ -104,9 +104,9 @@ class DetailController extends BaseController
 
             $this->validForm($classType,$form,$detail,$request,$collection[$detail->getLang()]['form'],$route);
         }
+
         $params = array(
             'title'         =>  'Details de l'.(($type == 'element') ? "'" : 'a').' '.$type.'  :  '.$object->getName(),
-            'collection'    =>  $collection,
             'object'        => $object
         );
         if(!$object instanceof Photo)
@@ -128,6 +128,11 @@ class DetailController extends BaseController
             ]
         );
 
+        foreach ($collection as $key => $val){
+            $collection[$key]['form'] = $collection[$key]['form']->createView();
+        }
+        $params['collection'] =   $collection;
+
         return $this->render('@ScyLabsNeptune/admin/detail/details.html.twig',$params);
     }
 
@@ -141,16 +146,23 @@ class DetailController extends BaseController
             return $this->redirectToRoute('neptune_home');
         }
 
-        if(null === $classDetail = $this->getClass($type.'Detail',$form)){
+        if(null === $classDetail = $this->getClass($type.'Detail',$formClass)){
             return $this->redirectToRoute('neptune_home');
         }
 
 
         $detail = $object->getDetail($lang);
 
-        $params = array();
-        $this->validForm($type.'Detail',$form,$detail,$request,$params['form']);
+
+        if(true === $result =$this->validForm($type.'Detail',$formClass,$detail,$request,$form)){
+
+            return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été ajouté'));
+        }
+        if($result !== false){
+            return $this->json($result);
+        }
         return $this->redirect($request->headers->get('referer'));
+
 
     }
 

@@ -24,6 +24,11 @@
     <link href="{{ asset('bundles/scylabsneptune/admin/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/font-awesome/css/fontawesome-all.min.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('bundles/scylabsneptune/admin/css/custom.less') }}" rel="stylesheet/less">
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/nestable/nestable.css') }}" rel="stylesheet">
+
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/tinyinit.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('bundles/scylabsneptune/admin/css/lib/dropzone/dropzone.css') }}"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
     <!--[if lt IE 9]>
@@ -182,6 +187,24 @@
 <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
 
 
+<script src="{{ asset('bundles/scylabsneptune/admin/js/lib/nestable/jquery.nestable.js') }}"></script>
+<!-- scripit init-->
+<script src="{{ asset('bundles/scylabsneptune/admin/js/lib/nestable/nestable.init.js') }}"></script>
+
+<script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables.min.js') }}></script>
+<script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js') }}></script>
+<script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js') }}></script>
+<script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js') }}></script>
+<script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js') }}></script>
+<script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js') }}></script>
+<script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js') }}></script>
+<script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js') }}></script>
+<script src={{ asset('bundles/scylabsneptune/admin/js/lib/datatables/datatables-init.js') }}></script>
+<script src="{{ asset('bundles/scylabsneptune/admin/js/lib/dropzone/dropzone.js') }}"></script>
+<script src="{{ asset('bundles/scylabsneptune/admin/js/gallery.js') }}"></script>
+
+
+
 <!--Custom JavaScript -->
 
 
@@ -194,12 +217,14 @@
 
 <script>
     var url_site = "{{ asset('') }}";
-
     var url_asset = "{{ asset('bundles/scylabsneptune') }}";
+    var url_changelog = "{{ path('neptune_changelogs') }}";
 </script>
 <script src="{{ asset('bundles/scylabsneptune/admin/js/scripts.js') }}"></script>
 <script src="{{ asset('bundles/scylabsneptune/admin/js/custom.js') }}"></script>
+<script src="{{ asset('bundles/scylabsneptune/admin/js/ajax.js') }}"></script>
 <script src="{{ asset('bundles/scylabsneptune/admin/js/egs.js') }}"></script>
+<script src="{{ asset('bundles/scylabsneptune/admin/js/changelogs.js') }}"></script>
 
 </body>
 

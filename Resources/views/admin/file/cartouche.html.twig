@@ -3,6 +3,11 @@
         <li>
             <a href="{{ asset('uploads/'~file.file)}}" class="fancy" data-fancybox="gallery"><i class="fa fa-search"></i></a>
         </li>
+        {#
+        <li>
+            <a href="{{ path('neptune_entity_edit',{'type':'file','id':file.id}) }}" class="ajax edit"><i class="fa fa-pencil"></i></a>
+        </li>
+        #}
         <li>
             {{ render(controller(
                 'ScyLabs\\NeptuneBundle\\Controller\\FileController::deleteAction',
@@ -15,7 +20,7 @@
         <span class="boxing">
             <i class="fa fa-check centerXY"></i>
             {% if file.type.name == 'photo' %}
-                <img src="{{ asset('uploads/'~file.file) | thumb(400) }}"/>
+                <img src="{{ asset('uploads/'~file.file) | thumb(400)  }}"/>
             {% else %}
                 <i class="fa {% if file.ext == 'pdf' %}
                 fa-file-pdf
