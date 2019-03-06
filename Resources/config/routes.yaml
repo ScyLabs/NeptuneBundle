@@ -1,3 +1,6 @@
+neptune_changelogs:
+    path: /changelogs
+    controller: ScyLabs\NeptuneBundle\Controller\MainController::changeLogsAction
 neptune_user:
     resource: 'routing/user.yaml'
 neptune_type:

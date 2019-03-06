@@ -39,7 +39,6 @@ class InfosController extends BaseController
 
         if(true === $result = $this->validForm('infos',$formClass,$object,$request,$form,$route)){
             if($request->isXmlHttpRequest()){
-                dump('wah?');
                 return $this->json(array('success'=>true,'message'=>'Vos Coordonnées ont bien été modifiées'));
             }
             $this->get('session')->getFlashBag()->add('notice','Les informations de votre site ont bien été modifiées');
