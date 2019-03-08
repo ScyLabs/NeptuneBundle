@@ -139,6 +139,8 @@ $('.ajax').neptuneAjaxEvent();
 
 
 function initialisations(container,instance,current,action){
+
+
     container.find('.ajax').neptuneAjaxEvent(instance,action);
 
     if(container.find('#modification_prio').length){
@@ -177,6 +179,17 @@ function initialisations(container,instance,current,action){
     });
     container.find('.nestable.onelevel').nestable({
         maxDepth:1
+    });
+    $('.dd').on('change',function () {
+        let ser = JSON.stringify($(this).nestable('serialize'));
+        let url = $(this).attr('data-action');
+        let data = new FormData();
+        data.append('prio',ser);
+
+        if(typeof(url) != typeof(undefined)){
+            $.edc.send(url,'POST',data);
+        }
+
     });
     if(container.find('.dataTable').length){
         container.find('.dataTable').DataTable();
