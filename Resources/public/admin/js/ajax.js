@@ -5,12 +5,15 @@ var actualSelect = new Array();
 
 $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
 
-    var parentObject = (typeof(parentObject) == 'undefined') ? null : parentObject;
-    var parentAction = (typeof(parentObject) == 'undefined') ? null : parentAction;
     this.on('click',function(e){
+
+        parentObject = (typeof(parentObject) == 'undefined') ? null : parentObject;
+        parentAction = (typeof(parentObject) == 'undefined') ? null : parentAction;
+
         e.preventDefault();
         let action = $(this).attr('href');
         let button = $(this);
+
 
         if(action !== null){
             var success = function (result) {
@@ -22,7 +25,6 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                         opts: {
                             touch: false,
                             afterShow: function(instance , current){
-
 
                                 let container =  current.$content;
                                 let forms = container.find('form');
@@ -79,6 +81,7 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                                             if(result.success === true){
                                                 $.fancybox.close();
                                                 if(button.hasClass('add') ){
+
                                                     if(parentObject !== null){
                                                         parentObject.close();
                                                         $.ajax({
