@@ -30,7 +30,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PageController extends AbstractController
 {
 
-    public function homeAction(Request $request){
+    public function homeAction(Request $request,?array $options = null){
 
         $locale = $request->getLocale();
         if(!in_array($locale,$this->getParameter('langs'))){
@@ -65,10 +65,14 @@ class PageController extends AbstractController
         }
         $tabJs = $this->getZonesDeps($page);
         $params = array('pages'=>$pages,'page'=>$page,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale(),'contactPages'=>$contactPages,'jsZones'=>$this->getZonesDeps($page));
+        if($options !== null){
+            $params = array_merge($params,$options);
+        }
+
         return $this->render('page/home.html.twig',$params);
     }
 
-    public function pageAction(Request $request,$slug){
+    public function pageAction(Request $request,$slug,?array $options = null){
         $em = $this->getDoctrine()->getManager();
         $url = $em->getRepository(PageUrl::class)->findOneBy(array(
             'url' => $slug
@@ -132,10 +136,13 @@ class PageController extends AbstractController
             return $this->render('page/'.$page->getType()->getName().'.html.twig',$params);
         }
 
+        if($options !== null){
+            $params = array_merge($params,$options);
+        }
         return $this->render('page/page.html.twig',$params);
     }
 
-    public function detailElementAction(Request $request,$slug){
+    public function detailElementAction(Request $request,$slug,?array $options = null){
         $em = $this->getDoctrine()->getManager();
         $url = $em->getRepository(ElementUrl::class)->findOneBy(array(
             'url' => $slug
@@ -171,6 +178,10 @@ class PageController extends AbstractController
         $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
         $partners = $em->getRepository(Partner::class)->findAll();
         $params = array('pages'=>$pages,'page'=>$element,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale(),'jsZones'=>$this->getZonesDeps($element));
+
+        if($options !== null){
+            $params = array_merge($params,$options);
+        }
 
         return $this->render('page/page.html.twig',$params);
     }
