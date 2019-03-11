@@ -84,6 +84,7 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
 
                                                     if(parentObject !== null){
                                                         parentObject.close();
+                                                        action = parentAction;
                                                         $.ajax({
                                                             type:'GET',
                                                             url:parentAction,
@@ -95,6 +96,7 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                                                 }
                                                 else if (forms.find('#form_form_remove').length){
                                                     instance.close();
+                                                    action = parentAction;
                                                     $.ajax({
                                                         type:'GET',
                                                         url:action,
@@ -127,7 +129,7 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                         }
                     }]);
                 }
-            }
+            };
 
             $.ajax({
                 type:'GET',
