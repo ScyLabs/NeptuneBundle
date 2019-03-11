@@ -116,7 +116,7 @@ class TypeController extends BaseController
 
     public function editAction(Request $request,$id,$type){
         $classType = $type.'Type';
-        $class = $this->getClass($classType,$form);
+        $class = $this->getClass($classType,$formClass);
         if($class === null){
             return $this->redirectToRoute('neptune_home');
         }
@@ -136,12 +136,13 @@ class TypeController extends BaseController
 
         $route = $this->generateUrl('neptune_type_edit',['id'=>$oType->getId(),'type'=>$type]);
 
-        if($this->validForm($classType,$form,$oType,$request,$params['form'],$route) === true){
+        if($this->validForm($classType,$formClass,$oType,$request,$form,$route) === true){
 
             $this->get('session')->getFlashBag()->add('notice',"Votre type de page à bien été modifié");
             return $this->redirectToRoute('neptune_type',array('type'=>$type));
         }
         else{
+            $params['form'] = $form->createView();
             return $this->render('@ScyLabsNeptune/admin/type/add.html.twig',$params);
         }
     }

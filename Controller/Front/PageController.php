@@ -131,14 +131,13 @@ class PageController extends AbstractController
 
         $params = array('pages'=>$pages,'page'=>$page,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale(),'contactPages'=>$contactPages,'jsZones'=>$this->getZonesDeps($page));
 
-
+        if($options !== null){
+            $params = array_merge($params,$options);
+        }
         if(file_exists($this->getParameter('kernel.project_dir').'/templates/page/'.$page->getType()->getName().'.html.twig')){
             return $this->render('page/'.$page->getType()->getName().'.html.twig',$params);
         }
 
-        if($options !== null){
-            $params = array_merge($params,$options);
-        }
         return $this->render('page/page.html.twig',$params);
     }
 
