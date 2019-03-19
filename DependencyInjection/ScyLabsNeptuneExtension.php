@@ -25,6 +25,7 @@ class ScyLabsNeptuneExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration,$configs);
         $container->setParameter($this->getAlias().'.override',$config['override']);
+        $container->setParameter($this->getAlias().'.compress',$config['compress']);
 
 
 

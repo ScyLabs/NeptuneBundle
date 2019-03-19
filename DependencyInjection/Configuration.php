@@ -74,6 +74,10 @@ class Configuration implements ConfigurationInterface
         // PAGE -----------
         $rootNode
             ->children()
+                ->variableNode('compress')->defaultValue(true)->end()
+            ->end()
+            ->children()
+
                 ->arrayNode('override')->addDefaultsIfNotSet()
                     ->children()
                         ->variableNode('page')->defaultValue(Page::class)->end()
