@@ -32,14 +32,12 @@ class PageController extends AbstractController
 
     public function homeAction(Request $request,?array $options = null){
 
-        $locale = $request->getLocale();
-        if(!in_array($locale,$this->getParameter('langs'))){
-            return $this->redirectToRoute("homepage");
-        }
         $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();
         if(!in_array($locale,$this->getParameter('langs'))){
-            return $this->redirectToRoute("homepage");
+            return $this->redirectToRoute("homepage",array(
+                '_locale'   => 'fr'
+            ));
         }
         $pages = $em->getRepository(Page::class)->findBy(array(
             'parent' => null,
@@ -73,6 +71,14 @@ class PageController extends AbstractController
     }
 
     public function pageAction(Request $request,$slug,?array $options = null){
+
+        $locale = $request->getLocale();
+        if(!in_array($locale,$this->getParameter('langs'))){
+            return $this->redirectToRoute('homepage',array(
+                '_locale'   => 'fr'
+            ));
+        }
+
         $em = $this->getDoctrine()->getManager();
         $url = $em->getRepository(PageUrl::class)->findOneBy(array(
             'url' => $slug
