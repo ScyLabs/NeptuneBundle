@@ -15,6 +15,8 @@ use ScyLabs\NeptuneBundle\Repository\ZoneTypeRepository;
 use Doctrine\ORM\MScyLabs\NeptuneBundleing\Entity;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -30,8 +32,14 @@ use Symfony\Component\Translation\Loader\ArrayLoader;
 class ZoneForm extends AbstractType
 {
 
+    private $container;
+    public function  __construct(ContainerInterface $container) {
+        $this->container = $container;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
 
         $builder
             ->add('name',TextType::class,[
@@ -42,14 +50,14 @@ class ZoneForm extends AbstractType
             $builder->setAction($options['action']);
         }
         $builder->add('type',EntityType::class,[
-                'label'         => 'Type de zone',
-                'class'         => ZoneType::class,
-                'choice_label'  => 'title',
-                'query_builder' =>  function(ZoneTypeRepository $r){
-                    return $r->createQueryBuilder('t')
-                        ->where('t.remove = 0');
-                },
-            ])
+            'label'         => 'Type de zone',
+            'class'         => ZoneType::class,
+            'choice_label'  => 'title',
+            'query_builder' =>  function(ZoneTypeRepository $r){
+                return $r->createQueryBuilder('t')
+                    ->where('t.remove = 0');
+            },
+        ])
             ->add('subType',ChoiceType::class,array(
                 'choices'=> array(
                     'Type 1'    => 'subtype1',
@@ -57,38 +65,55 @@ class ZoneForm extends AbstractType
                     'Type 3'    => 'subtype3'
                 )
             ));
-            if(in_array('ROLE_SUPER_ADMIN',$options['roles'])){
-                $builder->add('typeHead',ChoiceType::class,array(
-                    'choices'=> array(
-                        'H2'    => 2,
-                        'H3'    => 3,
-                        'H4'    => 4,
-                        'H5'    => 5,
-                        'H6'    => 6,
-                    )
+        if(in_array('ROLE_SUPER_ADMIN',$options['roles'])){
+            $builder->add('typeHead',ChoiceType::class,array(
+                'choices'=> array(
+                    'H2'    => 2,
+                    'H3'    => 3,
+                    'H4'    => 4,
+                    'H5'    => 5,
+                    'H6'    => 6,
+                )
+            ));
+        }
+
+        if(null !== $icons = $this->container->getParameter('scy_labs_neptune.icons')){
+            if(is_array($icons)){
+                $choices = array('Aucune'=>'');
+                foreach ($icons as $key => $icon){
+
+                    $choices[$key] = $key;
+                }
+                $builder->add('icon',ChoiceType::class,array(
+                    'label' => "Icone",
+                    "choices"   => $choices
+
                 ));
             }
+        }else{
             $builder->add('icon',TextType::class,array(
                 'required'=>false,
                 'label'=> 'Icone'
-            ))
-            ->add('pageLink',EntityType::class,array(
-                'label' => 'Page liée (PageLink)',
-                'class' => Page::class,
-                'choice_label'      => 'name',
-                'required'  => false,
-                'query_builder'     => function(PageRepository $r){
-                    return $r->createQueryBuilder('p')
-                        ->where('p.remove = 0');
-                }
-            ))
+            ));
+        }
+
+        $builder->add('pageLink',EntityType::class,array(
+            'label' => 'Page liée (PageLink)',
+            'class' => Page::class,
+            'choice_label'      => 'name',
+            'required'  => false,
+            'query_builder'     => function(PageRepository $r){
+                return $r->createQueryBuilder('p')
+                    ->where('p.remove = 0');
+            }
+        ))
             ->add('submit',SubmitType::class,[
                 'label' => 'Envoyer'
             ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA,function(FormEvent $event){
             $zone = $event->getData();
-            
+
             if(null === $zone){
                 return;
             }
@@ -96,11 +121,11 @@ class ZoneForm extends AbstractType
             if($zone->getType() !== null){
 
                 $event->getForm()->add('subType',ChoiceType::class,array(
-                   'choices'    => array(
-                       $zone->getType()->getTitle().' - Type 1'    => 'subtype1',
-                       $zone->getType()->getTitle().' - Type 2'    => 'subtype2',
-                       $zone->getType()->getTitle().' - Type 3'    => 'subtype3'
-                   )
+                    'choices'    => array(
+                        $zone->getType()->getTitle().' - Type 1'    => 'subtype1',
+                        $zone->getType()->getTitle().' - Type 2'    => 'subtype2',
+                        $zone->getType()->getTitle().' - Type 3'    => 'subtype3'
+                    )
                 ));
             }
 
@@ -123,7 +148,8 @@ class ZoneForm extends AbstractType
         $resolver->setDefaults([
             'action' => null,
             'data_class' => Zone::class,
-            'roles'     => ['ROLE_ADMIN']
+            'roles'     => ['ROLE_ADMIN'],
+            'container' => null,
         ])
         ;
     }

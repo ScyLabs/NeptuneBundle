@@ -62,11 +62,7 @@ class Configuration implements ConfigurationInterface
 
 
         $this->addClassesNode('override',$rootNode);
-    ;
 
-
-            //$rootNode->end();
-        ;
         return $treeBuilder;
     }
 
@@ -75,6 +71,9 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->variableNode('compress')->defaultValue(true)->end()
+            ->end()
+            ->children()
+                ->variableNode('icons')->defaultValue(null)->end()
             ->end()
             ->children()
 
