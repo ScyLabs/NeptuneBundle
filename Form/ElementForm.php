@@ -13,7 +13,9 @@ use ScyLabs\NeptuneBundle\Repository\ElementTypeRepository;
 use Doctrine\ORM\Mapping\Entity;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -27,6 +29,11 @@ use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 class ElementForm extends AbstractType
 {
+    private $container;
+
+    public function  __construct(ContainerInterface $container) {
+        $this->container = $container;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -52,8 +59,27 @@ class ElementForm extends AbstractType
                 return $r->createQueryBuilder('t')
                     ->where('t.remove = 0');
             },
-        ])
-        ->add('submit',SubmitType::class,[
+        ]);
+        if(null !== $icons = $this->container->getParameter('scy_labs_neptune.icons')){
+            if(is_array($icons)){
+                $choices = array('Aucune'=>'');
+                foreach ($icons as $key => $icon){
+
+                    $choices[$key] = $key;
+                }
+                $builder->add('icon',ChoiceType::class,array(
+                    'label' => "Icone",
+                    "choices"   => $choices
+
+                ));
+            }
+        }else{
+            $builder->add('icon',TextType::class,array(
+                'required'=>false,
+                'label'=> 'Icone'
+            ));
+        }
+        $builder->add('submit',SubmitType::class,[
             'label' => 'Envoyer'
         ]);
 

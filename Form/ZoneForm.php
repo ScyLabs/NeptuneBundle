@@ -149,7 +149,6 @@ class ZoneForm extends AbstractType
             'action' => null,
             'data_class' => Zone::class,
             'roles'     => ['ROLE_ADMIN'],
-            'container' => null,
         ])
         ;
     }

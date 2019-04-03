@@ -61,6 +61,18 @@ class Element extends AbstractElem
 
     protected $urls;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable = true)
+     */
+    protected $icon;
+
+    public function getIcon() : ?string{
+        return $this->icon;
+    }
+    public function setIcon(?string $icon) : self{
+        $this->icon = $icon;
+        return $this;
+    }
     public function __construct()
     {
         $this->zones = new ArrayCollection();
