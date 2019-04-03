@@ -86,7 +86,8 @@ class ZoneForm extends AbstractType
                 }
                 $builder->add('icon',ChoiceType::class,array(
                     'label' => "Icone",
-                    "choices"   => $choices
+                    "choices"   => $choices,
+                    'required'  => false
 
                 ));
             }
