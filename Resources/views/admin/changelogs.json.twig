@@ -2,22 +2,7 @@
   "active": {{ (changelogs.active) ? 'true' : 'false' }},
   "version": "{{ changelogs.version }}",
   "cookieAction":"{{ path('neptune_changelog_cookie',{'version':changelogs.version}) }}",
-  "title" : "Des changements conséquents ont été apportés",
+  "title" : "",
   "changes": [
-    "Des changements conséquents ont été apportés a votre outil d'aministration<br/>",
-    "Voici la liste de modifications pour que vous puissez vous repérer dans ces modifications : <br/><br/>",
-    "- Toute l'interface est maintenant pensée pour être plus rapide à utliser grâce a l'AJAX (Ouverture de Popup au lieu de recharger la page)<br/>",
-    "Cliquer sur les icônes vous ouvriront une fenêtre par dessus celle que vous aviez déjà ouvert.<br/><br/>",
-    "- La gestion du contenu à été simplifiée : <br/>",
-    "<img src=\"{{ asset('bundles/scylabsneptune/admin/img/changelogs/1.jpg') }}\"/><br/>",
-    "Vous n'avez plus besoin de passer par l'interface de contenu, cliquez simplement sur l'icône concernée dans les actions de la page/element<br/>",
-    "La même icône se trouve aussi dans le listing des elements<br/>",
-    "Au clic , une popup comme celle-ci sera ouverte avec le listing des \"Zones\" de contenu.",
-    "- Pour accéder à la médiathèque, c'est la même chose. Le lien direct vers la médiathèque générale à été enlevé pour simplifier la liaison des fichiers :<br/>",
-    "<img src=\"{{ asset('bundles/scylabsneptune/admin/img/changelogs/2.jpg') }}\"/><br/><br/>",
-    "Ce qui va vous ouvrir une popup comme celle-ci , corespondant à la médiatèque et aux photos / documents/ videos liées à l'élément / page",
-    "<img src=\"{{ asset('bundles/scylabsneptune/admin/img/changelogs/3.jpg') }}\" style=\"display:block;margin:0 auto;\"/><br/><br/>",
-    "Cette médiathèque fonctionne comme l'ancienne , à la seule différence que vous êtes déjà connecté aux fichiers de la page/element , et que vous n'avez qu'a sélectionner et valider vos modifications",
-    "Pour envoyer de nouvelles photos , vous pouvez cliquer sur le cadre, ou tout simpelement glisser-déposer vos fichiers dans l'encart prévu pour (en bas)"
   ]
 }

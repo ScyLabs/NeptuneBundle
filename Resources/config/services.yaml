@@ -1,6 +1,6 @@
 parameters:
     changelogs:
-        active: true
+        active: false
         version: "1.0"
 
 services:
