@@ -110,10 +110,6 @@ class PageController extends AbstractController
             return $this->redirectToRoute('homepage');
         }
 
-        if($page->getType()->getName() == 'contact'){
-            return $this->redirectToRoute('contact');
-        }
-
         $pages = $em->getRepository(Page::class)->findBy(array(
             'parent'    =>  null,
             'remove'    =>  false,
