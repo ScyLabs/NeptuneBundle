@@ -26,7 +26,6 @@ class PhotoController extends AbstractController
 
     public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome){
 
-
         $monochrome = trim($monochrome,'/');
 
         $monochrome = (empty($monochrome)) ? false : $monochrome;
@@ -38,14 +37,22 @@ class PhotoController extends AbstractController
 
         // Récupération de la photo
         $ph = $this->getDoctrine()->getRepository(Photo::class)->find($id);
+       
         if($ph === null){
             throw new HttpException(404,"La photo n'existe pas");
         }
 
         /* On récupère le fichier et son chemin */
         $file = $ph->getFile();
+       
+    
         $dir = $this->getParameter('uploads_directory');
         $filePath = $dir.$file->getFile();
+
+        if($file->getExt() == 'svg'){
+            $this->headers($file,$filePath);
+            return new Response(readfile($filePath));
+        }
 
 
         if(!file_exists($filePath)){
@@ -66,8 +73,6 @@ class PhotoController extends AbstractController
             $height = $this->calcScale($height);
 
         }
-
-
 
         $localThumb = $dir.'thumbnails';
 

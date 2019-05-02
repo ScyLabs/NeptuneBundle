@@ -28,7 +28,7 @@ class ThumbnailExtension extends AbstractExtension
         $realPath = $_SERVER['DOCUMENT_ROOT'].$path;
         if(!file_exists($realPath))
             return '';
-
+        
 
         $exp = explode('.',$path);
         $nameExp = explode('/',$path);
@@ -63,6 +63,9 @@ class ThumbnailExtension extends AbstractExtension
 
         // Si pdf , génération de la miniature
         $ext = $exp[sizeof($exp) - 1];
+        
+        if($ext == 'svg')
+            return $path;
 
         if($ext == 'pdf'){
 

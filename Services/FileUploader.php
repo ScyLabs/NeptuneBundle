@@ -21,12 +21,18 @@ class FileUploader
         $mime = $file->getMimeType();
         $filesize = $file->getSize();
         $name = md5(uniqid());
-        $fileName = $name.'.'.$file->guessExtension();
-
+        
+        if(null === $ext = $file->guessExtension()){
+            if($file->getMimeType() == 'image/svg+xml'){
+                $ext = 'svg';
+            }
+            else{
+                $ext = explode('/',$file->getMimeType())[1];
+            }
+        }        
+        $fileName = $name.'.'.$ext;
+        
         $file->move($this->getTargetDirectory(),$fileName);
-
-
-        // Future emplacement d'ImageMagic . (A retenter + tard)
 
         $minesok = array(
             'image/jpeg',

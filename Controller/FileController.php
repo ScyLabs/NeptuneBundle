@@ -292,6 +292,7 @@ class FileController extends BaseController
             'image/jpeg',
             'image/png',
             'image/svg+xml',
+            'image/svg',
             'audio/*',
             'image/gif',
             'video/mp4',
@@ -301,12 +302,18 @@ class FileController extends BaseController
         );
 
         $uploadFile = new SymfonyFile($res);
-
         if(!in_array($uploadFile->getMimeType(),$minesok))
             return new Response('Type de fichier non autorisé',403);
-
+            
         $typeRepo = $this->getDoctrine()->getRepository($this->getClass('fileType'));
-
+        if(null === $ext = $uploadFile->guessExtension()){
+            if($uploadFile->getMimeType() == 'image/svg+xml'){
+                $ext = 'svg';
+            }
+            else{
+                $ext = explode('/',$uploadFile->getMimeType())[1];
+            }
+        }        
         switch($uploadFile->getMimeType()){
             case 'application/pdf':
                 $name = 'document';
@@ -318,6 +325,9 @@ class FileController extends BaseController
                 $name = 'photo';
                 break;
             case 'image/svg+xml':
+                $name = 'photo';
+                break;
+            case 'image/svg':
                 $name = 'photo';
                 break;
             case 'image/gif':
@@ -341,7 +351,7 @@ class FileController extends BaseController
         $file->setOriginalName($res->getClientOriginalName());
 
         $file->setFile($res)
-            ->setExt($uploadFile->guessExtension())
+            ->setExt($ext)
             ->setType($type);
 
         $em = $this->getDoctrine()->getManager();
