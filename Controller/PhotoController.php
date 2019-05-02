@@ -50,10 +50,8 @@ class PhotoController extends AbstractController
         $filePath = $dir.$file->getFile();
 
         if($file->getExt() == 'svg'){
-            $this->headers($file,$filePath);
-            return new Response(readfile($filePath));
+            return new Response(file_get_contents($filePath),200,array('Content-type'=>'image/svg+xml'));
         }
-
 
         if(!file_exists($filePath)){
             throw new HttpException(404,"La photo n'existe pas");
