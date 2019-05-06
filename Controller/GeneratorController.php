@@ -34,9 +34,7 @@ class GeneratorController extends BaseController
 
         $urls = $this->getUrls($pages);
         $urls = array_merge($urls,$this->getUrls($elements));
-
-
-
+        
         return $this->render('@ScyLabsNeptuneBundle/Resources/views/sitemap.xml.twig',array(
             'urls'=>$urls
         ));
@@ -51,26 +49,29 @@ class GeneratorController extends BaseController
         foreach ($objects as $object){
 
             foreach ($object->getUrls() as $urlObj){
-
+                
+                $url = null;
                 if(in_array($urlObj->getLang(),$this->getParameter('langs'))){
-
-                        if($object instanceof Page && $object->getType()->getName() != 'not_accessible'){
-                            $url = ($object->getPrio() === 0 && $object->getParent() === null) ?  $this->generateUrl('homepage',array(
-                                '_locale'  =>  $urlObj->getLang(),
-                            )) :  $this->generateUrl('page',array(
-                                '_locale'  =>  $urlObj->getLang(),
-                                'slug'  =>  $urlObj->getUrl()
-                            ));
+                        dump($object->getType()->getName());
+                        if($object instanceof Page){
+                            if($object->getType()->getName() != 'not_accessible'){
+                                $url = ($object->getPrio() == 0 && $object->getParent() === null && $object->getActive()) ?  $this->generateUrl('homepage',array(
+                                    '_locale'  =>  $urlObj->getLang(),
+                                )) :  $this->generateUrl('page',array(
+                                    '_locale'  =>  $urlObj->getLang(),
+                                    'slug'  =>  $urlObj->getUrl()
+                                ));
+                            } 
+                            $urls = array_merge($urls,$this->getUrls($object->getChilds()));
                         }
-                        else{/*
+                        else{
                             $url = $this->generateUrl('detail_element',array(
                                 '_locale'   =>  $urlObj->getLang(),
                                 'slug'      =>  $urlObj->getUrl()
-                            ));*/
+                            ));
                         }
-
-
-                    if(isset($url)){
+   
+                    if($url !== null){
                         $urls[] = array(
                             'loc'   => $url
                         );
