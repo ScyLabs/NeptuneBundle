@@ -48,7 +48,7 @@ class GeneratorController extends BaseController
         $urls = array();
         $sitemapConfig = $this->getParameter('scy_labs_neptune.sitemap');
         foreach ($objects as $object){
-                if($object->getRemove() === false)
+                if($object->getRemove() === true)
                     continue;
 
             foreach ($object->getUrls() as $urlObj){
