@@ -48,12 +48,14 @@ class GeneratorController extends BaseController
         $urls = array();
         $sitemapConfig = $this->getParameter('scy_labs_neptune.sitemap');
         foreach ($objects as $object){
+                if($object->getRemove() === false)
+                    continue;
 
             foreach ($object->getUrls() as $urlObj){
                 
                 $url = null;
                 if(in_array($urlObj->getLang(),$this->getParameter('langs'))){
-
+                        
                         if($object instanceof Page){
                             if($object->getType()->getName() != 'not_accessible'){
                                 $url = ($object->getPrio() == 0 && $object->getParent() === null && $object->getActive()) ?  $this->generateUrl('homepage',array(

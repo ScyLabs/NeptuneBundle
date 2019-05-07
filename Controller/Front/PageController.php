@@ -106,9 +106,10 @@ class PageController extends AbstractController
             $page->getZones()[0]->setTypeHead(1);
         }
 
-        if($page->getActive() === false){
+        if($page->getActive() === false || $page->getRemove() === true){
             return $this->redirectToRoute('homepage');
         }
+        
 
         $pages = $em->getRepository(Page::class)->findBy(array(
             'parent'    =>  null,
@@ -163,7 +164,7 @@ class PageController extends AbstractController
             return $this->redirectToRoute('detail_actuality',array('_locale'=>$request->getLocale(),'slug' => $url->getUrl()));
         }
         $element = $url->getElement();
-        if($element->getActive() === false){
+        if($element->getActive() === false || $element->getRemove() === true){
             return $this->redirectToRoute('homepage');
         }
         if($element->getZones()->count() > 0){
