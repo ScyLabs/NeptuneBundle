@@ -34,7 +34,7 @@ class GeneratorController extends BaseController
 
         $urls = $this->getUrls($pages);
         $urls = array_merge($urls,$this->getUrls($elements));
-        
+    
         return $this->render('@ScyLabsNeptuneBundle/Resources/views/sitemap.xml.twig',array(
             'urls'=>$urls
         ));
@@ -46,6 +46,7 @@ class GeneratorController extends BaseController
      */
     public function getUrls($objects){
         $urls = array();
+        $sitemapConfig = $this->getParameter('scy_labs_neptune.sitemap');
         foreach ($objects as $object){
 
             foreach ($object->getUrls() as $urlObj){
@@ -65,6 +66,9 @@ class GeneratorController extends BaseController
                             $urls = array_merge($urls,$this->getUrls($object->getChilds()));
                         }
                         else{
+                            
+                            if($sitemapConfig['elements'] === false)
+                                continue;
                             $url = $this->generateUrl('detail_element',array(
                                 '_locale'   =>  $urlObj->getLang(),
                                 'slug'      =>  $urlObj->getUrl()

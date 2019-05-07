@@ -26,6 +26,7 @@ class ScyLabsNeptuneExtension extends Extension
         $config = $this->processConfiguration($configuration,$configs);
         $container->setParameter($this->getAlias().'.override',$config['override']);
         $container->setParameter($this->getAlias().'.compress',$config['compress']);
+        $container->setParameter($this->getAlias().'.sitemap',$config['sitemap']);
         $container->setParameter($this->getAlias().'.icons',$config['icons']);
 
 

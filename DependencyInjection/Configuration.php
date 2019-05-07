@@ -58,8 +58,21 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(){
         $treeBuilder = new TreeBuilder();
 
-        $rootNode = $treeBuilder->root('neptune');
-
+        $rootNode = $treeBuilder->root('neptune')
+        
+        ->children()
+            ->variableNode('compress')->defaultValue(true)->end()
+        ->end()
+        ->children()
+            ->arrayNode('sitemap')->addDefaultsIfNotSet()
+                ->children()
+                    ->variableNode('elements')->defaultValue(true)->end()
+                ->end()
+            ->end()
+        ->end()
+        ->children()
+            ->variableNode('icons')->defaultValue(null)->end()
+        ->end();
 
         $this->addClassesNode('override',$rootNode);
 
@@ -69,14 +82,7 @@ class Configuration implements ConfigurationInterface
     private function addClassesNode($node,&$rootNode){
         // PAGE -----------
         $rootNode
-            ->children()
-                ->variableNode('compress')->defaultValue(true)->end()
-            ->end()
-            ->children()
-                ->variableNode('icons')->defaultValue(null)->end()
-            ->end()
-            ->children()
-
+        ->children()
                 ->arrayNode('override')->addDefaultsIfNotSet()
                     ->children()
                         ->variableNode('page')->defaultValue(Page::class)->end()
