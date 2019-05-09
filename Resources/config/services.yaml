@@ -2,10 +2,9 @@ parameters:
     changelogs:
         active: false
         version: "1.0"
-
+        
 services:
-
-
+    
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
@@ -20,6 +19,11 @@ services:
     ScyLabs\NeptuneBundle\Controller\:
         resource: '../../Controller'
         tags: ['controller.service_arguments']
+
+    ScyLabs\NeptuneBundle\Controller\TwigExceptionController:
+        public: true
+        arguments:
+            $debug: '%kernel.debug%'
 
     ScyLabs\NeptuneBundle\Repository\:
         resource: '../../Repository'
