@@ -18,6 +18,28 @@ class ElementDetailRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ElementDetail::class);
     }
+    public function findByLangAndParentIsActiveAndNotRemoved(string $lang){
+        return $this->createQueryBuilder('d')
+            ->innerJoin('d.element','e')
+            ->where('d.lang = :lang')
+            ->andWhere('e.remove = false')
+            ->andWhere('e.active = true')
+            ->setParameter('lang',$lang)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function findOneByParentAndLang($parentId,$lang){
+        return $this->createQueryBuilder('d')
+            ->innerJoin('d.element','e')
+            ->where('d.lang = :lang')
+            ->andWhere('e.id = :parentId')
+            ->setParameter('lang',$lang)
+            ->setParameter('parentId',$parentId)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
 //    /**
 //     * @return ElementDetail[] Returns an array of ElementDetail objects

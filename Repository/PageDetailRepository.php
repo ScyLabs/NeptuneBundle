@@ -18,6 +18,28 @@ class PageDetailRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PageDetail::class);
     }
+    public function findByLangAndParentIsActiveAndNotRemoved(string $lang){
+        return $this->createQueryBuilder('d')
+            ->innerJoin('d.page','p')
+            ->where('d.lang = :lang')
+            ->andWhere('p.remove = false')
+            ->andWhere('p.active = true')
+            ->setParameter('lang',$lang)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function findOneByParentAndLang($parentId,$lang){
+        return $this->createQueryBuilder('d')
+            ->innerJoin('d.page','p')
+            ->where('d.lang = :lang')
+            ->andWhere('p.id = :parentId')
+            ->setParameter('lang',$lang)
+            ->setParameter('parentId',$parentId)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
 //    /**
 //     * @return PageDetail[] Returns an array of PageDetail objects

@@ -39,4 +39,13 @@ class ElementDetail extends AbstractAvancedDetail
 
         return $this;
     }
+    public function getParent(){
+        return $this->element;
+    }
+    public function getParentClassName(){
+        return 'element';
+    }
+    public function setParent($parent){
+        return $this->element = $parent;
+    }
 }

@@ -40,5 +40,14 @@ class DocumentDetail extends AbstractDetail
     public function getDocument() : Document{
         return $this->document;
     }
+    public function getParent(){
+        return $this->document;
+    }
+    public function setParent($parent){
+        return $this->document = $parent;
+    }
+    public function getParentClassName(){
+        return 'document';
+    }
 
 }

@@ -52,4 +52,13 @@ class PartnerDetail extends AbstractDetail
 
         return $this;
     }
+    public function getParent(){
+        return $this->partner;
+    }
+    public function getParentClassName(){
+        return 'partner';
+    }
+    public function setParent($parent){
+        return $this->partner = $parent;
+    }
 }

@@ -1,0 +1,3 @@
+neptune_export_text:
+    path: /export/text
+    controller: ScyLabs\NeptuneBundle\Controller\ExportController::exportTextAction

@@ -18,6 +18,28 @@ class PartnerDetailRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PartnerDetail::class);
     }
+    public function findByLangAndParentIsActiveAndNotRemoved(string $lang){
+        return $this->createQueryBuilder('d')
+            ->innerJoin('d.partner','p')
+            ->where('d.lang = :lang')
+            ->andWhere('p.remove = false')
+            ->andWhere('p.active = true')
+            ->setParameter('lang',$lang)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function findOneByParentAndLang($parentId,$lang){
+        return $this->createQueryBuilder('d')
+            ->innerJoin('d.partner','p')
+            ->where('d.lang = :lang')
+            ->andWhere('p.id = :parentId')
+            ->setParameter('lang',$lang)
+            ->setParameter('parentId',$parentId)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
 //    /**
 //     * @return PartnerDetail[] Returns an array of PartnerDetail objects

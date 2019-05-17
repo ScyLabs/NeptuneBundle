@@ -70,7 +70,7 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
 
                                 });
 
-                                if(forms.length){
+                                if(forms.length && !button.hasClass('export')){
 
                                     forms.on('submit',function (e) {
                                         e.preventDefault();

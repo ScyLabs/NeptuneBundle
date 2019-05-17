@@ -29,7 +29,7 @@ class ScyLabsNeptuneExtension extends Extension
         $container->setParameter($this->getAlias().'.sitemap',$config['sitemap']);
         $container->setParameter($this->getAlias().'.icons',$config['icons']);
 
-
+        
         $bundleRoot = new FileLocator(dirname(__DIR__));
 
         $loader = new YamlFileLoader($container,$bundleRoot);

@@ -157,4 +157,13 @@ class ZoneDetail extends AbstractDetail
         }
         return $titles;
     }
+    public function getParent(){
+        return $this->zone;
+    }
+    public function getParentClassName(){
+        return 'zone';
+    }
+    public function setParent($parent){
+        return $this->zone = $parent;
+    }
 }

@@ -18,6 +18,28 @@ class DocumentDetailRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, DocumentDetail::class);
     }
+    public function findByLangAndParentIsActiveAndNotRemoved(string $lang){
+        return $this->createQueryBuilder('d')
+            ->innerJoin('d.document','dc')
+            ->where('d.lang = :lang')
+            ->andWhere('dc.remove = false')
+            ->andWhere('dc.active = true')
+            ->setParameter('lang',$lang)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function findOneByParentAndLang($parentId,$lang){
+        return $this->createQueryBuilder('d')
+            ->innerJoin('d.document','dd')
+            ->where('d.lang = :lang')
+            ->andWhere('dd.id = :parentId')
+            ->setParameter('lang',$lang)
+            ->setParameter('parentId',$parentId)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
 //    /**
 //     * @return DocumentDetail[] Returns an array of DocumentDetail objects

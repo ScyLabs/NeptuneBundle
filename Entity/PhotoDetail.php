@@ -40,5 +40,14 @@ class PhotoDetail extends AbstractDetail
     public function getPhoto() : Photo{
         return $this->photo;
     }
+    public function getParent(){
+        return $this->photo;
+    }
+    public function getParentClassName(){
+        return 'photo';
+    }
+    public function setParent($parent){
+        return $this->photo = $parent;
+    }
 
 }

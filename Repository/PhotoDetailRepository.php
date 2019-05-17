@@ -18,6 +18,28 @@ class PhotoDetailRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PhotoDetail::class);
     }
+    public function findByLangAndParentIsActiveAndNotRemoved(string $lang){
+        return $this->createQueryBuilder('d')
+            ->innerJoin('d.photo','p')
+            ->where('d.lang = :lang')
+            ->andWhere('p.remove = false')
+            ->andWhere('p.active = true')
+            ->setParameter('lang',$lang)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function findOneByParentAndLang($parentId,$lang){
+        return $this->createQueryBuilder('d')
+            ->innerJoin('d.photo','p')
+            ->where('d.lang = :lang')
+            ->andWhere('p.id = :parentId')
+            ->setParameter('lang',$lang)
+            ->setParameter('parentId',$parentId)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
 //    /**
 //     * @return PhotoDetail[] Returns an array of PhotoDetail objects
