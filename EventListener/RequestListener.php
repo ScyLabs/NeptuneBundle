@@ -16,8 +16,10 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 class RequestListener
 {
     private $container;
+    private $routeNotCompress;
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
+        $this->routeNotCompress = array('generatePhoto','neptune_export_text');
 
     }
 
@@ -32,10 +34,10 @@ class RequestListener
         }
         $request = $event->getRequest();
         $route = $request->get('_route');
-        if($route == 'generatePhoto')
+        if(in_array($route,$this->routeNotCompress))
             return;
 
-         ob_start(RequestListener::class."::ob_html_compress");
+        ob_start(RequestListener::class."::ob_html_compress");
 
     }
     public static function ob_html_compress($buf){return preg_replace(array('/<!--(.*)-->/Uis',"/[[:blank:]]+/"),array('',' '),str_replace(array("\n","\r","\t"),'',$buf)); }
