@@ -147,9 +147,9 @@ class TypeController extends BaseController
         }
     }
 
-    public function deleteAction(Request $request,$id,$type){
+    public function removeAction(Request $request,$id,$type){
         $classType = $type.'Type';
-        $class = $this->getClass($classType,$form);
+        $class = $this->getClass($classType);
         if($class === null){
             return $this->redirectToRoute('neptune_home');
         }
@@ -160,26 +160,15 @@ class TypeController extends BaseController
         if(null === $oType ||( is_object($oType) && $oType->getRemovable() === false)){
             $this->redirectToRoute('neptune_type');
         }
-
-
-        $form = $this->createFormBuilder($type)->setMethod('POST')
-            ->setAction($this->generateUrl('neptune_type_delete',array('id'=>$oType->getId(),'type'=>$type)))
-            ->getForm();
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-
-            $em = $this->getDoctrine()->getManager();
-            $oType->setRemove(true);
-            $em->persist($oType);
-            $em->flush();
-            return $this->redirect($request->headers->get('referer'));
+        $em = $this->getDoctrine()->getManager();
+        $oType->setRemove(true);
+        $em->persist($oType);
+        $em->flush();
+        
+        if($request->isXmlHttpRequest()){
+            return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été supprimé'));
         }
-        $params = array(
-            'form'  =>  $form->createView(),
-            'type'  =>  $oType,
-        );
+        return $this->redirect($request->headers->get('referer'));
 
-        return $this->render('@ScyLabsNeptune/admin/delete.html.twig',$params);
     }
 }

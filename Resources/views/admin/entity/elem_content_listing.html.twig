@@ -56,10 +56,9 @@
                                                                     {% endif %}
                                                                     <li><a href="{{ path('neptune_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax edit" title="Modifier"><i class="fa fa-pencil"></i></a></li>
                                                                     <li class="">
-                                                                        {{ render(controller(
-                                                                            'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
-                                                                            {'id':object.id,'type':app.request.attributes.get('type')}
-                                                                        )) }}
+                                                                        <a class="ajax delete" data-id="{{ object.id }}" href="{{ path('neptune_entity_remove',{'id':object.id,'type':app.request.attributes.get('type') }) }}">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </a>
                                                                     </li>
                                                                 </ul>
                                                             </td>

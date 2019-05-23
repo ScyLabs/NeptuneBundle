@@ -47,10 +47,9 @@
 
                                             {% if user.hasRole('ROLE_SUPER_ADMIN') == false %}
                                                 <li class="">
-                                                    {{ render(controller(
-                                                        'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
-                                                        {'id':user.id,'type':'user'}
-                                                    )) }}
+                                                    <a class="ajax delete" href="{{ path('neptune_entity_remove',{'id':user.id,'type':'user' }) }}">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
                                                 </li>
                                             {% endif %}
                                         {% endif %}

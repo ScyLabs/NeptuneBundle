@@ -9,11 +9,11 @@
                             {% set fullname = widget.vars.full_name %}
                             {% set href = path('neptune_type_add',{'type':app.request.attributes.get('type')}) %}
                             {% if fullname == "element_form[type]"  %}
-                                <a href="{{ href }}" class="ajax edit"><i class="fa fa-plus text-success m-l-5"></i> </a>
+                                <a href="{{ href }}" class="ajax add"><i class="fa fa-plus text-success m-l-5"></i> </a>
 
                             {% else %}
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                    <a href="{{ href }}" class="add edit"><i class="fa fa-plus text-success m-l-5"></i> </a>
+                                    <a href="{{ href }}" class="ajax add"><i class="fa fa-plus text-success m-l-5"></i> </a>
                                 {% endif %}
                             {% endif %}
 

@@ -14,9 +14,77 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
         let action = $(this).attr('href');
         let button = $(this);
 
+    
+        if(button.hasClass('delete')){
+            if(!confirm('Voulez vous vraiment supprimer ceci ?')){
+                return;
+            }
+            // Supression de la ligne
+            var tabs = button.parents('.tabs').eq(0);
+            var tr  = button.parents('tr');
+            var photo = button.parents('li');
+        
+            tr.remove();
 
+            // Suppresion de la ligne dans le nestable (gestion des prios)
+        
+            if(tabs.length){
+           
+         
+                var nestable = tabs.find('.nestable,.nestable1');
+                if(nestable.length){
+
+            
+                    nestable.find('.dd-item[data-id="'+button.data('id')+'"]').remove();
+            
+                    let ser = JSON.stringify(nestable.nestable('serialize'));
+                  
+                    let url = nestable.attr('data-action');
+                    let data = new FormData();
+                    data.append('prio',ser);
+        
+                    if(typeof(url) != typeof(undefined)){
+                        $.edc.send(url,'POST',data);
+                    }
+                }
+    
+            }
+            else if (photo.length && photo.parents('.cartouches').length){
+                let parent = photo.parents('.cartouches.sortable');
+                
+                photo.remove();
+        
+                if(parent.length){
+                    
+                    let lis = parent.find('> li');
+                    let table = new Array();
+            
+    
+                    for(let i = 0;i < lis.length ;i++){
+                        if(typeof(lis.eq(i).attr('data-id')) != 'undefined'){
+                            table.push(lis.eq(i).attr('data-id'));
+                        }
+                        if(i == lis.length -1){
+                            let data = new FormData();
+                            let type = parent.data('type');
+                            data.append('prio',JSON.stringify(table));
+                            data.append('type',type);
+                        
+                            $.edc.send(parent.attr('data-action'),'POST',data);
+    
+                        }
+                    }
+                }
+                
+               
+            }
+
+        }
         if(action !== null){
             var success = function (result) {
+                if(button.hasClass('delete')){
+                    return;
+                }
                 if($.fn.fancybox){
                     $.fancybox.open([{
                         src: result,

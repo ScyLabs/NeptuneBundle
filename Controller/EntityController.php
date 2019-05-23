@@ -148,7 +148,7 @@ class EntityController extends BaseController
                     'detail'    =>  $this->generateUrl('neptune_detail',array('type'=>$type,'id'=>$object->getId())),
                     'edit'      =>  $this->generateUrl('neptune_entity_edit',array('type'=>$type,'id'=>$object->getId())),
                     'gallery'   =>  $this->generateUrl('neptune_file_gallery_prio',array('type'=>$type,'id'=>$object->getId())),
-                    'remove'    =>  $this->deleteAction(new Request(),$type,$object->getId()),
+                    'remove'    =>  $this->generateUrl('neptune_entity_remove',array('type' => $type,'id'   => $object->getId())),
                 );
             }
             $resultTab[] = array('object'=>$object,'actions'=>$actions);
@@ -269,9 +269,9 @@ class EntityController extends BaseController
         }
     }
 
-    public function deleteAction(Request $request,$type,$id){
+    public function removeAction(Request $request,$type,$id){
 
-        if(null === $class = $this->getClass($type,$form)){
+        if(null === $class = $this->getClass($type)){
             if($request->isXmlHttpRequest()){
                 return $this->json(array('success'=>false,'message'=>'Une erreur est survenue lors de la supression'));
             }
@@ -279,41 +279,30 @@ class EntityController extends BaseController
         }
         $em = $this->getDoctrine()->getManager();
         $object = $em->getRepository($class)->find($id);
+
         if($object === null){
             if($request->isXmlHttpRequest()){
                 return $this->json(array('success'=>false,'message'=>'Une erreur est survenue lors de la supression'));
             }
             return $this->redirectToRoute('neptune_entity',array('type'=>$type));
         }
-        $form = $this->createFormBuilder($object)->setMethod('post')
-            ->setAction($this->generateUrl('neptune_entity_delete',array('type'=>$type,'id'=>$id)))
-            ->add('form_remove',HiddenType::class,array(
-                'mapped'    =>  false,
-                'required'  => false
-            ))
-            ->getForm();
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            if($object instanceof User && !$object->hasRole('ROLE_SUPER_ADMIN') && $object !== $this->getUser()){
-                $em->remove($object);
-                $em->flush();
-                if($request->isXmlHttpRequest()){
-                    return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été supprimé'));
-                }
-                return $this->redirect($request->headers->get('referer'));
-            }
-            $object->setRemove(true);
-            $em->persist($object);
+   
+        if($object instanceof User && !$object->hasRole('ROLE_SUPER_ADMIN') && $object !== $this->getUser()){
+            $em->remove($object);
             $em->flush();
             if($request->isXmlHttpRequest()){
                 return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été supprimé'));
             }
             return $this->redirect($request->headers->get('referer'));
         }
-        $params = array(
-            'form'  =>  $form->createView()
-        );
-        return $this->render('@ScyLabsNeptune/admin/delete.html.twig',$params);
+        $object->setRemove(true);
+        $em->persist($object);
+        $em->flush();
+
+        if($request->isXmlHttpRequest()){
+            return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été supprimé'));
+        }
+        return $this->redirect($request->headers->get('referer'));
     }
 
     public function prioAction(Request $request,$type){

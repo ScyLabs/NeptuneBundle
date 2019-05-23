@@ -13,8 +13,8 @@ neptune_file_link:
     controller: ScyLabs\NeptuneBundle\Controller\FileController::linkAction
     methods: [POST]
 
-neptune_file_link_remove:
-    path: /{type}/remove/{id}
+neptune_file_link_delete:
+    path: /{type}/delete/{id}
     controller: ScyLabs\NeptuneBundle\Controller\FileController::removeLinkAction
     requirements:
         type: "(photo|video|document)"

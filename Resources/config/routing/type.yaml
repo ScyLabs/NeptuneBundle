@@ -17,9 +17,9 @@ neptune_type_edit:
         id: "[0-9]+"
         type: "[a-z]{2,20}"
 
-neptune_type_delete:
+neptune_type_remove:
     path: /{type}/type/delete/{id}
-    controller: ScyLabs\NeptuneBundle\Controller\TypeController::deleteAction
+    controller: ScyLabs\NeptuneBundle\Controller\TypeController::removeAction
     requirements:
         id: "[0-9]+"
         type: "[a-z]{2,20}"

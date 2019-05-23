@@ -60,10 +60,9 @@
                     <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':'page','parentId':page.id}) }}" class="ajax" title="Contenu"><i class="fa fa-align-left"></i></a></li>
                     <li><a href="{{ path('neptune_entity_edit',{'id':page.id,'type':app.request.attributes.get('type')}) }}" class="ajax edit" title="Modifier"><i class="fa fa-pencil"></i></a></li>
                     <li class="">
-                        {{ render(controller(
-                            'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
-                            {'id':page.id,'type':app.request.attributes.get('type')}
-                        )) }}
+                        <a class="ajax delete" data-id="{{ page.id }}" href="{{ path('neptune_entity_remove',{'id':page.id,'type':app.request.attributes.get('type') }) }}">
+                            <i class="fa fa-trash"></i>
+                        </a>
                     </li>
                 </ul>
             </td>

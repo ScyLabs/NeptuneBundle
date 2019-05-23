@@ -9,10 +9,9 @@
         </li>
         #}
         <li>
-            {{ render(controller(
-                'ScyLabs\\NeptuneBundle\\Controller\\FileController::deleteAction',
-                {'id':file.id}
-            )) }}
+            <a class="ajax delete" href="{{ path('neptune_file_delete',{'id':file.id}) }}">
+                <i class="fa fa-trash"></i>
+            </a>
         </li>
     </ul>
 

@@ -69,12 +69,10 @@
                                                     {% if object.zones is defined %}
                                                         <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':app.request.attributes.get('type'),'parentId':object.id}) }}" title="Contenu"><i class="fa fa-align-left"></i></a></li>`
                                                     {% endif %}
-
                                                     <li class="">
-                                                        {{ render(controller(
-                                                            'ScyLabs\\NeptuneBundle\\Controller\\EntityController::deleteAction',
-                                                            {'id':object.id,'type':app.request.attributes.get('type')}
-                                                        )) }}
+                                                        <a class="ajax delete"  data-id="{{ object.id }}" href="{{ path('neptune_entity_remove',{'id':object.id,'type':app.request.attributes.get('type') }) }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
                                                     </li>
 
 

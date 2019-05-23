@@ -364,7 +364,7 @@ class FileController extends BaseController
             'type'=>$file->getType()->getName(),
             'date'=>$file->getDate()->format('d/m/Y'),
             'actions'=>array(
-                'remove' => $this->deleteAction(new Request(),$file->getId()),
+                'remove' => $this->generateUrl('entity_file_delete',array('id'=>$object->getId())),
             )
         );
 
@@ -467,24 +467,15 @@ class FileController extends BaseController
         if(null === $file){
             $this->redirectToRoute('neptune_file');
         }
-
-        $form = $this->createFormBuilder($file)->setMethod('PUT')
-            ->setAction($this->generateUrl('neptune_file_delete',array('id'=>$file->getId())))
-            ->getForm();
-
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($file);
-            $em->flush();
-            return $this->redirect($request->headers->get('referer'));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($file);
+        $em->flush();
+        
+        if($request->isXmlHttpRequest()){
+            return $this->json(array('success'=>true,'message'=>'Votre fichier à bien été supprimé'));
         }
-        $params = array(
-            'form'  =>  $form->createView(),
-        );
-
-        return $this->render('@ScyLabsNeptune/admin/delete.html.twig',$params);
+        return $this->redirect($request->headers->get('referer'));
+  
     }
 
 
