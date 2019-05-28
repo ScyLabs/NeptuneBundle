@@ -65,25 +65,33 @@ class ImportController extends BaseController
             ->getForm();
 
         $form->handleRequest($request);
-        
+
         if($form->isSubmitted() && $form->isValid()){
         
             $res = $request->files->get('form')['file'];
+
             $lang = $request->get('form')['lang'];
-            
+
             $f = fopen($res->getPathName(),'r+');
             $classActive = null;
+
             while(!feof($f)) {
+
                 
                 $line = fgetcsv($f,0,';');
+
             
                 if($line === false)
                     break;
-                if(is_array($line) && sizeof($line) === 1){
+
+                if(is_array($line) && $this->getClass($line[0]) !== null){
+
                     $classActive = $line[0];
                     continue;
                 }
+
                 $class = $this->getClass($classActive);
+
                 if($class === null)
                     continue;
 
@@ -94,16 +102,17 @@ class ImportController extends BaseController
                 )) ?? new $class();
                 
                 if($object->getParent() === null){
-                    $parent = $em->getRepository($this->getClass($object->getParentClassName()))->findOneByParentAndLang($line[0],$lang);
+
+                    $parent = $em->getRepository($this->getClass($object->getParentClassName()))->find($line[0]);
                     if($parent === null) continue;
                     $object->setParent($parent);
                     
                 }
 
                 $i = 1 ;
-                
-                $line[$i];
+
                 $object->setName($line[$i]);
+                $object->setLang($lang);
                 $object->setTitle($line[$i++]);
                 $object->SetDescription($line[$i++]);
 
@@ -112,7 +121,7 @@ class ImportController extends BaseController
                     $object->setDescription2($line[$i++]);
                     $object->setTitle3($line[$i++]);
                     $object->setDescription3($line[$i++]);
-                    
+
                     $object->setTitle4($line[$i++]);
                     $object->setDescription4($line[$i++]);
                 }
@@ -124,8 +133,6 @@ class ImportController extends BaseController
                 }
 
                 $em->persist($object);
-            
-                
             }
             
             fclose($f);
