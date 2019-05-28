@@ -77,10 +77,9 @@ class ImportController extends BaseController
 
             while(!feof($f)) {
 
-                
+
                 $line = fgetcsv($f,0,';');
 
-            
                 if($line === false)
                     break;
 
@@ -94,12 +93,8 @@ class ImportController extends BaseController
 
                 if($class === null)
                     continue;
-
-
                 
-                $object = $em->getRepository($class)->findOneBy(array(
-                    'lang'  => $lang
-                )) ?? new $class();
+                $object = $em->getRepository($class)->findOneByParentAndLang($line[0],$lang) ?? new $class();
                 
                 if($object->getParent() === null){
 
@@ -111,7 +106,7 @@ class ImportController extends BaseController
 
                 $i = 1 ;
 
-                $object->setName($line[$i]);
+                $object->setName($line[$i++]);
                 $object->setLang($lang);
                 $object->setTitle($line[$i++]);
                 $object->SetDescription($line[$i++]);

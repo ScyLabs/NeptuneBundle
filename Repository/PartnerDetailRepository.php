@@ -29,7 +29,7 @@ class PartnerDetailRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
-    public function findOneByParentAndLang($parentId,$lang){
+    public function customFindOneByParentAndLang($parentId,$lang){
         return $this->createQueryBuilder('d')
             ->innerJoin('d.partner','p')
             ->where('d.lang = :lang')

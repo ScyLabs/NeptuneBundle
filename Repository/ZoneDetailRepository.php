@@ -37,8 +37,7 @@ class ZoneDetailRepository extends ServiceEntityRepository
             ->setParameter('lang',$lang)
             ->setParameter('parentId',$parentId)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 
 //    /**
