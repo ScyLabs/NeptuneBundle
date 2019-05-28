@@ -32,6 +32,7 @@ class ImportController extends BaseController
 
         $langs = $this->getParameter('langs');
         $finalLangs = array();
+        $em = $this->getDoctrine()->getManager();
         foreach($langs as $lang){
             $finalLangs[$this->translator->trans($lang)] = $lang;
         }
@@ -86,7 +87,7 @@ class ImportController extends BaseController
                 if($class === null)
                     continue;
 
-                $em = $this->getDoctrine()->getManager();
+
                 
                 $object = $em->getRepository($class)->findOneBy(array(
                     'lang'  => $lang
