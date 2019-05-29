@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,7 +26,7 @@ class PhotoController extends AbstractController
 
 
     public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome){
-
+        
         $monochrome = trim($monochrome,'/');
 
         $monochrome = (empty($monochrome)) ? false : $monochrome;
@@ -148,10 +149,13 @@ class PhotoController extends AbstractController
         // Récupération de l'extension du fichier
 
         // Si jpg , deviens Jpeg (pour norme HTTP)
-        $this->headers($file,$path);
 
         $img->destroy();
-        return new Response(readfile($path));
+        $this->headers($file,$path);
+
+        $response = new \Symfony\Component\HttpFoundation\File\File($path);
+        return $this->file($response,'',ResponseHeaderBag::DISPOSITION_INLINE);
+
 
     }
     private function calcScale($val){
@@ -162,18 +166,13 @@ class PhotoController extends AbstractController
         $last_modified_time = filemtime($path);
         $etag = 'W/"' . md5($last_modified_time) . '"';
 
-        $result = ($file->getExt() == 'jpg') ? 'jpeg' : $file->getExt();
-        header('Content-Type: image/'.$result);
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $last_modified_time) . " GMT");
+        //$result = ($file->getExt() == 'jpg') ? 'jpeg' : $file->getExt();
+        //header('Content-Type: image/'.$result);
+        //header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $last_modified_time) . " GMT");
         header('Cache-Control: public, max-age=604800'); // On peut ici changer la durée de validité du cache
         header("Etag: $etag");
         $result = '';
 
-        if ((isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) === $last_modified_time) ||
-            (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $etag === trim($_SERVER['HTTP_IF_NONE_MATCH'])) ) {
-            // On renvoit une 304 si on n'a rien modifié depuis
-            header('HTTP/1.1 304 Not Modified');
-            exit();
-        }
+
     }
 }

@@ -29,9 +29,16 @@ services:
         resource: '../../Repository'
 
 
+    #Debut service
     ScyLabs\NeptuneBundle\Services\FileUploader:
         arguments:
             $targetDirectory: '%uploads_directory%'
+
+    ScyLabs\NeptuneBundle\Services\CleanText:
+                arguments:
+    #Fin service
+
+    #Listeners
     ScyLabs\NeptuneBundle\EventListener\FileListener:
         tags:
             - { name: doctrine.event_listener,event: prePersist }
@@ -44,6 +51,11 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
+    ScyLabs\NeptuneBundle\EventListener\TypeListener:
+          tags:
+              - { name: doctrine.event_listener,event: prePersist }
+              - { name: doctrine.event_listener,event: preUpdate }
+
     ScyLabs\NeptuneBundle\EventListener\EntityListener:
         arguments:
             $langs: '%langs%'
@@ -54,5 +66,4 @@ services:
     ScyLabs\NeptuneBundle\EventListener\RequestListener:
         tags:
             - { name: kernel.event_listener,event: kernel.request }
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    #Fin listeners

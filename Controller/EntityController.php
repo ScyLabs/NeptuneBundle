@@ -306,9 +306,12 @@ class EntityController extends BaseController
     }
 
     public function prioAction(Request $request,$type){
+
         $ajax = $request->isXmlHttpRequest();
         $prio = $request->request->get('prio');
+
         if($prio === null || false === $prios = json_decode($prio)){
+
             if($ajax){
                 return new Response('');
             }
@@ -316,6 +319,7 @@ class EntityController extends BaseController
                 return $this->redirectToRoute('neptune_entity',array('type'=>$type));
             }
         }
+
         $em = $this->getDoctrine()->getManager();
 
         if(null === $class = $this->getClass($type)){

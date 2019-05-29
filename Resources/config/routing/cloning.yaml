@@ -1,0 +1,6 @@
+neptune_entity_clone:
+    path: /{type}/clone/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\CloningController::instantCloneAction
+    requirements:
+        type: "[a-z]{2,20}"
+        id: "[0-9]+"

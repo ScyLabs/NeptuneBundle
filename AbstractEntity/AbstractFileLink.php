@@ -24,6 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
 class AbstractFileLink extends AbstractElem
 {
 
+    protected $id;
     /**
      * @ORM\Column(type="string",nullable=true)
      */
@@ -130,5 +131,10 @@ class AbstractFileLink extends AbstractElem
     }
     public function getPath(){
         return $this->getFile()->getFile();
+    }
+    public function __clone(){
+        $this->id = null;
+        return $this;
+
     }
 }

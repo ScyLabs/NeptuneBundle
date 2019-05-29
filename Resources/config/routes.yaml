@@ -5,6 +5,9 @@ neptune_changelog_cookie:
     path: /changelogs/{version}
     controller: ScyLabs\NeptuneBundle\Controller\MainController::setCookieChangelogsAction
 
+
+neptune_cloning:
+    resource: 'routing/cloning.yaml'
 neptune_export:
     resource: 'routing/export.yaml'
 

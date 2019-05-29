@@ -54,7 +54,7 @@ class Page extends AbstractElem
     protected $videos;
 
     /**
-     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Zone", mappedBy="page")
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Zone", mappedBy="page",cascade={"persist","remove"})
      * @OrderBy({"prio" = "ASC"})
      */
     protected $zones;
@@ -377,5 +377,46 @@ class Page extends AbstractElem
 
         return $this;
     }
+    public function __clone() {
+
+        parent::__clone();
+
+        $details = $this->details;
+        $this->details = new ArrayCollection();
+
+        foreach($details as $detail){
+            $this->addDetail(clone $detail);
+        }
+        $childs = $this->childs;
+        $this->childs = new ArrayCollection();
+
+        foreach($childs as $child){
+            $this->addChild(clone $child);
+        }
+        $zones = $this->zones;
+        $this->zones = new ArrayCollection();
+        foreach ($zones as $zone){
+            $this->addZone(clone $zone);
+        }
+        $photos = $this->photos;
+        $this->photos = new ArrayCollection();
+        foreach ($photos as $photo){
+            $this->addPhoto(clone $photo);
+        }
+
+        $documents = $this->documents;
+        $this->documents = new ArrayCollection();
+        foreach ($documents as $document){
+            $this->addDocument(clone $document);
+        }
+        $videos = $this->videos;
+        $this->videos = new ArrayCollection();
+        foreach ($videos as $video){
+            $this->addVideo(clone $video);
+        }
+
+        return $this;
+    }
+
 
 }

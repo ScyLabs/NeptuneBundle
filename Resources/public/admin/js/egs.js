@@ -48,8 +48,11 @@ $(window).on('keyup',function(e){
     else if (egg == 'meuporg'){
         audio('meuporg.ogg');
     }
-    else if (egg == 'caramel song'){
-        video('https://www.youtube.com/watch?v=A67ZkAd1wmI');
+    else if (egg == 'piumaria'){
+        audio('shark.ogg');
+    }
+    else if (egg == 'zerg rush'){
+        video('https://www.google.fr/search?source=hp&ei=ct_nXOjgOqmcjLsP1pGw2AQ&q=zerg+rush&oq=zerg+rush&gs_l=psy-ab.12..35i39j0i67j0l8.1077.3178..3426...1.0..0.128.772.10j1......0....1..gws-wiz.....0..0i131j0i131i67j0i10j0i20i263.PNMuT7OVc7Q');
     }
     else if (egg == 'resident evil'){
         audio('mr-x.ogg');

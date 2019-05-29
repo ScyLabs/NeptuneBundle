@@ -63,6 +63,7 @@
                                             <td>{{ object.prio }}</td>
                                             <td>
                                                 <ul class="actions">
+                                                    <li><a href="{{ path('neptune_entity_clone',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax clone"><i class="fal fa-clone"></i></a></li>
                                                     <li><a href="{{ path('neptune_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
                                                     <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax edit" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
                                                     <li><a href="{{ path('neptune_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax edit" title="Modifier"><i class="fa fa-pencil"></i></a></li>

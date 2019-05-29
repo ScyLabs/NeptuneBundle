@@ -14,52 +14,52 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
         let action = $(this).attr('href');
         let button = $(this);
 
-    
+
+        if((button.hasClass('delete') || button.hasClass('clone')) && !confirm('Voulez vous vraiment '+((button.hasClass('delete') ? 'supprimer' : 'clonner'))+' ceci ?')){
+            return;
+        }
         if(button.hasClass('delete')){
-            if(!confirm('Voulez vous vraiment supprimer ceci ?')){
-                return;
-            }
+
             // Supression de la ligne
             var tabs = button.parents('.tabs').eq(0);
             var tr  = button.parents('tr');
             var photo = button.parents('li');
-        
+
             tr.remove();
 
             // Suppresion de la ligne dans le nestable (gestion des prios)
-        
+
             if(tabs.length){
-           
-         
+
                 var nestable = tabs.find('.nestable,.nestable1');
                 if(nestable.length){
 
-            
+
                     nestable.find('.dd-item[data-id="'+button.data('id')+'"]').remove();
-            
+
                     let ser = JSON.stringify(nestable.nestable('serialize'));
-                  
+
                     let url = nestable.attr('data-action');
                     let data = new FormData();
                     data.append('prio',ser);
-        
+
                     if(typeof(url) != typeof(undefined)){
                         $.edc.send(url,'POST',data);
                     }
                 }
-    
+
             }
             else if (photo.length && photo.parents('.cartouches').length){
                 let parent = photo.parents('.cartouches.sortable');
-                
+
                 photo.remove();
-        
+
                 if(parent.length){
-                    
+
                     let lis = parent.find('> li');
                     let table = new Array();
-            
-    
+
+
                     for(let i = 0;i < lis.length ;i++){
                         if(typeof(lis.eq(i).attr('data-id')) != 'undefined'){
                             table.push(lis.eq(i).attr('data-id'));
@@ -69,19 +69,37 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                             let type = parent.data('type');
                             data.append('prio',JSON.stringify(table));
                             data.append('type',type);
-                        
+
                             $.edc.send(parent.attr('data-action'),'POST',data);
-    
+
                         }
                     }
                 }
-                
-               
             }
 
         }
         if(action !== null){
             var success = function (result) {
+
+                if(button.hasClass('clone')){
+
+                    if(result.success == false){
+                        $.edc.flashAlert(result.message,'danger');
+                    }
+                    else if(parentObject !== null){
+                        button.removeClass('clone');
+                        parentObject.close();
+                        action = parentAction;
+                        $.ajax({
+                            type:'GET',
+                            url:parentAction,
+                            success:success
+                        });
+                    }else{
+                        location.reload();
+                    }
+                    return;
+                }
                 if(button.hasClass('delete')){
                     return;
                 }
@@ -199,11 +217,38 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                 }
             };
 
-            $.ajax({
-                type:'GET',
-                url:action,
-                success: success
-            });
+            if(button.hasClass('clone')) {
+                let tabs = button.parents('.tabs');
+                if(tabs.length){
+                    let nestable = tabs.find('.nestable');
+                    if(nestable.length){
+                        let prios = JSON.stringify(nestable.nestable('serialize'));
+                        let data = new FormData();
+                        data.append('prio',prios);
+
+                        $.ajax({
+                            type: 'POST',
+                            url : action,
+                            success: success,
+                            data: data,
+                            contentType: false,
+                            processData: false,
+                        });
+                    }
+
+
+                }
+            }else{
+
+                $.ajax({
+                    type:'GET',
+                    url:action,
+                    success: success
+                });
+            }
+
+
+
 
         }
     });

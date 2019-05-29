@@ -364,7 +364,7 @@ class FileController extends BaseController
             'type'=>$file->getType()->getName(),
             'date'=>$file->getDate()->format('d/m/Y'),
             'actions'=>array(
-                'remove' => $this->generateUrl('entity_file_delete',array('id'=>$object->getId())),
+                'remove' => $this->generateUrl('neptune_file_delete',array('id'=>$file->getId())),
             )
         );
 

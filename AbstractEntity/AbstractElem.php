@@ -20,6 +20,7 @@ use Symfony\Component\Form\FormTypeInterface;
 abstract class AbstractElem
 {
 
+    protected $id;
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -280,6 +281,12 @@ abstract class AbstractElem
         }
 
         return $array;
+    }
+    public function __clone() {
+        $this->creationDate = new \DateTime('now');
+        $this->id = null;
+        $this->prio++;
+        return $this;
     }
 
 }

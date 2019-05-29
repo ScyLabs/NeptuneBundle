@@ -12,6 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 abstract class AbstractDetail
 {
 
+    protected $id;
     /**
      * @ORM\Column(type="string", length=2)
      */
@@ -104,5 +105,10 @@ abstract class AbstractDetail
             }
         }
         return $descriptions;
+    }
+
+    public function __clone(){
+        $this->id = null;
+        return $this;
     }
 }

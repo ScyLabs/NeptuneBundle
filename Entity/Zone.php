@@ -209,4 +209,34 @@ class Zone extends AbstractChild
         }
     }
 
+    public function __clone(){
+        parent::__clone();
+
+        $details = $this->details;
+        $this->details = new ArrayCollection();
+        foreach ($details as $detail){
+            $this->addDetail(clone $detail);
+        }
+
+        $photos = $this->photos;
+        $this->photos = new ArrayCollection();
+        foreach ($photos as $photo){
+            $this->addPhoto(clone $photo);
+        }
+
+        $documents = $this->documents;
+        $this->documents = new ArrayCollection();
+        foreach ($documents as $document){
+            $this->addDocument(clone $document);
+        }
+
+        $videos = $this->videos;
+        $this->videos = new ArrayCollection();
+        foreach ($videos as $video){
+            $this->addVideo(clone $video);
+        }
+
+        return $this;
+    }
+
 }

@@ -51,7 +51,7 @@ class Element extends AbstractElem
     protected $details;
 
     /**
-     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Zone", mappedBy="element")
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Zone", mappedBy="element",cascade={"persist","remove"})
      */
     protected $zones;
 
@@ -230,6 +230,42 @@ class Element extends AbstractElem
                 $url->setElement(null);
             }
         }
+
+        return $this;
+    }
+    public function __clone(){
+        parent::__clone();
+
+        $details = $this->details;
+        $this->details = new ArrayCollection();
+        foreach ($details as $detail){
+            $this->addDetail(clone $detail);
+        }
+
+        $zones = $this->zones;
+        $this->zones = new ArrayCollection();
+        foreach ($zones as $zone){
+            $this->addZone(clone $zone);
+        }
+
+        $photos = $this->photos;
+        $this->photos = new ArrayCollection();
+        foreach ($photos as $photo){
+            $this->addPhoto(clone $photo);
+        }
+
+        $documents = $this->documents;
+        $this->documents = new ArrayCollection();
+        foreach ($documents as $document){
+            $this->addDocument(clone $document);
+        }
+
+        $videos = $this->videos;
+        $this->videos = new ArrayCollection();
+        foreach ($videos as $video){
+            $this->addVideo(clone $video);
+        }
+
 
         return $this;
     }

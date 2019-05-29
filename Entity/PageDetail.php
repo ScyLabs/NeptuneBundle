@@ -48,4 +48,5 @@ class PageDetail extends AbstractAvancedDetail
     public function setParent($parent){
         return $this->page = $parent;
     }
+   
 }

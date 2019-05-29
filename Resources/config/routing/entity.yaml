@@ -8,7 +8,7 @@ neptune_entity_add:
         type: "[a-z]{2,20}"
 
 neptune_entity_remove:
-    path: /{type}/delete/{id}
+    path: /{type}/remove/{id}
     controller: ScyLabs\NeptuneBundle\Controller\EntityController::removeAction
     requirements:
         type: "[a-z]{2,20}"
