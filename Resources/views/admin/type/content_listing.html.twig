@@ -25,11 +25,11 @@
                                 <td>
                                     <ul class="actions">
 
-                                            <li><a href="{{ path('neptune_type_edit',{'id':type.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fa fa-pencil"></i></a></li>
+                                            <li><a href="{{ path('neptune_type_edit',{'id':type.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fal fa-pencil"></i></a></li>
                                         {% if type.removable %}
                                             <li class="">
-                                                <a class="ajax delete" href="{{ path('neptune_type_remove',{'id':type.id,'type':app.request.attributes.get('type') }) }}">
-                                                    <i class="fa fa-trash"></i>
+                                                <a class="ajax delete" href="{{ path('neptune_type_remove',{'id':type.id,'type':app.request.attributes.get('type') }) }}" title="Supprimer">
+                                                    <i class="fal fa-trash"></i>
                                                 </a>
                                             </li>
                                         {% endif %}

@@ -34,11 +34,11 @@
 
                                                         <tr>
                                                             <td>
-                                                                <a href="{{ path('neptune_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}">
+                                                                <a href="{{ path('neptune_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax active">
                                                                     {% if object.active %}
-                                                                        <i class="fa fa-check text-success"></i>
+                                                                        <i class="fa fa-check text-success" title="Désactiver"></i>
                                                                     {% else %}
-                                                                        <i class="fa fa-times text-danger"></i>
+                                                                        <i class="fa fa-times text-danger" title="Activer"></i>
                                                                     {% endif %}
                                                                 </a>
                                                             </td>
@@ -49,16 +49,16 @@
                                                             <td>{{ object.prio }}</td>
                                                             <td>
                                                                 <ul class="actions">
-                                                                    <li><a href="{{ path('neptune_entity_clone',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax clone"><i class="fal fa-clone"></i></a></li>
-                                                                    <li><a href="{{ path('neptune_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax" title="Gestion des fichiers"><i class="fa fa-file-alt"></i></a></li>
+                                                                    <li><a href="{{ path('neptune_entity_clone',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax clone" title="Dupliquer"><i class="fal fa-clone"></i></a></li>
+                                                                    <li><a href="{{ path('neptune_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax" title="Gestion des fichiers"><i class="fal fa-file-alt"></i></a></li>
                                                                     <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax edit" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
                                                                     {% if object.zones is defined %}
-                                                                        <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':app.request.attributes.get('type'),'parentId':object.id}) }}" class="ajax" title="Contenu"><i class="fa fa-align-left"></i></a></li>`
+                                                                        <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':app.request.attributes.get('type'),'parentId':object.id}) }}" class="ajax" title="Contenu"><i class="fal fa-align-left"></i></a></li>
                                                                     {% endif %}
-                                                                    <li><a href="{{ path('neptune_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax edit" title="Modifier"><i class="fa fa-pencil"></i></a></li>
+                                                                    <li><a href="{{ path('neptune_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax edit" title="Modifier"><i class="fal fa-pencil"></i></a></li>
                                                                     <li class="">
-                                                                        <a class="ajax delete" data-id="{{ object.id }}" href="{{ path('neptune_entity_remove',{'id':object.id,'type':app.request.attributes.get('type') }) }}">
-                                                                            <i class="fa fa-trash"></i>
+                                                                        <a class="ajax delete" data-id="{{ object.id }}" href="{{ path('neptune_entity_remove',{'id':object.id,'type':app.request.attributes.get('type') }) }}" title="Supprimer">
+                                                                            <i class="fal fa-trash"></i>
                                                                         </a>
                                                                     </li>
                                                                 </ul>
@@ -87,11 +87,11 @@
                                                                 {% else %}
                                                                     <li class="dd-item" data-id="{{ object.id }}">
                                                                         <div class="dd-handle">
-                                                                            <a href="{{ path('neptune_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}">
+                                                                            <a href="{{ path('neptune_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax active">
                                                                                 {% if object.active %}
-                                                                                    <i class="fa fa-check text-success"></i>
+                                                                                    <i class="fa fa-check text-success" title="Désactiver"></i>
                                                                                 {% else %}
-                                                                                    <i class="fa fa-times text-danger"></i>
+                                                                                    <i class="fa fa-times text-danger" title="Activer"></i>
                                                                                 {% endif %}
                                                                             </a>
                                                                             {{ object.name }}
@@ -118,7 +118,7 @@
     {% if app.request.attributes.get('_route') == 'neptune_entity' %}
         <div class="col-lg-2 m-t-25">
             <div class="card">
-                <a href="{{ path('neptune_entity_add',{'type':app.request.attributes.get('type')}) }}" class="btn btn-pink m-b-10 m-l-5 show_form ajax add">Créer une {{ app.request.attributes.get('type') }}</a>
+                <a href="{{ path('neptune_entity_add',{'type':app.request.attributes.get('type')}) }}" class="btn btn-pink m-b-10 m-l-5 show_form ajax add">Créer un element</a>
             </div>
         </div>
     {% endif %}

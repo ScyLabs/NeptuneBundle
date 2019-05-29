@@ -18,11 +18,11 @@
                             <tr class="user {{ (user.firstConnexion) ? 'firstCo' : '' }} {{ (user.enabled == false) ? 'disabled' : '' }}">
                                 <td width="50px" style="text-align: center">
                                     {% if user.hasRole('ROLE_SUPER_ADMIN') == false %}
-                                        <a href="{{ path('neptune_user_active',{'id':user.id}) }}" onclick="return confirm('Etes vous sur de vouloir bloquer le compte {{ user.email }}?');">
+                                        <a href="{{ path('neptune_user_active',{'id':user.id}) }}" onclick="return confirm('Etes vous sur de vouloir bloquer le compte {{ user.email }}?');" class="ajax active">
                                             {% if user.enabled %}
-                                                <i class="fa fa-check text-success"></i>
+                                                <i class="fa fa-check text-success" title="Désactiver"></i>
                                             {% else %}
-                                                <i class="fa fa-times text-danger"></i>
+                                                <i class="fa fa-times text-danger" title="Activer"></i>
                                             {% endif %}
                                         </a>
                                     {% endif %}

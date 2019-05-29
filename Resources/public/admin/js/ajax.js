@@ -78,6 +78,21 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
             }
 
         }
+        else if(button.hasClass('active')){
+
+            button.find('i').each(function () {
+                if($(this).hasClass('fa-check')){
+                    $(this)
+                        .removeClass('fa-check').removeClass('text-success')
+                        .addClass('fa-times').addClass('text-danger').attr('title','Activer');
+                }
+                else{
+                    $(this)
+                        .removeClass('fa-times').removeClass('text-danger')
+                        .addClass('fa-check').addClass('text-success').attr('title','Désactiver');
+                }
+            });
+        }
 
         if(action !== null){
             var success = function (result) {
@@ -99,6 +114,9 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                     }else{
                         location.reload();
                     }
+                    return;
+                }
+                else if (button.hasClass('active')){
                     return;
                 }
                 if(button.hasClass('delete')){

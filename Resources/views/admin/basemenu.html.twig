@@ -24,7 +24,7 @@
 <li>
     <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{ 'Gérer vos éléments' | trans }}</span> </a>
     <ul aria-expanded="false" class="collapse">
-        <li><a href="{{ path('neptune_entity',{'type':'element'}) }}">{{'Listing des' | trans }} {{'element_titles'}}</a></li>
+        <li><a href="{{ path('neptune_entity',{'type':'element'}) }}">{{'Tous les éléments' | trans }}</a></li>
         {% if is_granted('ROLE_SUPER_ADMIN') %}
             <li><a href="{{ path('neptune_type',{'type':'element'}) }}" class="ajax edit"><i class="fa fa-list-ul m-r-10"></i>{{"Types d'éléments" | trans}}</a> </li>
             <li><a href="{{ path('neptune_type_add',{'type':'element'}) }}" class="ajax edit"><i class="fa fa-plus m-r-10"></i>{{"Créer un type d'élément" | trans}}</a> </li>
