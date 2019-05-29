@@ -78,6 +78,7 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
             }
 
         }
+
         if(action !== null){
             var success = function (result) {
 
@@ -217,10 +218,14 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                 }
             };
 
+
             if(button.hasClass('clone')) {
-                let tabs = button.parents('.tabs');
+
+                let tabs = button.parents('.tabs').eq(0);
+
                 if(tabs.length){
-                    let nestable = tabs.find('.nestable');
+                    let nestable = tabs.find('.nestable,.nestable1');
+
                     if(nestable.length){
                         let prios = JSON.stringify(nestable.nestable('serialize'));
                         let data = new FormData();
