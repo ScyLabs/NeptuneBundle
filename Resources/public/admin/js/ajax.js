@@ -426,7 +426,7 @@ function success_dropzone(thisfile,done){
 
     let file = done;
 
-    let element = $('<li data-id="'+file.id+'" class="relative image col-lg-4 photo" data-type="'+file.type+'"></li>');
+    let element = $('<li data-id="'+file.id+'" class="relative image col-lg-2 photo" data-type="'+file.type+'"></li>');
 
 
     let span = $('<span></span>');

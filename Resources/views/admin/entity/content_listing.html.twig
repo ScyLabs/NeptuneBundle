@@ -103,11 +103,11 @@
                                                 {% else %}
                                                     <li class="dd-item" data-id="{{ object.id }}">
                                                         <div class="dd-handle">
-                                                            <a href="{{ path('neptune_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}">
+                                                            <a href="{{ path('neptune_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax active">
                                                                 {% if object.active %}
-                                                                    <i class="fa fa-check text-success"></i>
+                                                                    <i class="fa fa-check text-success" title="Désactiver"></i>
                                                                 {% else %}
-                                                                    <i class="fa fa-times text-danger"></i>
+                                                                    <i class="fa fa-times text-danger" title="Activer"></i>
                                                                 {% endif %}
                                                             </a>
                                                             {{ object.name }}

@@ -109,11 +109,17 @@ class UserController extends BaseController
             $userManager->updateUser($user);
             $this->get('session')->getFlashBag()->add('notice','Votre Utilisateur à bien été ajouté');
 
+            if($request->isXmlHttpRequest()){
+                return $this->json(array('success'=>true,'message'=>'Votre utilisateur à bien été ajouté'));
+            }
+            
             return $this->redirectToRoute('neptune_user');
         }
 
         $params['form'] = $form->createView();
         $params['title'] = "Ajout d'un utilisateur";
+
+
 
         return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
 

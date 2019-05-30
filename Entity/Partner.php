@@ -111,4 +111,13 @@ class Partner extends AbstractElem
         return $this;
     }
 
+    public function getDetail($locale){
+        foreach ($this->details as $detail){
+            if($detail->getLang() == $locale){
+                return $detail;
+            }
+        }
+        return new PartnerDetail();
+    }
+
 }
