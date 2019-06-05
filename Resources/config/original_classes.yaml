@@ -1,50 +1,50 @@
 page: ScyLabs\NeptuneBundle\Entity\Page
-pageForm: ScyLabs\NeptuneBundle\Entity\PageForm
+pageForm: ScyLabs\NeptuneBundle\Form\PageForm
 pageUrl: ScyLabs\NeptuneBundle\Entity\PageUrl
 pageDetail: ScyLabs\NeptuneBundle\Entity\PageDetail
-pageDetailForm: ScyLabs\NeptuneBundle\Entity\PageDetailForm
+pageDetailForm: ScyLabs\NeptuneBundle\Form\PageDetailForm
 pageType: ScyLabs\NeptuneBundle\Entity\PageType
 pageTypeForm: ScyLabs\NeptuneBundle\Entity\PageTypeForm
 
 element: ScyLabs\NeptuneBundle\Entity\Element
 elementUrl: ScyLabs\NeptuneBundle\Entity\ElementUrl
-elementForm: ScyLabs\NeptuneBundle\Entity\ElementForm
+elementForm: ScyLabs\NeptuneBundle\Form\ElementForm
 elementDetail: ScyLabs\NeptuneBundle\Entity\ElementDetail
-elementDetailForm: ScyLabs\NeptuneBundle\Entity\ElementDetailForm
+elementDetailForm: ScyLabs\NeptuneBundle\Form\ElementDetailForm
 elementType: ScyLabs\NeptuneBundle\Entity\ElementType
-elementTypeForm: ScyLabs\NeptuneBundle\Entity\ElementTypeForm
+elementTypeForm: ScyLabs\NeptuneBundle\Form\ElementTypeForm
 
 zone: ScyLabs\NeptuneBundle\Entity\Zone
-zoneForm: ScyLabs\NeptuneBundle\Entity\ZoneForm
+zoneForm: ScyLabs\NeptuneBundle\Form\ZoneForm
 zoneDetail: ScyLabs\NeptuneBundle\Entity\ZoneDetail
-zoneDetailForm: ScyLabs\NeptuneBundle\Entity\ZoneDetailForm
+zoneDetailForm: ScyLabs\NeptuneBundle\Form\ZoneDetailForm
 zoneType: ScyLabs\NeptuneBundle\Entity\ZoneType
-zoneTypeForm: ScyLabs\NeptuneBundle\Entity\ZoneTypeForm
+zoneTypeForm: ScyLabs\NeptuneBundle\Form\ZoneTypeForm
 
 partner: ScyLabs\NeptuneBundle\Entity\Partner
-partnerForm: ScyLabs\NeptuneBundle\Entity\PartnerForm
+partnerForm: ScyLabs\NeptuneBundle\Form\PartnerForm
 partnerDetail: ScyLabs\NeptuneBundle\Entity\PartnerDetail
-partnerDetailForm: ScyLabs\NeptuneBundle\Entity\PartnerDetailForm
+partnerDetailForm: ScyLabs\NeptuneBundle\Form\PartnerDetailForm
 
 file: ScyLabs\NeptuneBundle\Entity\File
-fileForm: ScyLabs\NeptuneBundle\Entity\FileForm
+fileForm: ScyLabs\NeptuneBundle\Form\FileForm
 fileType: ScyLabs\NeptuneBundle\Entity\FileType
-fileTypeForm: ScyLabs\NeptuneBundle\Entity\FileTypeForm
+fileTypeForm: ScyLabs\NeptuneBundle\Form\FileTypeForm
 
 photo: ScyLabs\NeptuneBundle\Entity\Photo
 photoDetail: ScyLabs\NeptuneBundle\Entity\PhotoDetail
-photoDetailForm: ScyLabs\NeptuneBundle\Entity\PhotoDetailForm
+photoDetailForm: ScyLabs\NeptuneBundle\Form\PhotoDetailForm
 
 document: ScyLabs\NeptuneBundle\Entity\Document
 documentDetail: ScyLabs\NeptuneBundle\Entity\DocumentDetail
-documentDetailForm: ScyLabs\NeptuneBundle\Entity\DocumentDetailForm
+documentDetailForm: ScyLabs\NeptuneBundle\Form\DocumentDetailForm
 
 video: ScyLabs\NeptuneBundle\Entity\Video
 videoDetail: ScyLabs\NeptuneBundle\Entity\VideoDetail
-videoDetailForm: ScyLabs\NeptuneBundle\Entity\VideoDetailForm
+videoDetailForm: ScyLabs\NeptuneBundle\FormVideoDetailForm
 
 infos: ScyLabs\NeptuneBundle\Entity\Infos
-infosForm: ScyLabs\NeptuneBundle\Entity\InfosForm
+infosForm: ScyLabs\NeptuneBundle\Form\InfosForm
 
 user: ScyLabs\NeptuneBundle\Entity\User
-userForm: ScyLabs\NeptuneBundle\Entity\UserForm
+userForm: ScyLabs\NeptuneBundle\Form\UserForm

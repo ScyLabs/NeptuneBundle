@@ -61,7 +61,6 @@ abstract class BaseController extends AbstractController
     protected function ajaxFormResult(FormInterface $form){
 
 
-
     }
     protected function validForm($type,$formClass,$object,Request $request,&$form,$action = null){
 

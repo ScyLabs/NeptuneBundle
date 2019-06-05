@@ -24,9 +24,7 @@ class ScyLabsNeptuneExtension extends Extension
         $configuration = new Configuration();
 
         $config = $this->processConfiguration($configuration,$configs);
-        //dump($config);
         $originalClasses = Yaml::parseFile(dirname(__DIR__).'/Resources/config/original_classes.yaml');
-        //dump($originalClasses);
 
         foreach ($originalClasses as $key => $class) {
             if (!array_key_exists($key, $config['override'])) {

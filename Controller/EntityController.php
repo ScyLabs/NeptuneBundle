@@ -164,6 +164,9 @@ class EntityController extends BaseController
             return $this->redirectToRoute('neptune_home');
         }
 
+
+
+
         $object = new $class();
 
         if($parentType !== null && $parentId !== null && in_array($parentType,['page','element'])){
