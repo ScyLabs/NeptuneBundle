@@ -52,7 +52,7 @@ class LoadORMMetadataSubscriber implements EventSubscriber
         $originalClasses = Yaml::parseFile(dirname(__DIR__).'/Resources/config/original_classes.yaml');
 
         foreach ($classes as $key => $class){
-            if(class_exists($originalClasses[$key]) && $class != $originalClasses[$key]  && class_exists($class))
+            if(array_key_exists($key,$originalClasses) && class_exists($originalClasses[$key]) && $class != $originalClasses[$key]  && class_exists($class))
                 $overriddenEntities[$originalClasses[$key]] = $class;
         }
         

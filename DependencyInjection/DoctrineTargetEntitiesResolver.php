@@ -18,37 +18,36 @@ class DoctrineTargetEntitiesResolver
 {
     public function resolve(ContainerBuilder $container){
 
-
-        if(!$container->hasDefinition('doctrine.orm.listeners.resolve_target_entity')){
-            throw new \RuntimeException('Cannot find Doctrine RTEL');
-        }
-
-
-        $resolveTargetEntityListener = $container->findDefinition('doctrine.orm.listeners.resolve_target_entity');
-
-
-        $classes = $container->getParameter('scy_labs_neptune.override');
-        $originalClasses = Yaml::parseFile(dirname(__DIR__).'/Resources/config/original_classes.yaml');
-
-        foreach ($classes as $key => $class){
-            if(class_exists($originalClasses[$key]) && $class != $originalClasses[$key] && class_exists($class)){
-                $resolveTargetEntityListener
-                    ->addMethodCall('addResolveTargetEntity', array(
-                        $this->getInterface($container,$originalClasses[$key]),
-                        $this->getClass($container,$class),
-                        array()
-                    ))
-                ;
+            if(!$container->hasDefinition('doctrine.orm.listeners.resolve_target_entity')){
+                throw new \RuntimeException('Cannot find Doctrine RTEL');
             }
-        }
 
 
-        if (version_compare(Version::VERSION, '2.5.0-DEV') < 0) {
-            $resolveTargetEntityListener->addTag('doctrine.event_listener', array('event' => 'loadClassMetadata'));
-        } else {
-            $resolveTargetEntityListener->addTag('doctrine.event_subscriber', array('connection' => 'default'));
-        }
-        
+            $resolveTargetEntityListener = $container->findDefinition('doctrine.orm.listeners.resolve_target_entity');
+
+
+            $classes = $container->getParameter('scy_labs_neptune.override');
+            $originalClasses = Yaml::parseFile(dirname(__DIR__).'/Resources/config/original_classes.yaml');
+
+            foreach ($classes as $key => $class){
+
+                if(array_key_exists($key,$originalClasses) && class_exists($originalClasses[$key])  && $class != $originalClasses[$key] && class_exists($class)){
+                    $resolveTargetEntityListener
+                        ->addMethodCall('addResolveTargetEntity', array(
+                            $this->getInterface($container,$originalClasses[$key]),
+                            $this->getClass($container,$class),
+                            array()
+                        ))
+                    ;
+                }
+
+            }
+
+            if (version_compare(Version::VERSION, '2.5.0-DEV') < 0) {
+                $resolveTargetEntityListener->addTag('doctrine.event_listener', array('event' => 'loadClassMetadata'));
+            } else {
+                $resolveTargetEntityListener->addTag('doctrine.event_subscriber', array('connection' => 'default'));
+            }
     }
 
     private function getInterface(ContainerBuilder $container, $key)
