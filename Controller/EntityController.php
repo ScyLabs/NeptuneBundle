@@ -60,14 +60,14 @@ class EntityController extends BaseController
         $child = false;
         $elemListing = false;
 
-        if($class === Page::class){
+        if(new $class() instanceof Page){
             $objects = $repo->findBy(array(
                'parent' =>  null,
                'remove' =>  false,
             ),['prio'=>'ASC']);
 
         }
-        elseif($class == Element::class){
+        elseif(new $class() instanceof Element){
             $objects = $this->getDoctrine()->getRepository(ElementType::class)->findBy(array(
                 'remove'    =>  false
             ));
@@ -123,7 +123,7 @@ class EntityController extends BaseController
         $parent = null;
 
 
-        if($class === Page::class){
+        if(new $class() instanceof Page){
             $objects = $repo->findBy(array(
                'parent' =>  $parentId,
                'remove' =>  false,
