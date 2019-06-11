@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Yaml\Yaml;
 
 class PageController extends AbstractController
 {
@@ -39,7 +40,7 @@ class PageController extends AbstractController
                 '_locale'   => 'fr'
             ));
         }
-        $pages = $em->getRepository(Page::class)->findBy(array(
+        $pages = $em->getRepository($this->getClass('page'))->findBy(array(
             'parent' => null,
             'remove' => false,
             'active' => true
@@ -52,8 +53,8 @@ class PageController extends AbstractController
             $page->getZones()[0]->setTypeHead(1);
         }
 
-        $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
-        $partners = $em->getRepository(Partner::class)->findAll();
+        $infos = $em->getRepository($this->getClass('infos'))->findOneBy([],['id'=>'ASC']);
+        $partners = $em->getRepository($this->getClass('partner'))->findAll();
         $contactPages = new ArrayCollection();
         foreach ($pages as $thisPage){
             if($thisPage->getType()->getName() == 'contact'){
@@ -80,7 +81,7 @@ class PageController extends AbstractController
         }
 
         $em = $this->getDoctrine()->getManager();
-        $url = $em->getRepository(PageUrl::class)->findOneBy(array(
+        $url = $em->getRepository($this->getClass('pageUrl'))->findOneBy(array(
             'url' => $slug
         ));
 
@@ -88,7 +89,7 @@ class PageController extends AbstractController
             return $this->redirectToRoute('homepage');
 
         if($url->getLang() !== $request->getLocale()){
-            $url = $em->getRepository(PageUrl::class)->findOneBy(
+            $url = $em->getRepository($this->getClass('pageUrl'))->findOneBy(
                 array(
                     'lang'  => $request->getLocale(),
                     'page'  => $url->getPage()
@@ -111,7 +112,7 @@ class PageController extends AbstractController
         }
         
 
-        $pages = $em->getRepository(Page::class)->findBy(array(
+        $pages = $em->getRepository($this->getClass('page'))->findBy(array(
             'parent'    =>  null,
             'remove'    =>  false,
             'active'    => true,
@@ -120,8 +121,8 @@ class PageController extends AbstractController
         );
 
 
-        $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
-        $partners = $em->getRepository(Partner::class)->findBy(['remove'=>false]);
+        $infos = $em->getRepository($this->getClass('infos'))->findOneBy([],['id'=>'ASC']);
+        $partners = $em->getRepository($this->getClass('partner'))->findBy(['remove'=>false]);
 
         $contactPages = new ArrayCollection();
 
@@ -146,13 +147,13 @@ class PageController extends AbstractController
 
     public function detailElementAction(Request $request,$slug,?array $options = null){
         $em = $this->getDoctrine()->getManager();
-        $url = $em->getRepository(ElementUrl::class)->findOneBy(array(
+        $url = $em->getRepository($this->getClass('elementUrl'))->findOneBy(array(
             'url' => $slug
         ));
         if($url === null)
             return $this->redirectToRoute('homepage');
         if($url->getLang() !== $request->getLocale()){
-            $url = $em->getRepository(ElementUrl::class)->findOneBy(
+            $url = $em->getRepository($this->getClass('elementUrl'))->findOneBy(
                 array(
                     'lang'  => $request->getLocale(),
                     'element'  => $url->getElement()
@@ -170,15 +171,15 @@ class PageController extends AbstractController
         if($element->getZones()->count() > 0){
             $element->getZones()[0]->setTypeHead(1);
         }
-        $pages = $em->getRepository(Page::class)->findBy(array(
+        $pages = $em->getRepository($this->getClass('page'))->findBy(array(
             'parent'    =>  null,
             'remove'    =>  false,
             'active'    => true
         ),
             ['prio'=>'ASC']
         );
-        $infos = $em->getRepository(Infos::class)->findOneBy([],['id'=>'ASC']);
-        $partners = $em->getRepository(Partner::class)->findAll();
+        $infos = $em->getRepository($this->getClass('infos'))->findOneBy([],['id'=>'ASC']);
+        $partners = $em->getRepository($this->getClass('partner'))->findAll();
         $params = array('pages'=>$pages,'page'=>$element,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale(),'jsZones'=>$this->getZonesDeps($element));
 
         if($options !== null){
@@ -215,6 +216,23 @@ class PageController extends AbstractController
             fclose($f);
         }
         return $tabJs;
+    }
+    private function getClass($name,&$form = null){
+
+        $originalClasses = Yaml::parseFile(dirname(__DIR__,2).'/Resources/config/original_classes.yaml');
+        $classes = $this->getParameter('scy_labs_neptune.override');
+        if(isset($classes[$name])){
+            if(!isset($classes[$name.'Form'])){
+                $form = null;
+            }else{
+                // If New Class Exist . Use new Class , else if original Class Exist use Original class Else set null
+                $form = (class_exists($classes[$name.'Form'])) ? $classes[$name.'Form'] : ((class_exists($originalClasses[$name.'Form'])) ? $originalClasses[$name.'Form'] : null ) ;
+            }
+
+            return (class_exists($classes[$name])) ? $classes[$name] : (class_exists($originalClasses[$name]) ? $originalClasses[$name] : null);
+
+        }
+        return null;
     }
 }
 

@@ -4,7 +4,7 @@ pageUrl: ScyLabs\NeptuneBundle\Entity\PageUrl
 pageDetail: ScyLabs\NeptuneBundle\Entity\PageDetail
 pageDetailForm: ScyLabs\NeptuneBundle\Form\PageDetailForm
 pageType: ScyLabs\NeptuneBundle\Entity\PageType
-pageTypeForm: ScyLabs\NeptuneBundle\Entity\PageTypeForm
+pageTypeForm: ScyLabs\NeptuneBundle\Form\PageTypeForm
 
 element: ScyLabs\NeptuneBundle\Entity\Element
 elementUrl: ScyLabs\NeptuneBundle\Entity\ElementUrl
