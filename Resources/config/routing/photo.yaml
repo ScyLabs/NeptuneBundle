@@ -1,5 +1,5 @@
 generatePhoto:
-    path: /photo/{id}/{width}/{height}/{multiplicator}/{truncate}{monochrome}/{name}
+    path: /photo/{id}/{width}/{height}/{multiplicator}/{truncate}{monochrome}/{name}.{ext}
     controller: ScyLabs\NeptuneBundle\Controller\PhotoController::generateAction
     requirements:
         id: "[0-9]+"
@@ -12,5 +12,6 @@ generatePhoto:
         height: 0
         multiplicator: 100
         truncate: 0
-        name: ""
         monochrome: ""
+        name: ""
+        ext: "jpeg"

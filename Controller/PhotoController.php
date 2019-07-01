@@ -22,11 +22,8 @@ class PhotoController extends AbstractController
 {
 
 
-    private $photoQuality = 90;
+    public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome,$name,$ext){
 
-
-    public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome){
-        
         $monochrome = trim($monochrome,'/');
 
         $monochrome = (empty($monochrome)) ? false : $monochrome;
@@ -38,15 +35,15 @@ class PhotoController extends AbstractController
 
         // Récupération de la photo
         $ph = $this->getDoctrine()->getRepository(Photo::class)->find($id);
-       
+
         if($ph === null){
             throw new HttpException(404,"La photo n'existe pas");
         }
 
         /* On récupère le fichier et son chemin */
         $file = $ph->getFile();
-       
-    
+
+
         $dir = $this->getParameter('uploads_directory');
         $filePath = $dir.$file->getFile();
 
@@ -93,12 +90,16 @@ class PhotoController extends AbstractController
             $monochrome = explode('-',$monochrome);
             $wh .= '_monochrome_'.$monochrome[0].'_'.$monochrome[1];
         }
-        $path = $localThumb.'/'.$fileName.$wh.'.'.$file->getExt();
-        if(file_exists($path) && false){
+
+        $path = $localThumb.'/'.$fileName.$wh.'.'.$ext;
+
+        if(file_exists($path)){
 
             $this->headers($file,$path);
-            return new Response(readfile($path));
+            $response = new \Symfony\Component\HttpFoundation\File\File($path);
+            return $this->file($response,'',ResponseHeaderBag::DISPOSITION_INLINE);
         }
+
 
         // On récupère L'image de base
         $img = new \Imagick($filePath);
@@ -126,7 +127,7 @@ class PhotoController extends AbstractController
         }
 
         if(!file_exists($path)){
-            $img->setCompressionQuality($this->photoQuality);
+            $img->setImageCompressionQuality($this->calcQuality($width));
             if($truncate == 0)
                 $img->thumbnailImage($width,$height);
             else{
@@ -146,9 +147,7 @@ class PhotoController extends AbstractController
             $img->writeImage($path);
         }
 
-        // Récupération de l'extension du fichier
 
-        // Si jpg , deviens Jpeg (pour norme HTTP)
 
         $img->destroy();
         $this->headers($file,$path);
@@ -166,13 +165,33 @@ class PhotoController extends AbstractController
         $last_modified_time = filemtime($path);
         $etag = 'W/"' . md5($last_modified_time) . '"';
 
-        //$result = ($file->getExt() == 'jpg') ? 'jpeg' : $file->getExt();
-        //header('Content-Type: image/'.$result);
-        //header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $last_modified_time) . " GMT");
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $last_modified_time) . " GMT");
         header('Cache-Control: public, max-age=604800'); // On peut ici changer la durée de validité du cache
         header("Etag: $etag");
         $result = '';
 
 
+    }
+
+    private function calcQuality($width,$type = 'webp'){
+        if($type == 'webp'){
+
+            if($width > 3000){
+                return 20;
+            }
+            else if($width > 2000){
+                return 35;
+            }
+            else if ($width > 800){
+                return 45;
+            }
+            else if ($width > 600){
+                return 60;
+            }
+            else{
+                return 80;
+            }
+        }
+        return 90;
     }
 }
