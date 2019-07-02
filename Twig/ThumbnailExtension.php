@@ -18,7 +18,8 @@ class ThumbnailExtension extends AbstractExtension
     public function getFilters()
     {
         return array(
-          new TwigFilter('thumbnail',array($this,'thumbFilter'))
+          new TwigFilter('thumbnail',array($this,'thumbFilter')),
+          new TwigFilter('thumb',array($this,'thumbFilter')),
         );
     }
     public function thumbFilter($path,$w=0,$h = 0,$q = 90){
