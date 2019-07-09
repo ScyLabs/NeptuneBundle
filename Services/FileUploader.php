@@ -37,6 +37,7 @@ class FileUploader
         $minesok = array(
             'image/jpeg',
             'image/png',
+            'image/gif',
         );
 
         if(in_array($mime,$minesok))

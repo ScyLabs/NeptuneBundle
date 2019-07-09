@@ -22,7 +22,7 @@ class PhotoController extends AbstractController
 {
 
 
-    public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome,$name,$ext){
+    public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome,$ext){
 
         $monochrome = trim($monochrome,'/');
 
@@ -43,6 +43,19 @@ class PhotoController extends AbstractController
         /* On récupère le fichier et son chemin */
         $file = $ph->getFile();
 
+        $formats = \Imagick::queryFormats();
+
+        foreach($formats as $key => $format){
+            $formats[$key] = strtolower($format);
+        }
+
+
+        if(in_array($file->getExt(),['jpeg','jpg'])){
+
+            $ext = (!in_array('webp',$formats)) ? $file->getExt() : $ext;
+        }else{
+            $ext = $file->getExt();
+        }
 
         $dir = $this->getParameter('uploads_directory');
         $filePath = $dir.$file->getFile();
@@ -79,7 +92,6 @@ class PhotoController extends AbstractController
         for($i =0; $i < sizeof($nameExp ) - 1;$i++){
             $fileName .= $nameExp[$i];
         }
-
 
         $wh = '';
 
@@ -121,7 +133,6 @@ class PhotoController extends AbstractController
 
         }
 
-
         if(!file_exists($localThumb)){
             mkdir($localThumb);
         }
@@ -132,9 +143,7 @@ class PhotoController extends AbstractController
                 $img->thumbnailImage($width,$height);
             else{
                 $img->cropThumbnailImage($width,$height);
-
             }
-
             if($monochrome !== false){
 
                 $img->modulateImage(100,0,100);
@@ -146,8 +155,6 @@ class PhotoController extends AbstractController
             }
             $img->writeImage($path);
         }
-
-
 
         $img->destroy();
         $this->headers($file,$path);
