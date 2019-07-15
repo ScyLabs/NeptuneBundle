@@ -95,6 +95,17 @@ abstract class AbstractDetail
         return $this;
     }
 
+    public function getTitles(): ?array
+    {
+        $titles = array();
+        foreach ($this as $key => $value){
+            if(preg_match('#title#Ui',$key)){
+                $titles[$key] = $value;
+
+            }
+        }
+        return $titles;
+    }
     public function getDescriptions(): ?array
     {
         $descriptions = array();
