@@ -22,7 +22,7 @@ class PhotoController extends AbstractController
 {
 
 
-    public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome,$ext){
+    public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome,$name){
 
         $monochrome = trim($monochrome,'/');
 
@@ -49,6 +49,12 @@ class PhotoController extends AbstractController
             $formats[$key] = strtolower($format);
         }
 
+
+        $nameExp = explode('.',$name);
+        $ext = $nameExp[sizeof($nameExp) -1];
+        if(empty($ext)){
+            $ext = $file->getExt();
+        }
 
         if(in_array($file->getExt(),['jpeg','jpg'])){
 
