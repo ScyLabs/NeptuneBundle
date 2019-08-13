@@ -57,6 +57,7 @@ class ZoneDetail extends AbstractDetail
         return $this->id;
     }
 
+
     public function getTitle2(): ?string
     {
         return $this->title2;

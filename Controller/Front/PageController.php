@@ -22,6 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -33,6 +34,7 @@ class PageController extends AbstractController
 
     public function homeAction(Request $request,?array $options = null){
 
+        $this->getRequestLang($request);
         $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();
         if(!in_array($locale,$this->getParameter('langs'))){
@@ -233,6 +235,13 @@ class PageController extends AbstractController
 
         }
         return null;
+    }
+
+    // Get request lang from Navigator and Cookie
+    private function getRequestLang(Request $request){
+        $navLang = substr($request->getLanguages()[0],0,2);
+        dump($request->cookies);
+        return Cookie::create('lang',$navLang);
     }
 }
 

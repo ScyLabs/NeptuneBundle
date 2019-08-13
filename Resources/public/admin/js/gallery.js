@@ -235,6 +235,10 @@ Dropzone.options.customdropzone = {
             'application/x-7z-compressed',
             'application/x-rar-compressed',
         ];
+        if(file.type == 'video/mp4'){
+            done('No!!!');
+        }
+
         if($.inArray(file.type,accepts) !== -1){
             done();
         }else{

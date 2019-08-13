@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('sitemap')->addDefaultsIfNotSet()
                     ->children()
-                        ->variableNode('elements')->defaultValue(true)->end()
+                        ->variableNode('elements')->defaultValue(false)->end()
                     ->end()
                 ->end()
             ->end()

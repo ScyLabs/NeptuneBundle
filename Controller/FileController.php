@@ -302,6 +302,9 @@ class FileController extends BaseController
         );
 
         $uploadFile = new SymfonyFile($res);
+        dump($uploadFile);
+        return new Response('<html><body></body></html>');
+
         if(!in_array($uploadFile->getMimeType(),$minesok))
             return new Response('Type de fichier non autorisé',403);
             
@@ -356,7 +359,7 @@ class FileController extends BaseController
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($file);
-        $em->flush();
+        //$em->flush();
 
         $result = array(
             'file'=>$file->getFile(),

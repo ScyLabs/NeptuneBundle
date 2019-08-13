@@ -31,8 +31,8 @@ class FileUploader
             }
         }        
         $fileName = $name.'.'.$ext;
-        
-        $file->move($this->getTargetDirectory(),$fileName);
+
+        //$file->move($this->getTargetDirectory(),$fileName);
 
         $minesok = array(
             'image/jpeg',
@@ -52,7 +52,6 @@ class FileUploader
             }
 
         }
-
 
         return $fileName;
     }
