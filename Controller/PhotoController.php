@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PhotoController extends AbstractController
+class PhotoController extends BaseController
 {
 
 
@@ -34,7 +34,7 @@ class PhotoController extends AbstractController
         }
 
         // Récupération de la photo
-        $ph = $this->getDoctrine()->getRepository(Photo::class)->find($id);
+        $ph = $this->getDoctrine()->getRepository($this->getClass('photo'))->find($id);
 
         if($ph === null){
             throw new HttpException(404,"La photo n'existe pas");
