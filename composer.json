@@ -1,7 +1,7 @@
 {
     "name": "scylabs/neptune-bundle",
     "type": "symfony-bundle",
-    "version": "1.1.8",
+    "version": "1.1.9",
     "keywords": ["User management"],
     "homepage": "https://github.com/ScyLabs/NeptuneBundle",
     "license": "MIT",
