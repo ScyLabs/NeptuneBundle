@@ -16,9 +16,9 @@
                 {% endif %}
                 {{ page.name }}
             </div>
-            {% if page.childs |length %}
+            {% if page.childs({'active':null}) |length %}
                 <ol class="dd-list">
-                    {% for child in page.childs %}
+                    {% for child in page.childs({'active':null}) %}
                         {{ self.recursivePage(child) }}
                     {% endfor %}
                 </ol>
@@ -68,8 +68,8 @@
                 </ul>
             </td>
         </tr>
-        {% if page.childs |length %}
-            {% for child in page.childs %}
+        {% if page.childs({'active':null}) |length %}
+            {% for child in page.childs({'active':null}) %}
                 {{ self.recursiveTabPage(child) }}
             {% endfor %}
         {% endif %}

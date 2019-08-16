@@ -32,7 +32,9 @@ class ElementTypeForm extends AbstractType
                 'required'      => false,
                 'query_builder' =>  function(PageRepository $r){
                     return $r->createQueryBuilder('t')
-                        ->where('t.remove = 0');
+                        ->where('t.remove = 0')
+                        ->andWhere('t.active = 1')
+                        ;
                 },
             ])
             ->add('submit',SubmitType::class)

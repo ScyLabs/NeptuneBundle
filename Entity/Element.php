@@ -91,15 +91,22 @@ class Element extends AbstractElem
     /**
      * @return Collection|Zone[]
      */
-    public function getZones(bool $showAll = false): Collection
+    public function getZones(array $opts = []): Collection
     {
         $criteria = Criteria::create();
-        $criteria->orderBy(array(
-            'prio'=>Criteria::ASC
-        ));
-        if($showAll !== true){
-            $criteria->where(Criteria::expr()->eq('remove',false));
-        }
+
+        if(!array_key_exists('remove',$opts))
+            $opts['remove'] = false;
+        if(!array_key_exists('active',$opts))
+            $opts['active'] = true;
+        if(!array_key_exists('order',$opts))
+            $opts['order'] = ['prio' => 'ASC'];
+
+        $criteria->orderBy($opts['order']);
+
+        $criteria->where(Criteria::expr()->eq('remove',$opts['remove']));
+        if(null !== $opts['active'])
+            $criteria->andWhere(Criteria::expr()->eq('active',$opts['active']));
 
         return $this->zones->matching($criteria);
     }
