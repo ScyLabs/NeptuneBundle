@@ -30,6 +30,7 @@ use ScyLabs\NeptuneBundle\Entity\User;
 use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
 use ScyLabs\NeptuneBundle\Services\FileUploader;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -279,15 +280,73 @@ class FileController extends BaseController
         return $this->redirectToRoute('neptune_file');
     }
 
-    public function uploadAction(Request $request,FileUploader $fileUploader){
+    public function uploadChunckAction(Request $request,FileUploader $fileUploader){
 
-        ini_set('memory_limit',-1);
-        set_time_limit(-1);
+        
         if(!$res = $request->files->get('file')){
             return new Response('Type de fichier non pris en compte',403);
         }
+        $uploadFile = new SymfonyFile($res);
 
-        $minesok = array(
+        if(!$res instanceof UploadedFile)
+            return new Response('Type de fichier non pris en compte',403);
+
+        $tmpDir = $this->getParameter('kernel.project_dir').'/var/tmp';
+        
+        
+        if(!file_exists($tmpDir)){
+            mkdir($tmpDir);
+        }
+
+        if(null === $tmpFileName = $request->get('dzuuid')){
+            $tmpFileName = md5($res->getClientOriginalName());
+        }
+
+        $mimeTypesAccepted = [
+            'application/pdf',
+            'image/jpeg',
+            'image/png',
+            'image/svg+xml',
+            'image/svg',
+            'audio/*',
+            'image/gif',
+            'video/mp4',
+            'application/zip',
+            'application/x-7z-compressed',
+            'application/x-rar-compressed'
+        ];
+        $chunckIndex = $request->get('dzchunkindex');
+        if(null === $chunckIndex || $chunckIndex === 0){
+            if(!in_array($res->getMimeType(),$mimeTypesAccepted))
+                return new Response('Type de fichier non pris en compte',403);
+            
+            $f = fopen($tmpDir.'/'.$tmpFileName,'w+');
+        }else{
+            $f = fopen($tmpDir.'/'.$tmpFileName,'a+');    
+        }
+
+        fwrite($f,file_get_contents($res->getPathname()));
+        fclose($f);
+        unlink($res->getPathname());
+
+
+        return $this->json(array(
+            'success' => true,
+            'tmpFileName'  => $tmpFileName
+        ));
+    }
+    public function uploadAction(Request $request,FileUploader $fileUploader){
+        
+        if(null === $tmpFileName = $request->get('dzuid') ){
+            return new Response('Un problème est arrivé lors de l\'upload',403);
+        }
+        if(null === $basename = $request->get('basename')){
+            return new Response('Un problème est arrivé lors de l\'upload',403);
+        }
+        
+        
+        $tmpDir = $this->getParameter('kernel.project_dir').'/var/tmp';
+        $mimeTypesAccepted = array(
             'application/pdf',
             'image/jpeg',
             'image/png',
@@ -300,11 +359,15 @@ class FileController extends BaseController
             'application/x-7z-compressed',
             'application/x-rar-compressed'
         );
-
-        $uploadFile = new SymfonyFile($res);
-        if(!in_array($uploadFile->getMimeType(),$minesok))
-            return new Response('Type de fichier non autorisé',403);
             
+        $uploadFile = new SymfonyFile($tmpDir.'/'.$tmpFileName);
+        
+
+
+        if(!in_array($uploadFile->getMimeType(),$mimeTypesAccepted))
+            return new Response('Type de fichier non autorisé',403);
+
+
         $typeRepo = $this->getDoctrine()->getRepository($this->getClass('fileType'));
         if(null === $ext = $uploadFile->guessExtension()){
             if($uploadFile->getMimeType() == 'image/svg+xml'){
@@ -313,7 +376,7 @@ class FileController extends BaseController
             else{
                 $ext = explode('/',$uploadFile->getMimeType())[1];
             }
-        }        
+        }
         switch($uploadFile->getMimeType()){
             case 'application/pdf':
                 $name = 'document';
@@ -343,14 +406,15 @@ class FileController extends BaseController
                 $name = 'no_classified';
                 break;
         }
+
         $type = $typeRepo->findOneByName($name);
 
         $fileClass = $this->getClass('file');
         $file = new $fileClass();
 
-        $file->setOriginalName($res->getClientOriginalName());
+        $file->setOriginalName($basename);
 
-        $file->setFile($res)
+        $file->setFile($uploadFile)
             ->setExt($ext)
             ->setType($type);
 
@@ -460,7 +524,7 @@ class FileController extends BaseController
         }
         return $this->redirectToRoute('neptune_file_gallery_prio');
     }
-    
+
     public function deleteAction(Request $request,$id){
         $repo = $this->getDoctrine()->getRepository($this->getClass('file'));
         $file = $repo->find($id);
@@ -470,12 +534,12 @@ class FileController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $em->remove($file);
         $em->flush();
-        
+
         if($request->isXmlHttpRequest()){
             return $this->json(array('success'=>true,'message'=>'Votre fichier à bien été supprimé'));
         }
         return $this->redirect($request->headers->get('referer'));
-  
+
     }
 
 

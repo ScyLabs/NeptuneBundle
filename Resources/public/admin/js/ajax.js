@@ -375,7 +375,11 @@ function initialisations(container,instance,current,action){
     if(container.find('.dropzone').length){
         new Dropzone(container.find('#container_cartouches')[0], { // Make the whole body a dropzone
             dictDefaultMessage: 'Cliquez ou déposez des fichiers ici',
-            url:container.find('#container_cartouches').data('action'),
+            url:container.find('#container_cartouches').attr('action'),
+            chunking: true,
+            retryChunks: true,
+            forceChunking: true,
+        
             accept:function(file,done){
 
                 let accepts = [
@@ -390,15 +394,30 @@ function initialisations(container,instance,current,action){
                     'application/x-7z-compressed',
                     'application/x-rar-compressed',
                 ];
+            
                 if($.inArray(file.type,accepts) !== -1){
                     done();
                 }else{
                     done('Fichier non autorisé');
                 }
             },
-            success: function(thisfile,done){
-                success_dropzone(thisfile,done);
-
+            chunksUploaded : function(thisfile,done){
+            
+                var formData = new FormData();
+                formData.append('dzuid',thisfile.upload.uuid);
+                formData.append('basename',thisfile.name)
+                $.ajax({
+                    url: container.find('#container_cartouches').data('finish'),
+                    type: 'POST',
+                    data:formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(res){
+                        success_dropzone(thisfile,res);
+                    }
+                
+                });
+            
             }
         });
     }

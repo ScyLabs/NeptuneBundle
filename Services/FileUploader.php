@@ -9,7 +9,7 @@
 namespace ScyLabs\NeptuneBundle\Services;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
+use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 class FileUploader
 {
     private $targetDirectory;
@@ -17,7 +17,7 @@ class FileUploader
     public function __construct($targetDirectory){
         $this->targetDirectory = $targetDirectory;
     }
-    public function upload(UploadedFile $file){
+    public function upload(SymfonyFile $file){
         $mime = $file->getMimeType();
         $filesize = $file->getSize();
         $name = md5(uniqid());

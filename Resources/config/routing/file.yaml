@@ -24,6 +24,10 @@ neptune_file_upload:
     path: /file/upload
     controller: ScyLabs\NeptuneBundle\Controller\FileController::uploadAction
 
+neptune_file_upload_chunck:
+    path: /file/upload-chunck
+    controller: ScyLabs\NeptuneBundle\Controller\FileController::uploadChunckAction
+
 neptune_file_gallery_prio:
     path: /{type}/{id}/files
     controller: ScyLabs\NeptuneBundle\Controller\FileController::galleryPrioAction

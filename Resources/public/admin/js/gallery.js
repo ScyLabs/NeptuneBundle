@@ -221,6 +221,10 @@ function selection(){
 /*Configuration de DROPZONE*/
 Dropzone.options.customdropzone = {
     dictDefaultMessage: 'Cliquez ou déposez des fichiers ici',
+    url:$('#container_cartouches').attr('action'),
+    chunking: true,
+    retryChunks: true,
+    forceChunking: true,
     accept:function(file,done){
 
         let accepts = [
@@ -235,63 +239,82 @@ Dropzone.options.customdropzone = {
             'application/x-7z-compressed',
             'application/x-rar-compressed',
         ];
+
         if($.inArray(file.type,accepts) !== -1){
             done();
         }else{
             done('Fichier non autorisé');
         }
     },
-    success: function(thisfile,done){
-        /*Callback appelé quand le fichier est bien envoyé .. (pOur ajouter l'image a la liste ) */
-        $.edc.flashAlert('Fichier bien envoyé');
+    chunksUploaded : function(thisfile,done){
 
-        let file = done;
-
-        let element = $('<li data-id="'+file.id+'" class="relative image col-lg-2 photo" data-type="'+file.type+'"></li>');
-
-
-        let span = $('<span></span>');
-        element.append(span);
-
-        let spanspan = $('<span class="boxing"></span>');
-        span.append(spanspan);
-
-
-
-        spanspan.append('<i class="fa fa-check centerXY"></i>');
-
-        spanspan.append($('<span class="date">'+file.date+'</span>'));
-        let path = file.file;
-        let exp  = path.split('.');
-        let actions = $('<ul class="actions"></ul>');
-        actions.append($('<li><a href="'+url_site+'uploads/'+path+'" class="fancy"><i class="fa fa-search"></i></a></li>'));
-        actions.append($('<li>'+file.actions.remove.content+'</li>'));
-
-        element.append(actions);
-        if(exp[exp.length -1] == 'pdf'){
-
-            path = 'thumbnails/';
-            for(let i = 0; i < exp.length -1;i++ ){
-                path += exp[i];
-                if(i == exp.length -2 ){
-                    path += ".jpg";
-                    img.src = url_site+'uploads/'+path;
-                }
+        var formData = new FormData();
+        formData.append('dzuid',thisfile.upload.uuid);
+        formData.append('basename',thisfile.name)
+        $.ajax({
+            url: $('#container_cartouches').data('finish'),
+            type: 'POST',
+            data:formData,
+            contentType: false,
+            processData: false,
+            success: function(res){
+                success_dropzone(thisfile,res);
             }
-        }
-        spanspan.append($('<img src="'+url_site+'uploads/'+path+'" />'));
-        if($('#cartouches').length)
-        {
-            $('#cartouches').prepend(element);
-
-            element.find('>span').gallery();
-            element.find('.fancy').fancybox();
-
-        }
-
+        
+        });
 
     }
 };
+
+
+function success_dropzone(thisfile,done){
+    /*Callback appelé quand le fichier est bien envoyé .. (pOur ajouter l'image a la liste ) */
+    $.edc.flashAlert('Fichier bien envoyé');
+
+    let file = done;
+
+    let element = $('<li data-id="'+file.id+'" class="relative image col-lg-2 photo" data-type="'+file.type+'"></li>');
+
+
+    let span = $('<span></span>');
+    element.append(span);
+
+    let spanspan = $('<span class="boxing"></span>');
+    span.append(spanspan);
+
+
+
+    spanspan.append('<i class="fa fa-check centerXY"></i>');
+
+    spanspan.append($('<span class="date">'+file.date+'</span>'));
+    let path = file.file;
+    let exp  = path.split('.');
+    let actions = $('<ul class="actions"></ul>');
+    actions.append($('<li><a href="'+url_site+'uploads/'+path+'" class="fancy"><i class="fa fa-search"></i></a></li>'));
+    actions.append($('<li>'+file.actions.remove.content+'</li>'));
+
+    element.append(actions);
+    if(exp[exp.length -1] == 'pdf'){
+
+        path = 'thumbnails/';
+        for(let i = 0; i < exp.length -1;i++ ){
+            path += exp[i];
+            if(i == exp.length -2 ){
+                path += ".jpg";
+                img.src = url_site+'uploads/'+path;
+            }
+        }
+    }
+    spanspan.append($('<img src="'+url_site+'uploads/'+path+'" />'));
+    if($('#cartouches').length)
+    {
+        $('#cartouches').prepend(element);
+
+        element.find('>span').gallery();
+        element.find('.fancy').fancybox();
+
+    }
+}
 
 /*FIN Configuration de DROPZONE*/
 

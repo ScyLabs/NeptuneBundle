@@ -15,7 +15,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use FOS\UserBundle\Form\Factory\FactoryInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
+use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 class FileListener
 {
     private $uploader;
@@ -54,7 +54,8 @@ class FileListener
             return;
         }
         $file = $entity->getFile();
-        if($file instanceof UploadedFile){
+
+        if($file instanceof SymfonyFile){
             $fileName = $this->uploader->upload($file);
 
             $entity->setFile($fileName);
