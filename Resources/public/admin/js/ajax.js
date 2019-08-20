@@ -371,15 +371,16 @@ function initialisations(container,instance,current,action){
             }
         }
     });
-
+    var Drop = null;
     if(container.find('.dropzone').length){
-        new Dropzone(container.find('#container_cartouches')[0], { // Make the whole body a dropzone
+        Drop = new Dropzone(container.find('#container_cartouches')[0], { // Make the whole body a dropzone
             dictDefaultMessage: 'Cliquez ou déposez des fichiers ici',
             url:container.find('#container_cartouches').attr('action'),
             chunking: true,
             retryChunks: true,
             forceChunking: true,
-        
+            //chunkSize: 1000 * 1024,
+
             accept:function(file,done){
 
                 let accepts = [
@@ -394,7 +395,7 @@ function initialisations(container,instance,current,action){
                     'application/x-7z-compressed',
                     'application/x-rar-compressed',
                 ];
-            
+
                 if($.inArray(file.type,accepts) !== -1){
                     done();
                 }else{
@@ -402,7 +403,16 @@ function initialisations(container,instance,current,action){
                 }
             },
             chunksUploaded : function(thisfile,done){
-            
+
+                var files = Drop.files;
+                for(var i = 0;i < files.length;i++){
+                    if(files[i] !== thisfile)
+                        continue;
+                    delete Drop.files[i];
+
+                }
+                Drop.processQueue();
+
                 var formData = new FormData();
                 formData.append('dzuid',thisfile.upload.uuid);
                 formData.append('basename',thisfile.name)
@@ -415,9 +425,9 @@ function initialisations(container,instance,current,action){
                     success: function(res){
                         success_dropzone(thisfile,res);
                     }
-                
+
                 });
-            
+
             }
         });
     }
