@@ -100,4 +100,8 @@ class Photo extends AbstractFileLink
         return $this->id;
     }
 
+    public function simulateId(){
+        $this->id = 1 ;
+    }
+
 }

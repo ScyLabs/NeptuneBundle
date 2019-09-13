@@ -33,6 +33,8 @@ class ScyLabsNeptuneExtension extends Extension
         }
 
         $container->setParameter($this->getAlias().'.override',$config['override']);
+        $container->setParameter($this->getAlias().'.codexUrl',$config['codexUrl']);
+        $container->setParameter($this->getAlias().'.cdn',$config['cdn']);
         $container->setParameter($this->getAlias().'.compress',$config['compress']);
         $container->setParameter($this->getAlias().'.sitemap',$config['sitemap']);
         $container->setParameter($this->getAlias().'.icons',$config['icons']);

@@ -1,312 +1,391 @@
 .select2-container.select2-container--open{
-    z-index: 9999999;
+  z-index: 9999999;
+}
+
+.download_zone{
+  position: absolute;
+  left:50%;
+  bottom:0;
+  padding:1rem 2rem;
+  border:none;
+  background: #82ccdd;
+  color:#fff;
+  text-transform: uppercase;
+  transform:translate(-50%,120%);
+}
+.listing_zones_codex{
+
+  .zone{
+    padding:0.5rem;
+    cursor: pointer;
+    &:hover .box_photo::after{
+      opacity: 0;
+    }
+    .number{
+
+      position: absolute;
+      left:0;
+      top:0;
+      width:5rem;
+      height: 5rem;
+      background: #00a8ff;
+      color:#fff;
+      font-size: 2.2rem;
+      border-bottom-right-radius: 100%;
+      padding-left: 1.3rem;
+      padding-top: 1.3rem;
+      z-index: 10;
+      font-style: normal;
+    }
+    .box_photo{
+      display:flex;
+      justify-content: center;
+      overflow: hidden;
+      position:relative;
+
+      &::after{
+        content:'';
+        display:block;
+        position: absolute;
+        left:0;
+        top:0;
+        width:100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        transition:all 500ms;
+        z-index: 9;
+      }
+
+      img{
+        flex:1;
+        object-fit: cover;
+      }
+    }
+
+  }
+}
+.question {
+  label,input,select{
+    display: inline-block;
+    border-radius: 2px;
+
+
+  }
+  input,select{
+    padding:0.3rem;
+    border:1px solid #bbb;
+  }
+  .select2-container{
+    width:200px!important;
+    display: inline-block!important;
+  }
 }
 .btn{
-    padding:1rem 2rem;
-    max-width: 20rem;
-    background: #82ccdd;
-    color:#fff;
-    margin:0 auto!important;
-    display: block;
+  padding:1rem 2rem;
+  max-width: 20rem;
+  background: #82ccdd;
+  color:#fff;
+  margin:0 auto!important;
+  display: block;
 }
 .margin_bottom_30{
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 #container_cartouches.dropzone{
-    margin-top: 3rem;
-    display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: wrap;
-    > * {
-        flex:0;
-        &.mw100{
-            min-width: 100%;
-            order:99;
-        }
-        &.dz-message{
-            min-width: 100%;
-        }
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  > * {
+    flex:0;
+    &.mw100{
+      min-width: 100%;
+      order:99;
     }
+    &.dz-message{
+      min-width: 100%;
+    }
+  }
 }
 
 .dd-list.dd-dragel{
-    z-index: 9999999;
+  z-index: 9999999;
 }
 .div-ajax{
-    max-width: 1600px;
-    width:100%;
-    &.add,&.edit{
-        max-width: 400px;
+  max-width: 1600px;
+  width:100%;
+  &.add,&.edit{
+    max-width: 400px;
+  }
+  .row{
+    margin:0;
+    width: 100%;
+    >div {
+      width: 100%;
     }
-    .row{
-        margin:0;
-        width: 100%;
-        >div {
-            width: 100%;
-        }
-        form{
-            width: 100%;
-        }
+    form{
+      width: 100%;
     }
-    #tabs,.tabs{
-        > *:not(:nth-child(2)):not(.onglets){
-            display: none;
-        }
+  }
+  #tabs,.tabs{
+    > *:not(:nth-child(2)):not(.onglets){
+      display: none;
     }
-    #cartouches > li > span{
-        z-index: 99;
-    }
+  }
+  #cartouches > li > span{
+    z-index: 99;
+  }
 }
 .onglets {
-    display: block;
-    width:100%;
-    position: relative;
-    margin-bottom: -15px;
-    > li {
-        display: inline-block;
-        border:1px solid #ededed;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        border-bottom: none;
-        a{padding:10px 20px;display: block;}
-    }
-    > li.ui-state-active{background:#d1ecf1;}
+  display: block;
+  width:100%;
+  position: relative;
+  margin-bottom: -15px;
+  > li {
+    display: inline-block;
+    border:1px solid #ededed;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: none;
+    a{padding:10px 20px;display: block;}
+  }
+  > li.ui-state-active{background:#d1ecf1;}
 }
 
 .photo_mini{
-    display: flex;
-    justify-content: center;
-    img{
-        object-fit: cover;
-        object-position: 50% 50%;
-    }
+  display: flex;
+  justify-content: center;
+  img{
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
 }
 #flashes {
-    position: fixed;
-    bottom:50px;
-    right:0;
-    width:100%;
-    max-width: 300px;
-    z-index: 9999999;
-    .flash { margin:10px;}
-    .alert p {color:#000!important;}
+  position: fixed;
+  bottom:50px;
+  right:0;
+  width:100%;
+  max-width: 300px;
+  z-index: 9999999;
+  .flash { margin:10px;}
+  .alert p {color:#000!important;}
 }
 
 .nobtnstyle {
-    border:none!important;
-    background:none!important;
+  border:none!important;
+  background:none!important;
 }
 .actions > li {
-    display: inline-block;
-    font-size: 18px;
-    margin:0 7px;
+  display: inline-block;
+  font-size: 18px;
+  margin:0 7px;
 }
 .relative {
-    position: relative;
+  position: relative;
 }
 #keyup {
-    position: fixed;
-    bottom:40px;
-    left:0;
-    padding:20px;
-    z-index:999;
+  position: fixed;
+  bottom:40px;
+  left:0;
+  padding:20px;
+  z-index:999;
 }
 .dropzone  {
-    min-height: 300px;
+  min-height: 300px;
 }
 #addfile_form {
-    display: none;
+  display: none;
 }
 .hack-inline {
-    letter-spacing: -0.5em;
-    > * {letter-spacing: normal;display: inline-block;}
+  letter-spacing: -0.5em;
+  > * {letter-spacing: normal;display: inline-block;}
 }
 
 .centerXY {
-    position: absolute;
-    left:50%;
-    top:50%;
-    transform: translate(-50%,-50%);
+  position: absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%);
 }
 .cartouches > li {
-    display:inline-block;
+  display:inline-block;
+  overflow: hidden;
+  padding:5px;
+  cursor: pointer!important;
+  .actions {
+    position: absolute;
+    right:0;
+    top:0;
+    width:100%;
+    text-align: right;
+    padding:1rem;
+    z-index: 9999;
+    a,button{
+      color:#007bff !important;
+
+      &:hover{
+        color: #003d7b !important;
+      }
+    }
+  }
+  > span {
     overflow: hidden;
-    padding:5px;
+    position: relative;
+    display: block;
+    background: #666;
     cursor: pointer!important;
-    .actions {
-        position: absolute;
-        right:0;
-        top:0;
+
+
+    > .boxing {
+      position: absolute;
+      left: 0;
+      top:0;
+      width:100%;
+      height:100%;
+      display: flex;
+      justify-content: center;
+      > img {
+        object-fit: cover;
+        object-position: 50% 50%;
         width:100%;
-        text-align: right;
-        padding:1rem;
-        z-index: 9999;
-        a,button{
-            color:#007bff !important;
 
-            &:hover{
-                color: #003d7b !important;
-            }
-        }
+      }
     }
-    > span {
-        overflow: hidden;
-        position: relative;
+    &::after {
+      content:'';
+      padding-top: 75%;
+      position: relative;
+      display: block;
+    }
+    > .boxing > .iconFile{
+      text-align: center;
+      color:#fff;
+      font-size: 1rem;
+      &::before{
+        font-size: 4rem;
+        color:red;
         display: block;
-        background: #666;
-        cursor: pointer!important;
+      }
 
-
-        > .boxing {
-            position: absolute;
-            left: 0;
-            top:0;
-            width:100%;
-            height:100%;
-            display: flex;
-            justify-content: center;
-            > img {
-                object-fit: cover;
-                object-position: 50% 50%;
-                width:100%;
-
-            }
-        }
-        &::after {
-            content:'';
-            padding-top: 75%;
-            position: relative;
-            display: block;
-        }
-        > .boxing > .iconFile{
-            text-align: center;
-            color:#fff;
-            font-size: 1rem;
-            &::before{
-                font-size: 4rem;
-                color:red;
-                display: block;
-            }
-
-        }
-        > .boxing > i.fa-check {
-            opacity: 0;
-            font-size: 60px;
-            color:green;
-            transition: all 500ms;
-            z-index: 3;
-            cursor: pointer!important;
-        }
-        &::before{
-            content:'';
-            display: block;
-            position: absolute;
-            left:0;
-            top:0;
-            width:100%;
-            height:100%;
-            background:transparent;
-            opacity: 0;
-            transition:all 500ms;
-            z-index: 2;
-        }
-        .date {
-            position: absolute;
-            bottom:0;
-            padding:10px;
-            color:#fff;
-            z-index: 99;
-            opacity: 0;
-            transition:all 500ms;
-        }
-        button {
-            color:#e74c3c;
-            font-size: 16px;
-        }
     }
+    > .boxing > i.fa-check {
+      opacity: 0;
+      font-size: 60px;
+      color:green;
+      transition: all 500ms;
+      z-index: 3;
+      cursor: pointer!important;
+    }
+    &::before{
+      content:'';
+      display: block;
+      position: absolute;
+      left:0;
+      top:0;
+      width:100%;
+      height:100%;
+      background:transparent;
+      opacity: 0;
+      transition:all 500ms;
+      z-index: 2;
+    }
+    .date {
+      position: absolute;
+      bottom:0;
+      padding:10px;
+      color:#fff;
+      z-index: 99;
+      opacity: 0;
+      transition:all 500ms;
+    }
+    button {
+      color:#e74c3c;
+      font-size: 16px;
+    }
+  }
+  .fancy {
+    position: relative;
+    padding:1rem;
+    font-size: 1.4rem;
+    opacity: 0;
+    transition: opacity 500ms;
+    z-index: 999;
+    /*&.fancy_box{
+        position: absolute;
+        left:0;
+        top:0;
+        padding:0;
+        width:100%;
+        height:100%;
+    }
+    */
+
+
+  }
+
+  &:not(.active):hover > span::before {opacity: 1;background: rgba(255,255,255,0.3);}
+  &:hover > span .date {opacity: 1;}
+  form {
+    z-index: 999;
+    display: block;
+    transition:all 500ms;
+    opacity: 0;
+  }
+  &:hover {
+    form { opacity: 1;}
     .fancy {
-        position: relative;
-        padding:1rem;
-        font-size: 1.4rem;
-        opacity: 0;
-        transition: opacity 500ms;
-        z-index: 999;
-        /*&.fancy_box{
-            position: absolute;
-            left:0;
-            top:0;
-            padding:0;
-            width:100%;
-            height:100%;
-        }
-        */
-
-
+      opacity: 1;
     }
-
-    &:not(.active):hover > span::before {opacity: 1;background: rgba(255,255,255,0.3);}
-    &:hover > span .date {opacity: 1;}
-    form {
-        z-index: 999;
-        display: block;
-        transition:all 500ms;
-        opacity: 0;
-    }
-    &:hover {
-        form { opacity: 1;}
-        .fancy {
-            opacity: 1;
-        }
-    }
-    &.active {
-        > span  i.fa-check {opacity: 1!important;}
-        > span::before {opacity: 1; background:rgba(0,0,0,0.5);}
-    }
+  }
+  &.active {
+    > span  i.fa-check {opacity: 1!important;}
+    > span::before {opacity: 1; background:rgba(0,0,0,0.5);}
+  }
 
 }
 
 
 .trans500 {
-    transition:all 500ms;
+  transition:all 500ms;
 }
 .none {
-    display: none;
+  display: none;
 }
 
 #selection_elements table tbody tr {
-    cursor: pointer;
-    &:hover,&.active{border:2px solid #0d71bb;}
+  cursor: pointer;
+  &:hover,&.active{border:2px solid #0d71bb;}
 }
 
 .block {
-    display: block;}
+  display: block;}
 textarea.form-control {height: auto;}
 
 .form-control{
-    [type="checkbox"]{
-        margin-right: 1rem;
+  [type="checkbox"]{
+    margin-right: 1rem;
 
-    }
+  }
 }
 button.form-control[type="submit"] {
-    background-color:#82ccdd;
-    text-transform: uppercase;
-    color:#fff;
+  background-color:#82ccdd;
+  text-transform: uppercase;
+  color:#fff;
 }
 .select2-container{
-    display: block!important;
-    width:100%!important;
+  display: block!important;
+  width:100%!important;
 }
 
 .form-group{
-    .repeated{
-        > div:not(:last-child){
-            margin-bottom: 20px;
-        }
+  .repeated{
+    > div:not(:last-child){
+      margin-bottom: 20px;
     }
+  }
 }
 #form_choices.form-control{
-    input{
-        margin-right: 1rem;
-    }
+  input{
+    margin-right: 1rem;
+  }
 }

@@ -12,7 +12,6 @@
 
 
 {% block content %}
-
     {% if elemLisiting and not app.request.XmlHttpRequest %}
         {% include('@ScyLabsNeptune/admin/entity/elem_content_listing.html.twig') %}
     {% else %}

@@ -1,4 +1,6 @@
 {% import '@ScyLabsNeptune/admin/entity/macros.html.twig' as recursiveMacro %}
+
+
 <!-- Start Page Content -->
 <div class="row">
     {% if app.request.XmlHttpRequest %}
@@ -8,29 +10,43 @@
             </div>
         </div>
     {% endif %}
-    <div class="col-lg-{{  (app.request.attributes.get('_route') == 'neptune_entity' and not app.request.XmlHttpRequest ) ? '10' : '12'}}">
+    <div class="col-lg-{{  (app.request.attributes.get('_route') == 'neptune_entity' or app.request.attributes.get('_route') == "codex_category" and not app.request.XmlHttpRequest ) ? '10' : '12'}}">
         <div class="tabs">
             <ul class="onglets">
                 <li><a href="#tabs-1">Gestion</a></li>
-                <li><a href="#tabs-2">Prios</a></li>
+                {% if object.prio is defined %}
+                    <li><a href="#tabs-2">Prios</a></li>
+                {% endif %}
             </ul>
             <div id="tabs-1">
                 <div class="card">
                     <div class="card-body">
                         <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
                             <thead>
-                            <th>Actif</th>
-                            {% if app.request.attributes.get('type') != 'partner' %}
+
+                            {% set object = (objects | length) ?  objects[0] : [] %}
+                            {% if object.active is defined %}
+                                <th>Actif</th>
+                            {% endif %}
+                            {% if object.type is defined %}
                                 <th>Type</th>
                             {% endif %}
-                            <th>Name</th>
+                            {% if object.name is defined %}
+                                <th>Name</th>
+                            {% endif %}
+                            {% if object.title is defined %}
+                                <th>Title</th>
+                            {% endif %}
                             {% if object.url is defined and not (object.url | is_object) and object.url is not null %}
                                 <th>Url</th>
                             {% endif %}
-                            {% if app.request.attributes.get('type') != 'partner' and app.request.attributes.get('type') != 'element' %}
+                            {% if object.parent is defined  %}
                                 <th>Parent</th>
                             {% endif %}
-                            <th>Prio</th>
+                            {% if object.prio is defined %}
+                                <th>Prio</th>
+                            {% endif %}
+
                             <th>Actions</th>
                             </thead>
                             <tbody>
@@ -40,19 +56,26 @@
                                         {{ recursiveMacro.recursiveTabPage(object,loop.first) }}
                                     {% else %}
                                         <tr>
-                                            <td>
-                                                <a href="{{ path('neptune_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax active">
-                                                    {% if object.active %}
-                                                        <i class="fa fa-check text-success" title="Désactiver"></i>
-                                                    {% else %}
-                                                        <i class="fa fa-times text-danger" title="Activer"></i>
-                                                    {% endif %}
-                                                </a>
-                                            </td>
+                                            {% if object.active is defined %}
+                                                <td>
+                                                    <a href="{{ path('neptune_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax active">
+                                                        {% if object.active %}
+                                                            <i class="fa fa-check text-success" title="Désactiver"></i>
+                                                        {% else %}
+                                                            <i class="fa fa-times text-danger" title="Activer"></i>
+                                                        {% endif %}
+                                                    </a>
+                                                </td>
+                                            {% endif %}
                                             {% if object.type is defined %}
                                                 <td>{{ object.type.name }}</td>
                                             {% endif %}
-                                            <td>{{ object.name }}</td>
+                                            {% if object.name is defined %}
+                                                <td>{{ object.name }}</td>
+                                            {% endif %}
+                                            {% if object.title is defined %}
+                                                <td>{{ object.title }}</td>
+                                            {% endif %}
                                             {% if object.parent is defined %}
                                                 <td>{{ object.parent.name }}</td>
                                             {% endif %}
@@ -60,12 +83,20 @@
                                             {% if object.url is defined and not (object.url | is_object) and object.url is not null %}
                                                 <td><a href="{{ object.url }}">{{ object.url }}</a></td>
                                             {% endif %}
-                                            <td>{{ object.prio }}</td>
+                                            {% if object.prio is defined %}
+                                                <td>{{ object.prio }}</td>
+                                            {% endif %}
                                             <td>
                                                 <ul class="actions">
-                                                    <li><a href="{{ path('neptune_entity_clone',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax clone" title="Dupliquer"><i class="fal fa-clone"></i></a></li>
-                                                    <li><a href="{{ path('neptune_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax" title="Gestion des fichiers"><i class="fal fa-file-alt"></i></a></li>
-                                                    <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax edit" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
+                                                    {% if object.__clone is defined %}
+                                                        <li><a href="{{ path('neptune_entity_clone',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax clone" title="Dupliquer"><i class="fal fa-clone"></i></a></li>
+                                                    {% endif %}
+                                                    {% if object.photos is defined %}
+                                                        <li><a href="{{ path('neptune_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax" title="Gestion des fichiers"><i class="fal fa-file-alt"></i></a></li>
+                                                    {% endif %}
+                                                    {% if object.details is defined %}
+                                                        <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax edit" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
+                                                    {% endif %}
                                                     <li><a href="{{ path('neptune_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax edit" title="Modifier"><i class="fal fa-pencil"></i></a></li>
                                                     {% if object.zones is defined %}
                                                         <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':app.request.attributes.get('type'),'parentId':object.id}) }}" title="Contenu"><i class="fal fa-align-left"></i></a></li>
@@ -88,45 +119,48 @@
                     </div>
                 </div>
             </div>
-            <div id="tabs-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Nestedable</h4>
-                        <div class="card-content">
-                            <div class="">
-                                <div class="dd nestable{{ (app.request.attributes.get('type') == 'page') ? '' : ' onelevel' }}" data-action="{{ path('neptune_entity_prio',{'type':app.request.attributes.get('type')}) }}">
-                                    <ol class="dd-list">
-                                        {% if objects | length %}
-                                            {% for object in objects %}
-                                                {% if app.request.attributes.get('type') == 'page' %}
-                                                    {{ recursiveMacro.recursivePage(object,loop.first) }}
-                                                {% else %}
-                                                    <li class="dd-item" data-id="{{ object.id }}">
-                                                        <div class="dd-handle">
-                                                            <a href="{{ path('neptune_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax active">
-                                                                {% if object.active %}
-                                                                    <i class="fa fa-check text-success" title="Désactiver"></i>
-                                                                {% else %}
-                                                                    <i class="fa fa-times text-danger" title="Activer"></i>
+            {% if object.prio is defined %}
+                <div id="tabs-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Nestedable</h4>
+                            <div class="card-content">
+                                <div class="">
+                                    <div class="dd nestable{{ (app.request.attributes.get('type') == 'page') ? '' : ' onelevel' }}" data-action="{{ path('neptune_entity_prio',{'type':app.request.attributes.get('type')}) }}">
+                                        <ol class="dd-list">
+                                            {% if objects | length %}
+                                                {% for object in objects %}
+                                                    {% if app.request.attributes.get('type') == 'page' %}
+                                                        {{ recursiveMacro.recursivePage(object,loop.first) }}
+                                                    {% else %}
+                                                        <li class="dd-item" data-id="{{ object.id }}">
+                                                            <div class="dd-handle">
+                                                                {% if object.active is defined %}
+                                                                    <a href="{{ path('neptune_entity_active',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax active">
+                                                                        {% if object.active %}
+                                                                            <i class="fa fa-check text-success" title="Désactiver"></i>
+                                                                        {% else %}
+                                                                            <i class="fa fa-times text-danger" title="Activer"></i>
+                                                                        {% endif %}
+                                                                    </a>
                                                                 {% endif %}
-                                                            </a>
-                                                            {{ object.name }}
-                                                        </div>
-                                                    </li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-                                    </ol>
+                                                                {{ object.name }}
+                                                            </div>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </ol>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
+            {% endif %}
         </div>
     </div>
-    {% if app.request.attributes.get('_route') == 'neptune_entity' and not app.request.XmlHttpRequest %}
+    {% if app.request.attributes.get('_route') == 'neptune_entity' or app.request.attributes.get('_route') == "codex_category" and not app.request.XmlHttpRequest %}
         <div class="col-lg-2 m-t-25">
             <div class="card">
                 <a class="btn btn-pink m-b-10 m-l-5 show_form ajax add" href="{{ path('neptune_entity_add',{'type':app.request.attributes.get('type')}) }}" >Créer une {{ app.request.attributes.get('type') }}</a>

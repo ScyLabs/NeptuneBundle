@@ -2,6 +2,7 @@
 
 namespace ScyLabs\NeptuneBundle\AbstractEntity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Validator\Constraints as Assert;

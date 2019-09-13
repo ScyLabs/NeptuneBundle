@@ -62,7 +62,7 @@ class PageController extends AbstractController
                 break;
             }
         }
-        $tabJs = $this->getZonesDeps($page);
+    
         $params = array('pages'=>$pages,'page'=>$page,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale(),'contactPages'=>$contactPages,'jsZones'=>$this->getZonesDeps($page));
         if($options !== null){
             $params = array_merge($params,$options);

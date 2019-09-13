@@ -55,6 +55,11 @@ class Video extends AbstractFileLink
      */
     protected $details;
 
+    public function __construct() {
+        parent::__construct();
+        $this->details = new ArrayCollection();
+    }
+
     public function addDetail(VideoDetail $detail): self
     {
         if (!$this->details->contains($detail)) {

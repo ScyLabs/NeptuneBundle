@@ -20,12 +20,25 @@
                     {% if types |length %}
                         {% for type in types %}
                             <tr>
-                                <td>{{ type.name }}</td>
+                                <td>{{ type.name }}{% if type.codexId is defined and type.codexId is not null %}<i class="fas fa-paw" style="margin-left: 10px;"></i>{% endif %}</td>
                                 <td>{{ type.title }}</td>
                                 <td>
                                     <ul class="actions">
 
-                                            <li><a href="{{ path('neptune_type_edit',{'id':type.id,'type':app.request.attributes.get('type')}) }}" title="Modifier"><i class="fal fa-pencil"></i></a></li>
+                                        {% if type.codexId is defined and type.codexId is not null%}
+                                            <i class="fas fa-paw" style="margin-left: 10px;"></i>
+                                            <li><a href="" class="ajax" title="Mettre à jour depuis le codex"><i class="fas fa-download"></i></a> </li>
+                                        {% endif %}
+                                        {% if type.codexId is defined %}
+
+                                            <li>
+                                                <a href="{{ path('codex_export',{'id':type.id}) }}" class="ajax" title="Uploader la zone"><i class="fas fa-upload"></i></a>
+                                            </li>
+                                        {% endif %}
+                                        <li>
+                                            <a href="{{ path('codex_zone_show_template',{'id':type.id}) }}" class="ajax iframe"><i class="fas fa-search"></i></a>
+                                        </li>
+                                        <li><a href="{{ path('neptune_type_edit',{'id':type.id,'type':app.request.attributes.get('type')}) }}" title="Modifier" class="ajax edit"><i class="fal fa-pencil"></i></a></li>
                                         {% if type.removable %}
                                             <li class="">
                                                 <a class="ajax delete" href="{{ path('neptune_type_remove',{'id':type.id,'type':app.request.attributes.get('type') }) }}" title="Supprimer">
@@ -33,6 +46,7 @@
                                                 </a>
                                             </li>
                                         {% endif %}
+
                                     </ul>
                                 </td>
                             </tr>
@@ -43,6 +57,5 @@
             </div>
         </div>
     </div>
-
 </div>
 <!-- End page Content -->

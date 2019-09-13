@@ -1,0 +1,44 @@
+{% trans_default_domain 'app' %}
+
+{% if cdn is null %}
+    Le CDN n'est pas configuré , l'affichage ne peut se faire.<br/>
+    Il faut le configurer dans services.yaml<br/>
+    scy_labs_neptune.cdn
+{% else %}
+    <!doctype html>
+    <html lang="{{ locale }}">
+    <head>
+        <script type="text/javascript">
+            var webpActive = false;
+            var root = "{{ asset('') }}";
+            var cdn = "{{ cdn }}";
+            var lang_get = "{{ locale }}";
+            var adminRoot = "{{ path('neptune_home') }}";
+
+            var dependances = [
+                cdn + "/js/jquery/dist/jquery.min.js",
+                cdn + '/js/edc.js',
+                cdn + "/js/swiper/dist/css/swiper.min.css",
+                cdn + "/js/swiper/dist/js/swiper.min.js",
+                cdn + "/css/fontawesome-pro/css/all.min.css",
+                "{{ asset('js/zone/' ~ zone.type.name ~ '.js') }}"
+            ];
+
+            dependances.push("")
+
+        </script>
+        <script src="{{ asset('bundles/scylabsneptune/admin/codex/lazyLoad.js') }}"></script>
+        <link href="{{ asset("bundles/scylabsneptune/admin/codex/css/style.less") }}" rel="stylesheet/less"/>
+
+        <link href="{{ asset('css/zone/' ~ zone.type.name ~ '.less') }}" rel="stylesheet/less" />
+        <script src="{{ asset('js/lib/less.min.js') }}"></script>
+        <script>less = { useFileCache: false }</script>
+        <script src=></script>
+
+    </head>
+    <body class="">
+    {% include  'zone/' ~ zone.type.name ~ '.html.twig' %}
+    <script src="{{  cdn ~ "/js/load.js" }}"></script>
+    </body>
+    </html>
+{% endif %}

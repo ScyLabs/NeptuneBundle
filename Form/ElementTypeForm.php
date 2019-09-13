@@ -31,10 +31,9 @@ class ElementTypeForm extends AbstractType
                 'choice_label'  => 'name',
                 'required'      => false,
                 'query_builder' =>  function(PageRepository $r){
-                    return $r->createQueryBuilder('t')
-                        ->where('t.remove = 0')
-                        ->andWhere('t.active = 1')
-                        ;
+                    return $r->createQueryBuilder('p')
+                        ->where('p.remove = 0')
+                        ->andWhere('p.active = 1');
                 },
             ])
             ->add('submit',SubmitType::class)

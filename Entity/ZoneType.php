@@ -24,10 +24,34 @@ class ZoneType extends AbstractElemType
      */
     protected $zones;
 
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $codexHash;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     */
+    private $codexId;
+
+    public function getCodexHash() : ?string {
+        return $this->codexHash;
+    }
+    public function setCodexHash(?string $codexHash) : self {
+        $this->codexHash = $codexHash;
+        return $this;
+    }
+
+    public function getCodexId() : ?int{
+        return $this->codexId;
+    }
+    public function setCodexId(?int $codexId){
+        $this->codexId = $codexId;
+        return $this;
+    }
 
     public function __construct()
     {
-        $this->zone = new ArrayCollection();
         $this->zones = new ArrayCollection();
         parent::__construct();
     }

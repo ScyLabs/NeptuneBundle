@@ -1,0 +1,29 @@
+{% extends app.request.XmlHttpRequest  ? '@ScyLabsNeptune/admin/ajax.html.twig' : '@ScyLabsNeptune/admin/layout.html.twig'%}
+
+
+{% block css %}
+    <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/select2/select2.min.css') }}" rel="stylesheet">
+{% endblock css %}
+
+{% block js %}
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/select2/select2.full.min.js') }}"></script>
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/select2/select2-init.js') }}"></script>
+    <script src="{{ asset('bundles/scylabsneptune/admin/js/codex/codex.js') }}"></script>
+{% endblock js %}
+
+{% block content %}
+    <div>
+        <div class="listing_zones_codex row">
+            {% for i in 0..20 %}
+                {% for zone in zones %}
+                    <div class="zone col-lg-4" data-id="{{ zone.id }}" data-name="{{ zone.name }}" data-downloadlink="{{ path('codex_import',{'id':zone.id}) }}">
+                        <div class="box_photo">
+                            <i class="number">{{ zone.id }}</i>
+                            <img src="{{ zone.thumbnail }}"/>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,38 @@
+@import "structure.less";
+
+html { font-size: 62.5%; color:#787878;/* font-size:10px;*/}
+body { font:1.4rem/1.42 'Raleway', serif; overflow-x: hidden;transition: all 150ms;-webkit-transition: all 150ms;}
+h1,h2,h3,h4,h5,h6{
+ font-family: "Roboto",Arial,Helvetica,sans-serif;
+}
+.align_content_right {
+	align-content: right;}
+
+.text_right {text-align: right;}
+
+.top0 { top:0;}
+.left0 { left:0;}
+.right0{right:0}
+.photo {
+	justify-content: center;
+	background: #ededed;
+	> img {
+		object-fit: cover;
+		object-position: 50% 50%;
+		opacity: 0;
+		transition: all 500ms;
+	}
+	&.loaded{
+		opacity: 1;
+	}
+}
+p{
+	line-height: 2;
+}
+a{
+	color:#000;
+	transition: color 500ms;
+	&:hover{
+		color:#e13536;
+	}
+}

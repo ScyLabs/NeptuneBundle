@@ -17,7 +17,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
 
         $rootNode = $treeBuilder->root('neptune')
-
             ->children()
                 ->variableNode('compress')->defaultValue(true)->end()
             ->end()
@@ -33,7 +32,15 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->children()
                 ->variableNode('override')->defaultValue(array())->end()
-            ->end();
+            ->end()
+            ->children()
+                ->variableNode('codexUrl')->defaultValue(null)->end()
+            ->end()
+            ->children()
+                ->variableNode('cdn')->defaultValue(null)->end()
+            ->end()
+
+        ;
 
         return $treeBuilder;
     }

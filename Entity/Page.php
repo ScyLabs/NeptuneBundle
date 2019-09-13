@@ -92,8 +92,10 @@ class Page extends AbstractElem
 
     public function getElements(array $opts = []){
         if($this->elements === null){
+            $criteria = Criteria::create();
+            $criteria->where(Criteria::expr()->eq('remove',false));
             $this->elements = new ArrayCollection();
-            foreach ($this->elementTypes as $elementType){
+            foreach ($this->elementTypes->matching($criteria) as $elementType){
                 foreach ($elementType->getElements() as $element){
                     if( !$this->elements->contains($element)){
                         $this->elements->add($element);
@@ -179,8 +181,7 @@ class Page extends AbstractElem
         $criteria->orderBy($opts['order']);
 
         $criteria->where(Criteria::expr()->eq('remove',$opts['remove']));
-        if(null !== $opts['active'])
-            $criteria->andWhere(Criteria::expr()->eq('active',$opts['active']));
+
 
 
         return $this->elementTypes->matching($criteria);

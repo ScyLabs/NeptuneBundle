@@ -2,6 +2,7 @@
 
 namespace ScyLabs\NeptuneBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractFileLink;
@@ -51,6 +52,11 @@ class Document extends AbstractFileLink
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\DocumentDetail", mappedBy="document", orphanRemoval=true,cascade={"persist","remove"})
      */
     protected $details;
+
+    public function __construct() {
+        parent::__construct();
+        $this->details = new ArrayCollection();
+    }
 
     public function addDetail(DocumentDetail $detail): self
     {
