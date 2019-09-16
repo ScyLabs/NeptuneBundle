@@ -179,9 +179,6 @@ class Page extends AbstractElem
         $criteria->orderBy($opts['order']);
 
         $criteria->where(Criteria::expr()->eq('remove',$opts['remove']));
-        if(null !== $opts['active'])
-            $criteria->andWhere(Criteria::expr()->eq('active',$opts['active']));
-
 
         return $this->elementTypes->matching($criteria);
     }
