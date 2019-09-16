@@ -1,0 +1,24 @@
+{
+  "name": "codex",
+  "homepage": "https://github.com/ScyLabs/NeptuneBundle",
+  "authors": [
+    "Alexandre Sciacca <alexandre.sciacca@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/js/lib/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "swiper": "Swiper#^4.5.0",
+    "jquery-ui": "^1.12.1",
+    "jquery": "^3.4.1",
+    "script-loader": "santanas2b/script-loader"
+  }
+}
