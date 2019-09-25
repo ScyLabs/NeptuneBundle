@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -237,7 +238,8 @@ class CodexController extends BaseController
 
 
     public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome,$name){
-        return $this->file($this->getParameter('kernel.project_dir').'/public/img/demo.jpg','',ResponseHeaderBag::DISPOSITION_INLINE);
+        $response = new File($this->getParameter('kernel.project_dir').'/public/img/demo.jpg');
+        return $this->file($response,'',ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
     public function importZone(Request $request,CodexImporterInterface $codexImporter,$id){
