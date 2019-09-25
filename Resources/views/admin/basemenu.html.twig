@@ -57,7 +57,14 @@
         </ul>
     </li>
 {% endif %}
-<li><a href="{{ path('codex_zones') }}">Import de zone</a></li>
-<li><a href="{{ path('codex_category') }}">Catégories du codex</a></li>
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+    {% if app.user.apiToken is not null %}
+        <li><a href="{{ path('codex_zones') }}">Import de zone</a></li>
+        <li><a href="{{ path('codex_category') }}">Catégories du codex</a></li>
+    {% endif %}
+    {% if app.user.apiToken is null%}
+        <li><a href="{{ path('codex_zones') }}">Lier le site au codex</a></li>
+    {% endif %}
+{% endif %}
 {{ include('@ScyLabsNeptune/admin/menu.html.twig') }}
 

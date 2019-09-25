@@ -20,16 +20,16 @@
                     {% if types |length %}
                         {% for type in types %}
                             <tr>
-                                <td>{{ type.name }}{% if type.codexId is defined and type.codexId is not null %}<i class="fas fa-paw" style="margin-left: 10px;"></i>{% endif %}</td>
+                                <td>{{ type.name }}{% if type.codexId is defined and type.codexId is not null and app.user.apiToken is not null %}<i class="fas fa-paw" style="margin-left: 10px;"></i>{% endif %}</td>
                                 <td>{{ type.title }}</td>
                                 <td>
                                     <ul class="actions">
 
-                                        {% if type.codexId is defined and type.codexId is not null%}
+                                        {% if type.codexId is defined and type.codexId is not null and app.user.apiToken is not null%}
                                             <i class="fas fa-paw" style="margin-left: 10px;"></i>
-                                            <li><a href="" class="ajax" title="Mettre à jour depuis le codex"><i class="fas fa-download"></i></a> </li>
+                                            <li><a href="{{ path('codex_maj',{ "id":type.codexId }) }}" class="ajax" title="Mettre à jour depuis le codex"><i class="fas fa-download"></i></a> </li>
                                         {% endif %}
-                                        {% if type.codexId is defined %}
+                                        {% if type.codexId is defined and app.user.apiToken is not null %}
 
                                             <li>
                                                 <a href="{{ path('codex_export',{'id':type.id}) }}" class="ajax" title="Uploader la zone"><i class="fas fa-upload"></i></a>

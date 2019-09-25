@@ -22,68 +22,95 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Translation\Loader\JsonFileLoader;
 
 use Symfony\Component\Routing\Annotation\Route;
 class CodexController extends BaseController
 {
-    const codexUrl = "http://codex.developpement";
+
+
+
+    private $codexUrl;
+    private $kernel;
+    public function __construct(KernelInterface $kernel) {
+        $this->kernel = $kernel;
+    }
 
     public function getZones(){
-        $url = self::codexUrl;
-        $data = array(
 
-        );
-        $params = "?";
-        foreach ($data as  $key => $val){
-            $params .= $key.'='.$val.'&';
+        if(null === $this->codexUrl = $this->getCodexUrl()){
+            return $this->redirectToRoute('neptune_home');
         }
-        $params = trim($params,'&');
+        if(($token = $this->getApiToken()) instanceof Response)
+            return $token;
 
-        $curl = curl_init();
 
-        $opts = array(
-            CURLOPT_RETURNTRANSFER 	=>	true,
-            CURLOPT_HEADER			=> false,
-            CURLOPT_URL             => $url
-        );
-        curl_setopt_array($curl,$opts);
-        $result = curl_exec($curl);
-        curl_close($curl);
+        $result = $this->curl([
+            'url'   => $this->codexUrl.'/zone',
+            'token' => $token
+        ],$code);
+
+        $categories = json_decode($this->curl([
+            'url'   =>  $this->codexUrl.'/category',
+            'token' =>  $token
+        ]));
+        if(null === $categories){
+            $categories = [];
+        }
 
         $zones = json_decode($result,true);
 
+        if($code !== Response::HTTP_OK){
+            $zones = [];
+        }
 
         return $this->render('@ScyLabsNeptune/admin/codex/list.html.twig',[
-            'zones' => $zones
+            'zones'         =>  $zones,
+            'categories'    =>  $categories,
+            'codexUrl'      =>  $this->getParameter('scy_labs_neptune.codex.url')
         ]);
     }
 
     public function exportZone(Request $request,CodexExporterInterface $codexExporter,ZoneType $zoneType){
-        $url = self::codexUrl.'/';
+        if(($token = $this->getApiToken()) instanceof Response)
+            return $token;
+        $url = $this->codexUrl.'/zone';
         $curlOpts = [
-            'type'  => 'POST'
+            'type'  =>  'POST',
+            'token' =>  $token
         ];
 
 
         $categories = $this->curl([
-            'url'   => self::codexUrl.'/category'
+            'url'   =>  $this->codexUrl.'/category',
+            'token' =>  $token
         ],$code);
         $codexZone = null;
         if(null !== $zoneType->getCodexId()){
-            $url .= $zoneType->getCodexId();
+            $url .= '/'.$zoneType->getCodexId();
             $curlOpts['type']  = 'PUT';
             $zoneOpts = [
-              'id'  =>  $zoneType->getCodexId()
+                'id'    =>  $zoneType->getCodexId(),
             ];
             $codexZone = json_decode($this->curl([
-                'url'       =>  self::codexUrl,
+                'url'       =>  $this->codexUrl.'/zone',
+                'token'     =>  $token,
                 'content'   =>  json_encode($zoneOpts)
-            ]));
+            ],$code));
 
-            if(null !== $codexZone ){
+
+            if($code !== 200){
+                return $this->json([
+                    'success'   =>  false,
+                    'message'   =>  'An error has occured'
+                ],Response::HTTP_BAD_REQUEST);
+            }
+            if(null !== $codexZone){
+
                 if(sizeof($codexZone ) === 0){
                     $codexZone = null;
                     $curlOpts['type'] = 'POST';
@@ -91,6 +118,15 @@ class CodexController extends BaseController
                     $this->getDoctrine()->getManager()->flush();
                 }else{
                     $codexZone =  $codexZone[0];
+
+                    if($codexZone->version > $zoneType->getVersion()){
+
+                        return $this->json([
+                            'success'   =>  false,
+                            'message'   =>  'La zone à une version plus récente que celle du site  sur le codex(mettre à jour avant de renvoyer)'
+                        ],Response::HTTP_BAD_REQUEST);
+                    }
+
                 }
             }
         }
@@ -160,16 +196,19 @@ class CodexController extends BaseController
         $curlOpts['content'] = json_encode($zoneContent);
 
         $result = $this->curl($curlOpts,$code);
+
         if(!in_array($code,[201,200])){
             return $this->json($result,Response::HTTP_BAD_REQUEST);
         }
 
         $result = json_decode($result);
+
         if(true !== $result->success){
             return $this->json($result,Response::HTTP_BAD_REQUEST);
         }
         $em = $this->getDoctrine()->getManager();
-        $zoneType->setCodexId($result->object->id)->setCodexHash($result->object->hash);
+        $zoneType->setCodexId($result->object->id)->setCodexHash($result->object->hash)->setVersion($zoneType->getVersion() + 1);
+
         $em->flush();
 
         $message = "Ta zone à bien été ";
@@ -182,12 +221,13 @@ class CodexController extends BaseController
     }
 
     public function showTemplate(Request $request,NeptuneVarsCreatorInterface $neptuneVariablesCreator,$id){
+
         $repo = $this->getDoctrine()->getRepository(ZoneType::class);
         if(null === $zoneType = $repo->find($id)){
             throw new NotFoundHttpException();
         }
         $params = array_merge(
-            ['cdn'   => $this->getParameter('scy_labs_neptune.cdn')],
+            ['cdn'   => $this->getParameter('scy_labs_neptune.codex.cdn')],
             $neptuneVariablesCreator->initVars($zoneType)
         );
 
@@ -201,10 +241,19 @@ class CodexController extends BaseController
     }
 
     public function importZone(Request $request,CodexImporterInterface $codexImporter,$id){
-        $url = self::codexUrl.'/'.$id;
+        if(null === $this->codexUrl = $this->getCodexUrl()){
+            return $this->redirectToRoute('neptune_home');
+        }
+
+        if(($token = $this->getApiToken()) instanceof Response)
+            return $token;
+
+        $url = $this->codexUrl.'/zone/'.$id;
         $result = $this->curl([
-            'url'   => $url
-        ]);
+            'url'   =>  $url,
+            'token' =>  $token
+        ],$code);
+
         if(false === $result){
             return $this->json([
                 'success'   =>  false,
@@ -218,14 +267,40 @@ class CodexController extends BaseController
                 'message'   =>  'Error in codex-response decode'
             ],Response::HTTP_BAD_REQUEST);
         }
+        if($code !== Response::HTTP_OK){
+            return $this->json([
+                'success'    =>  false,
+                'message'   =>  ($code === Response::HTTP_NOT_FOUND) ? 'Zone not found' : 'An error has occured'
+            ]);
+        }
         $dataZone = $data['zone'];
         $dataFile = $data['file'];
 
+
+        if($request->attributes->get('_route') === 'codex_maj'){
+            if(null === $zone = $this->getDoctrine()->getRepository(ZoneType::class)->findOneByCodexId($dataZone['id'])){
+                return $this->json([
+                    'success'   => false,
+                    'message'   =>  'Pas de zone'
+                ],Response::HTTP_BAD_REQUEST);
+            }
+            if($zone->getVersion() >= $dataZone['version']){
+                return $this->json([
+                    'success'   =>  false,
+                    'message'   =>  'Ta zone est déjà à jour'
+                ],Response::HTTP_BAD_REQUEST);
+            }
+
+        }
+
         $bundleRoot = dirname(__DIR__);
 
+
         $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('codex_import',['id'=>$id]))
-            ->add('importType',ChoiceType::class,[
+            ->setAction($this->generateUrl($request->attributes->get('_route'),['id'=>$id]));
+        if($request->attributes->get('_route') !== 'codex_maj'){
+
+            $form->add('importType',ChoiceType::class,[
                 'multiple'  =>  false,
                 'expanded'  =>  true,
                 'required'  =>  true,
@@ -237,8 +312,9 @@ class CodexController extends BaseController
                 ]
             ]);
 
+        }
         $css = $this->curl([
-            'url'   => self::codexUrl.'/css/zone/'.$dataZone['slug'].'.less'
+            'url'   => $this->codexUrl.'/css/zone/'.$dataZone['slug'].'.less'
         ],$code);
         if($code !== 404){
             preg_match_all('/((#[a-fA-F0-9]{3,6})|rgba?\(.*\))([ ]*!important)?;/Ui',$css,$matches);
@@ -278,10 +354,10 @@ class CodexController extends BaseController
         if(!$form->isSubmitted() || ($form->isSubmitted() && !$form->isValid())){
             return $this->render('@ScyLabsNeptune/admin/codex/question.html.twig',[
                 'form'          =>  $form->createView(),
+                'iframe'        =>  $this->codexUrl.'/show/'.$id.'?token='.$token,
                 'questionTitle' =>  'Importer la zone : "'.$dataZone['title'].'" ('.$dataZone['slug'].')"',
             ]);
         }
-
 
         $data = $form->getData();
 
@@ -293,42 +369,83 @@ class CodexController extends BaseController
 
         $repo = $this->getDoctrine()->getRepository(ZoneType::class);
 
-        if(null !== $zone =  $repo->findOneByCodexId($dataZone['id'])){
-            /*return $this->json([
+
+
+        $zone =  $repo->findOneByCodexId($dataZone['id']);
+        if($request->attributes->get('_route') !== 'codex_maj' && ($form->has('importType') && $form->get('importType')->getData() === 0) && null !== $zone){
+            return $this->json([
                 'success'   =>  false,
                 'message'   =>  'This zone early installed'
-            ],Response::HTTP_NOT_ACCEPTABLE);*/
-        }
-        $slug = $dataZone['slug'];
-        $i = 0;
-        while (null !== $zone = $repo->findOneByName($dataZone['slug'])){
-            $i++;
-            $dataZone['slug'] = $slug.'-'.$i;
+            ],Response::HTTP_BAD_REQUEST);
         }
 
-        $zone = new ZoneType();
-        $zone
-            ->setName($dataZone['slug'])
-            ->setTitle($dataZone['title'])
-            ->setRemovable(true)
-            ->setRemove(false);
-        if($data['importType'] === 0){
-            $zone
-                ->setCodexId($dataZone['id'])
-                ->setCodexHash($dataZone['hash']);
+
+        $slug = $dataZone['slug'];
+
+        if(null === $zone){
+            $i = 0;
+            while (null !== $tmpZone = $repo->findOneByName($dataZone['slug'])){
+                $i++;
+                $dataZone['slug'] = $slug.'-'.$i;
+            }
         }
+
+
+        if(null === $zone){
+            $zone = new ZoneType();
+            $zone
+                ->setName($dataZone['slug'])
+                ->setTitle($dataZone['title'])
+                ->setRemovable(true)
+                ->setRemove(false);
+
+            if($data['importType'] === 0){
+                $zone
+                    ->setCodexId($dataZone['id'])
+                    ->setCodexHash($dataZone['hash']);
+            }
+        }
+
+
+        $zone->setVersion($dataZone['version']);
+
+
         $em = $this->getDoctrine()->getManager();
 
         $em->persist($zone);
         $codexImporter->import($dataFile,$zone,$colors);
         $em->flush();
+        $message = ($request->attributes->get('_route') === 'codex_maj') ? 'mise à jour' : 'importée';
         return $this->json([
             'success'   =>  true,
-            'message'   =>  'La zone à bien été importée'
+            'message'   =>  'La zone à bien été '.$message
         ]);
     }
+    public function deleteZone(Request $request,$id){
+        if(null === $this->codexUrl = $this->getCodexUrl()){
+            return $this->redirectToRoute('neptune_home');
+        }
+        if(($token = $this->getApiToken()) instanceof Response)
+            return $token;
+        $curlOpts = [
+            'url'   =>  $this->codexUrl.'/zone/'.$id,
+            'type'  =>  'DELETE',
+            'token' =>  $token
+        ];
+        $result = $this->curl($curlOpts);
 
+        return $this->json([
+            'success'   =>  true,
+            'message'   => 'La zone à bien été supprimée'
+        ]);
+    }
     public function addCategory(Request $request){
+        if(null === $this->codexUrl = $this->getCodexUrl()){
+            return $this->redirectToRoute('neptune_home');
+        }
+        if(($token = $this->getApiToken()) instanceof Response)
+            return $token;
+
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('codex_category_add'))
             ->add('name',TextType::class)->getForm();
@@ -342,11 +459,14 @@ class CodexController extends BaseController
         }
         $data = $form->getData();
         $curlOpts = [
-            'url'       =>  self::codexUrl.'/category',
+            'url'       =>  $this->codexUrl.'/category',
             'type'      =>  'POST',
-            'content'   =>  json_encode($data)
+            'content'   =>  json_encode($data),
+            'token'     =>  $token
         ];
+
         $result = $this->curl($curlOpts,$code);
+
         if($code !== 201){
             return $this->json([
                 'success'   =>  false,
@@ -360,8 +480,14 @@ class CodexController extends BaseController
 
     }
     public function editCategory(Request $request,$id){
+        if(null === $this->codexUrl = $this->getCodexUrl()){
+            return $this->redirectToRoute('neptune_home');
+        }
+        if(($token = $this->getApiToken()) instanceof Response)
+            return $token;
         $curlOpts = [
-            'url'   =>  self::codexUrl.'/category/'.$id
+            'url'   =>  $this->codexUrl.'/category/'.$id,
+            'token' =>  $token
         ];
         $result = $this->curl($curlOpts);
         if(null === $category = json_decode($result)){
@@ -396,9 +522,15 @@ class CodexController extends BaseController
 
     }
     public function deleteCategory(Request $request,$id){
+        if(null === $this->codexUrl = $this->getCodexUrl()){
+            return $this->redirectToRoute('neptune_home');
+        }
+        if(($token = $this->getApiToken()) instanceof Response)
+            return $token;
         $curlOpts = [
-            'url'   =>  self::codexUrl.'/category/'.$id,
-            'type'  =>  'DELETE'
+            'url'   =>  $this->codexUrl.'/category/'.$id,
+            'type'  =>  'DELETE',
+            'token' =>  $token
         ];
         $result = $this->curl($curlOpts);
         return $this->json([
@@ -408,15 +540,22 @@ class CodexController extends BaseController
     }
 
     public function categories(Request $request){
+        if(null === $this->codexUrl = $this->getCodexUrl()){
+            return $this->redirectToRoute('neptune_home');
+        }
+        if(($token = $this->getApiToken()) instanceof Response)
+            return $token;
 
         $curlOpts = [
-            'url' => self::codexUrl.'/category',
+            'url'   =>  $this->codexUrl.'/category',
+            'token' =>  $token
         ];
-        $result = $this->curl($curlOpts);
+        $result = $this->curl($curlOpts,$code);
 
-        if(null === $categories = json_decode($result)){
+        if((null === $categories = json_decode($result)) || $code !== Response::HTTP_OK){
             $categories = [];
         }
+
         $request->attributes->add([
            'type'   =>  'zonecategory'
         ]);
@@ -438,6 +577,65 @@ class CodexController extends BaseController
 
         return $this->render('@ScyLabsNeptune/admin/entity/listing.html.twig',$params);
     }
+
+    private function getApiToken(){
+        if(null === $this->codexUrl = $this->getCodexUrl()){
+            return $this->redirectToRoute('neptune_home');
+        }
+        $env = $this->kernel->getEnvironment();
+        $user = $this->getUser();
+
+        if(preg_match('/(localhost|127.0.0.1)/Ui',$_SERVER['HTTP_HOST'])){
+            return $this->redirectToRoute('neptune_home');
+        }
+        if(null === $user)
+            return $this->redirectToRoute('neptune_home');
+        if(null !== $user->getApiToken())
+            return $user->getApiToken();
+
+
+
+        $publicKey = $this->getParameter('scy_labs_neptune.codex.publicKey');
+        if(!file_exists($publicKey)){
+            if($env === 'dev')
+                throw new AccessDeniedHttpException('Public key not found');
+            return $this->redirectToRoute('neptune_home');
+        }
+
+        $tokenRequestContent = [
+            'username'  =>  $user->getUserName(),
+            'site'      =>  $_SERVER['HTTP_HOST'],
+            'name'      =>  $user->getName(),
+            'firstname' =>  $user->getFirstName(),
+        ];
+
+
+        $result = $this->curl([
+            'url'       =>  $this->codexUrl.'/create-apikey',
+            'content'   =>  json_encode($tokenRequestContent),
+            'type'      =>  'POST',
+            'token'     =>  base64_encode(file_get_contents($publicKey))
+        ],$code);
+
+        if(null === $result = json_decode($result)){
+            if($env === 'dev')
+                throw new BadRequestHttpException('An error has occured');
+            return $this->redirectToRoute('neptune_home');
+        }
+        if($code !== Response::HTTP_CREATED){
+            if($this->kernel->getEnvironment() === 'dev')
+                throw new BadRequestHttpException('Codex error : '.$result->message);
+            return $this->redirectToRoute('neptune_home');
+        }
+
+        $token = $result->token;
+        $user->setApiToken($token);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+        return $token;
+    }
+
     private function curl(array $opts,&$code = null){
         if(!array_key_exists('type',$opts)){
             $opts['type'] = 'GET';
@@ -445,10 +643,18 @@ class CodexController extends BaseController
         if(!array_key_exists('content',$opts)){
             $opts['content'] = '{}';
         }
+
         $headers = [
             'Accept: application/json',
             'Content-Type: application/json'
         ];
+        if(array_key_exists('token',$opts)){
+
+            $headers[] = "X-API-KEY: ".$opts['token'];
+
+            unset($opts['token']);
+        }
+
         $curlOpts = [
             CURLOPT_URL             =>  $opts['url'],
             CURLOPT_RETURNTRANSFER  =>  true,
@@ -463,5 +669,9 @@ class CodexController extends BaseController
         $code = curl_getinfo($curl,CURLINFO_HTTP_CODE);
         curl_close($curl);
         return $result;
+    }
+
+    private function getCodexUrl(){
+        return $this->getParameter('scy_labs_neptune.codex.url');
     }
 }

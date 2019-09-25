@@ -12,6 +12,7 @@
     {% endif %}
     <div class="col-lg-{{  (app.request.attributes.get('_route') == 'neptune_entity' or app.request.attributes.get('_route') == "codex_category" and not app.request.XmlHttpRequest ) ? '10' : '12'}}">
         <div class="tabs">
+
             {% set object = (objects | length) ?  objects[0] : [] %}
             <ul class="onglets">
                 <li><a href="#tabs-1">Gestion</a></li>

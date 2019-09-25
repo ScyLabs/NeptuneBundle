@@ -6,9 +6,17 @@ codex_import:
     path: /codex/import/{id}
     controller: ScyLabs\NeptuneBundle\Controller\CodexController::importZone
 
+codex_maj:
+    path: /codex/maj/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\CodexController::importZone
+
 codex_export:
     path: /codex/export/{id}
     controller: ScyLabs\NeptuneBundle\Controller\CodexController::exportZone
+
+codex_delete:
+    path: /codex/delete/{id}
+    controller: ScyLabs\NeptuneBundle\Controller\CodexController::deleteZone
 
 codex_category:
     path: /zonecategory
@@ -27,6 +35,8 @@ codex_category_delete:
 codex_category_add:
     path: /zonecategory/add
     controller: ScyLabs\NeptuneBundle\Controller\CodexController::addCategory
+
+
 
 codex_zone_show_template:
     path: /show/{id}

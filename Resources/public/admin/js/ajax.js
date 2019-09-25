@@ -96,7 +96,12 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
 
         if(action !== null){
             var success = function (result) {
-
+                if(typeof(result) === 'object' && result.message !== undefined){
+                    $.edc.fancy(
+                        '<div>'+result.message+'</div>'
+                    );
+                    return;
+                }
                 if(button.hasClass('clone')){
 
                     if(result.success == false){
@@ -133,6 +138,7 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
 
                                 let container =  current.$content;
                                 let forms = container.find('form');
+
                                 initialisations(container,instance,current,action);
 
                                 container.find('#valider_liaison').on('click',function (e) {
@@ -174,7 +180,6 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                                     }
 
                                 });
-
                                 if(forms.length && !button.hasClass('export')){
 
                                     forms.on('submit',function (e) {
@@ -207,9 +212,11 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                                                         url:action,
                                                         success:success
                                                     });
+                                                }else{
+                                                    instance.close();
+                                                    $.fancybox.open(result.message,'inline');
                                                 }
                                                 $.edc.flashAlert(result.message);
-
 
                                                 return;
                                             }
@@ -224,6 +231,16 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                                                     form.find("#" + input).after("<div class='error'>" + keyValue + "</div>");
                                                 }
                                             })
+                                        },function(result){
+
+                                            if(typeof(result.responseJSON) === 'undefined')
+                                                return;
+                                            var json = result.responseJSON;
+                                            $.edc.fancy(
+                                                '<div>'+json.message+'</div>'
+                                            )
+
+
                                         })
                                     })
                                 }
@@ -262,16 +279,28 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
 
                 }
             }else{
+                if(button.hasClass('iframe')){
+                    $.edc.fancy(action,'iframe');
+                    return;
+                }
 
                 $.ajax({
-                    type:'GET',
+
+                    type:(button.data('method') !== undefined) ? button.data('method') : 'GET',
                     url:action,
-                    success: success
+                    success: success,
+                    error: function (result) {
+
+                        if(typeof(result.responseJSON) === 'undefined')
+                            return;
+
+                        //var json = JSON.parse(result.responseJSON);
+                        $.edc.fancy(
+                            '<div>'+result.responseJSON.message+'</div>'
+                        )
+                    }
                 });
             }
-
-
-
 
         }
     });
@@ -282,6 +311,16 @@ $('.ajax').neptuneAjaxEvent();
 function initialisations(container,instance,current,action){
 
 
+    container.find('.switch_imput').on('click',function(e){
+        e.preventDefault();
+        var parent = $(this).parents('.form-group');
+        var input = parent.find('input');
+        if(input.attr('type') === 'color'){
+            input.attr('type','text');
+        }else{
+            input.attr('type','color')
+        }
+    });
     container.find('.ajax').neptuneAjaxEvent(instance,action);
 
     if(container.find('#modification_prio').length){

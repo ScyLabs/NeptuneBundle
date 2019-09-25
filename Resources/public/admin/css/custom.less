@@ -13,19 +13,32 @@
   text-transform: uppercase;
   transform:translate(-50%,120%);
 }
+.box_codex{
+  .filter{
+    max-width: 30rem;
+    margin-bottom: 3rem;
+  }
+}
 .listing_zones_codex{
 
   .zone{
-    padding:0.5rem;
+
     cursor: pointer;
+    overflow: hidden;
+    &::before{
+      content:'';
+      display:block;
+      padding-top: 75%;
+      position: relative;
+    }
     &:hover .box_photo::after{
       opacity: 0;
     }
     .number{
 
       position: absolute;
-      left:0;
-      top:0;
+      left:0.5rem;
+      top:0.5rem;
       width:5rem;
       height: 5rem;
       background: #00a8ff;
@@ -37,20 +50,35 @@
       z-index: 10;
       font-style: normal;
     }
+    .delete{
+      position: absolute;
+      right:0;
+      top:0;
+      padding:1rem;
+      font-size: 1.8rem;
+      color:red;
+      z-index: 99;
+    }
     .box_photo{
       display:flex;
       justify-content: center;
       overflow: hidden;
-      position:relative;
+      position: absolute;
+      left:0;
+      top:0;
+      height:100%;
+      width:100%;
+      padding:0.5rem;
+
 
       &::after{
         content:'';
         display:block;
         position: absolute;
-        left:0;
-        top:0;
-        width:100%;
-        height: 100%;
+        left:0.5rem;
+        top:0.5rem;
+        right: 0.5rem;
+        bottom:0.5rem;
         background: rgba(0,0,0,0.5);
         transition:all 500ms;
         z-index: 9;
@@ -65,6 +93,9 @@
   }
 }
 .question {
+  label{
+    margin-right: 1rem;
+  }
   label,input,select{
     display: inline-block;
     border-radius: 2px;

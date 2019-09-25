@@ -50,6 +50,11 @@ class User extends BaseUser
     protected $address;
 
     /**
+     * @ORM\Column(type="string",length=255,nullable=true)
+     */
+    protected  $apiToken;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $firstConnexion;
@@ -116,6 +121,18 @@ class User extends BaseUser
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getApiToken(): ?string
+    {
+        return $this->apiToken;
+    }
+
+    public function setApiToken(string $apiToken): self
+    {
+        $this->apiToken = $apiToken;
 
         return $this;
     }

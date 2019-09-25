@@ -74,11 +74,9 @@ class CodexImporter implements CodexImporterInterface
             $css = file_get_contents($cssFile);
 
             foreach ($colors as $key => $color){
-                dump($key. '- '.$color);
-
                 $css = str_replace($key,$color,$css);
                 $css = preg_replace('/'.$key.'/Ui',$color,$css);
-                dump($css);
+
             }
             $f = fopen($cssFile,'w+');
             fwrite($f,$css);

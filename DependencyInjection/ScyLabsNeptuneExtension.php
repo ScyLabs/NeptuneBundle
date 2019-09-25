@@ -10,6 +10,7 @@ namespace ScyLabs\NeptuneBundle\DependencyInjection;
 
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\Loader\YamlFileLoader as TranslationLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -19,6 +20,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class ScyLabsNeptuneExtension extends Extension
 {
+
     public function load(array $configs,ContainerBuilder $container){
 
         $configuration = new Configuration();
@@ -33,12 +35,24 @@ class ScyLabsNeptuneExtension extends Extension
         }
 
         $container->setParameter($this->getAlias().'.override',$config['override']);
-        $container->setParameter($this->getAlias().'.codexUrl',$config['codexUrl']);
-        $container->setParameter($this->getAlias().'.cdn',$config['cdn']);
         $container->setParameter($this->getAlias().'.compress',$config['compress']);
         $container->setParameter($this->getAlias().'.sitemap',$config['sitemap']);
         $container->setParameter($this->getAlias().'.icons',$config['icons']);
 
+        if(!array_key_exists('codex',$config)){
+            $config['codex'] = [
+                'url'       =>  null,
+                'cdn'       =>  null,
+                'publicKey' =>  $container->getParameter('kernel.project_dir').'/public.pem'
+            ];
+        }elseif(array_key_exists('codex',$config) && null === $config['codex']['publicKey']){
+            $config['codex']['publicKey'] = $container->getParameter('kernel.project_dir').'/public.pem';
+        }
+
+        $container->setParameter($this->getAlias().'.codex',$config['codex']);
+        $container->setParameter($this->getAlias().'.codex.url',$config['codex']['url']);
+        $container->setParameter($this->getAlias().'.codex.cdn',$config['codex']['cdn']);
+        $container->setParameter($this->getAlias().'.codex.publicKey',$config['codex']['publicKey']);
 
 
         $bundleRoot = new FileLocator(dirname(__DIR__));
