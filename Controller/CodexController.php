@@ -238,7 +238,7 @@ class CodexController extends BaseController
 
 
     public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome,$name){
-        $response = new File($this->getParameter('kernel.project_dir').'/public/img/demo.jpg');
+        $response = new File($this->getParameter('kernel.project_dir').'/public/bundles/scylabsneptune/admin/img/demo.jpg');
         return $this->file($response,'',ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
