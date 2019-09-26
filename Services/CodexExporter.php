@@ -29,8 +29,12 @@ class CodexExporter implements CodexExporterInterface
 
     public function getBase64ZipZoneFile(ZoneType $zoneType): array {
         $projectRoot = $this->getParameter('kernel.project_dir');
+
         $zip = new \ZipArchive();
         $tmpDir = $projectRoot.'/var/tmp';
+        if(!file_exists($tmpDir)){
+            mkdir($tmpDir);
+        }
         $this->tmpFile = $tmpDir.'/'.hash('sha1',time());
 
         $zip->open($this->tmpFile,\ZipArchive::CREATE);
