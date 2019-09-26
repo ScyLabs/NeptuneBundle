@@ -63,7 +63,8 @@ class CodexImporter implements CodexImporterInterface
         }
     }
     public function clearTemp(){
-        unlink($this->tmpFile);
+        if(file_exists($this->tmpFile))
+            unlink($this->tmpFile);
         if(is_dir($this->tmpZipExtractDir)){
             $this->rmDir($this->tmpZipExtractDir);
         }
@@ -104,6 +105,7 @@ class CodexImporter implements CodexImporterInterface
         $zip = new \ZipArchive();
         $zip->open($this->tmpFile);
         $zip->extractTo($this->tmpZipExtractDir);
+        $zip->close();
         $this->renameFiles($this->tmpZipExtractDir,$zone->getName());
         $this->changeColors($zone,$colors);
         $this->copyDir($this->tmpZipExtractDir.'/public',$rootDir.'/public');
