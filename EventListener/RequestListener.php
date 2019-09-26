@@ -19,7 +19,7 @@ class RequestListener
     private $routeNotCompress;
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
-        $this->routeNotCompress = array('generatePhoto','neptune_export_text','neptune_import_text');
+        $this->routeNotCompress = array('generatePhoto','neptune_export_text','neptune_import_text','codex_photo');
 
     }
 

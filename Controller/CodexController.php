@@ -587,9 +587,6 @@ class CodexController extends BaseController
         $env = $this->kernel->getEnvironment();
         $user = $this->getUser();
 
-        if(preg_match('/(localhost|127.0.0.1)/Ui',$_SERVER['HTTP_HOST'])){
-            return $this->redirectToRoute('neptune_home');
-        }
         if(null === $user)
             return $this->redirectToRoute('neptune_home');
         if(null !== $user->getApiToken())
