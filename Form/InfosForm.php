@@ -80,9 +80,6 @@ class InfosForm extends AbstractType
                 'label'=>'Url Instagram',
                 'required'=>false,
             ])
-            ->add('Valider',SubmitType::class,[
-                'label'=>'Envoyer'
-            ])
 
         ;
 

@@ -36,7 +36,6 @@ class ElementTypeForm extends AbstractType
                         ->andWhere('p.active = 1');
                 },
             ])
-            ->add('submit',SubmitType::class)
         ;
         $builder->addEventListener(FormEvents::PRE_SET_DATA,function(FormEvent $event){
 

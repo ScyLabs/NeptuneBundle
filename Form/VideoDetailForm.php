@@ -21,7 +21,6 @@ class VideoDetailForm extends AbstractType
             ->add('description',TextareaType::class,array(
                 'required'=> false
             ))
-            ->add('Valider',SubmitType::class)
         ;
     }
 

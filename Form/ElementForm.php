@@ -80,9 +80,6 @@ class ElementForm extends AbstractType
                 'label'=> 'Icone'
             ));
         }
-        $builder->add('submit',SubmitType::class,[
-            'label' => 'Envoyer'
-        ]);
 
 
     }

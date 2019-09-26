@@ -54,7 +54,6 @@ class UserForm extends AbstractType
                 'label'     => 'Adresse',
                 'required'  => false
             ))
-            ->add('submit',SubmitType::class)
         ;
     }
 
