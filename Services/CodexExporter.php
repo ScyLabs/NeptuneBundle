@@ -55,7 +55,10 @@ class CodexExporter implements CodexExporterInterface
                 if($nameExplode[sizeof($nameExplode) - 1] === 'less'){
                     $parser = new \Less_Parser();
                     $parser->parseFile($zoneFile);
+
                     $css = $parser->getCss();
+                    $cssToLess = new \Ortic\Css2Less\Css2Less($css);
+                    $css = $cssToLess->getLess();
                     $zoneFile = $projectRoot.'/var/tmp/'.hash('sha1',time().rand());
                     $this->tmpCss = $zoneFile;
                     $f = fopen($zoneFile,'w+');
