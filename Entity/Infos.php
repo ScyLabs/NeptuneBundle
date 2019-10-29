@@ -40,6 +40,15 @@ class Infos
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    protected $siret;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $codeApe;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     protected $mail;
 
     /**
@@ -122,6 +131,28 @@ class Infos
     public function setCity(?string $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(?string $siret): self
+    {
+        $this->city = $siret;
+
+        return $this;
+    }
+    public function getCodeApe(): ?string
+    {
+        return $this->codeApe;
+    }
+
+    public function setCodeApe(?string $codeApe): self
+    {
+        $this->city = $codeApe;
 
         return $this;
     }
