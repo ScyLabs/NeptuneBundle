@@ -20,8 +20,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PhotoController extends BaseController
 {
-
-
     public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome,$name){
 
         $monochrome = trim($monochrome,'/');

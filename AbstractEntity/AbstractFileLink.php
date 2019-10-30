@@ -14,6 +14,7 @@ use ScyLabs\NeptuneBundle\Entity\File;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\Partner;
 use ScyLabs\NeptuneBundle\Entity\User;
+use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -108,6 +109,9 @@ class AbstractFileLink extends AbstractElem
         elseif($this->user != null){
             return $this->user;
         }
+        elseif(property_exists($this,'video') && $this->video !== null){
+            return $this->video;
+        }
         else{
             return $this->element;
         }
@@ -124,6 +128,9 @@ class AbstractFileLink extends AbstractElem
         }
         elseif($parent instanceof User){
             $this->user = $parent;
+        }
+        elseif($parent instanceof Video){
+            $this->video = $parent;
         }
         else{
             $this->element = $parent;

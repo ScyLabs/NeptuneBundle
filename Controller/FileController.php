@@ -188,6 +188,7 @@ class FileController extends BaseController
         $prioPhoto = 0;
         $prioDocument = 0;
         $prioVideo = 0;
+
         foreach ($obj->getPhotos() as $photo){
             $photo->setPrio($prioPhoto);
             $prioPhoto++;
@@ -446,6 +447,8 @@ class FileController extends BaseController
         $repo = $em->getRepository($class);
         $object = $repo->find($id);
 
+
+
         $ariane = array(
             ['link'=>$this->generateUrl('neptune_home'),'name'=>'Accueil'],
             [
@@ -459,7 +462,24 @@ class FileController extends BaseController
         );
         $repoFiles = $em->getRepository($this->getClass('file'));
 
-        $files = $repoFiles->findBy(array(),['id'=>'DESC']);
+
+        $filter = [];
+        if($object instanceof AbstractFileLink){
+            $fileTypePhoto = $this->getDoctrine()->getRepository($this->getClass('fileType'))->findOneBy([
+                'name'  =>  'photo'
+            ]);
+            if(null !== $fileTypePhoto){
+                $filter = [
+                    'type'  =>  $fileTypePhoto->getId()
+                ];
+            }
+
+        }
+
+        $files = $repoFiles->findBy($filter,['id'=>'DESC']);
+
+
+
         $filesTypes = $em->getRepository($this->getClass('fileType'))->findBy(array(
             'remove'=>false,
         ));
