@@ -14,6 +14,9 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
         let action = $(this).attr('href');
         let button = $(this);
 
+        if(button.hasClass('close') && null !== parentObject){
+            parentObject.close();
+        }
 
         if((button.hasClass('delete') || button.hasClass('clone')) && !confirm('Voulez vous vraiment '+((button.hasClass('delete') ? 'supprimer' : 'clonner'))+' ceci ?')){
             return;
@@ -144,9 +147,10 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                                 container.find('#valider_liaison').on('click',function (e) {
 
                                     let sel = container.find('#container_cartouches').attr('data-select');
+
                                     if(typeof(sel) != 'undefined'){
 
-                                        let element = $('#selection_elements').find('tr.active').eq(0);
+                                        let element = container.find('#selection_elements').find('tr.active').eq(0);
                                         let id_elem = element.attr('data-id');
                                         let type_elem = element.attr('data-type');
                                         if(typeof(id_elem) != 'undefined' && typeof(type_elem) != 'udefined'){
@@ -324,7 +328,8 @@ function initialisations(container,instance,current,action){
     container.find('.ajax').neptuneAjaxEvent(instance,action);
 
     if(container.find('#modification_prio').length){
-        let files = $('#selection_elements tr.active').attr('data-files');
+
+        let files = container.find('#selection_elements tr.active').attr('data-files');
         if(typeof(files) != 'undefined'){
             let tab = JSON.parse(files);
             for(let i = 0;i < tab.length  ;i++){
@@ -375,7 +380,6 @@ function initialisations(container,instance,current,action){
         container.find('.dataTable').DataTable();
     }
     container.find('#cartouches > li > span').gallery();
-
 
 
     container.find('#filter_type').on('change',function () {
