@@ -41,7 +41,7 @@ class OverrideAnnotationFounder implements OverrideAnnotationFounderInterface
 
                     if (null !== $classAnotations = $annotationReader->getClassAnnotations($reflectionClass)){
                         foreach ($classAnotations as $classAnotation){
-                            if($classAnotation instanceof Override && class_exists($classAnotation->classNameSpace))
+                            if($classAnotation instanceof Override && class_exists($classAnotation->class))
                                 $overrideAnnotations[] = $classAnotation;
                         }
                     }

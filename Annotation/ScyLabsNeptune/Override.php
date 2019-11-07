@@ -17,7 +17,7 @@ namespace ScyLabs\NeptuneBundle\Annotation\ScyLabsNeptune;
  *  @Attribute("classNameSpace",type="string"),
  * })
  */
-class Override
+final class Override
 {
     /**
      * @var string
@@ -26,12 +26,6 @@ class Override
     /**
      * @var string
      */
-    public $classNameSpace;
+    public $class;
 
-    public function __construct(array $opts) {
-
-        $this->key = $opts['value'];
-        $this->classNameSpace = $opts['class'];
-
-    }
 }

@@ -68,10 +68,9 @@ class ScyLabsNeptuneExtension extends Extension
 
 
                 $overrideAnnotations = $this->annotationFounder->getAnnotations($reflector->getNamespaceName(),$childBundleRoot);
-
                 foreach ($overrideAnnotations as $overrideAnnotation){
                     if(!array_key_exists($overrideAnnotation->key,$config['override']) || (array_key_exists($overrideAnnotation->key,$config['override']) && !class_exists($config['override'][$overrideAnnotation->key])))
-                        $config['override'][$overrideAnnotation->key] = $overrideAnnotation->classNameSpace;
+                        $config['override'][$overrideAnnotation->key] = $overrideAnnotation->class;
                 }
 
             }
@@ -90,7 +89,7 @@ class ScyLabsNeptuneExtension extends Extension
                 }
                 $overrideAnnotations = $this->annotationFounder->getAnnotations($projectNameSpace,$projectDir.'/'.$sourcesDir);
                 foreach ($overrideAnnotations as $overrideAnnotation){
-                    $config['override'][$overrideAnnotation->key] = $overrideAnnotation->classNameSpace;
+                    $config['override'][$overrideAnnotation->key] = $overrideAnnotation->class;
                 }
 
             }
