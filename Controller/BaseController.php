@@ -192,8 +192,7 @@ abstract class BaseController extends AbstractController
                 // If New Class Exist . Use new Class , else if original Class Exist use Original class Else set null
                 $form = (class_exists($classes[$name.'Form'])) ? $classes[$name.'Form'] : ((class_exists($originalClasses[$name.'Form'])) ? $originalClasses[$name.'Form'] : null ) ;
             }
-
-            return (class_exists($classes[$name])) ? $classes[$name] : (class_exists($originalClasses[$name]) ? $originalClasses[$name] : null);
+            return (class_exists($classes[$name])) ? $classes[$name] : (array_key_exists($name,$originalClasses) && class_exists($originalClasses[$name]) ? $originalClasses[$name] : null);
 
         }
         return null;

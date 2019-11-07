@@ -134,9 +134,24 @@ Chargement de scripts de faÃ§on automatique :
     });
 
 
+
+
     $('#tabs').tabs();
     $('#tabs2').tabs();
     $('.tabs').tabs();
+
+    if($('#tabs-produit-1').length){
+        var url = window.location.href;
+        var exp = url.split('#');
+        if(exp.length > 1){
+            var anchor = exp[1];
+            var type = anchor.split('-');
+            if(type.length > 1){
+                $('.ui-tabs-anchor[data-type="'+type[1]+'"]').click();
+            }
+
+        }
+    }
 
     if($.fn.nestable){
         $('.dd').on('change',function () {

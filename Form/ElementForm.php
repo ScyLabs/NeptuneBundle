@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,6 +28,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\ArrayLoader;
+use Symfony\Component\Validator\Constraints\PositiveOrZero;
+
 class ElementForm extends AbstractType
 {
     private $container;
@@ -46,7 +49,14 @@ class ElementForm extends AbstractType
             ))
             ->add('name',TextType::class,[
                 'label'=>'Nom de la Element'
-            ]);
+            ])
+            ->add('price',NumberType::class,[
+                'label'=>'Price',
+                'required'  => false,
+                'constraints'   =>  [
+                    new PositiveOrZero()
+                ]
+            ]);;
 
         if($options['action'] !== null){
             $builder->setAction($options['action']);
@@ -60,6 +70,7 @@ class ElementForm extends AbstractType
                     ->where('t.remove = 0');
             },
         ]);
+
         if(null !== $icons = $this->container->getParameter('scy_labs_neptune.icons')){
             if(is_array($icons)){
                 $choices = array('Aucune'=>'');

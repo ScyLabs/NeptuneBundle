@@ -6,7 +6,7 @@
             <div class="tabs">
                 <ul class="onglets">
                     {% for type in objects %}
-                        <li><a href="#tabs-{{ type.name }}">{{ type.title }}</a></li>
+                        <li><a href="#tabs-{{ type.name }}" data-type="{{ type.id }}">{{ type.title }}</a></li>
                     {% endfor %}
 
                 </ul>

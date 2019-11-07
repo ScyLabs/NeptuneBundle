@@ -25,8 +25,6 @@ class CloningController extends BaseController
         $repo = $this->getDoctrine()->getRepository($class);
         $object = $repo->find($id);
         if($object === null){
-            dump('ok');
-            return new Response('<html><body></body></html>');
             return $this->redirectToRoute('neptune_entity',array('type'=>$type));
         }
 
@@ -64,7 +62,7 @@ class CloningController extends BaseController
         $em->flush();
 
         if($request->isXmlHttpRequest()){
-            return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été supprimé'));
+            return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été clonné'));
         }
         return $this->redirect($request->headers->get('referer'));
     }

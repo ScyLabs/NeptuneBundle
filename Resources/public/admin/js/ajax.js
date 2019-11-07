@@ -186,10 +186,22 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                                 });
                                 if(forms.length && !button.hasClass('export')){
 
+                                    forms.find('#element_form_price').on('change keydown keyup click input focus blur',function(){
+                                        var value = $(this).val();
+                                        value = value
+                                            .replace(/[^0-9.,]/,'')
+                                            .replace(/[,]/,'.')
+                                            .replace(/\.\./,'.')
+                                            .replace(/([0-9]*)[,.]([\d]{1,6}).*/,'$1.$2')
+                                        ;
+                                        $(this).val(value);
+                                    });
+
                                     forms.on('submit',function (e) {
                                         e.preventDefault();
                                         let form = $(this);
                                         let data = new FormData(this);
+
                                         let nameForm = $(this).attr("name");
                                         $.edc.send($(this).attr('action'),$(this).attr('method'),data,function (result) {
                                             if(result.success === true){
@@ -205,7 +217,13 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                                                             success:success
                                                         });
                                                     }else{
+                                                        if(null !== data.get('element_form[type]')){
+                                                            var href = window.location.href.split('#');
+
+                                                            window.location.href = href[0] + "#type-" + data.get('element_form[type]');
+                                                        }
                                                         location.reload();
+
                                                     }
                                                 }
                                                 else if (forms.find('#form_form_remove').length){

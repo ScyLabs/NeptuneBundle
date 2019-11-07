@@ -8,6 +8,8 @@
 
 namespace ScyLabs\NeptuneBundle\Controller;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use ScyLabs\GiftCodeBundle\Entity\GiftCode;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractChild;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractFileLink;
 use ScyLabs\NeptuneBundle\Entity\Document;
@@ -48,6 +50,7 @@ class EntityController extends BaseController
 
 
     public function listAction($type,$parentType,$parentId){
+
         if($parentType !== null && $parentId === null){
             return $this->redirectToRoute('neptune_entity',array('type'=>$type));
         }
