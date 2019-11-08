@@ -23,6 +23,7 @@ class OverrideAnnotationFounder implements OverrideAnnotationFounderInterface
 
         $annotationReader = new AnnotationReader();
         new \ReflectionClass(ORM\Entity::class);
+        new \ReflectionClass(Override::class);
 
         foreach (self::ANNOTATIONS_DIRECTORIES as $directoryName){
             if(is_dir($directory = $directoryPath.'/'.$directoryName)){
