@@ -29,7 +29,7 @@ class OverrideAnnotationFounder implements OverrideAnnotationFounderInterface
             if(is_dir($directory = $directoryPath.'/'.$directoryName)){
                 foreach (scandir($directory) as $file){
 
-                    if(!preg_match('/[^.].*\.php$/Ui',$file))
+                     if(!preg_match('/[^.].*\.php$/Ui',$file))
                         continue;
 
                     $explodeNameSpace = explode("\\",$directoryNameSpace);
@@ -42,7 +42,12 @@ class OverrideAnnotationFounder implements OverrideAnnotationFounderInterface
 
                     if (null !== $classAnotations = $annotationReader->getClassAnnotations($reflectionClass)){
                         foreach ($classAnotations as $classAnotation){
-                            if($classAnotation instanceof Override && class_exists($classAnotation->class))
+                            if(!($classAnotation instanceof Override ))
+                                continue;
+
+                                if(null === $classAnotation->class)
+                                    $classAnotation->class = $reflectionClass->getName();
+
                                 $overrideAnnotations[] = $classAnotation;
                         }
                     }

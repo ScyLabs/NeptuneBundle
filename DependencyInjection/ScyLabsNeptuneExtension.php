@@ -50,10 +50,11 @@ class ScyLabsNeptuneExtension extends Extension
 
             if($bundle === ScyLabsNeptuneBundle::class)
                 continue;
-            if(method_exists(new $bundle,'getParent') && (new $bundle)->getParent() === ScyLabsNeptuneBundle::class){
+            if(class_exists($bundle) && method_exists(new $bundle,'getParent') && (new $bundle)->getParent() === ScyLabsNeptuneBundle::class){
 
                 $reflector = new \ReflectionClass($bundle);
                 $childBundleRoot = dirname($reflector->getFileName());
+
 
                 if(file_exists($childBundleRoot.'/Resources/config/scylabs_neptune_config.yaml')){
                     $scyLabsConfig = Yaml::parseFile($childBundleRoot.'/Resources/config/scylabs_neptune_config.yaml');
@@ -101,6 +102,7 @@ class ScyLabsNeptuneExtension extends Extension
                 $config['override'][$key] = $class;
             }
         }
+
         $container->setParameter($this->getAlias().'.override',$config['override']);
         $container->setParameter($this->getAlias().'.compress',$config['compress']);
         $container->setParameter($this->getAlias().'.sitemap',$config['sitemap']);
