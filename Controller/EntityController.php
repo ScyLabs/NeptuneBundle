@@ -165,8 +165,6 @@ class EntityController extends BaseController
         }
 
 
-
-
         $object = new $class();
 
         if($parentType !== null && $parentId !== null && in_array($parentType,['page','element'])){

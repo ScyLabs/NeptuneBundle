@@ -10,21 +10,21 @@ namespace ScyLabs\NeptuneBundle\DependencyInjection\Compiler;
 
 
 use ScyLabs\NeptuneBundle\DependencyInjection\DoctrineTargetEntitiesResolver;
+use ScyLabs\NeptuneBundle\Manager\HookManager;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 
 class ResolveDoctrineTargetEntitiesPass implements CompilerPassInterface
 {
-    public function __construct(){
-    }
 
     /**
      * {@inheritdoc}
      */
     public function process(ContainerBuilder $container){
-
+        
         $resolver = new DoctrineTargetEntitiesResolver();
         $resolver->resolve($container);
-
     }
 }

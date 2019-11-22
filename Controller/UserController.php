@@ -61,8 +61,8 @@ class UserController extends BaseController
         $em->flush();
         return $this->redirect($referer);
     }
-
-    public function addAction(Request $request,UserManagerInterface $userManager,\Swift_Mailer $mailer){
+    /*
+    public function addAction(Request $requestUserManagerInterface $userManager,\Swift_Mailer $mailer){
 
         $class = $this->getClass('user',$form);
         $object = new $class();
@@ -124,6 +124,7 @@ class UserController extends BaseController
         return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
 
     }
+    */
 
 
 }

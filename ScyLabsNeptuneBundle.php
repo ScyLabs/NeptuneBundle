@@ -10,6 +10,7 @@ namespace ScyLabs\NeptuneBundle;
 
 
 use ScyLabs\NeptuneBundle\DependencyInjection\Compiler\ResolveDoctrineTargetEntitiesPass;
+use ScyLabs\NeptuneBundle\Manager\HookManager;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;

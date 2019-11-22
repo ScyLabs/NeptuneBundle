@@ -20,6 +20,7 @@ use ScyLabs\NeptuneBundle\Entity\Partner;
 use ScyLabs\NeptuneBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,8 +32,8 @@ use Symfony\Component\Yaml\Yaml;
 class PageController extends AbstractController
 {
 
-    public function homeAction(Request $request,?array $options = null){
-
+    public function homeAction(Request $request,?array $options = null,AdapterInterface $adapter){
+        
         $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();
         if(!in_array($locale,$this->getParameter('langs'))){

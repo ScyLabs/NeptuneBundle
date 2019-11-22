@@ -39,6 +39,11 @@ services:
     #Fin service
 
     #Listeners
+
+    ScyLabs\NeptuneBundle\EventListener\LoadHookListener:
+        tags:
+            - { name: kernel.event_listener,event: kernel.controller }
+
     ScyLabs\NeptuneBundle\EventListener\FileListener:
         tags:
             - { name: doctrine.event_listener,event: prePersist }
@@ -66,4 +71,7 @@ services:
     ScyLabs\NeptuneBundle\EventListener\RequestListener:
         tags:
             - { name: kernel.event_listener,event: kernel.request }
+    ScyLabs\NeptuneBundle\Manager\HookManager:
+        public: true
+
     #Fin listeners
