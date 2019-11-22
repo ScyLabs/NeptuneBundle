@@ -40,7 +40,6 @@ class PageDetailForm extends AbstractType
             ->add('metaKeys',TextareaType::class,array(
                 'required'=>false
             ))
-            ->add('Valider',SubmitType::class)
         ;
     }
 

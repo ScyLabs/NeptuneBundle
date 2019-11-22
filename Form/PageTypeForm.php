@@ -18,7 +18,6 @@ class PageTypeForm extends AbstractType
         $builder
             ->add('name')
             ->add('title')
-            ->add('submit',SubmitType::class)
         ;
     }
 

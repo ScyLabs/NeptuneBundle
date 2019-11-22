@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractFileLink;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\VideoRepository")
@@ -48,7 +49,12 @@ class Video extends AbstractFileLink
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\User", inversedBy="videos")
      */
     protected $user;
+
     /**
+     * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="video",cascade={"persist","remove"})
+     * @OrderBy({"prio" = "ASC"})
+     */
+    protected  $photos;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\VideoDetail", mappedBy="video", orphanRemoval=true,cascade={"persist","remove"})

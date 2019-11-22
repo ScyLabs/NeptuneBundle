@@ -57,9 +57,6 @@ class PageForm extends AbstractType
                         ->where('t.remove = 0');
                 },
             ])
-            ->add('submit',SubmitType::class,[
-                'label' => 'Envoyer'
-            ])
         ;
     }
 

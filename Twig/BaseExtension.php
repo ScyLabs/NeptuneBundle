@@ -9,6 +9,7 @@
 namespace ScyLabs\NeptuneBundle\Twig;
 
 
+use Symfony\Component\HttpFoundation\Request;
 use Twig\Extension\AbstractExtension;
 
 use Twig\TwigFilter;
@@ -22,11 +23,14 @@ class BaseExtension extends AbstractExtension
         return array(
             new TwigFilter('is_object',array($this,'isObject')),
             new TwigFilter('clean',array($this,'clean')),
+
         );
     }
     public function getFunctions() {
         return [
-            new TwigFunction('webpActiveInImagick',array($this,'webpActiveInImagick'))
+            new TwigFunction('webpActiveInImagick',array($this,'webpActiveInImagick')),
+            new TwigFunction('mobileDetect',array($this,'mobileDetectFunction')),
+            new TwigFunction('isMobile',array($this,'mobileDetectFunction'))
         ];
     }
 
@@ -60,4 +64,13 @@ class BaseExtension extends AbstractExtension
         }
         return in_array('webp',$formats);
    }
+
+    public function mobileDetectFunction(Request $request)
+    {
+        $userInfo = $request->headers->get('User-Agent');
+        if(strpos($userInfo,'Mobile') !== false)
+            return true;
+
+        return false;
+    }
 }

@@ -18,6 +18,7 @@ class CodexExporter implements CodexExporterInterface
     private $parameterBag;
 
     private $tmpFile;
+    private $tmpCss;
 
     public function __construct(ParameterBagInterface $parameterBag) {
         $this->parameterBag = $parameterBag;
@@ -50,18 +51,39 @@ class CodexExporter implements CodexExporterInterface
                     $this->addDirToZip($zoneFile,$zip,'/public/img/zone/'.$zoneType->getName());
                     continue;
                 }
+                $nameExplode = explode('.',$zoneFile);
+                if($nameExplode[sizeof($nameExplode) - 1] === 'less'){
+                    $parser = new \Less_Parser();
+                    $parser->parseFile($zoneFile);
+
+                    $css = $parser->getCss();
+                    $cssToLess = new \Ortic\Css2Less\Css2Less($css);
+                    $css = $cssToLess->getLess();
+                    $zoneFile = $projectRoot.'/var/tmp/'.hash('sha1',time().rand());
+                    $this->tmpCss = $zoneFile;
+                    $f = fopen($zoneFile,'w+');
+                    fwrite($f,$css);
+                    fclose($f);
+                    $zip->addFile($zoneFile,$key);
+                }
                 $zip->addFile($zoneFile,$key);
             }
         }
         $zip->close();
-        return [
+
+        $result = [
             'hash'      =>  hash_file('sha1',$this->tmpFile),
             'content'   =>  base64_encode(file_get_contents($this->tmpFile))
         ];
+        $this->clearTmp();
+        return $result;
 
     }
     public function clearTmp(){
-
+        if(file_exists($this->tmpFile))
+            unlink($this->tmpFile);
+        if(file_exists($this->tmpCss))
+            unlink($this->tmpCss);
     }
     private function addDirToZip(string $dir,\ZipArchive &$zip,$zipPath = ''){
         if(!is_dir($dir)){

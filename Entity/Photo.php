@@ -47,6 +47,10 @@ class Photo extends AbstractFileLink
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Partner", inversedBy="photos")
      */
     protected $partner;
+    /**
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Video", inversedBy="photos")
+     */
+    protected $video;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\PhotoDetail", mappedBy="photo", orphanRemoval=true,cascade={"persist","remove"})

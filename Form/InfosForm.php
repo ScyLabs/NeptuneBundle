@@ -49,6 +49,14 @@ class InfosForm extends AbstractType
                 'label'=>'Ville',
                 'required'=>false,
             ])
+            ->add('siret',TextType::class,[
+                'label'=>'N° Siret',
+                'required'=>false,
+            ])
+            ->add('codeApe',TextType::class,[
+                'label'=>'Code Ape',
+                'required'=>false,
+            ])
             ->add('mail', EmailType::class,[
                 'label'=>'E-mail',
                 'required'=>false,
@@ -79,9 +87,6 @@ class InfosForm extends AbstractType
             ->add('insta',TextType::class,[
                 'label'=>'Url Instagram',
                 'required'=>false,
-            ])
-            ->add('Valider',SubmitType::class,[
-                'label'=>'Envoyer'
             ])
 
         ;

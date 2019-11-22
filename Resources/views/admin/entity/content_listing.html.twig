@@ -10,7 +10,7 @@
             </div>
         </div>
     {% endif %}
-    <div class="col-lg-{{  (app.request.attributes.get('_route') == 'neptune_entity' or app.request.attributes.get('_route') == "codex_category" and not app.request.XmlHttpRequest ) ? '10' : '12'}}">
+    <div class="col-lg-{{  (not app.request.XmlHttpRequest and app.request.attributes.get('_route') == 'neptune_entity' or app.request.attributes.get('_route') == "codex_category" ) ? '10' : '12'}}">
         <div class="tabs">
 
             {% set object = (objects | length) ?  objects[0] : [] %}
@@ -162,7 +162,7 @@
             {% endif %}
         </div>
     </div>
-    {% if app.request.attributes.get('_route') == 'neptune_entity' or app.request.attributes.get('_route') == "codex_category" and not app.request.XmlHttpRequest %}
+    {% if not app.request.XmlHttpRequest and app.request.attributes.get('_route') == 'neptune_entity' or app.request.attributes.get('_route') == "codex_category"  %}
         <div class="col-lg-2 m-t-25">
             <div class="card">
                 <a class="btn btn-pink m-b-10 m-l-5 show_form ajax add" href="{{ path('neptune_entity_add',{'type':app.request.attributes.get('type')}) }}" >Créer une {{ app.request.attributes.get('type') }}</a>

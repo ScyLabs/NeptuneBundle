@@ -54,7 +54,6 @@ class ZoneDetailForm extends AbstractType
                     'class'=> 'tiny'
                 )
             ))
-            ->add('Valider',SubmitType::class)
         ;
     }
 

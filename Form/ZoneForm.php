@@ -107,10 +107,7 @@ class ZoneForm extends AbstractType
                 return $r->createQueryBuilder('p')
                     ->where('p.remove = 0');
             }
-        ))
-            ->add('submit',SubmitType::class,[
-                'label' => 'Envoyer'
-            ]);
+        ));
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA,function(FormEvent $event){
             $zone = $event->getData();

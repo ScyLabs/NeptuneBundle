@@ -46,9 +46,6 @@ abstract class AbstractElem
      */
     protected $creationDate;
 
-    protected $photos;
-    protected $videos;
-    protected $documents;
 
     public function __construct()
     {
@@ -129,11 +126,16 @@ abstract class AbstractElem
      */
     public function getPhotos(): ?Collection
     {
+        if(!property_exists($this,'photos'))
+            return new ArrayCollection();
         return $this->photos;
     }
 
     public function addPhoto(Photo $photo): self
     {
+        if(!property_exists($this,'photos'))
+            return $this;
+
         if (!$this->photos->contains($photo)) {
             $this->photos[] = $photo;
             $photo->setParent($this);
@@ -142,6 +144,7 @@ abstract class AbstractElem
         return $this;
     }
     public function addFile(AbstractFileLink $file){
+
         if($file instanceof Photo){
             $this->addPhoto($file);
         }
@@ -155,6 +158,8 @@ abstract class AbstractElem
 
     public function removePhoto(Photo $photo): self
     {
+        if(!property_exists($this,'photos'))
+            return $this;
         if ($this->photos->contains($photo)) {
             $this->photos->removeElement($photo);
             // set the owning side to null (unless already changed)
@@ -195,11 +200,15 @@ abstract class AbstractElem
      */
     public function getDocuments(): ?Collection
     {
+        if(!property_exists($this,'documents'))
+            return new ArrayCollection();
         return $this->documents;
     }
 
     public function addDocument(Document $document): self
     {
+        if(!property_exists($this,'documents'))
+            return $this;
         if (!$this->documents->contains($document)) {
             $this->documents[] = $document;
             $document->setParent($this);
@@ -210,6 +219,8 @@ abstract class AbstractElem
 
     public function removeDocument(Document $document): self
     {
+        if(!property_exists($this,'documents'))
+            return $this;
         if ($this->documents->contains($document)) {
             $this->documents->removeElement($document);
             // set the owning side to null (unless already changed)
@@ -226,11 +237,15 @@ abstract class AbstractElem
      */
     public function getVideos(): ?Collection
     {
+        if(!property_exists($this,'videos'))
+            return new ArrayCollection();
         return $this->videos;
     }
 
     public function addVideo(Video $video): self
     {
+        if(!property_exists($this,'videos'))
+            return $this;
         if (!$this->videos->contains($video)) {
             $this->videos[] = $video;
             $video->setParent($this);
@@ -242,6 +257,8 @@ abstract class AbstractElem
 
     public function removeVideo(Video $video): self
     {
+        if(!property_exists($this,'videos'))
+            return $this;
         if ($this->videos->contains($video)) {
             $this->videos->removeElement($video);
             // set the owning side to null (unless already changed)
@@ -254,19 +271,20 @@ abstract class AbstractElem
     }
 
     public function getJsonFiles(){
+
         $tab = array();
-        if($this->photos != null){
+        if(property_exists($this,'photos') && $this->photos != null){
 
             foreach ($this->photos as $photo){
                 $tab[] = $photo->getFile()->getId();
             }
         }
-        if($this->documents != null){
+        if(property_exists($this,'documents') && $this->documents != null){
             foreach ($this->documents as $document){
                 $tab[] = $document->getFile()->getId();
             }
         }
-        if($this->videos != null){
+        if(property_exists($this,'videos') && $this->videos != null){
             foreach ($this->videos as $video){
                 $tab[] = $video->getFile()->getId();
             }

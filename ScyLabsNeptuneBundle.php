@@ -9,6 +9,7 @@
 namespace ScyLabs\NeptuneBundle;
 
 
+use ScyLabs\NeptuneBundle\DependencyInjection\Compiler\OverrideAnnotationPass;
 use ScyLabs\NeptuneBundle\DependencyInjection\Compiler\ResolveDoctrineTargetEntitiesPass;
 use ScyLabs\NeptuneBundle\Manager\HookManager;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -26,5 +27,7 @@ class ScyLabsNeptuneBundle extends Bundle
     public function build(ContainerBuilder $container){
         parent::build($container);
         $container->addCompilerPass(new ResolveDoctrineTargetEntitiesPass(),PassConfig::TYPE_BEFORE_OPTIMIZATION,1000);
+
+
     }
 }
