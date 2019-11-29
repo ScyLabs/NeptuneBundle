@@ -32,7 +32,7 @@ class HookExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
-            new TwigFunction('scy_labs_printHook',array($this,'showHook'))
+            new TwigFunction('ScyLabs_showHook',array($this,'showHook'))
         );
     }
 
@@ -42,6 +42,7 @@ class HookExtension extends AbstractExtension
 
         $manager = $this->container->get(HookManager::class);
         $hooksByPriority = $manager->getHooks($hookName);
+        ksort($hooksByPriority);
 
         if($this->container->has('profiler')){
             $sessionHooks = $session->get('scy_labs_neptune_hooks');
@@ -65,6 +66,9 @@ class HookExtension extends AbstractExtension
         }
 
         $render = [];
+
+
+
 
         foreach ($hooksByPriority as $hooks){
             foreach ($hooks as $hook){

@@ -28,6 +28,7 @@ class HookManager
                 $this->hooks[$hookName][$hook->getPriority()] = [];
 
             $this->hooks[$hookName][$hook->getPriority()][] = $hook;
+            ksort($this->hooks[$hookName]);
         }
     }
 }

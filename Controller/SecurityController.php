@@ -28,19 +28,7 @@ class SecurityController extends AbstractController
         $this->eventDispatcher = $eventDispatcher;
         $this->userManager = $userManager;
     }
-    public function checkRedirectAction(AuthorizationCheckerInterface $authChecker){
-        if(!$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->redirectToRoute('fos_user_security_login');
-        }
-        if($this->isGranted('ROLE_ADMIN')){
-            if($this->getUser()->getFirstConnexion() == true){
-                return $this->redirectToRoute('security_first_connexion');
-            }
-            return $this->redirectToRoute('neptune_home');
-        }else{
-            return $this->redirectToRoute('index');
-        }
-    }
+
     public function firstConnexionAction(Request $request){
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
