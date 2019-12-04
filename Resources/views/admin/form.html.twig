@@ -3,7 +3,7 @@
             <div class="form-group">
                 {% if widget.vars.block_prefixes[1] not in  ['hidden','repeated']  %}
                     <label class="block">
-                        {{ form_label(widget) }}
+                        {{ form_label(widget) }}{{ (widget.vars.required) ? ' *' : '' }}
 
                         {% if widget.vars.name == "type" %}
                             {% set fullname = widget.vars.full_name %}

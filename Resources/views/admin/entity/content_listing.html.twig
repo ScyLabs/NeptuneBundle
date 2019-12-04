@@ -30,7 +30,7 @@
                             {% if object.active is defined %}
                                 <th>Actif</th>
                             {% endif %}
-                            {% if object.type is defined %}
+                            {% if object.type is defined and object.type is not null%}
                                 <th>Type</th>
                             {% endif %}
                             {% if object.name is defined %}
@@ -69,7 +69,7 @@
                                                     </a>
                                                 </td>
                                             {% endif %}
-                                            {% if object.type is defined %}
+                                            {% if object.type is defined and object.type is not null %}
                                                 <td>{{ object.type.name }}</td>
                                             {% endif %}
                                             {% if object.name is defined %}

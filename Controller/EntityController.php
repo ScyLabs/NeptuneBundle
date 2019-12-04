@@ -87,11 +87,13 @@ class EntityController extends BaseController
                 if($parentType !== null && $parentId !== null && (new $class()) instanceof AbstractChild){
                     $repoParams[$parentType]  = $parentId;
                 }
+
                 $objects = $repo->findBy($repoParams,['prio'=>'ASC']);
 
                 if(null !== $classParent = $this->getClass($parentType)){
                     $parent = $this->getDoctrine()->getRepository($classParent)->find($parentId);
                 }
+
 
         }
         $params = array(

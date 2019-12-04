@@ -186,7 +186,7 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                                 });
                                 if(forms.length && !button.hasClass('export')){
 
-                                    forms.find('#element_form_price').on('change keydown keyup click input focus blur',function(){
+                                    forms.find('.price').on('change keydown keyup click input focus blur',function(){
                                         var value = $(this).val();
                                         value = value
                                             .replace(/[^0-9.,]/,'')

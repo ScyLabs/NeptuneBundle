@@ -53,6 +53,9 @@ class ElementForm extends AbstractType
             ->add('price',NumberType::class,[
                 'label'=>'Price',
                 'required'  => false,
+                'attr'      =>  [
+                    'class' =>  'price'
+                ],
                 'constraints'   =>  [
                     new PositiveOrZero()
                 ]

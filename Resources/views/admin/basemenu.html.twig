@@ -67,4 +67,5 @@
     {% endif %}
 {% endif %}
 {{ include('@ScyLabsNeptune/admin/menu.html.twig') }}
+{{ ScyLabs_showHook(_self,'ScyLabsNeptuneBundle.admin.menu') | raw }}
 

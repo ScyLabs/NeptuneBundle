@@ -33,6 +33,7 @@ class DetailController extends BaseController
         $classType = $type.'Detail';
         $langs = $this->getParameter('langs');
         if(null === $classDetail = $this->getClass($classType,$form)){
+
             return$this->redirectToRoute('neptune_home');
         }
 
@@ -40,9 +41,6 @@ class DetailController extends BaseController
         $object = $em->getRepository($class)->find($id);
 
 
-        if(null === $object){
-            return $this->redirectToRoute('neptune_home');
-        }
         $details = $object->getDetails();
 
 
