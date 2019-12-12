@@ -186,6 +186,7 @@ class PhotoController extends BaseController
 
     private function calcQuality($width,$type = 'webp'){
         if($type == 'webp'){
+
             return 80;
         }
         return 90;
