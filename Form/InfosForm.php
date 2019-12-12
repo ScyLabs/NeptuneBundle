@@ -64,7 +64,7 @@ class InfosForm extends AbstractType
                     new Email(),
                 )
             ])
-            ->add('tel',TelType::class,[
+            ->add('phone',TelType::class,[
                 'label'=>'Tel',
                 'required'=>false,
             ])
@@ -86,6 +86,10 @@ class InfosForm extends AbstractType
             ])
             ->add('insta',TextType::class,[
                 'label'=>'Url Instagram',
+                'required'=>false,
+            ])
+            ->add('resa',TextType::class,[
+                'label'=>'Url de resa',
                 'required'=>false,
             ])
 

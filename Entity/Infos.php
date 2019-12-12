@@ -54,7 +54,7 @@ class Infos
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $tel;
+    protected $phone;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -82,9 +82,27 @@ class Infos
      */
     protected $insta;
 
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     */
+    protected $resa;
+
     public function getId()
     {
         return $this->id;
+    }
+
+
+    public function getResa() : ?string{
+        return $this->resa;
+    }
+    public function setResa(string $resa) : self{
+        $this->resa = $resa;
+        return $this;
+    }
+
+    public function getTel(){
+        return $this->phone;
     }
 
     public function getName(): ?string
@@ -169,14 +187,14 @@ class Infos
         return $this;
     }
 
-    public function getTel(): ?string
+    public function getPhone(): ?string
     {
-        return $this->tel;
+        return $this->phone;
     }
 
-    public function setTel(?string $tel): self
+    public function setPhone(?string $phone): self
     {
-        $this->tel = $tel;
+        $this->phone = $phone;
 
         return $this;
     }

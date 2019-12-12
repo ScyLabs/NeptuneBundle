@@ -55,7 +55,8 @@ class GeneratorController extends BaseController
                 
                 $url = null;
                 if(in_array($urlObj->getLang(),$this->getParameter('langs'))){
-                        
+                        if($object->getZones()->count() === 0)
+                            continue;
                         if($object instanceof Page){
                             if($object->getType()->getName() != 'not_accessible'){
                                 $url = ($object->getPrio() == 0 && $object->getParent() === null && $object->getActive()) ?  $this->generateUrl('homepage',array(
@@ -68,7 +69,8 @@ class GeneratorController extends BaseController
                             $urls = array_merge($urls,$this->getUrls($object->getChilds()));
                         }
                         else{
-                            
+
+
                             if($sitemapConfig['elements'] === false)
                                 continue;
                             $url = $this->generateUrl('detail_element',array(
