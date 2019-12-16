@@ -32,6 +32,10 @@ class InfosForm extends AbstractType
     {
 
         $builder
+            ->add('analyticsId',TextType::class,[
+                'label'     =>  'Code analytics',
+                'required'  =>  false
+            ])
             ->add('name',TextType::class,[
                 'label'=>'Nom',
                 'required'=>false,

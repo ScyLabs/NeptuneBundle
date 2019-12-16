@@ -87,12 +87,24 @@ class Infos
      */
     protected $resa;
 
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     */
+    protected $analyticsId;
+
+
     public function getId()
     {
         return $this->id;
     }
 
-
+    public function getAnalyticsId() : ?string{
+        return $this->analyticsId;
+    }
+    public function setAnalyticsId(?string $analyticsId) : self{
+        $this->analyticsId = $analyticsId;
+        return $this;
+    }
     public function getResa() : ?string{
         return $this->resa;
     }
