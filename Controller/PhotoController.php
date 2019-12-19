@@ -110,6 +110,9 @@ class PhotoController extends BaseController
         $path = $localThumb.'/'.$fileName.$wh.'.'.$ext;
 
         if(file_exists($path)){
+            if(filesize($path) > filesize($filePath)){
+                $path = $filePath;
+            }
 
             $this->headers($file,$path);
             $response = new \Symfony\Component\HttpFoundation\File\File($path);
@@ -161,6 +164,10 @@ class PhotoController extends BaseController
         }
 
         $img->destroy();
+
+        if(filesize($path) > filesize($filePath)){
+            $path = $filePath;
+        }
         $this->headers($file,$path);
 
         $response = new \Symfony\Component\HttpFoundation\File\File($path);
