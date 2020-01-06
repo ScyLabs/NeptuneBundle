@@ -4,7 +4,7 @@ detail_element:
     requirements:
         _locale: "[a-z]{2}"
         slug: "^[a-z-_0-9/]+$"
-        anchor: "^#[a-z-_]+$"
+        anchor: "^(\\#)[a-z-_]+$"
     defaults:
         _locale: "fr"
         anchor: ""

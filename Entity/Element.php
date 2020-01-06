@@ -117,7 +117,7 @@ class Element extends AbstractElem
         $criteria->orderBy($opts['order']);
 
         $criteria->where(Criteria::expr()->eq('remove',$opts['remove']));
-        if(null !== $opts['active'])
+        if(array_key_exists('active',$opts))
             $criteria->andWhere(Criteria::expr()->eq('active',$opts['active']));
 
         return $this->zones->matching($criteria);

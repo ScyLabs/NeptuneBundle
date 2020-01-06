@@ -115,7 +115,8 @@ class Page extends AbstractElem
         $criteria->orderBy($opts['order']);
 
         $criteria->where(Criteria::expr()->eq('remove',$opts['remove']));
-        if(null !== $opts['active'])
+
+        if(array_key_exists('active',$opts))
             $criteria->andWhere(Criteria::expr()->eq('active',$opts['active']));
 
         return $this->elements->matching($criteria);
@@ -226,7 +227,7 @@ class Page extends AbstractElem
         $criteria->orderBy($opts['order']);
 
         $criteria->where(Criteria::expr()->eq('remove',$opts['remove']));
-        if(null !== $opts['active'])
+        if(array_key_exists('active',$opts))
             $criteria->andWhere(Criteria::expr()->eq('active',$opts['active']));
 
         return $this->childs->matching($criteria);
@@ -262,6 +263,7 @@ class Page extends AbstractElem
      */
     public function getZones(array $opts = []): Collection
     {
+
         $criteria = Criteria::create();
 
         if(!array_key_exists('remove',$opts))
@@ -274,8 +276,10 @@ class Page extends AbstractElem
         $criteria->orderBy($opts['order']);
 
         $criteria->where(Criteria::expr()->eq('remove',$opts['remove']));
-        if(null !== $opts['active'])
+
+        if(array_key_exists('active',$opts)){
             $criteria->andWhere(Criteria::expr()->eq('active',$opts['active']));
+        }
 
         return $this->zones->matching($criteria);
     }

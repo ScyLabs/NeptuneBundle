@@ -4,7 +4,7 @@ page:
     requirements:
         slug: "^[a-z-_0-9/]+$"
         _locale: "[a-z]{2}"
-        anchor: "^#[a-z-_]+$"
+        anchor: "^(\\#)[a-z-_]+$"
     defaults:
         anchor: ""
         _locale: "fr"

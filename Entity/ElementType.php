@@ -52,6 +52,7 @@ class ElementType extends AbstractElemType
      */
     public function getElements(array $opts = []){
 
+
         $criteria = Criteria::create();
 
         if(!array_key_exists('remove',$opts))
@@ -63,8 +64,7 @@ class ElementType extends AbstractElemType
 
         $criteria->orderBy($opts['order']);
 
-        $criteria->where(Criteria::expr()->eq('remove',$opts['remove']));
-        if(null !== $opts['active'])
+        if(array_key_exists('active',$opts))
             $criteria->andWhere(Criteria::expr()->eq('active',$opts['active']));
 
         return $this->elements->matching($criteria);
