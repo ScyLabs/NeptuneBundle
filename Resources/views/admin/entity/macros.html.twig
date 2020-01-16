@@ -16,9 +16,9 @@
                 {% endif %}
                 {{ page.name }}
             </div>
-            {% if page.childs({'active':null}) |length %}
+            {% if page.childs() |length %}
                 <ol class="dd-list">
-                    {% for child in page.childs({'active':null}) %}
+                    {% for child in page.childs() %}
                         {{ self.recursivePage(child) }}
                     {% endfor %}
                 </ol>
@@ -57,7 +57,7 @@
                 <ul class="actions">
                     <li><a href="{{ path('neptune_entity_clone',{'type':'page','id':page.id}) }}" class="ajax clone"><i class="fal fa-clone"></i></a></li>
                     <li><a href="{{ path('neptune_file_gallery_prio',{'type':'page','id':page.id}) }}" class="ajax" title="Gestion des fichiers"><i class="fal fa-file-alt"></i></a></li>
-                    <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':page.id}) }}" class="ajax edit" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
+                    <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':page.id}) }}" class="edit" target="_blank" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
                     <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':'page','parentId':page.id}) }}" class="ajax" title="Contenu"><i class="fal fa-align-left"></i></a></li>
                     <li><a href="{{ path('neptune_entity_edit',{'id':page.id,'type':app.request.attributes.get('type')}) }}" class="ajax edit" title="Modifier"><i class="fal fa-pencil"></i></a></li>
                     <li class="">
@@ -68,8 +68,8 @@
                 </ul>
             </td>
         </tr>
-        {% if page.childs({'active':null}) |length %}
-            {% for child in page.childs({'active':null}) %}
+        {% if page.childs() |length %}
+            {% for child in page.childs() %}
                 {{ self.recursiveTabPage(child) }}
             {% endfor %}
         {% endif %}

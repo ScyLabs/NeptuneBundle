@@ -27,6 +27,7 @@ class DetailController extends BaseController
     public function listAction(Request $request,$type,$id){
 
         if(null === $class = $this->getClass($type)){
+
             return $this->redirectToRoute('neptune_home');
         }
 
@@ -45,6 +46,7 @@ class DetailController extends BaseController
 
 
         /*Si l'objet n'a aucun details */
+
 
         if($details->count() === 0){
 
@@ -153,11 +155,24 @@ class DetailController extends BaseController
 
 
         if(true === $result =$this->validForm($type.'Detail',$formClass,$detail,$request,$form)){
+            if($request->isXmlHttpRequest())
+                return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été ajouté'));
 
-            return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été ajouté'));
+            return $this->redirectToRoute('neptune_detail',[
+                'type'  =>  $type,
+                'id'    =>  $detail->getParent()->getId()
+            ]);
         }
+
         if($result !== false){
-            return $this->json($result);
+            if($request->isXmlHttpRequest())
+                return $this->json($result);
+            
+            return $this->redirectToRoute('neptune_detail',[
+                'type'  =>  $type,
+                'id'    =>  $detail->getParent()->getId()
+            ]);
+
         }
         return $this->redirect($request->headers->get('referer'));
 
