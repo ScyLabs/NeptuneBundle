@@ -74,9 +74,10 @@ class Zone extends AbstractChild
     protected $icon;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page")
+     * @ORM\ManyToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Page")
      */
-    protected $pageLink;
+    protected $pageLinks;
+
 
     /**
      * @ORM\Column(type="string",length=255,nullable = false)
@@ -92,6 +93,7 @@ class Zone extends AbstractChild
     public function __construct()
     {
         $this->details = new ArrayCollection();
+        $this->pageLinks = new ArrayCollection();
         if($this->subType === null){
             $this->subType = 'subtype1';
         }
@@ -119,12 +121,31 @@ class Zone extends AbstractChild
         $this->icon = $icon;
         return $this;
     }
+    public function getPageLinks(){
+        return $this->pageLinks;
+    }
+    public function addPageLink(Page $page) : self{
+        if(!$this->pageLinks->contains($page)){
+            $this->pageLinks[] = $page;
+        }
+        return $this;
+    }
+    public function removePageLink(Page $page) : self{
+        if($this->pageLinks->contains($page)){
+            $this->pageLinks->removeElement($page);
+        }
+        return $this;
+    }
+    /*
     public function setPageLink(?Page $page) : self{
         $this->pageLink = $page;
         return $this;
     }
+    */
     public function getPageLink() : ?Page{
-        return $this->pageLink;
+        if($this->pageLinks->count() === 0)
+            return null;
+        return $this->pageLinks[0];
     }
 
     public function getSubType() : string{

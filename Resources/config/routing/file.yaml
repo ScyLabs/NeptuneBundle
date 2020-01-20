@@ -32,7 +32,7 @@ neptune_file_gallery_prio:
     path: /{type}/{id}/files
     controller: ScyLabs\NeptuneBundle\Controller\FileController::galleryPrioAction
     requirements:
-        type: "[a-z]{2,20}"
+        type: "[a-zA-Z-]{2,20}"
         id: "[0-9]+"
 
 neptune_file_prio:

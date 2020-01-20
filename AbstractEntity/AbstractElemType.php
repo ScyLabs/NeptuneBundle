@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
- *  @MappedSuperclass
+ * @MappedSuperclass
  * @UniqueEntity("name")
  */
 

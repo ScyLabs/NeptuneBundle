@@ -98,10 +98,11 @@ class ZoneForm extends AbstractType
             ));
         }
 
-        $builder->add('pageLink',EntityType::class,array(
+        $builder->add('pageLinks',EntityType::class,array(
             'label' => 'Page liée (PageLink)',
             'class' => Page::class,
             'choice_label'      => 'name',
+            'multiple'  =>  true,
             'required'  => false,
             'query_builder'     => function(PageRepository $r){
                 return $r->createQueryBuilder('p')
