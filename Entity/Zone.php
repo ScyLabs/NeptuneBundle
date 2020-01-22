@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\OrderBy;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractChild;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractElem;
 
+
 /**
  * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\ZoneRepository")
  */
@@ -89,6 +90,12 @@ class Zone extends AbstractChild
      */
     protected $typeHead;
 
+    /**
+     * @deprecated since neptune-bundle 1.3
+     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Page")
+     */
+    protected $pageLink;
+
 
     public function __construct()
     {
@@ -143,6 +150,8 @@ class Zone extends AbstractChild
     }
     */
     public function getPageLink() : ?Page{
+        if( null !== $this->pageLink)
+            return $this->pageLink;
         if($this->pageLinks->count() === 0)
             return null;
         return $this->pageLinks[0];
