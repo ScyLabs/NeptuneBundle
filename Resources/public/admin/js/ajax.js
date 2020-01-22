@@ -395,7 +395,9 @@ function initialisations(container,instance,current,action){
 
     });
     if(container.find('.dataTable').length){
-        container.find('.dataTable').DataTable();
+        container.find('.dataTable').DataTable({
+            "pageLength": 100
+        });
     }
     container.find('#cartouches > li > span').gallery();
 

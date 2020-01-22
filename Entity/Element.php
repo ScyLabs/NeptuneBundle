@@ -107,10 +107,11 @@ class Element extends AbstractElem
     {
         $criteria = Criteria::create();
 
-        if(!array_key_exists('remove',$opts))
-            $opts['remove'] = false;
         if(sizeof($opts) === 0 && !array_key_exists('active',$opts))
             $opts['active'] = true;
+        if(!array_key_exists('remove',$opts))
+            $opts['remove'] = false;
+
         if(!array_key_exists('order',$opts))
             $opts['order'] = ['prio' => 'ASC'];
 

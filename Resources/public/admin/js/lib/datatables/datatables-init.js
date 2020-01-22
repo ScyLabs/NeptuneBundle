@@ -1,12 +1,15 @@
 $(document).ready(function() {
 
-    $('.dataTable').DataTable();
+    $('.dataTable').DataTable({
+        "pageLength": 100,
+    });
 
     var table = $('#example').DataTable({
         "columnDefs": [{
             "visible": false,
             "targets": 2
         }],
+        "pageLength": 100,
         "order": [
             [2, 'asc']
         ],
