@@ -81,7 +81,7 @@ class UserController extends BaseController
             }
 
 
-            $templating = $this->container->get('templating');
+            $templating = $this->container->get('twig');
 
             $pass = substr(hash('sha256',random_bytes(10)),0,10);
 

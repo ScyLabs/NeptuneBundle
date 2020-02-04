@@ -50,6 +50,14 @@ services:
             - { name: doctrine.event_listener,event: preUpdate }
             - { name: doctrine.event_listener,event: preRemove }
 
+    ScyLabs\NeptuneBundle\DataCollector\HookCollector:
+        tags:
+            -
+                name: data_collector
+                template: '@ScyLabsNeptune/data_collector/hook_collector.html.twig'
+                id: 'scy_labs_neptune_hooks'
+        public: false
+
     ScyLabs\NeptuneBundle\EventListener\LoadORMMetadataSubscriber:
         arguments:
             - "@service_container"

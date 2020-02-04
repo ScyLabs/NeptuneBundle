@@ -9,13 +9,14 @@
 namespace ScyLabs\NeptuneBundle\Controller;
 
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class MainController extends Controller
+class MainController extends AbstractController
 {
 
     public function indexAction(){
@@ -42,6 +43,5 @@ class MainController extends Controller
         $response->headers->setCookie(new Cookie('changelogs-'.$version,true,strtotime('now + 1 year')));
         $response->headers->set('Content-type','application/json');
         return $response;
-
     }
 }

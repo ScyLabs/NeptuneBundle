@@ -77,6 +77,7 @@ class PhotoController extends BaseController
         $width *= ($multiplicator / 100);
         $height *= ($multiplicator / 100);
 
+
         // Si width != 0 , on calcule la meilleure taille
         if($width != 0 && $truncate == 0){
             $width  = $this->calcScale($width);
@@ -105,6 +106,9 @@ class PhotoController extends BaseController
         if($monochrome !== false){
             $monochrome = explode('-',$monochrome);
             $wh .= '_monochrome_'.$monochrome[0].'_'.$monochrome[1];
+        }
+        if($truncate != 0){
+            $wh .= '_truncate';
         }
 
         $path = $localThumb.'/'.$fileName.$wh.'.'.$ext;

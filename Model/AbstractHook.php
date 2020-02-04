@@ -20,7 +20,7 @@ abstract class AbstractHook implements HookInterface
 
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
-        $this->templating = $container->get('templating');
+        $this->templating = $container->get('twig');
     }
     protected function render(string $template,array $options = []){
         return $this->templating->render($template);

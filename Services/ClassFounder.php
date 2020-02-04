@@ -7,11 +7,12 @@
  */
 
 namespace ScyLabs\NeptuneBundle\Services;
+use ScyLabs\NeptuneBundle\Model\ClassFounderInterface;
 use Symfony\Component\Yaml\Yaml;
 use Psr\Container\ContainerInterface;
 
 
-class ClassFounder
+class ClassFounder implements ClassFounderInterface
 {
 
     private $container;
