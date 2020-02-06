@@ -171,7 +171,7 @@ class Infos
 
     public function setSiret(?string $siret): self
     {
-        $this->city = $siret;
+        $this->siret = $siret;
 
         return $this;
     }
@@ -182,7 +182,7 @@ class Infos
 
     public function setCodeApe(?string $codeApe): self
     {
-        $this->city = $codeApe;
+        $this->codeApe = $codeApe;
 
         return $this;
     }

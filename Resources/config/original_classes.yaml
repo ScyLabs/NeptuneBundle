@@ -41,7 +41,7 @@ documentDetailForm: ScyLabs\NeptuneBundle\Form\DocumentDetailForm
 
 video: ScyLabs\NeptuneBundle\Entity\Video
 videoDetail: ScyLabs\NeptuneBundle\Entity\VideoDetail
-videoDetailForm: ScyLabs\NeptuneBundle\FormVideoDetailForm
+videoDetailForm: ScyLabs\NeptuneBundle\Form\VideoDetailForm
 
 infos: ScyLabs\NeptuneBundle\Entity\Infos
 infosForm: ScyLabs\NeptuneBundle\Form\InfosForm
