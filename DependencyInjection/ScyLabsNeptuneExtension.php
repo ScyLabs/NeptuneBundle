@@ -16,7 +16,6 @@ use Doctrine\Common\Annotations\DocParser;
 use ScyLabs\GiftCodeBundle\Entity\GiftCode;
 use ScyLabs\NeptuneBundle\Annotation\ScyLabsNeptune\Override;
 use ScyLabs\NeptuneBundle\Entity\Page;
-use ScyLabs\NeptuneBundle\Manager\HookManager;
 use ScyLabs\NeptuneBundle\Model\OverrideAnnotationFounderInterface;
 use ScyLabs\NeptuneBundle\ScyLabsNeptuneBundle;
 use ScyLabs\NeptuneBundle\Services\OverrideAnnotationFounder;
@@ -112,6 +111,7 @@ class ScyLabsNeptuneExtension extends Extension
                 $config['override'][$key] = $class;
             }
         }
+
 
         $container->setParameter($this->getAlias().'.override',$config['override']);
         $container->setParameter($this->getAlias().'.compress',$config['compress']);

@@ -108,7 +108,7 @@ class PageController extends AbstractController
             $page->getZones()[0]->setTypeHead(1);
         }
 
-        if($page->getActive() === false || $page->getRemove() === true){
+        if(!$page->getActive() || $page->getRemove()){
             return $this->redirectToRoute('homepage');
         }
         

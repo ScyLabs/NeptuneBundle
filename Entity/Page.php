@@ -159,11 +159,10 @@ class Page extends AbstractElem
     {
         parent::setRemove($remove);
 
-        if($this->childs !== null){
-            foreach ($this->childs as $page){
-                $page->setRemove($remove);
-            }
+        foreach ($this->childs as $page){
+            $page->setRemove($remove);
         }
+
         return $this;
     }
 

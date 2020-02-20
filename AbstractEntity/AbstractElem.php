@@ -20,6 +20,11 @@ use Symfony\Component\Form\FormTypeInterface;
 abstract class AbstractElem
 {
 
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
     protected $id;
     /**
      * @ORM\Column(type="string", length=255)

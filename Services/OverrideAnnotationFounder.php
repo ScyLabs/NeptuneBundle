@@ -10,10 +10,12 @@ namespace ScyLabs\NeptuneBundle\Services;
 
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\DocParser;
 use ScyLabs\NeptuneBundle\Annotation\ScyLabsNeptune\Override;
 use ScyLabs\NeptuneBundle\Model\OverrideAnnotationFounderInterface;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\ORM\Mapping as ORM;
+
 
 class OverrideAnnotationFounder implements OverrideAnnotationFounderInterface
 {
@@ -21,9 +23,10 @@ class OverrideAnnotationFounder implements OverrideAnnotationFounderInterface
     public function getAnnotations(string $directoryNameSpace, string $directoryPath) {
         $overrideAnnotations = [];
 
-        $annotationReader = new AnnotationReader();
-        new \ReflectionClass(ORM\Entity::class);
-        new \ReflectionClass(Override::class);
+        $docParser = new DocParser();
+        $docParser->setIgnoreNotImportedAnnotations(true);
+        $docParser->addNamespace('ScyLabs\NeptuneBundle\Annotation\ScyLabsNeptune');
+        $docParser->addNamespace('ScyLabs\NeptuneBundle\Annotation');
 
         foreach (self::ANNOTATIONS_DIRECTORIES as $directoryName){
             if(is_dir($directory = $directoryPath.'/'.$directoryName)){
@@ -40,17 +43,17 @@ class OverrideAnnotationFounder implements OverrideAnnotationFounderInterface
 
                     $reflectionClass = new \ReflectionClass($classNamespace);
 
-                    if (null !== $classAnotations = $annotationReader->getClassAnnotations($reflectionClass)){
-                        foreach ($classAnotations as $classAnotation){
-                            if(!($classAnotation instanceof Override ))
-                                continue;
 
-                                if(null === $classAnotation->class)
-                                    $classAnotation->class = $reflectionClass->getName();
 
-                                $overrideAnnotations[] = $classAnotation;
+                    $annotations = $docParser->parse($reflectionClass->getDocComment(), 'class ' . $reflectionClass->getName());
+
+                    foreach ($annotations as $annotation){
+
+                        if(null === $annotation->class)
+                            $annotation->class = $reflectionClass->getName();
+
+                        $overrideAnnotations[] = $annotation;
                         }
-                    }
                 }
             }
         }
