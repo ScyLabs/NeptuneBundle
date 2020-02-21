@@ -30,7 +30,7 @@
                                             </thead>
                                             <tbody>
                                             {% if type.elements.count() > 0  %}
-                                                {% for object in type.elements %}
+                                                {% for object in type.elements({'remove':false}) %}
 
                                                         <tr>
                                                             <td>
