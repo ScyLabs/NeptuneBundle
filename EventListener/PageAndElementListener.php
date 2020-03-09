@@ -6,7 +6,7 @@ namespace ScyLabs\NeptuneBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
-class PageListener
+class PageAndElementListener
 {
     public function prePersist(LifecycleEventArgs $event){
         $detail = $event->getEntity();
