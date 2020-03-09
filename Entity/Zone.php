@@ -150,7 +150,7 @@ class Zone extends AbstractChild
     }
     */
     public function getPageLink() : ?Page{
-        if( null !== $this->pageLink)
+        if( null !== $this->pageLink && $this->pageLinks->count() === 0)
             return $this->pageLink;
         if($this->pageLinks->count() === 0)
             return null;
