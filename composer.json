@@ -1,14 +1,14 @@
 {
     "name": "scylabs/neptune-bundle",
     "type": "symfony-bundle",
-    "version": "1.3.6",
+    "version": "1.3.7",
     "keywords": ["User management"],
     "homepage": "https://github.com/ScyLabs/NeptuneBundle",
     "license": "MIT",
     "description": "Admin bundle all in one",
     "require": {
         "php": "^7.1.3",
-        "friendsofsymfony/user-bundle": "^2",PageAndElementListener.php
+        "friendsofsymfony/user-bundle": "^2",
         "scylabs/hook-bundle": "^1",
         "symfony/translation": "^4",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
