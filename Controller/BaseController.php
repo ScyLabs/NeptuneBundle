@@ -74,6 +74,7 @@ abstract class BaseController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $object = $form->getData();
+
             if($object->getid() == null){
                 if(null !== $classDetail = $this->getClass($type.'Detail')){
                     $langs = $this->getParameter('langs');

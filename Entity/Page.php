@@ -461,4 +461,8 @@ class Page extends AbstractElem
     }
 
 
+    public function getSlug() :?string{
+        return $this->slug;
+    }
+
 }

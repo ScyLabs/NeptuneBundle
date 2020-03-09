@@ -2,6 +2,12 @@
   z-index: 9999999;
 }
 
+#myTable a {
+  color:#1976d2;
+  &:hover{
+    color:#2ecc71;
+  }
+}
 .download_zone{
   position: absolute;
   left:50%;
@@ -145,6 +151,9 @@
 .div-ajax{
   max-width: 1600px;
   width:100%;
+  &.small{
+    max-width: 600px;
+  }
   &.add,&.edit{
     max-width: 400px;
   }

@@ -77,9 +77,13 @@ class User extends BaseUser
      */
     protected $videos;
 
-
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    private $creationDate;
 
     private $tmpRole;
+
     public function setTmpRole(string $role) : self{
         $this->tmpRole = $role;
         return $this;
@@ -100,12 +104,23 @@ class User extends BaseUser
         if($this->enabled === null){
             $this->enabled = true;
         }
+
+        if(null === $this->creationDate){
+            $this->creationDate = new \DateTime('now');
+        }
     }
     
     public function getId() :?int{
         return $this->id;
     }
 
+    public function getCreationDate() : ?\DateTime{
+        return $this->creationDate;
+    }
+    public function setCreationDate(\DateTime $creationDate) : self{
+        $this->creationDate = $creationDate;
+        return $this;
+    }
     public function getCivility(): ?string
     {
         return $this->civility;

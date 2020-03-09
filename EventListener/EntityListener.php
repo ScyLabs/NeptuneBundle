@@ -153,14 +153,7 @@ class EntityListener
 
     }
 
-    public function postUpdate(LifecycleEventArgs $args){
-        $em = $args->getEntityManager();
-        $entity = $args->getEntity();
-        if($entity instanceof  Page || $entity instanceof PageDetail || $entity instanceof  Element || $entity instanceof ElementDetail){
-            $em->flush();
-        }
 
-    }
 
     private function childsUrl(Page $page){
 

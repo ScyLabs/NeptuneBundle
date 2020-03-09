@@ -47,49 +47,29 @@ class DetailController extends BaseController
 
         /*Si l'objet n'a aucun details */
 
+        foreach ($details as $detail){
+            if(!in_array($detail->getLang(),$langs)){
+                $object->removeDetail($detail);
+                if(null !== $url = $object->geturl($detail->getLang())){
+                    $object->removeUrl($url);
+                    $em->remove($url);
+                }
+                $em->remove($detail);
+            }
+        }
 
-        if($details->count() === 0){
+        foreach ($langs as $lang){
+            $detail = $object->getDetail($lang);
 
-            foreach ($langs as $lang){
-                $detail = new $classDetail();
+            if(!$detail->getId()){
                 $detail->setLang($lang);
                 $detail->setName($object->getName());
                 $object->addDetail($detail);
                 $em->persist($detail);
             }
         }
-        elseif(sizeof($langs) !== $details->count()){
-            if(sizeof($langs ) < $details->count() ){
-                $tabLang = array();
-                foreach ($details as $detail){
-                    $tabLang[] = $detail->getLang();
-                }
 
-                $diff = array_diff($tabLang,$langs);
-                foreach ($diff as $lang){
-                    $em->remove($object->getDetail($lang));
-                }
-            }
-            else{
-                /* Si l'object a des details , mais qu'il n'en a pas autant que de langues actives */
-                foreach ($langs as $lang){
-                    $i = 0;
-                    foreach ($details as $detail){
-                        $i++;
-                        if($detail->getLang() == $lang){
-                            break;
-                        }
-                        if($i == sizeof($details)){
-                            $newDetail = new $classDetail();
-                            $newDetail->setLang($lang);
-                            $newDetail->setName($object->getName());
-                            $object->addDetail($newDetail);
-                            $em->persist($newDetail);
-                        }
-                    }
-                }
-            }
-        }
+
         $em->flush();
         $details = $object->getDetails();
 

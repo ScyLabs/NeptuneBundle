@@ -59,13 +59,14 @@ services:
               - { name: doctrine.event_listener,event: prePersist }
               - { name: doctrine.event_listener,event: preUpdate }
 
-    ScyLabs\NeptuneBundle\EventListener\EntityListener:
-        arguments:
-            $langs: '%langs%'
-        tags:
-            - { name: doctrine.event_listener,event: postPersist }
-            - { name: doctrine.event_listener,event: preUpdate }
-            - { name: doctrine.event_listener,event: postUpdate }
+
+#    ScyLabs\NeptuneBundle\EventListener\EntityListener:
+#        arguments:
+#            $langs: '%langs%'
+#        tags:
+#            - { name: doctrine.event_listener,event: postPersist }
+#            - { name: doctrine.event_listener,event: preUpdate }
+#            - { name: doctrine.event_listener,event: postUpdate }
     ScyLabs\NeptuneBundle\EventListener\RequestListener:
         tags:
             - { name: kernel.event_listener,event: kernel.request }

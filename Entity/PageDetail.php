@@ -2,11 +2,13 @@
 
 namespace ScyLabs\NeptuneBundle\Entity;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractAvancedDetail;
 
 /**
  * @ORM\Entity(repositoryClass="ScyLabs\NeptuneBundle\Repository\PageDetailRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class PageDetail extends AbstractAvancedDetail
 {
@@ -22,6 +24,7 @@ class PageDetail extends AbstractAvancedDetail
      * @ORM\JoinColumn(nullable=false)
      */
     protected $page;
+
 
     public function getId()
     {
