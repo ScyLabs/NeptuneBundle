@@ -104,6 +104,10 @@ class PageController extends AbstractController
 
 
         $page = $url->getPage();
+
+        if($page->getPrio() === 0 && $page->getParent() === null){
+            return $this->redirectToRoute('homepage',['_locale'=>$request->getLocale()]);
+        }
         if($page->getZones()->count() > 0){
             $page->getZones()[0]->setTypeHead(1);
         }
