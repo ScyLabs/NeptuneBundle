@@ -443,7 +443,7 @@ function initialisations(container,instance,current,action){
             retryChunks: true,
             forceChunking: true,
             maxFilesize: 2500,
-            //chunkSize: 1000 * 1024,
+            chunkSize: 200 * 1024,
 
             accept:function(file,done){
 
