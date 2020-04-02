@@ -64,6 +64,8 @@ class ElementType extends AbstractElemType
 
         $criteria->orderBy($opts['order']);
 
+
+        $criteria->where(Criteria::expr()->eq('remove',$opts['remove']));
         if(array_key_exists('active',$opts))
             $criteria->andWhere(Criteria::expr()->eq('active',$opts['active']));
 
