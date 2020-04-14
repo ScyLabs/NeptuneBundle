@@ -1,9 +1,11 @@
 {% block css %}
 {% endblock css %}
 <div class="div-ajax {% block ajax_classes %}{% endblock %}">
-    <h3>{{ (title is defined) ? title : '' }}</h3>
+    <h3>{{ (title is defined) ? title : '' }}{% block title %}{% endblock title %}</h3>
     <div class="content">
         {% block content %}
         {% endblock content %}
     </div>
 </div>
+{% block js %}
+{% endblock %}

@@ -94,7 +94,7 @@ Chargement de scripts de faÃ§on automatique :
                     opts: {
                         touch: false,
                         afterShow: function(instance , current){
-                            fn(data);
+                            fn(instance,current);
                         }
                     }
                 }]);

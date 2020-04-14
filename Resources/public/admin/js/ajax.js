@@ -140,7 +140,7 @@ $.fn.neptuneAjaxEvent = function(parentObject,parentAction){
                             afterShow: function(instance , current){
 
                                 let container =  current.$content;
-                                let forms = container.find('form');
+                                let forms = container.find('form:not(.noajax)');
 
                                 initialisations(container,instance,current,action);
 
