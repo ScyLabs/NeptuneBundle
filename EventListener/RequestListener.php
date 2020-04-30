@@ -12,6 +12,7 @@ namespace ScyLabs\NeptuneBundle\EventListener;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class RequestListener
 {
@@ -19,12 +20,13 @@ class RequestListener
     private $routeNotCompress;
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
-        $this->routeNotCompress = array('generatePhoto','neptune_export_text','neptune_import_text','codex_photo');
-
+        $this->routeNotCompress = ($container->hasParameter('routesNotCompress')) ? $container->getParameter('routesNotCompress') : ['generatePhoto','neptune_export_text','neptune_import_text','codex_photo'];
     }
 
-    public function onKernelRequest(GetResponseEvent $event){
+    public function onKernelRequest(RequestEvent $event){
 
+
+        dump($event);
         if(!$event->isMasterRequest()){
             return;
         }
