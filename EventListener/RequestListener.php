@@ -25,8 +25,6 @@ class RequestListener
 
     public function onKernelRequest(RequestEvent $event){
 
-
-        dump($event);
         if(!$event->isMasterRequest()){
             return;
         }
