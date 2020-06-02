@@ -11,11 +11,12 @@ namespace ScyLabs\NeptuneBundle\Controller;
 
 use ScyLabs\NeptuneBundle\Entity\Element;
 use ScyLabs\NeptuneBundle\Entity\Page;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GeneratorController extends BaseController
+class GeneratorController extends AbstractController
 {
 
     public function generateSiteMapAction(Request $request){

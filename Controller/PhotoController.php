@@ -10,6 +10,7 @@ namespace ScyLabs\NeptuneBundle\Controller;
 
 use ScyLabs\NeptuneBundle\Entity\File;
 use ScyLabs\NeptuneBundle\Entity\Photo;
+use ScyLabs\NeptuneBundle\Model\NotCompressedInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PhotoController extends BaseController
+class PhotoController extends BaseController implements NotCompressedInterface
 {
     public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome,$name){
 

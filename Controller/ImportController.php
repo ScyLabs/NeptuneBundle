@@ -15,15 +15,17 @@ use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Doctrine\Common\Collections\ArrayCollection;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractAvancedDetail;
 use ScyLabs\NeptuneBundle\Entity\ZoneDetail;
+use ScyLabs\NeptuneBundle\Model\NotCompressedInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Contracts\Translation\TranslatorInterface as TranslationTranslatorInterface;
 
-class ImportController extends BaseController
+class ImportController extends BaseController implements NotCompressedInterface
 {
 
     private $translator;
 
-    public function __construct(TranslatorInterface $translator){
+    public function __construct(TranslationTranslatorInterface $translator){
         $this->translator = $translator;
     }
     
