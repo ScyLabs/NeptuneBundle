@@ -68,6 +68,6 @@ services:
             - { name: doctrine.event_listener,event: postUpdate }
     ScyLabs\NeptuneBundle\EventListener\CompressListener:
         tags:
-            - { name: kernel.event_listener,event: kernel.request }
+            - { name: kernel.event_listener,event: kernel.controller }
 
     #Fin listeners
