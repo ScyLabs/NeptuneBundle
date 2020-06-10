@@ -17,7 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends BaseController
 {
 
-    public function listingAction(Request $request){
+    /**
+     * @Route("/user",name="neptune_user")
+     */
+    public function list(Request $request){
 
         $class = $this->getClass('user');
         $repo = $this->getDoctrine()->getRepository($class);
@@ -40,7 +43,11 @@ class UserController extends BaseController
 
     }
 
-    public function switchActiveAction(Request $request,$id){
+
+    /**
+     * @Route("/user/active/{id}",name="neptune_user_active",requirements={"type"="[a-z]{2,20}","id"="[0-9]+"})
+     */
+    public function switchActive(Request $request,$id){
 
         $em = $this->getDoctrine()->getManager();
         $class = $this->getClass('user');
@@ -62,7 +69,10 @@ class UserController extends BaseController
         return $this->redirect($referer);
     }
 
-    public function addAction(Request $request,UserManagerInterface $userManager,\Swift_Mailer $mailer){
+    /**
+     * @Route("/user/add",name="neptune_user_add")
+     */
+    public function add(Request $request,UserManagerInterface $userManager,\Swift_Mailer $mailer){
 
         $class = $this->getClass('user',$form);
         $object = new $class();

@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Symfony\Component\Translation\Translator;
 use Twig\Environment;
 
-class TwigExceptionController extends \Symfony\Bundle\TwigBundle\Controller\ExceptionController
+class TwigExceptionController
 {
     private $container;
     public function __construct(Environment $twig, bool $debug,ContainerInterface $container){

@@ -24,7 +24,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class DetailController extends BaseController
 {
 
-    public function listAction(Request $request,$type,$id){
+    /**
+     * @Route("/{type}/details/{id}",name="neptune_detail",requirements={"type"="[a-z]{2,20}","id"="[0-9]+"})
+     */
+    public function list(Request $request,$type,$id){
 
         if(null === $class = $this->getClass($type)){
 
@@ -137,7 +140,10 @@ class DetailController extends BaseController
     }
 
 
-    public function editAction(Request $request,$type,$id,$lang){
+    /**
+     * @Route("/{type}/detail/{lang}/{id}",name="neptune_detail_edit",requirements={"type"="[a-z]{2,20}","id"="[0-9]+","lang"="[a-z]{2}"})
+     */
+    public function edit(Request $request,$type,$id,$lang){
 
         if(null === $class = $this->getClass($type)){
             return $this->redirectToRoute('neptune_home');

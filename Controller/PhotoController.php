@@ -21,6 +21,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PhotoController extends BaseController implements NotCompressedInterface
 {
+    /**
+     * @Route("/photo/{id}/{width}/{height}/{multiplicator}/{truncate}{monochrome}/{name}",name="generatePhoto",requirements={
+     * "id"= "[0-9]+",
+     * "width"= "[0-9]{1,4}",
+     * "height"= "[0-9]{0,4}",
+     * "truncate"= "[01]",
+     * "monochrome"= "(/[a-zA-Z0-9]{6}-[a-fA-F0-9]{6})?",
+     * "multiplicator"= "[0-9]{2,3}"
+     * },defaults={"height"=0,"multiplicator"=100,"truncate"=0,"monochrome"="","name"=""})
+     */
     public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome,$name){
 
         $monochrome = trim($monochrome,'/');

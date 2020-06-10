@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
@@ -23,7 +24,10 @@ class MainController extends AbstractController
 
         return $this->render('@ScyLabsNeptune/admin/index.html.twig');
     }
-    public function changelogsAction(Request $request){
+    /**
+     * @Route("/changelogs",name="neptune_changelogs")
+     */
+    public function changelogs(Request $request){
 
         $changelogs = $this->getParameter('changelogs');
 
@@ -37,7 +41,10 @@ class MainController extends AbstractController
 
         return $response;
     }
-    public function setCookieChangelogsAction($version){
+    /**
+     * @Route("/changelogs/{version}",name="neptune_changelog_cookie")
+     */
+    public function setCookieChangelogs($version){
 
         $response = new RedirectResponse($this->generateUrl('neptune_home'));
         $response->headers->setCookie(new Cookie('changelogs-'.$version,true,strtotime('now + 1 year')));

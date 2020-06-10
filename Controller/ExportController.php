@@ -17,7 +17,7 @@ use ScyLabs\NeptuneBundle\AbstractEntity\AbstractAvancedDetail;
 use ScyLabs\NeptuneBundle\Entity\ZoneDetail;
 use ScyLabs\NeptuneBundle\Model\NotCompressedInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as TranslationTranslatorInterface;
-
+use Symfony\Component\Routing\Annotation\Route;
 class ExportController extends BaseController implements NotCompressedInterface
 {
 
@@ -37,7 +37,10 @@ class ExportController extends BaseController implements NotCompressedInterface
     }
     
 
-    public function exportTextAction(Request $request){
+    /**
+     * @Route("/export/text",name="neptune_export_text")
+     */
+    public function exportText(Request $request){
         
        
         $langs = $this->getParameter('langs');

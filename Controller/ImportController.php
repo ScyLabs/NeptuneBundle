@@ -19,7 +19,7 @@ use ScyLabs\NeptuneBundle\Model\NotCompressedInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Contracts\Translation\TranslatorInterface as TranslationTranslatorInterface;
-
+use Symfony\Component\Routing\Annotation\Route;
 class ImportController extends BaseController implements NotCompressedInterface
 {
 
@@ -29,7 +29,10 @@ class ImportController extends BaseController implements NotCompressedInterface
         $this->translator = $translator;
     }
     
-    public function importTextAction(Request $request){
+    /**
+     * @Route("/import/text",name="neptune_import_text")
+     */
+    public function importText(Request $request){
 
 
         $langs = $this->getParameter('langs');
