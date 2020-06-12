@@ -1,3 +1,6 @@
+neptune_main: 
+    resource: ../../Controller/MainController.php
+    type: annotation
 neptune_codex:
     resource: ../../Controller/CodexController.php
     type: annotation
@@ -31,13 +34,3 @@ neptune_entity:
     resource: ../../Controller/EntityController.php
     type: annotation
 
-
-
-
-
-
-
-
-neptune_home:
-    path: /
-    controller: ScyLabs\NeptuneBundle\Controller\MainController::indexAction

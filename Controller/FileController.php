@@ -26,7 +26,7 @@ use ScyLabs\NeptuneBundle\Entity\FileType;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\Partner;
 use ScyLabs\NeptuneBundle\Entity\Photo;
-use ScyLabs\NeptuneBundle\Entity\User;
+use ScyLabs\UserBundle\Entity\User;
 use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
 use ScyLabs\NeptuneBundle\Services\FileUploader;

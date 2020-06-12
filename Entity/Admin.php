@@ -5,14 +5,14 @@ namespace ScyLabs\NeptuneBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use ScyLabs\NeptuneBundle\Repository\UserRepository;
+use ScyLabs\NeptuneBundle\Repository\AdminRepository;
 
 use Doctrine\ORM\Mapping\OrderBy;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Entity(repositoryClass=AdminRepository::class)
  */
-class User
+class Admin implements UserInterface
 {
 
 
@@ -30,7 +30,7 @@ class User
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="array")
      */
     private $roles = [];
 
@@ -50,16 +50,6 @@ class User
      */
     protected $name;
 
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $country;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $address;
 
     /**
      * @ORM\Column(type="string",length=255,nullable=true)
@@ -190,29 +180,6 @@ class User
         return $this;
     }
 
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(?string $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?string $address): self
-    {
-        $this->address = $address;
-
-        return $this;
-    }
 
     public function getEnabled() : bool {
         return $this->enabled;

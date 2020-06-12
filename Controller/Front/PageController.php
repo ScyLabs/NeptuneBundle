@@ -17,7 +17,7 @@ use ScyLabs\NeptuneBundle\Entity\Infos;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\PageUrl;
 use ScyLabs\NeptuneBundle\Entity\Partner;
-use ScyLabs\NeptuneBundle\Entity\User;
+use ScyLabs\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
@@ -76,7 +76,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @Route("/{_locale}/{slug}{anchor}",name="page",requirements={"slug"="^[a-z-_0-9/]+$","_locale"="[a-z]{2}","anchor"="^(\\#)[a-z-_]+$"},defaults={"ancor"="","_locale"="fr"})
+     * @Route("/{_locale}/{slug}{anchor}",name="page",requirements={"slug"="^[a-z-_0-9/]+$","_locale"="[a-z]{2}","anchor"="^(\\#)[a-z-_]+$"},defaults={"anchor"="","_locale"="fr"})
      */
     public function page(Request $request,$slug,?array $options = null){
 

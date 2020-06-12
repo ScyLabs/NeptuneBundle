@@ -18,7 +18,7 @@ use ScyLabs\NeptuneBundle\Entity\ElementType;
 use ScyLabs\NeptuneBundle\Entity\File;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\Photo;
-use ScyLabs\NeptuneBundle\Entity\User;
+use ScyLabs\UserBundle\Entity\User;
 use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
 use ScyLabs\NeptuneBundle\Form\ElementForm;
@@ -51,7 +51,7 @@ class EntityController extends BaseController
 
 
     /**
-     * @Route("/{type}/{parentType}/{parentId}",name="neptune_entity",requirements={"type"="a-zA-Z-]{2,20}","parentType"="[a-zA-Z]{2,20}"},defaults={"parentType":null,"parentId"=null})
+     * @Route("/{type}/{parentType}/{parentId}",name="neptune_entity",requirements={"type"="[a-zA-Z-]{2,20}","parentType"="[a-zA-Z]{2,20}"},defaults={"parentType":null,"parentId"=null})
      */
     public function list($type,$parentType,$parentId){
 

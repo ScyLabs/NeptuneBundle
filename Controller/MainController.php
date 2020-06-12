@@ -20,6 +20,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
 
+    /**
+     * @Route("/",name="neptune_home")
+     */
     public function indexAction(){
 
         return $this->render('@ScyLabsNeptune/admin/index.html.twig');

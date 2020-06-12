@@ -17,6 +17,8 @@ use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\PageDetail;
 use ScyLabs\NeptuneBundle\Entity\Partner;
 use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,11 +27,12 @@ use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Symfony\Component\Translation\Translator;
 use Twig\Environment;
 
-class TwigExceptionController
+class TwigExceptionController implements ContainerAwareInterface
 {
-    private $container;
-    public function __construct(Environment $twig, bool $debug,ContainerInterface $container){
-        $this->container = $container;
+    use ContainerAwareTrait;
+    
+    public function __construct(Environment $twig, bool $debug){
+    
         parent::__construct($twig, $debug);
     }
 

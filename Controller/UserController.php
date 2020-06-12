@@ -9,7 +9,7 @@
 namespace ScyLabs\NeptuneBundle\Controller;
 
 use FOS\UserBundle\Model\UserManagerInterface;
-use ScyLabs\NeptuneBundle\Entity\User;
+use ScyLabs\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

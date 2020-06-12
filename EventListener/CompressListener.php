@@ -3,20 +3,21 @@
 namespace ScyLabs\NeptuneBundle\EventListener;
 
 use ScyLabs\NeptuneBundle\Model\NotCompressedInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
-class CompressListener  {
+class CompressListener implements ContainerAwareInterface
+{
+    use ContainerAwareTrait;
 
-    private $container;
+
     private $routeNotCompress;
-    public function __construct(ContainerInterface $container) {
-        $this->container = $container;
 
-        /**
-         * @deprecated
-         */
-        $this->routeNotCompress = ($container->hasParameter('routesNotCompress')) ? $container->getParameter('routesNotCompress') : [];
+    public function __construct() {
+     
+
     }
 
     public function onKernelController(ControllerEvent $event){
@@ -31,7 +32,7 @@ class CompressListener  {
         $controller = get_class($event->getController()[0]);
         $controllerImplements = class_implements($controller);
         
-        if(array_key_exists(NotCompressedInterface::class,$controllerImplements) || in_array($route,$this->routeNotCompress))
+        if(array_key_exists(NotCompressedInterface::class,$controllerImplements))
             return;
 
         ob_start(RequestListener::class."::ob_html_compress");

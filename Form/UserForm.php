@@ -2,7 +2,7 @@
 
 namespace ScyLabs\NeptuneBundle\Form;
 
-use ScyLabs\NeptuneBundle\Entity\User;
+use ScyLabs\UserBundle\Entity\User;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Repository\PageRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

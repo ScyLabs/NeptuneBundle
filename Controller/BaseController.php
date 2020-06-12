@@ -25,7 +25,7 @@ use ScyLabs\NeptuneBundle\Entity\Partner;
 use ScyLabs\NeptuneBundle\Entity\PartnerDetail;
 use ScyLabs\NeptuneBundle\Entity\Photo;
 use ScyLabs\NeptuneBundle\Entity\PhotoDetail;
-use ScyLabs\NeptuneBundle\Entity\User;
+use ScyLabs\UserBundle\Entity\User;
 use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
 use ScyLabs\NeptuneBundle\Entity\ZoneDetail;

@@ -13,6 +13,8 @@ use ScyLabs\NeptuneBundle\Repository\ElementTypeRepository;
 use Doctrine\ORM\Mapping\Entity;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -30,13 +32,9 @@ use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Validator\Constraints\PositiveOrZero;
 
-class ElementForm extends AbstractType
+class ElementForm extends AbstractType implements ContainerAwareInterface
 {
-    private $container;
-
-    public function  __construct(ContainerInterface $container) {
-        $this->container = $container;
-    }
+    use ContainerAwareTrait;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
