@@ -8,11 +8,17 @@
 
 namespace ScyLabs\NeptuneBundle\Controller;
 
-use FOS\UserBundle\Model\UserManagerInterface;
-use ScyLabs\UserBundle\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use ScyLabs\NeptuneBundle\Entity\Admin;
+use ScyLabs\NeptuneBundle\Repository\AdminRepository;
+use ScyLabs\NeptuneBundle\Form\AdminCreationForm;
+use ScyLabs\NeptuneBundle\Model\PasswordGeneratorInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Twig\Environment;
 
 class UserController extends BaseController
 {
@@ -22,7 +28,7 @@ class UserController extends BaseController
      */
     public function list(Request $request){
 
-        $class = $this->getClass('user');
+        $class = $this->getClass('admin');
         $repo = $this->getDoctrine()->getRepository($class);
         $users = $repo->findAll();
 
@@ -47,24 +53,25 @@ class UserController extends BaseController
     /**
      * @Route("/user/active/{id}",name="neptune_user_active",requirements={"type"="[a-z]{2,20}","id"="[0-9]+"})
      */
-    public function switchActive(Request $request,$id){
+    public function switchActive(Request $request,$id,AdminRepository $adminRepository){
 
         $em = $this->getDoctrine()->getManager();
-        $class = $this->getClass('user');
-        $user = $em->getRepository($class)->find($id);
+       
+        $admin = $adminRepository->find($id);
 
 
-        if(null === $user  || ! $user instanceof User){
+        if(!$admin instanceof User){
             $this->redirectToRoute('neptune_user');
         }
 
         $referer = $request->headers->get('referer');
-        if($user->hasRole('ROLE_SUPER_ADMIN')){
+
+        if($admin->hasRole('ROLE_SUPER_ADMIN')){
             return $this->redirect($referer);
         }
 
-        $user->setEnabled(!$user->getEnabled());
-        $em->persist($user);
+        $admin->setEnable(!$admin->getEnable());
+        $em->persist($admin);
         $em->flush();
         return $this->redirect($referer);
     }
@@ -72,51 +79,59 @@ class UserController extends BaseController
     /**
      * @Route("/user/add",name="neptune_user_add")
      */
-    public function add(Request $request,UserManagerInterface $userManager,\Swift_Mailer $mailer){
+    public function add(Request $request,\Swift_Mailer $mailer,Environment $templating,PasswordGeneratorInterface $passwordGenerator,UserPasswordEncoderInterface $passwordEncoder,EntityManagerInterface $entityManager){
 
-        $class = $this->getClass('user',$form);
-        $object = new $class();
+        
+        $object = new Admin();
         $params = array();
 
         $route = $this->generateUrl('neptune_user_add');
-        $form = $this->createForm($form,$object,['action'=>$route]);
-
+        $form = $this->createForm(AdminCreationForm::class,$object,['action'=>$route]);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
 
-            $object = $form->getData();
-            if(!$object instanceof User){
-                return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
+            $admin = $form->getData();
+
+            if(null !== $this->getDoctrine()->getRepository(Admin::class)->findOneBy(['email'  =>  strtolower($admin->getEmail())])){
+                
+                if($request->isXmlHttpRequest()){
+                    $emailForm = $form->get('email');
+                    $emailForm->addError(new FormError('Un utilisateur existe déjà avec cet e-mail'));
+                
+                    return $this->json(array('success'=>false,'errors'  =>   [
+                        ['email' =>  $emailForm->getErrors()]
+                    ]));
+                }
+                return $this->redirectToRoute('neptune_user');
             }
 
+            $pass = $passwordGenerator->generate([
+                'minCapital'    =>  2,
+                'minDigit'      =>  2
+            ]);
 
-            $templating = $this->container->get('twig');
-
-            $pass = substr(hash('sha256',random_bytes(10)),0,10);
-
-            $user = $userManager->createUser()
-                ->setUsername($object->getUsername())
-                ->setEmail($object->getUsername())
-                ->setFirstConnexion(true)
-                ->setRoles(array($object->getTmpRole()))
-                ->setPlainPassword($pass);
-
+            $admin->setPassWord($passwordEncoder->encodePassword($admin,$pass));
+            $admin->setRoles([
+                'ROLE_ADMIN'
+            ]);
+            $entityManager->persist($admin);
+            $entityManager->flush();
 
             $message = (new \Swift_Message('Création de compte sur le site '.$request->getHttpHost()))
                 ->setFrom('web@e-corses.com')
-                ->setTo($user->getEmail())
+                ->setTo($admin->getEmail())
                 ->setBody(
                     $templating->render(
                         '@ScyLabsNeptune/mail/mail_account.html.twig',
                         array(
-                            'login' =>  $user->getEmail(),
+                            'login' =>  $admin->getEmail(),
                             'pass'  =>  $pass,
                         )
                     )
                     ,'text/html');
             $mailer->send($message);
-            $userManager->updateUser($user);
+            
             $this->get('session')->getFlashBag()->add('notice','Votre Utilisateur à bien été ajouté');
 
             if($request->isXmlHttpRequest()){
@@ -134,7 +149,22 @@ class UserController extends BaseController
         return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
 
     }
+    /**
+     * @Route("/admin/delete/{id}",name="neptune_admin_delete",requirements={"id"="[0-9]+"})
+     */
+    public function delete(Request $request,$id,AdminRepository $adminRepository,EntityManagerInterface $entityManager){
+        $admin = $adminRepository->find($id);
+        if(null === $admin)
+            return $this->redirectToRoute('neptune_home');
+        
+        $entityManager->remove($admin);
+        $entityManager->flush();
 
+        if($request->isXmlHttpRequest()){
+            return $this->json(array('success'=>true,'message'=>'Le compte administrateur à bien été supprimé'));
+        }
+        return $this->redirect($request->headers->get('referer'));
+    }
 
 
 }

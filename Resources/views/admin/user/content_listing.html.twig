@@ -15,11 +15,11 @@
                     </thead>
                     <tbody>
                         {% for user in users %}
-                            <tr class="user {{ (user.firstConnexion) ? 'firstCo' : '' }} {{ (user.enabled == false) ? 'disabled' : '' }}">
+                            <tr class="user {{ (user.enable == false) ? 'disabled' : '' }}">
                                 <td width="50px" style="text-align: center">
                                     {% if user.hasRole('ROLE_SUPER_ADMIN') == false %}
                                         <a href="{{ path('neptune_user_active',{'id':user.id}) }}" class="ajax active">
-                                            {% if user.enabled %}
+                                            {% if user.enable %}
                                                 <i class="fa fa-check text-success" title="Désactiver"></i>
                                             {% else %}
                                                 <i class="fa fa-times text-danger" title="Activer"></i>
@@ -41,13 +41,13 @@
                                 <td>
                                     <ul class="actions">
 
-                                        {% if user.enabled == true %}
-                                            <li><a href="{{ path('neptune_file_gallery_prio',{'type':'user','id':user.id}) }}" title="Gestion des fichiers"><i class="fal fa-file-alt"></i></a></li>
-                                            <li><a href="{{ path('neptune_entity_edit',{'id':user.id,'type':'user'}) }}" title="Modifier"><i class="fal fa-pencil"></i></a></li>
+                                        {% if user.enable == true %}
+                                            <li><a href="{{ path('neptune_file_gallery_prio',{'type':'admin','id':user.id}) }}" title="Gestion des fichiers"><i class="fal fa-file-alt"></i></a></li>
+                                            <li><a href="{{ path('neptune_entity_edit',{'id':user.id,'type':'admin'}) }}" title="Modifier"><i class="fal fa-pencil"></i></a></li>
 
                                             {% if user.hasRole('ROLE_SUPER_ADMIN') == false %}
                                                 <li class="">
-                                                    <a class="ajax delete" href="{{ path('neptune_entity_remove',{'id':user.id,'type':'user' }) }}">
+                                                    <a class="ajax delete" href="{{ path('neptune_admin_delete',{'id':user.id }) }}">
                                                         <i class="fal fa-trash"></i>
                                                     </a>
                                                 </li>

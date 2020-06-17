@@ -1,9 +1,11 @@
 {% extends app.request.XmlHttpRequest  ? '@ScyLabsNeptune/admin/ajax.html.twig' : '@ScyLabsNeptune/admin/layout.html.twig'%}
 
 
-{% if app.request.XmlHttpRequest %}
-    {% block ajax_classes %}add{% endblock %}
-{% endif %}
+
+{% block ajax_classes %}add{% endblock %}    
+
+    
+
 
 {% block css %}
     <link href="{{ asset('bundles/scylabsneptune/admin/css/lib/select2/select2.min.css') }}" rel="stylesheet">

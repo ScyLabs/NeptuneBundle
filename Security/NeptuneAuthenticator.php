@@ -2,8 +2,9 @@
 
 namespace ScyLabs\NeptuneBundle\Security;
 
-use ScyLabs\UserBundle\Entity\User;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use ScyLabs\NeptuneBundle\Entity\Admin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -67,7 +68,7 @@ class NeptuneAuthenticator extends AbstractFormLoginAuthenticator implements Pas
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        $user = $this->entityManager->getRepository(Admin::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
             // fail authentication with a custom error
@@ -79,7 +80,7 @@ class NeptuneAuthenticator extends AbstractFormLoginAuthenticator implements Pas
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']) && ($user instanceof Admin && $user->getEnable());
     }
 
     /**
@@ -92,6 +93,15 @@ class NeptuneAuthenticator extends AbstractFormLoginAuthenticator implements Pas
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        
+
+        $user = $token->getUser();
+        if($user instanceof Admin){
+            $user->setLastLogin(new DateTime('now'));
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        }
+ 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }

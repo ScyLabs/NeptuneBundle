@@ -43,24 +43,41 @@ class Admin implements UserInterface
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      */
-    protected $firstname;
+    private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      */
-    protected $name;
+    private $name;
 
 
     /**
      * @ORM\Column(type="string",length=255,nullable=true)
      */
-    protected  $apiToken;
+    private  $apiToken;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enable;
+
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    private $lastLogin;
 
 
     public function getId() :?int{
         return $this->id;
     }
 
+    public function setEnable(bool $enable) : self{
+        $this->enable = $enable;
+        return $this;
+    }
+    public function getEnable() : bool{
+        return $this->enable;
+    }
     public function getEmail(): ?string
     {
         return $this->email;
@@ -93,6 +110,10 @@ class Admin implements UserInterface
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
+    }
+
+    public function hasRole(string $role) : bool{
+        return in_array($role,$this->getRoles());
     }
 
     public function setRoles(array $roles): self
@@ -135,14 +156,15 @@ class Admin implements UserInterface
     }
 
     public function __construct(){
-        if($this->firstConnexion === null){
-            $this->firstConnexion = true;
-        }
-        if($this->enabled === null){
-            $this->enabled = true;
-        }
+        if(!$this->enable)
+            $this->enable = true;
     }
     
+    public function addRole(string $role) : self{
+        if(!in_array($role,$this->getRoles()))
+            $this->roles[] = $role;
+        return $this;
+    }
 
     public function getName(): ?string
     {
@@ -179,10 +201,12 @@ class Admin implements UserInterface
 
         return $this;
     }
-
-
-    public function getEnabled() : bool {
-        return $this->enabled;
+    public function getLastLogin(): ?\DateTime {
+        return $this->lastLogin;
+    }
+    public function setLastLogin(\DateTime $date) : self{
+        $this->lastLogin = $date;
+        return $this;
     }
 
 }
