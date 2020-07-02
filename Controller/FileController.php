@@ -26,7 +26,7 @@ use ScyLabs\NeptuneBundle\Entity\FileType;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\Partner;
 use ScyLabs\NeptuneBundle\Entity\Photo;
-use ScyLabs\NeptuneBundle\Entity\User;
+use ScyLabs\UserBundle\Entity\User;
 use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
 use ScyLabs\NeptuneBundle\Services\FileUploader;
@@ -41,7 +41,10 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 class FileController extends BaseController
 {
 
-    public function addAction(Request $request){
+    /**
+     * @Route("/gallery",name="neptune_file")
+     */
+    public function add(Request $request){
         $em = $this->getDoctrine();
         $class= $this->getClass('file');
         $repoFiles = $em->getRepository($class);
@@ -76,7 +79,10 @@ class FileController extends BaseController
         return $this->render('@ScyLabsNeptune/admin/file/listing.html.twig',$params);
     }
 
-    public function linkAction(Request $request){
+    /**
+     * @Route("/file/link",name="neptune_file_link",methods={"POST"})
+     */
+    public function link(Request $request){
 
         $select = $request->request->get('selection');
         $id = $request->request->get('id');
@@ -212,27 +218,11 @@ class FileController extends BaseController
 
     }
 
-    private function unlinkAll(EntityManager $em,File $file,PersistentCollection $links,AbstractElem &$obj){
-        foreach ($links as $link){
-            if(!$link instanceof AbstractFileLink)
-                return;
-            if($link->getFile()->getId() == $file->getId()){
 
-                if($link instanceof Photo){
-                    $obj->removePhoto($link);
-                }
-                elseif($link instanceof Document){
-                    $obj->removeDocument($link);
-                }
-                else{
-                    $obj->removeVideo($link);
-                }
-                $em->remove($link);
-            }
-        }
-    }
-
-    public function removeLinkAction(Request $request,$type,$id){
+    /**
+     * @Route("/{type}/delete/{id}",name="neptune_file_link_delete",requirements={"type"="(photo|video|document)","id"="[0-9]+"})
+     */
+    public function removeLink(Request $request,$type,$id){
 
         if(null === $class = $this->getClass($type)){
             return$this->redirectToRoute('neptune_home');
@@ -281,7 +271,10 @@ class FileController extends BaseController
         return $this->redirectToRoute('neptune_file');
     }
 
-    public function uploadChunckAction(Request $request,FileUploader $fileUploader){
+    /**
+     * @Route("/file/upload-chunck",name="neptune_file_upload_chunck")
+     */
+    public function uploadChunck(Request $request,FileUploader $fileUploader){
 
         
         if(!$res = $request->files->get('file')){
@@ -336,7 +329,10 @@ class FileController extends BaseController
             'tmpFileName'  => $tmpFileName
         ));
     }
-    public function uploadAction(Request $request,FileUploader $fileUploader){
+    /**
+     * @Route("/file/upload",name="neptune_file_upload")
+     */
+    public function upload(Request $request,FileUploader $fileUploader){
         
         if(null === $tmpFileName = $request->get('dzuid') ){
             return new Response('Un problème est arrivé lors de l\'upload',403);
@@ -436,7 +432,10 @@ class FileController extends BaseController
         return $this->json($result);
     }
 
-    public function galleryPrioAction(Request $request,$id,$type){
+    /**
+     * @Route("/{type}/{id}/files",name="neptune_file_gallery_prio",requirements={"type"="[a-zA-Z-]{2,20}","id"="[0-9]+"})
+     */
+    public function galleryPrio(Request $request,$id,$type){
 
         $em = $this->getDoctrine()->getManager();
 
@@ -496,7 +495,10 @@ class FileController extends BaseController
         return $this->render('@ScyLabsNeptune/admin/file/gallery_prio.html.twig',$params);
     }
 
-    public function prioAction(Request $request){
+    /**
+     * @Route("/file/prio",name="neptune_file_prio",methods={"POST"})
+     */
+    public function prio(Request $request){
 
         $prios = json_decode($request->request->get('prio'),true);
         $type = $request->request->get('type');
@@ -545,6 +547,9 @@ class FileController extends BaseController
         return $this->redirectToRoute('neptune_file_gallery_prio');
     }
 
+    /**
+     * @Route("/file/delete/{id}",name="neptune_file_delete",requirements={"id"="[0-9]+"})
+     */
     public function deleteAction(Request $request,$id){
         $repo = $this->getDoctrine()->getRepository($this->getClass('file'));
         $file = $repo->find($id);
@@ -562,5 +567,25 @@ class FileController extends BaseController
 
     }
 
+
+    private function unlinkAll(EntityManager $em,File $file,PersistentCollection $links,AbstractElem &$obj){
+        foreach ($links as $link){
+            if(!$link instanceof AbstractFileLink)
+                return;
+            if($link->getFile()->getId() == $file->getId()){
+
+                if($link instanceof Photo){
+                    $obj->removePhoto($link);
+                }
+                elseif($link instanceof Document){
+                    $obj->removeDocument($link);
+                }
+                else{
+                    $obj->removeVideo($link);
+                }
+                $em->remove($link);
+            }
+        }
+    }
 
 }

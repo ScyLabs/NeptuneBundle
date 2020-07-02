@@ -16,6 +16,8 @@ use Doctrine\ORM\MScyLabs\NeptuneBundleing\Entity;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,17 +31,13 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\ArrayLoader;
-class ZoneForm extends AbstractType
+class ZoneForm extends AbstractType implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
 
-    private $container;
-    public function  __construct(ContainerInterface $container) {
-        $this->container = $container;
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
 
         $builder
             ->add('name',TextType::class,[

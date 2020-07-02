@@ -15,19 +15,24 @@ use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Doctrine\Common\Collections\ArrayCollection;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractAvancedDetail;
 use ScyLabs\NeptuneBundle\Entity\ZoneDetail;
+use ScyLabs\NeptuneBundle\Model\NotCompressedInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
-
-class ImportController extends BaseController
+use Symfony\Contracts\Translation\TranslatorInterface as TranslationTranslatorInterface;
+use Symfony\Component\Routing\Annotation\Route;
+class ImportController extends BaseController implements NotCompressedInterface
 {
 
     private $translator;
 
-    public function __construct(TranslatorInterface $translator){
+    public function __construct(TranslationTranslatorInterface $translator){
         $this->translator = $translator;
     }
     
-    public function importTextAction(Request $request){
+    /**
+     * @Route("/import/text",name="neptune_import_text")
+     */
+    public function importText(Request $request){
 
 
         $langs = $this->getParameter('langs');

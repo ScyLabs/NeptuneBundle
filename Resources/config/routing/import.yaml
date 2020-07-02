@@ -1,3 +1,0 @@
-neptune_import_text:
-    path: /import/text
-    controller: ScyLabs\NeptuneBundle\Controller\ImportController::importTextAction

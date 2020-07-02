@@ -18,7 +18,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class InfosController extends BaseController
 {
 
-    public function editAction(Request $request){
+    /**
+     * @Route("/infos/edit",name="neptune_infos_edit")
+     */
+    public function edit(Request $request){
         $class = $this->getClass('infos',$formClass);
         $repo = $this->getDoctrine()->getRepository($class);
 

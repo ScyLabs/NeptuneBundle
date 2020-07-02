@@ -16,45 +16,54 @@
 
 <body>
 
-    <div id="canvas-wrapper" style="">
-        <div class="content-login centerXY">
+<div id="canvas-wrapper" style="">
+    <div class="content-login centerXY">
 
-            <h1>Connectez vous</h1>
-            {# On affiche les messages flash que définissent les contrôleurs du bundle #}
+        {% if title is defined %}
+            <h3>{{ title }}</h3>
+        {% endif %}
+        <div class="form">
+           {% trans_default_domain 'ScyLabsNeptune' %}
 
-            {% for key, message in app.session.flashbag.all() %}
-
-                <div class="alert alert-{{ key }}">
-
-                    {{ message|trans({}, 'FOSUserBundle') }}
-
-                </div>
-
-            {% endfor %}
-
-
-            {# On définit ce block, dans lequel vont venir s'insérer les autres vues du bundle #}
-
-            {% block content %}
-
-            {% endblock content %}
             {% if error %}
-                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            <h3>Connectez vous</h3>
+            <form action="{{ path('neptune_login') }}" method="post">
+                
+                <label for="email">{{ 'security.login.username'|trans }}</label>
+                <input type="email" id="email" name="email" value="{{ last_username }}" required="required" autocomplete="username" />
+
+                <label for="password">{{ 'security.login.password'|trans }}</label>
+                <input type="password" id="password" name="password" required="required" autocomplete="current-password" />
+
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+
+                <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                <a href="#">{{ "resetting.request.submit" | trans}}</a>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            </form>
+
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
         </div>
-        <canvas style="height:100%;width:100%;left:0;top:0;position:absolute;" id="demo-canvas"></canvas>
     </div>
-    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('bundles/scylabsneptune/admin/js/lib/jquery-ui/jquery-ui.min.js') }}"></script>
+    <canvas style="height:100%;width:100%;left:0;top:0;position:absolute;" id="demo-canvas"></canvas>
+</div>
+<script src="{{ asset('js/lib/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('js/lib/jquery-ui/jquery-ui.min.js') }}"></script>
 
-    <script src="{{ asset('js/login/canvasbg.js') }}"></script>
-    <script>
-        CanvasBG.init({
-            Loc: {
-                x: window.innerWidth/2,
-                y: window.innerHeight/3.3
-            }
-        });
-    </script>
+<script src="{{ asset('js/login/canvasbg.js') }}"></script>
+<script>
+    CanvasBG.init({
+        Loc: {
+            x: window.innerWidth/2,
+            y: window.innerHeight/3.3
+        }
+    });
+</script>
 </body>
 </html>

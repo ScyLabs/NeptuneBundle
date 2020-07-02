@@ -10,17 +10,14 @@ namespace ScyLabs\NeptuneBundle\Services;
 use ScyLabs\NeptuneBundle\Model\ClassFounderInterface;
 use Symfony\Component\Yaml\Yaml;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-
-class ClassFounder implements ClassFounderInterface
+class ClassFounder implements ClassFounderInterface,ContainerAwareInterface
 {
 
-    private $container;
+    use ContainerAwareTrait;
 
-
-    public function __construct(ContainerInterface $container){
-        $this->container = $container;
-    }
 
     public function getClass(string $alias){
 

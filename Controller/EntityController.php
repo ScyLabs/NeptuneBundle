@@ -18,7 +18,7 @@ use ScyLabs\NeptuneBundle\Entity\ElementType;
 use ScyLabs\NeptuneBundle\Entity\File;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\Photo;
-use ScyLabs\NeptuneBundle\Entity\User;
+use ScyLabs\UserBundle\Entity\User;
 use ScyLabs\NeptuneBundle\Entity\Video;
 use ScyLabs\NeptuneBundle\Entity\Zone;
 use ScyLabs\NeptuneBundle\Form\ElementForm;
@@ -26,7 +26,7 @@ use ScyLabs\NeptuneBundle\Form\PageForm;
 use ScyLabs\NeptuneBundle\Form\ZoneForm;
 use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
 use Doctrine\Common\Collections\ArrayCollection;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
@@ -37,6 +37,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Routing\Annotation\Route;
 
 
 class EntityController extends BaseController
@@ -49,7 +50,10 @@ class EntityController extends BaseController
     /* Quelles Entités sont Acceptées dans la majorité de ce controller ? */
 
 
-    public function listAction($type,$parentType,$parentId){
+    /**
+     * @Route("/{type}/{parentType}/{parentId}",name="neptune_entity",requirements={"type"="[a-zA-Z-]{2,20}","parentType"="[a-zA-Z]{2,20}"},defaults={"parentType":null,"parentId"=null})
+     */
+    public function list($type,$parentType,$parentId){
 
         if($parentType !== null && $parentId === null){
             return $this->redirectToRoute('neptune_entity',array('type'=>$type));
@@ -117,7 +121,10 @@ class EntityController extends BaseController
 
     }
 
-    public function jsonListingAction($type,$parentType,$parentId){
+    /**
+     * @Route("/{type}/json/{parentType}/{parentId}",name="neptune_entity_json",requirements={"type"="[a-zA-Z-]{2,20}"},defaults={"parentType"=null,"parentId"=null})
+     */
+    public function jsonListing($type,$parentType,$parentId){
 
         if(null === $class = $this->getClass($type)){
             return $this->redirectToRoute('neptune_home');
@@ -163,7 +170,10 @@ class EntityController extends BaseController
         return  new JsonResponse((new Serializer(array($normalizer),array($encoder)))->serialize($resultTab,'json'));
     }
 
-    public function addAction(Request $request,$type,$parentType,$parentId){
+    /**
+     * @Route("/{type}/add/{parentType}/{parentId}",name="neptune_entity_add",requirements={"type"="[a-zA-Z-]{2,20}"},defaults={"parentType"=null,"parentId"=null})
+     */
+    public function add(Request $request,$type,$parentType,$parentId){
 
         if(null === $class = $this->getClass($type,$formClass)){
             return $this->redirectToRoute('neptune_home');
@@ -227,7 +237,10 @@ class EntityController extends BaseController
 
     }
 
-    public function editAction(Request $request,$id,$type){
+    /**
+     * @Route("/{type}/{id}",name="neptune_entity_edit",requirements={"type"="[a-zA-Z-]{2,20}","id"="[0-9]+"})
+     */
+    public function edit(Request $request,$id,$type){
 
         if(null === $class = $this->getClass($type,$formClass)){
             return $this->redirectToRoute('neptune_home');
@@ -275,7 +288,10 @@ class EntityController extends BaseController
         }
     }
 
-    public function removeAction(Request $request,$type,$id){
+    /**
+     * @Route("/{type}/remove/{id}",name="neptune_entity_remove",requirements={"type"="[a-zA-Z-]{2,20}","id"="[0-9]+"})
+     */
+    public function remove(Request $request,$type,$id){
 
         if(null === $class = $this->getClass($type)){
             if($request->isXmlHttpRequest()){
@@ -311,7 +327,10 @@ class EntityController extends BaseController
         return $this->redirect($request->headers->get('referer'));
     }
 
-    public function prioAction(Request $request,$type){
+    /**
+     * @Route("/{type}/prio",name="neptune_entity_prio",requirements={"type"="[a-zA-Z-]{2,20}"})
+     */
+    public function prio(Request $request,$type){
 
         $ajax = $request->isXmlHttpRequest();
         $prio = $request->request->get('prio');
@@ -349,7 +368,10 @@ class EntityController extends BaseController
 
     }
 
-    public function switchActiveAction(Request $request,$id,$type){
+    /**
+     * @Route("/{type}/active/{id}",name="neptune_entity_active",requirements={"type"="[a-zA-Z-]{2,20}","id"="[0-9]+"})
+     */
+    public function switchActive(Request $request,$id,$type){
 
         if(null === $class = $this->getClass($type)){
             return $this->redirectToRoute('neptune_home');

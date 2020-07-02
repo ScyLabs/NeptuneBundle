@@ -1,3 +1,0 @@
-neptune_infos_edit:
-    path: /infos/edit
-    controller: ScyLabs\NeptuneBundle\Controller\InfosController::editAction

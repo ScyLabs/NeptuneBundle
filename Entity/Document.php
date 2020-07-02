@@ -43,10 +43,6 @@ class Document extends AbstractFileLink
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Partner", inversedBy="documents")
      */
     protected $partner;
-    /**
-     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\User", inversedBy="documents")
-     */
-    protected $user;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\DocumentDetail", mappedBy="document", orphanRemoval=true,cascade={"persist","remove"})

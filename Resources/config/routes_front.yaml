@@ -1,12 +1,11 @@
 #routes_front.yaml
 neptune_photo:
-    resource: 'routing/photo.yaml'
-neptune_front_element:
-    resource: 'routing/front/element.yaml'
-neptune_front_page:
-    resource: 'routing/front/page.yaml'
+    resource: ../../Controller/PhotoController.php
+    type: annotation
+
+neptune_front:
+    resource: ../../Controller/Front/PageController.php
+    type: annotation
 neptune_sitemap:
-    path: /sitemap.{_format}
-    controller: ScyLabs\NeptuneBundle\Controller\GeneratorController::generateSiteMapAction
-    requirements:
-        _format: xml
+   resource: ../../Controller/Front/SitemapController.php
+   type: annotation

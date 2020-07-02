@@ -15,14 +15,16 @@ use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Doctrine\Common\Collections\ArrayCollection;
 use ScyLabs\NeptuneBundle\AbstractEntity\AbstractAvancedDetail;
 use ScyLabs\NeptuneBundle\Entity\ZoneDetail;
-
-class ExportController extends BaseController
+use ScyLabs\NeptuneBundle\Model\NotCompressedInterface;
+use Symfony\Contracts\Translation\TranslatorInterface as TranslationTranslatorInterface;
+use Symfony\Component\Routing\Annotation\Route;
+class ExportController extends BaseController implements NotCompressedInterface
 {
 
     private $translator;
     private $choices;
 
-    public function __construct(TranslatorInterface $translator){
+    public function __construct(TranslationTranslatorInterface $translator){
         $this->translator = $translator;
         $this->choices = array(
             'Elements'      => 'elementDetail',
@@ -35,7 +37,10 @@ class ExportController extends BaseController
     }
     
 
-    public function exportTextAction(Request $request){
+    /**
+     * @Route("/export/text",name="neptune_export_text")
+     */
+    public function exportText(Request $request){
         
        
         $langs = $this->getParameter('langs');

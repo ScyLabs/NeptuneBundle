@@ -17,7 +17,7 @@ use ScyLabs\NeptuneBundle\Entity\Infos;
 use ScyLabs\NeptuneBundle\Entity\Page;
 use ScyLabs\NeptuneBundle\Entity\PageUrl;
 use ScyLabs\NeptuneBundle\Entity\Partner;
-use ScyLabs\NeptuneBundle\Entity\User;
+use ScyLabs\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
@@ -32,7 +32,10 @@ use Symfony\Component\Yaml\Yaml;
 class PageController extends AbstractController
 {
 
-    public function homeAction(Request $request,?array $options = null,AdapterInterface $adapter){
+    /**
+     * @Route("/{_locale}",name="homepage",requirements={" _locale"="[a-z]{2}"},defaults={"_locale"="fr"})
+     */
+    public function home(Request $request,?array $options = null,AdapterInterface $adapter){
         
         $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();
@@ -72,7 +75,10 @@ class PageController extends AbstractController
         return $this->render('page/home.html.twig',$params);
     }
 
-    public function pageAction(Request $request,$slug,?array $options = null){
+    /**
+     * @Route("/{_locale}/{slug}{anchor}",name="page",requirements={"slug"="^[a-z-_0-9/]+$","_locale"="[a-z]{2}","anchor"="^(\\#)[a-z-_]+$"},defaults={"anchor"="","_locale"="fr"})
+     */
+    public function page(Request $request,$slug,?array $options = null){
 
         $locale = $request->getLocale();
         if(!in_array($locale,$this->getParameter('langs'))){
@@ -150,7 +156,10 @@ class PageController extends AbstractController
         return $this->render('page/page.html.twig',$params);
     }
 
-    public function detailElementAction(Request $request,$slug,?array $options = null){
+    /**
+     * @Route("/{_locale}/element/{slug}{anchor}",name="detail_element",requirements={"_locale"="[a-z]{2}","slug"="^[a-z-_0-9/]+$","anchor"="^(\\#)[a-z-_]+$"},defaults={"_locale"="fr","anchor"=""})
+     */
+    public function detailElement(Request $request,$slug,?array $options = null){
         $em = $this->getDoctrine()->getManager();
         $url = $em->getRepository($this->getClass('elementUrl'))->findOneBy(array(
             'url' => $slug

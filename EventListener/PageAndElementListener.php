@@ -5,6 +5,8 @@ namespace ScyLabs\NeptuneBundle\EventListener;
 
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use ScyLabs\NeptuneBundle\Entity\ElementDetail;
+use ScyLabs\NeptuneBundle\Entity\PageDetail;
 
 class PageAndElementListener
 {
@@ -15,7 +17,7 @@ class PageAndElementListener
             return;
         }
 
-        $this->updateUrls($detail);
+      //  $this->updateUrls($detail);
 
     }
 }

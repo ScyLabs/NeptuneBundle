@@ -6,18 +6,22 @@
  * Time: 14:35
  */
 
-namespace ScyLabs\NeptuneBundle\Controller;
+namespace ScyLabs\NeptuneBundle\Controller\Front;
 
 
 use ScyLabs\NeptuneBundle\Entity\Element;
 use ScyLabs\NeptuneBundle\Entity\Page;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GeneratorController extends BaseController
+class SitemapController extends AbstractController
 {
 
+    /**
+     * @Route("/sitemap.{_format}",name="neptune_sitemap",requirements={"_format"="xml"})
+     */
     public function generateSiteMapAction(Request $request){
 
         $em = $this->getDoctrine()->getManager();
@@ -44,7 +48,7 @@ class GeneratorController extends BaseController
      * @param $objects
      * @return array
      */
-    public function getUrls($objects){
+    private function getUrls($objects){
         $urls = array();
         $sitemapConfig = $this->getParameter('scy_labs_neptune.sitemap');
         foreach ($objects as $object){

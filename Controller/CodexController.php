@@ -41,6 +41,9 @@ class CodexController extends BaseController
         $this->kernel = $kernel;
     }
 
+    /**
+     * @Route("/codex/zones",name="codex_zones")
+     */
     public function getZones(){
 
         if(null === $this->codexUrl = $this->getCodexUrl()){
@@ -76,6 +79,9 @@ class CodexController extends BaseController
         ]);
     }
 
+    /**
+     * @Route("/codex/export/{id}",name="codex_export")
+     */
     public function exportZone(Request $request,CodexExporterInterface $codexExporter,ZoneType $zoneType){
         if(($token = $this->getApiToken()) instanceof Response)
             return $token;
@@ -221,6 +227,9 @@ class CodexController extends BaseController
 
     }
 
+    /**
+     * @Route("/show/{id}",name="codex_zone_show_template",requirements={"id"="\d+"},methods={"GET"})
+     */
     public function showTemplate(Request $request,NeptuneVarsCreatorInterface $neptuneVariablesCreator,$id){
 
         $repo = $this->getDoctrine()->getRepository(ZoneType::class);
@@ -237,11 +246,24 @@ class CodexController extends BaseController
     }
 
 
-    public function generateAction(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome,$name){
+    /**
+     * @Route("/photo-show/{id}/{width}/{height}/{multiplicator}/{truncate}{monochrome}/{name}",name="codex_photo",defaults={"height"=0,"multiplicator"=100,"truncate"=0,"monochrome"="","name"=""},requirements={
+     * "id"= "[0-9]+",
+     * "width"= "[0-9]{1,4}",
+     * "height"= "[0-9]{0,4}",
+     * "truncate"= "[01]",
+     * "monochrome"= "(/[a-zA-Z0-9]{6}-[a-fA-F0-9]{6})?",
+     * "multiplicator"= "[0-9]{2,3}"
+     * })
+     */
+    public function generatePhoto(Request $request,$id,$width,$height,$multiplicator,$truncate,$monochrome,$name){
         $response = new File($this->getParameter('kernel.project_dir').'/public/bundles/scylabsneptune/admin/img/demo.jpg');
         return $this->file($response,'',ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
+    /**
+     * @Route("/codex/maj/{id}",name="codex_maj")
+     */
     public function importZone(Request $request,CodexImporterInterface $codexImporter,$id){
         if(null === $this->codexUrl = $this->getCodexUrl()){
             return $this->redirectToRoute('neptune_home');
@@ -423,6 +445,9 @@ class CodexController extends BaseController
             'message'   =>  'La zone à bien été '.$message
         ]);
     }
+    /**
+     * @Route("/codex/delete/{id}",name="codex_delete")
+     */
     public function deleteZone(Request $request,$id){
         if(null === $this->codexUrl = $this->getCodexUrl()){
             return $this->redirectToRoute('neptune_home');
@@ -441,6 +466,10 @@ class CodexController extends BaseController
             'message'   => 'La zone à bien été supprimée'
         ]);
     }
+
+    /**
+     * @Route("/zonecategory/add",name="codex_category_add")
+     */
     public function addCategory(Request $request){
         if(null === $this->codexUrl = $this->getCodexUrl()){
             return $this->redirectToRoute('neptune_home');
@@ -481,6 +510,9 @@ class CodexController extends BaseController
         ]);
 
     }
+    /**
+     * @Route("/zonecategory/{id}",name="codex_category_edit",requirements={"id"="\d+"})
+     */
     public function editCategory(Request $request,$id){
         if(null === $this->codexUrl = $this->getCodexUrl()){
             return $this->redirectToRoute('neptune_home');
@@ -523,6 +555,9 @@ class CodexController extends BaseController
         ]);
 
     }
+    /**
+     * @Route("/zonecategory/remove/{id}",name="codex_category_delete",requirements={"id"="\d+"})
+     */
     public function deleteCategory(Request $request,$id){
         if(null === $this->codexUrl = $this->getCodexUrl()){
             return $this->redirectToRoute('neptune_home');
@@ -541,6 +576,9 @@ class CodexController extends BaseController
         ]);
     }
 
+    /**
+     * @Route("/zonecategory",name="codex_category")
+     */
     public function categories(Request $request){
         if(null === $this->codexUrl = $this->getCodexUrl()){
             return $this->redirectToRoute('neptune_home');

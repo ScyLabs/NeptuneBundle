@@ -9,25 +9,17 @@
 namespace ScyLabs\NeptuneBundle\Controller;
 
 
-use ScyLabs\NeptuneBundle\Entity\ElementType;
-use ScyLabs\NeptuneBundle\Entity\FileType;
-use ScyLabs\NeptuneBundle\Entity\PageType;
-use ScyLabs\NeptuneBundle\Entity\ZoneType;
-use ScyLabs\NeptuneBundle\Form\ElementTypeForm;
-use ScyLabs\NeptuneBundle\Form\FileTypeForm;
-use ScyLabs\NeptuneBundle\Form\PageTypeForm;
-use ScyLabs\NeptuneBundle\Form\ZoneTypeForm;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class TypeController extends BaseController
 {
 
-    public function addAction(Request $request,$type){
+    /**
+     * @Route("/{type}/type/add",name="neptune_type_add",requirements={"type"="[a-zA-Z-]{2,20}"})
+     */
+    public function add(Request $request,$type){
 
         $classType = $type.'Type';
         $class = $this->getClass($classType,$formClass);
@@ -83,7 +75,10 @@ class TypeController extends BaseController
 
     }
 
-    public function listAction(Request $request,$type){
+    /**
+     * @Route("/{type}/type",name="neptune_type",requirements={"type"="[a-zA-Z-]{2,20}"})
+     */
+    public function list(Request $request,$type){
         $classType = $type.'Type';
         $class = $this->getClass($classType);
 
@@ -114,7 +109,10 @@ class TypeController extends BaseController
         return $this->render('@ScyLabsNeptune/admin/type/listing.html.twig',$params);
     }
 
-    public function editAction(Request $request,$id,$type){
+    /**
+     * @Route("/{type}/type/{id}",name="neptune_type_edit",requirements={"id"="[0-9]+","type"="[a-zA-Z-]{2,20}"})
+     */
+    public function edit(Request $request,$id,$type){
         $classType = $type.'Type';
         $class = $this->getClass($classType,$formClass);
         if($class === null){
@@ -147,7 +145,10 @@ class TypeController extends BaseController
         }
     }
 
-    public function removeAction(Request $request,$id,$type){
+    /**
+     * @Route("/{type}/type/delete/{id}",name="neptune_type_remove",requirements={"id"="[0-9]+","type"="[a-zA-Z-]{2,20}"})
+     */
+    public function remove(Request $request,$id,$type){
         $classType = $type.'Type';
         $class = $this->getClass($classType);
         if($class === null){

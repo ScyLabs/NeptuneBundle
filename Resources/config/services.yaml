@@ -24,6 +24,8 @@ services:
         public: true
         arguments:
             $debug: '%kernel.debug%'
+        calls:
+            - [ setContainer, [ '@service_container']]
 
     ScyLabs\NeptuneBundle\Repository\:
         resource: '../../Repository'
@@ -36,6 +38,7 @@ services:
 
     ScyLabs\NeptuneBundle\Services\CleanText:
                 arguments:
+
     #Fin service
 
     #Listeners
@@ -66,8 +69,21 @@ services:
             - { name: doctrine.event_listener,event: postPersist }
             - { name: doctrine.event_listener,event: preUpdate }
             - { name: doctrine.event_listener,event: postUpdate }
-    ScyLabs\NeptuneBundle\EventListener\RequestListener:
+    ScyLabs\NeptuneBundle\EventListener\CompressListener:
         tags:
-            - { name: kernel.event_listener,event: kernel.request }
+            - { name: kernel.event_listener,event: kernel.controller }
+        calls:
+            - [ setContainer, [ '@service_container']]
 
+    ScyLabs\NeptuneBundle\Form\ElementForm:
+        calls:
+            - [ setContainer, [ '@service_container']]
+    
+    ScyLabs\NeptuneBundle\Form\ZoneForm:
+        calls:
+            - [ setContainer, [ '@service_container']]
+
+    ScyLabs\NeptuneBundle\Services\ClassFounder:
+        calls:
+            - [ setContainer, [ '@service_container']]
     #Fin listeners

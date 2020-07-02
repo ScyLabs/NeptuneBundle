@@ -39,10 +39,7 @@ class Photo extends AbstractFileLink
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Element", inversedBy="photos")
      */
     protected $element;
-    /**
-     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\User", inversedBy="photos")
-     */
-    protected $user;
+
     /**
      * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\Partner", inversedBy="photos")
      */

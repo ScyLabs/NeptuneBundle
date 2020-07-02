@@ -1,43 +1,36 @@
-neptune_changelogs:
-    path: /changelogs
-    controller: ScyLabs\NeptuneBundle\Controller\MainController::changelogsAction
-neptune_changelog_cookie:
-    path: /changelogs/{version}
-    controller: ScyLabs\NeptuneBundle\Controller\MainController::setCookieChangelogsAction
-
-
-
+neptune_main: 
+    resource: ../../Controller/MainController.php
+    type: annotation
 neptune_codex:
-    resource: 'routing/codex.yaml'
+    resource: ../../Controller/CodexController.php
+    type: annotation
 
 neptune_cloning:
-    resource: 'routing/cloning.yaml'
+    resource: ../../Controller/CloningController.php
+    type: annotation
+
 neptune_export:
-    resource: 'routing/export.yaml'
-
+    resource: ../../Controller/ExportController.php
+    type: annotation
 neptune_import:
-    resource: 'routing/import.yaml'
+    resource: ../../Controller/ImportController.php
+    type: annotation
 neptune_user:
-    resource: 'routing/user.yaml'
+    resource: ../../Controller/UserController.php
+    type: annotation
 neptune_type:
-    resource: 'routing/type.yaml'
+    resource: ../../Controller/TypeController.php
+    type: annotation
 neptune_infos:
-    resource: 'routing/infos.yaml'
+    resource: ../../Controller/InfosController.php
+    type: annotation
 neptune_detail:
-    resource: 'routing/detail.yaml'
+    resource: ../../Controller/DetailController.php
+    type: annotation
 neptune_file:
-    resource: 'routing/file.yaml'
+    resource: ../../Controller/FileController.php
+    type: annotation
 neptune_entity:
-    resource: 'routing/entity.yaml'
-neptune_security:
-    resource: 'routing/security.yaml'
+    resource: ../../Controller/EntityController.php
+    type: annotation
 
-
-
-
-
-
-
-neptune_home:
-    path: /
-    controller: ScyLabs\NeptuneBundle\Controller\MainController::indexAction

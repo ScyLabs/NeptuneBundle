@@ -14,10 +14,15 @@ use ScyLabs\NeptuneBundle\Entity\Page;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernel;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CloningController extends BaseController
 {
-    public function instantCloneAction(Request $request,$type,$id){
+
+    /**
+     * @Route("/{type}/clone/{id}",name="neptune_entity_clone",requirements={"type"="[a-z]{2,20}","id"="[0-9]+"})
+     */
+    public function clone(Request $request,$type,$id){
         if(null === $class = $this->getClass($type,$formClass)){
             return $this->redirectToRoute('neptune_home');
         }

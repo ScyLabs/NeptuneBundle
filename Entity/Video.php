@@ -45,10 +45,6 @@ class Video extends AbstractFileLink
      */
     protected $partner;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="ScyLabs\NeptuneBundle\Entity\User", inversedBy="videos")
-     */
-    protected $user;
 
     /**
      * @ORM\OneToMany(targetEntity="ScyLabs\NeptuneBundle\Entity\Photo", mappedBy="video",cascade={"persist","remove"})
