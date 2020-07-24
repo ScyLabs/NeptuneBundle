@@ -51,6 +51,73 @@ class EntityController extends BaseController
 
 
     /**
+     * @Route("/{type}/add/{parentType}/{parentId}",name="neptune_entity_add",requirements={"type"="[a-zA-Z-]{2,20}"},defaults={"parentType"=null,"parentId"=null})
+     */
+    public function add(Request $request,$type,$parentType,$parentId){
+
+        if(null === $class = $this->getClass($type,$formClass)){
+            return $this->redirectToRoute('neptune_home');
+        }
+
+
+        $object = new $class();
+
+        if($parentType !== null && $parentId !== null && in_array($parentType,['page','element'])){
+            $classParent = $this->getClass($parentType);
+
+            $parent = $this->getDoctrine()->getRepository($classParent)->find($parentId);
+            $object->setParent($parent);
+        }
+
+        $lastPrio = $this->getLastPrio($object,$parentType) +1;
+        $object->setPrio($lastPrio);
+        $objects = $this->getEntities($object,$parentType);
+
+
+        $params = array(
+            'title'     =>  "Ajout d'un".(($object instanceof Element) ? '' : 'e').' '.ucfirst($type),
+            'objects'   => $objects,
+        );
+
+
+        $params['ariane'] = array(
+            [
+                'link'  =>  $this->generateUrl('neptune_home'),
+                'name' =>  'Accueil'
+            ],
+            [
+                'link'  =>  $this->generateUrl('neptune_entity',array('type'=>$type)),
+                'name' =>  ucfirst($type).'s',
+            ],
+            [
+                'link'  =>  '#',
+                'name' =>  'Créer un'.(($object instanceof Element) ? '' : 'e').ucfirst($type)
+            ]
+        );
+        $paramsRoute = array('type'=>$type);
+        if($parentType !== null && $parentId !== null && in_array($parentType,['page','element'])){
+            $paramsRoute['parentId'] = $parentId;$paramsRoute['parentType'] = $parentType;
+        }
+        $route = $this->generateUrl('neptune_entity_add',$paramsRoute);
+
+
+        if(true === $result = $this->validForm($type,$formClass,$object,$request,$form,$route)){
+            if($request->isXmlHttpRequest()){
+                return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été ajouté'));
+            }
+            return $this->redirectToRoute('neptune_entity_add',$paramsRoute);
+        }
+        else{
+           if($result !== false){
+               return $this->json($result);
+           }
+            $params['form'] = $form->createView();
+            return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
+        }
+
+    }
+
+    /**
      * @Route("/{type}/{parentType}/{parentId}",name="neptune_entity",requirements={"type"="[a-zA-Z-]{2,20}","parentType"="[a-zA-Z]{2,20}"},defaults={"parentType":null,"parentId"=null})
      */
     public function list($type,$parentType,$parentId){
@@ -170,72 +237,7 @@ class EntityController extends BaseController
         return  new JsonResponse((new Serializer(array($normalizer),array($encoder)))->serialize($resultTab,'json'));
     }
 
-    /**
-     * @Route("/{type}/add/{parentType}/{parentId}",name="neptune_entity_add",requirements={"type"="[a-zA-Z-]{2,20}"},defaults={"parentType"=null,"parentId"=null})
-     */
-    public function add(Request $request,$type,$parentType,$parentId){
-
-        if(null === $class = $this->getClass($type,$formClass)){
-            return $this->redirectToRoute('neptune_home');
-        }
-
-
-        $object = new $class();
-
-        if($parentType !== null && $parentId !== null && in_array($parentType,['page','element'])){
-            $classParent = $this->getClass($parentType);
-
-            $parent = $this->getDoctrine()->getRepository($classParent)->find($parentId);
-            $object->setParent($parent);
-        }
-
-        $lastPrio = $this->getLastPrio($object,$parentType) +1;
-        $object->setPrio($lastPrio);
-        $objects = $this->getEntities($object,$parentType);
-
-
-        $params = array(
-            'title'     =>  "Ajout d'un".(($object instanceof Element) ? '' : 'e').' '.ucfirst($type),
-            'objects'   => $objects,
-        );
-
-
-        $params['ariane'] = array(
-            [
-                'link'  =>  $this->generateUrl('neptune_home'),
-                'name' =>  'Accueil'
-            ],
-            [
-                'link'  =>  $this->generateUrl('neptune_entity',array('type'=>$type)),
-                'name' =>  ucfirst($type).'s',
-            ],
-            [
-                'link'  =>  '#',
-                'name' =>  'Créer un'.(($object instanceof Element) ? '' : 'e').ucfirst($type)
-            ]
-        );
-        $paramsRoute = array('type'=>$type);
-        if($parentType !== null && $parentId !== null && in_array($parentType,['page','element'])){
-            $paramsRoute['parentId'] = $parentId;$paramsRoute['parentType'] = $parentType;
-        }
-        $route = $this->generateUrl('neptune_entity_add',$paramsRoute);
-
-
-        if(true === $result = $this->validForm($type,$formClass,$object,$request,$form,$route)){
-            if($request->isXmlHttpRequest()){
-                return $this->json(array('success'=>true,'message'=>'Votre '.ucfirst($type).' à bien été ajouté'));
-            }
-            return $this->redirectToRoute('neptune_entity_add',$paramsRoute);
-        }
-        else{
-           if($result !== false){
-               return $this->json($result);
-           }
-            $params['form'] = $form->createView();
-            return $this->render('@ScyLabsNeptune/admin/entity/add.html.twig',$params);
-        }
-
-    }
+    
 
     /**
      * @Route("/{type}/{id}",name="neptune_entity_edit",requirements={"type"="[a-zA-Z-]{2,20}","id"="[0-9]+"})

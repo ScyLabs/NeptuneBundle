@@ -62,7 +62,7 @@ abstract class BaseController extends AbstractController
 
 
     }
-    protected function validForm($type,$formClass,$object,Request $request,&$form,$action = null){
+    protected function validForm($type,$formClass,$object,Request $request,&$form,$action = ''){
 
 
         $options = ['action'=>$action,'data_class'=>$this->getClass($type)];
