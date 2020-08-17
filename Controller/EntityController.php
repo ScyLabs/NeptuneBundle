@@ -116,6 +116,46 @@ class EntityController extends BaseController
         }
 
     }
+    /**
+     * @Route("/{type}/prio",name="neptune_entity_prio",requirements={"type"="[a-zA-Z-]{2,20}"})
+     */
+    public function prio(Request $request,$type){
+
+        $ajax = $request->isXmlHttpRequest();
+        $prio = $request->request->get('prio');
+
+        if($prio === null || false === $prios = json_decode($prio)){
+
+            if($ajax){
+                return new Response('');
+            }
+            else{
+                return $this->redirectToRoute('neptune_entity',array('type'=>$type));
+            }
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        if(null === $class = $this->getClass($type)){
+            return new Response('');
+        }
+        $repo = $em->getRepository($class);
+        $objects = $repo->findAll();
+        $tabObjects = array();
+        foreach ($objects as $object){
+            $tabObjects[$object->getId()] = $object;
+        }
+        $this->prios($prios,$tabObjects);
+
+        $em->flush();
+        if($ajax){
+            return new Response('success');
+        }
+        else{
+            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
+        }
+
+    }
 
     /**
      * @Route("/{type}/{parentType}/{parentId}",name="neptune_entity",requirements={"type"="[a-zA-Z-]{2,20}","parentType"="[a-zA-Z]{2,20}"},defaults={"parentType":null,"parentId"=null})
@@ -329,46 +369,7 @@ class EntityController extends BaseController
         return $this->redirect($request->headers->get('referer'));
     }
 
-    /**
-     * @Route("/{type}/prio",name="neptune_entity_prio",requirements={"type"="[a-zA-Z-]{2,20}"})
-     */
-    public function prio(Request $request,$type){
-
-        $ajax = $request->isXmlHttpRequest();
-        $prio = $request->request->get('prio');
-
-        if($prio === null || false === $prios = json_decode($prio)){
-
-            if($ajax){
-                return new Response('');
-            }
-            else{
-                return $this->redirectToRoute('neptune_entity',array('type'=>$type));
-            }
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        if(null === $class = $this->getClass($type)){
-            return new Response('');
-        }
-        $repo = $em->getRepository($class);
-        $objects = $repo->findAll();
-        $tabObjects = array();
-        foreach ($objects as $object){
-            $tabObjects[$object->getId()] = $object;
-        }
-        $this->prios($prios,$tabObjects);
-
-        $em->flush();
-        if($ajax){
-            return new Response('success');
-        }
-        else{
-            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
-        }
-
-    }
+    
 
     /**
      * @Route("/{type}/active/{id}",name="neptune_entity_active",requirements={"type"="[a-zA-Z-]{2,20}","id"="[0-9]+"})
