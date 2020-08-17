@@ -157,76 +157,7 @@ class EntityController extends BaseController
 
     }
 
-    /**
-     * @Route("/{type}/{parentType}/{parentId}",name="neptune_entity",requirements={"type"="[a-zA-Z-]{2,20}","parentType"="[a-zA-Z]{2,20}"},defaults={"parentType":null,"parentId"=null})
-     */
-    public function list($type,$parentType,$parentId){
-
-        if($parentType !== null && $parentId === null){
-            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
-        }
-
-        if(null === $class = $this->getClass($type)){
-            return $this->redirectToRoute('neptune_home');
-        }
-
-        $repo = $this->getDoctrine()->getRepository($class);
-        $child = false;
-        $elemListing = false;
-
-        if(new $class() instanceof Page){
-            $objects = $repo->findBy(array(
-               'parent' =>  null,
-               'remove' =>  false,
-            ),['prio'=>'ASC']);
-
-        }
-        elseif(new $class() instanceof Element){
-            $objects = $this->getDoctrine()->getRepository(ElementType::class)->findBy(array(
-                'remove'    =>  false
-            ));
-            $elemListing = true;
-        }
-        else{
-            $objects = null;
-
-
-                $repoParams = array(
-                    'remove'=>false,
-
-                );
-                if($parentType !== null && $parentId !== null && (new $class()) instanceof AbstractChild){
-                    $repoParams[$parentType]  = $parentId;
-                }
-
-                $objects = $repo->findBy($repoParams,['prio'=>'ASC']);
-
-                if(null !== $classParent = $this->getClass($parentType)){
-                    $parent = $this->getDoctrine()->getRepository($classParent)->find($parentId);
-                }
-
-
-        }
-        $params = array(
-            'title'         =>  ucfirst($type).'s'.((isset($parent) && $parent != null) ? ' de - '.ucfirst($parentType).' : '.$parent->getName() : ''),
-            'objects'       =>  $objects,
-            'child'         =>  $child,
-            'elemLisiting'  => $elemListing
-        );
-        $params['ariane'] = array(
-            [
-                'link'  => $this->generateUrl('neptune_home'),
-                'name'  => 'Accueil'
-            ],
-            [
-                'link'  =>  '#',
-                'name'  =>  ucfirst($type).'s'
-            ]
-        );
-
-        return $this->render('@ScyLabsNeptune/admin/entity/listing.html.twig',$params);
-
-    }
+    
 
     /**
      * @Route("/{type}/json/{parentType}/{parentId}",name="neptune_entity_json",requirements={"type"="[a-zA-Z-]{2,20}"},defaults={"parentType"=null,"parentId"=null})
@@ -419,6 +350,77 @@ class EntityController extends BaseController
                 }
             }
         }
+    }
+
+    /**
+     * @Route("/{type}/{parentType}/{parentId}",name="neptune_entity",requirements={"type"="[a-zA-Z-]{2,20}","parentType"="[a-zA-Z]{2,20}"},defaults={"parentType":null,"parentId"=null})
+     */
+    public function list($type,$parentType,$parentId){
+
+        if($parentType !== null && $parentId === null){
+            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
+        }
+
+        if(null === $class = $this->getClass($type)){
+            return $this->redirectToRoute('neptune_home');
+        }
+
+        $repo = $this->getDoctrine()->getRepository($class);
+        $child = false;
+        $elemListing = false;
+
+        if(new $class() instanceof Page){
+            $objects = $repo->findBy(array(
+               'parent' =>  null,
+               'remove' =>  false,
+            ),['prio'=>'ASC']);
+
+        }
+        elseif(new $class() instanceof Element){
+            $objects = $this->getDoctrine()->getRepository(ElementType::class)->findBy(array(
+                'remove'    =>  false
+            ));
+            $elemListing = true;
+        }
+        else{
+            $objects = null;
+
+
+                $repoParams = array(
+                    'remove'=>false,
+
+                );
+                if($parentType !== null && $parentId !== null && (new $class()) instanceof AbstractChild){
+                    $repoParams[$parentType]  = $parentId;
+                }
+
+                $objects = $repo->findBy($repoParams,['prio'=>'ASC']);
+
+                if(null !== $classParent = $this->getClass($parentType)){
+                    $parent = $this->getDoctrine()->getRepository($classParent)->find($parentId);
+                }
+
+
+        }
+        $params = array(
+            'title'         =>  ucfirst($type).'s'.((isset($parent) && $parent != null) ? ' de - '.ucfirst($parentType).' : '.$parent->getName() : ''),
+            'objects'       =>  $objects,
+            'child'         =>  $child,
+            'elemLisiting'  => $elemListing
+        );
+        $params['ariane'] = array(
+            [
+                'link'  => $this->generateUrl('neptune_home'),
+                'name'  => 'Accueil'
+            ],
+            [
+                'link'  =>  '#',
+                'name'  =>  ucfirst($type).'s'
+            ]
+        );
+
+        return $this->render('@ScyLabsNeptune/admin/entity/listing.html.twig',$params);
+
     }
 }
 
