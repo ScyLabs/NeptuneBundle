@@ -39,7 +39,7 @@ class SitemapController extends AbstractController
         $urls = $this->getUrls($pages);
         $urls = array_merge($urls,$this->getUrls($elements));
     
-        return $this->render('@ScyLabsNeptune/Resources/views/sitemap.xml.twig',array(
+        return $this->render('@ScyLabsNeptune/sitemap.xml.twig',array(
             'urls'=>$urls
         ));
     }
