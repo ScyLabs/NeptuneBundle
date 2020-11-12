@@ -22,7 +22,7 @@ class CompressListener implements ContainerAwareInterface
 
     public function onKernelController(ControllerEvent $event){
 
-        if($this->container->getParameter('scy_labs_neptune.compress') == false ||  getenv('APP_ENV') != 'prod'){
+        if($this->container->getParameter('scy_labs_neptune.compress') == false ||  $_ENV['APP_ENV'] != 'prod'){
             return;
         }
     

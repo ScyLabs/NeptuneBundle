@@ -51,126 +51,6 @@ class EntityController extends BaseController
 
 
     /**
-     * @Route("/{type}/{parentType}/{parentId}",name="neptune_entity",requirements={"type"="[a-zA-Z-]{2,20}","parentType"="[a-zA-Z]{2,20}"},defaults={"parentType":null,"parentId"=null})
-     */
-    public function list($type,$parentType,$parentId){
-
-        if($parentType !== null && $parentId === null){
-            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
-        }
-
-        if(null === $class = $this->getClass($type)){
-            return $this->redirectToRoute('neptune_home');
-        }
-
-        $repo = $this->getDoctrine()->getRepository($class);
-        $child = false;
-        $elemListing = false;
-
-        if(new $class() instanceof Page){
-            $objects = $repo->findBy(array(
-               'parent' =>  null,
-               'remove' =>  false,
-            ),['prio'=>'ASC']);
-
-        }
-        elseif(new $class() instanceof Element){
-            $objects = $this->getDoctrine()->getRepository(ElementType::class)->findBy(array(
-                'remove'    =>  false
-            ));
-            $elemListing = true;
-        }
-        else{
-            $objects = null;
-
-
-                $repoParams = array(
-                    'remove'=>false,
-
-                );
-                if($parentType !== null && $parentId !== null && (new $class()) instanceof AbstractChild){
-                    $repoParams[$parentType]  = $parentId;
-                }
-
-                $objects = $repo->findBy($repoParams,['prio'=>'ASC']);
-
-                if(null !== $classParent = $this->getClass($parentType)){
-                    $parent = $this->getDoctrine()->getRepository($classParent)->find($parentId);
-                }
-
-
-        }
-        $params = array(
-            'title'         =>  ucfirst($type).'s'.((isset($parent) && $parent != null) ? ' de - '.ucfirst($parentType).' : '.$parent->getName() : ''),
-            'objects'       =>  $objects,
-            'child'         =>  $child,
-            'elemLisiting'  => $elemListing
-        );
-        $params['ariane'] = array(
-            [
-                'link'  => $this->generateUrl('neptune_home'),
-                'name'  => 'Accueil'
-            ],
-            [
-                'link'  =>  '#',
-                'name'  =>  ucfirst($type).'s'
-            ]
-        );
-
-        return $this->render('@ScyLabsNeptune/admin/entity/listing.html.twig',$params);
-
-    }
-
-    /**
-     * @Route("/{type}/json/{parentType}/{parentId}",name="neptune_entity_json",requirements={"type"="[a-zA-Z-]{2,20}"},defaults={"parentType"=null,"parentId"=null})
-     */
-    public function jsonListing($type,$parentType,$parentId){
-
-        if(null === $class = $this->getClass($type)){
-            return $this->redirectToRoute('neptune_home');
-        }
-        $repo = $this->getDoctrine()->getRepository($class);
-        $encoder = new JsonEncoder();
-        $normalizer =new ObjectNormalizer();
-        $parent = null;
-
-
-        if(new $class() instanceof Page){
-            $objects = $repo->findBy(array(
-               'parent' =>  $parentId,
-               'remove' =>  false,
-            ),['prio'=>'ASC']);
-        }
-        else{
-            $params = array(
-                'remove'     =>  false
-            );
-            if($parentType !== null && $parentId != null){
-                $params[$parentType] =  $parentId;
-            }
-            $objects = $repo->findBy($params,['prio'=>'ASC']);
-        }
-        $resultTab = array();
-
-        foreach ($objects as $object){
-            $actions = null;
-            if(!($object instanceof AbstractFileLink)){
-                $actions = array(
-                    'active'    =>  $this->generateUrl('neptune_entity_active',array('type'=>$type,'id'=>$object->getId())),
-                    'detail'    =>  $this->generateUrl('neptune_detail',array('type'=>$type,'id'=>$object->getId())),
-                    'edit'      =>  $this->generateUrl('neptune_entity_edit',array('type'=>$type,'id'=>$object->getId())),
-                    'gallery'   =>  $this->generateUrl('neptune_file_gallery_prio',array('type'=>$type,'id'=>$object->getId())),
-                    'remove'    =>  $this->generateUrl('neptune_entity_remove',array('type' => $type,'id'   => $object->getId())),
-                );
-            }
-            $resultTab[] = array('object'=>$object,'actions'=>$actions);
-        }
-        $normalizer->setIgnoredAttributes(self::JSON_IGNORED_ATTRIBUTES);
-
-        return  new JsonResponse((new Serializer(array($normalizer),array($encoder)))->serialize($resultTab,'json'));
-    }
-
-    /**
      * @Route("/{type}/add/{parentType}/{parentId}",name="neptune_entity_add",requirements={"type"="[a-zA-Z-]{2,20}"},defaults={"parentType"=null,"parentId"=null})
      */
     public function add(Request $request,$type,$parentType,$parentId){
@@ -236,6 +116,99 @@ class EntityController extends BaseController
         }
 
     }
+    /**
+     * @Route("/{type}/prio",name="neptune_entity_prio",requirements={"type"="[a-zA-Z-]{2,20}"})
+     */
+    public function prio(Request $request,$type){
+
+        $ajax = $request->isXmlHttpRequest();
+        $prio = $request->request->get('prio');
+
+        if($prio === null || false === $prios = json_decode($prio)){
+
+            if($ajax){
+                return new Response('');
+            }
+            else{
+                return $this->redirectToRoute('neptune_entity',array('type'=>$type));
+            }
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        if(null === $class = $this->getClass($type)){
+            return new Response('');
+        }
+        $repo = $em->getRepository($class);
+        $objects = $repo->findAll();
+        $tabObjects = array();
+        foreach ($objects as $object){
+            $tabObjects[$object->getId()] = $object;
+        }
+        $this->prios($prios,$tabObjects);
+
+        $em->flush();
+        if($ajax){
+            return new Response('success');
+        }
+        else{
+            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
+        }
+
+    }
+
+    
+
+    /**
+     * @Route("/{type}/json/{parentType}/{parentId}",name="neptune_entity_json",requirements={"type"="[a-zA-Z-]{2,20}"},defaults={"parentType"=null,"parentId"=null})
+     */
+    public function jsonListing($type,$parentType,$parentId){
+
+        if(null === $class = $this->getClass($type)){
+            return $this->redirectToRoute('neptune_home');
+        }
+        $repo = $this->getDoctrine()->getRepository($class);
+        $encoder = new JsonEncoder();
+        $normalizer =new ObjectNormalizer();
+        $parent = null;
+
+
+        if(new $class() instanceof Page){
+            $objects = $repo->findBy(array(
+               'parent' =>  $parentId,
+               'remove' =>  false,
+            ),['prio'=>'ASC']);
+        }
+        else{
+            $params = array(
+                'remove'     =>  false
+            );
+            if($parentType !== null && $parentId != null){
+                $params[$parentType] =  $parentId;
+            }
+            $objects = $repo->findBy($params,['prio'=>'ASC']);
+        }
+        $resultTab = array();
+
+        foreach ($objects as $object){
+            $actions = null;
+            if(!($object instanceof AbstractFileLink)){
+                $actions = array(
+                    'active'    =>  $this->generateUrl('neptune_entity_active',array('type'=>$type,'id'=>$object->getId())),
+                    'detail'    =>  $this->generateUrl('neptune_detail',array('type'=>$type,'id'=>$object->getId())),
+                    'edit'      =>  $this->generateUrl('neptune_entity_edit',array('type'=>$type,'id'=>$object->getId())),
+                    'gallery'   =>  $this->generateUrl('neptune_file_gallery_prio',array('type'=>$type,'id'=>$object->getId())),
+                    'remove'    =>  $this->generateUrl('neptune_entity_remove',array('type' => $type,'id'   => $object->getId())),
+                );
+            }
+            $resultTab[] = array('object'=>$object,'actions'=>$actions);
+        }
+        $normalizer->setIgnoredAttributes(self::JSON_IGNORED_ATTRIBUTES);
+
+        return  new JsonResponse((new Serializer(array($normalizer),array($encoder)))->serialize($resultTab,'json'));
+    }
+
+    
 
     /**
      * @Route("/{type}/{id}",name="neptune_entity_edit",requirements={"type"="[a-zA-Z-]{2,20}","id"="[0-9]+"})
@@ -327,46 +300,7 @@ class EntityController extends BaseController
         return $this->redirect($request->headers->get('referer'));
     }
 
-    /**
-     * @Route("/{type}/prio",name="neptune_entity_prio",requirements={"type"="[a-zA-Z-]{2,20}"})
-     */
-    public function prio(Request $request,$type){
-
-        $ajax = $request->isXmlHttpRequest();
-        $prio = $request->request->get('prio');
-
-        if($prio === null || false === $prios = json_decode($prio)){
-
-            if($ajax){
-                return new Response('');
-            }
-            else{
-                return $this->redirectToRoute('neptune_entity',array('type'=>$type));
-            }
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        if(null === $class = $this->getClass($type)){
-            return new Response('');
-        }
-        $repo = $em->getRepository($class);
-        $objects = $repo->findAll();
-        $tabObjects = array();
-        foreach ($objects as $object){
-            $tabObjects[$object->getId()] = $object;
-        }
-        $this->prios($prios,$tabObjects);
-
-        $em->flush();
-        if($ajax){
-            return new Response('success');
-        }
-        else{
-            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
-        }
-
-    }
+    
 
     /**
      * @Route("/{type}/active/{id}",name="neptune_entity_active",requirements={"type"="[a-zA-Z-]{2,20}","id"="[0-9]+"})
@@ -416,6 +350,77 @@ class EntityController extends BaseController
                 }
             }
         }
+    }
+
+    /**
+     * @Route("/{type}/{parentType}/{parentId}",name="neptune_entity",requirements={"type"="[a-zA-Z-]{2,20}","parentType"="[a-zA-Z]{2,20}"},defaults={"parentType":null,"parentId"=null})
+     */
+    public function list($type,$parentType,$parentId){
+
+        if($parentType !== null && $parentId === null){
+            return $this->redirectToRoute('neptune_entity',array('type'=>$type));
+        }
+
+        if(null === $class = $this->getClass($type)){
+            return $this->redirectToRoute('neptune_home');
+        }
+
+        $repo = $this->getDoctrine()->getRepository($class);
+        $child = false;
+        $elemListing = false;
+
+        if(new $class() instanceof Page){
+            $objects = $repo->findBy(array(
+               'parent' =>  null,
+               'remove' =>  false,
+            ),['prio'=>'ASC']);
+
+        }
+        elseif(new $class() instanceof Element){
+            $objects = $this->getDoctrine()->getRepository(ElementType::class)->findBy(array(
+                'remove'    =>  false
+            ));
+            $elemListing = true;
+        }
+        else{
+            $objects = null;
+
+
+                $repoParams = array(
+                    'remove'=>false,
+
+                );
+                if($parentType !== null && $parentId !== null && (new $class()) instanceof AbstractChild){
+                    $repoParams[$parentType]  = $parentId;
+                }
+
+                $objects = $repo->findBy($repoParams,['prio'=>'ASC']);
+
+                if(null !== $classParent = $this->getClass($parentType)){
+                    $parent = $this->getDoctrine()->getRepository($classParent)->find($parentId);
+                }
+
+
+        }
+        $params = array(
+            'title'         =>  ucfirst($type).'s'.((isset($parent) && $parent != null) ? ' de - '.ucfirst($parentType).' : '.$parent->getName() : ''),
+            'objects'       =>  $objects,
+            'child'         =>  $child,
+            'elemLisiting'  => $elemListing
+        );
+        $params['ariane'] = array(
+            [
+                'link'  => $this->generateUrl('neptune_home'),
+                'name'  => 'Accueil'
+            ],
+            [
+                'link'  =>  '#',
+                'name'  =>  ucfirst($type).'s'
+            ]
+        );
+
+        return $this->render('@ScyLabsNeptune/admin/entity/listing.html.twig',$params);
+
     }
 }
 
