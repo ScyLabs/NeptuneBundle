@@ -76,6 +76,53 @@ class PageController extends AbstractController
     }
 
     /**
+     * @Route("/{_locale}/element/{slug}{anchor}",name="detail_element",requirements={"_locale"="[a-z]{2}","slug"="^[a-z-_0-9/]+$","anchor"="^(\\#)[a-z-_]+$"},defaults={"_locale"="fr","anchor"=""})
+     */
+    public function detailElement(Request $request,$slug,?array $options = null){
+        $em = $this->getDoctrine()->getManager();
+        $url = $em->getRepository($this->getClass('elementUrl'))->findOneBy(array(
+            'url' => $slug
+        ));
+        if($url === null)
+            return $this->redirectToRoute('homepage');
+        if($url->getLang() !== $request->getLocale()){
+            $url = $em->getRepository($this->getClass('elementUrl'))->findOneBy(
+                array(
+                    'lang'  => $request->getLocale(),
+                    'element'  => $url->getElement()
+                )
+            );
+            if($url === null){
+                return $this->redirectToRoute('homepage');
+            }
+            return $this->redirectToRoute('detail_actuality',array('_locale'=>$request->getLocale(),'slug' => $url->getUrl()));
+        }
+        $element = $url->getElement();
+        if($element->getActive() === false || $element->getRemove() === true){
+            return $this->redirectToRoute('homepage');
+        }
+        if($element->getZones()->count() > 0){
+            $element->getZones()[0]->setTypeHead(1);
+        }
+        $pages = $em->getRepository($this->getClass('page'))->findBy(array(
+            'parent'    =>  null,
+            'remove'    =>  false,
+            'active'    => true
+        ),
+            ['prio'=>'ASC']
+        );
+        $infos = $em->getRepository($this->getClass('infos'))->findOneBy([],['id'=>'ASC']);
+        $partners = $em->getRepository($this->getClass('partner'))->findAll();
+        $params = array('pages'=>$pages,'page'=>$element,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale(),'jsZones'=>$this->getZonesDeps($element));
+
+        if($options !== null){
+            $params = array_merge($params,$options);
+        }
+
+        return $this->render('page/page.html.twig',$params);
+    }
+    
+    /**
      * @Route("/{_locale}/{slug}{anchor}",name="page",requirements={"slug"="^[a-z-_0-9/]+$","_locale"="[a-z]{2}","anchor"="^(\\#)[a-z-_]+$"},defaults={"anchor"="","_locale"="fr"})
      */
     public function page(Request $request,$slug,?array $options = null){
@@ -151,53 +198,6 @@ class PageController extends AbstractController
         }
         if(file_exists($this->getParameter('kernel.project_dir').'/templates/page/'.$page->getType()->getName().'.html.twig')){
             return $this->render('page/'.$page->getType()->getName().'.html.twig',$params);
-        }
-
-        return $this->render('page/page.html.twig',$params);
-    }
-
-    /**
-     * @Route("/{_locale}/element/{slug}{anchor}",name="detail_element",requirements={"_locale"="[a-z]{2}","slug"="^[a-z-_0-9/]+$","anchor"="^(\\#)[a-z-_]+$"},defaults={"_locale"="fr","anchor"=""})
-     */
-    public function detailElement(Request $request,$slug,?array $options = null){
-        $em = $this->getDoctrine()->getManager();
-        $url = $em->getRepository($this->getClass('elementUrl'))->findOneBy(array(
-            'url' => $slug
-        ));
-        if($url === null)
-            return $this->redirectToRoute('homepage');
-        if($url->getLang() !== $request->getLocale()){
-            $url = $em->getRepository($this->getClass('elementUrl'))->findOneBy(
-                array(
-                    'lang'  => $request->getLocale(),
-                    'element'  => $url->getElement()
-                )
-            );
-            if($url === null){
-                return $this->redirectToRoute('homepage');
-            }
-            return $this->redirectToRoute('detail_actuality',array('_locale'=>$request->getLocale(),'slug' => $url->getUrl()));
-        }
-        $element = $url->getElement();
-        if($element->getActive() === false || $element->getRemove() === true){
-            return $this->redirectToRoute('homepage');
-        }
-        if($element->getZones()->count() > 0){
-            $element->getZones()[0]->setTypeHead(1);
-        }
-        $pages = $em->getRepository($this->getClass('page'))->findBy(array(
-            'parent'    =>  null,
-            'remove'    =>  false,
-            'active'    => true
-        ),
-            ['prio'=>'ASC']
-        );
-        $infos = $em->getRepository($this->getClass('infos'))->findOneBy([],['id'=>'ASC']);
-        $partners = $em->getRepository($this->getClass('partner'))->findAll();
-        $params = array('pages'=>$pages,'page'=>$element,'infos'=>$infos,'partners'=>$partners,'locale'=>$request->getLocale(),'jsZones'=>$this->getZonesDeps($element));
-
-        if($options !== null){
-            $params = array_merge($params,$options);
         }
 
         return $this->render('page/page.html.twig',$params);
