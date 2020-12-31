@@ -4,7 +4,7 @@ namespace ScyLabs\NeptuneBundle\Repository;
 
 use ScyLabs\NeptuneBundle\Entity\ZoneType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ZoneType|null find($id, $lockMode = null, $lockVersion = null)

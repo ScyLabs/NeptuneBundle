@@ -11,7 +11,7 @@ namespace ScyLabs\NeptuneBundle\DataFixtures\ORM;
 use ScyLabs\NeptuneBundle\Entity\FileType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 
 class LoadFileTypeData extends Fixture implements OrderedFixtureInterface

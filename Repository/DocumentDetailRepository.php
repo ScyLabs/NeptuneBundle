@@ -4,7 +4,7 @@ namespace ScyLabs\NeptuneBundle\Repository;
 
 use ScyLabs\NeptuneBundle\Entity\DocumentDetail;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method DocumentDetail|null find($id, $lockMode = null, $lockVersion = null)

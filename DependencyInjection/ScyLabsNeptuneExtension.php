@@ -13,6 +13,7 @@ use Composer\Autoload\ClassLoader;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Annotations\DocParser;
+use Doctrine\Migrations\Configuration\Exception\ConfigurationException;
 use ScyLabs\GiftCodeBundle\Entity\GiftCode;
 use ScyLabs\NeptuneBundle\Annotation\ScyLabsNeptune\Override;
 use ScyLabs\NeptuneBundle\Entity\Page;
@@ -28,7 +29,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\ORM\Mapping as ORM;
-
+use RuntimeException;
 
 class ScyLabsNeptuneExtension extends Extension
 {
@@ -112,7 +113,9 @@ class ScyLabsNeptuneExtension extends Extension
             }
         }
 
-
+        if(!isset($config['depencenciesDirectory']))
+            throw new RuntimeException('"scy_labs_neptune.depencenciesDirectory" must be confifured in services.yaml');
+        $container->setParameter($this->getAlias().'.depencenciesDirectory',$config['depencenciesDirectory']);
         $container->setParameter($this->getAlias().'.override',$config['override']);
         $container->setParameter($this->getAlias().'.compress',$config['compress']);
         $container->setParameter($this->getAlias().'.sitemap',$config['sitemap']);
