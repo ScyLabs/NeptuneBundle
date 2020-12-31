@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         
         $rootNode = $treeBuilder->getRootNode()
             ->children()
-                ->variableNode('depencenciesDirectory')->end()
+                ->variableNode('assetsDirectory')->end()
             ->end()
             ->children()
                 ->variableNode('compress')->defaultValue(true)->end()
