@@ -30,7 +30,6 @@ services:
     ScyLabs\NeptuneBundle\Repository\:
         resource: '../../Repository'
 
-
     #Debut service
     ScyLabs\NeptuneBundle\Services\FileUploader:
         arguments:

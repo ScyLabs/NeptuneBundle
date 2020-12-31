@@ -18,8 +18,11 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(){
         $treeBuilder = new TreeBuilder('neptune');
 
+        
         $rootNode = $treeBuilder->getRootNode()
-
+            ->children()
+                ->variableNode('depencenciesDirectory')->end()
+            ->end()
             ->children()
                 ->variableNode('compress')->defaultValue(true)->end()
             ->end()
@@ -34,7 +37,7 @@ class Configuration implements ConfigurationInterface
                 ->variableNode('icons')->defaultValue(null)->end()
             ->end()
             ->children()
-                ->variableNode('override')->defaultValue(array())->end()
+                ->variableNode('override')->defaultValue([])->end()
             ->end()
             ->children()
                 ->arrayNode('codex')
