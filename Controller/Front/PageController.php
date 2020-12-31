@@ -206,26 +206,26 @@ class PageController extends AbstractController
     private function getZonesDeps(AbstractElem $page){
         $tabJs = [];
         $assetsDirectory = $this->getParameter('scy_labs_neptune.assetsDirectory');
-        if($_ENV['APP_ENV'] == 'dev' && file_exists($publicDir.'/css/import.less')){
-            $import_less = file_get_contents($publicDir.'/css/import.less');
+        if($_ENV['APP_ENV'] == 'dev' && file_exists($assetsDirectory.'/css/import.less')){
+            $import_less = file_get_contents($assetsDirectory.'/css/import.less');
             $new_import = $import_less;
         }
 
         foreach ($page->getZones() as $zone) {
 
-                if (!in_array($zone->getType()->getName(), $tabJs) && file_exists($publicDir.'/js/zone/'.$zone->getType()->getName().'.js')) {
+                if (!in_array($zone->getType()->getName(), $tabJs) && file_exists($assetsDirectory.'/js/zone/'.$zone->getType()->getName().'.js')) {
                     $tabJs[] = $zone->getType()->getName();
                 }
                 if(isset($import_less) && isset($new_import)){
 
-                    if(!preg_match("#zone\/".$zone->getType()->getName()."\.less#",$new_import) && file_exists($publicDir.'/css/zone/'.$zone->getType()->getName().'.less')){
+                    if(!preg_match("#zone\/".$zone->getType()->getName()."\.less#",$new_import) && file_exists($assetsDirectory.'/css/zone/'.$zone->getType()->getName().'.less')){
                         $new_import .= "\n".'@import "zone/'.$zone->getType()->getName().'.less";';
                     }
                 }
         }
 
         if(isset($import_less) && strlen($new_import) > strlen($import_less)){
-            $f = fopen($publicDir.'/css/import.less','w+');
+            $f = fopen($assetsDirectory.'/css/import.less','w+');
             fwrite($f,$new_import);
             fclose($f);
         }
