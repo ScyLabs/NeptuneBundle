@@ -205,7 +205,7 @@ class PageController extends AbstractController
 
     private function getZonesDeps(AbstractElem $page){
         $tabJs = [];
-        $publicDir = $this->getParameter('kernel.project_dir').'/public';
+        $assetsDirectory = $this->getParameter('scy_labs_neptune.depencenciesDirectory');
         if($_ENV['APP_ENV'] == 'dev' && file_exists($publicDir.'/css/import.less')){
             $import_less = file_get_contents($publicDir.'/css/import.less');
             $new_import = $import_less;

@@ -113,9 +113,9 @@ class ScyLabsNeptuneExtension extends Extension
             }
         }
 
-        if(!isset($config['depencenciesDirectory']))
-            throw new RuntimeException('"scy_labs_neptune.depencenciesDirectory" must be confifured in services.yaml');
-        $container->setParameter($this->getAlias().'.depencenciesDirectory',$config['depencenciesDirectory']);
+        if(!isset($config['assetsDirectory']))
+            throw new RuntimeException('"scy_labs_neptune.assetsDirectory" must be confifured in services.yaml');
+        $container->setParameter($this->getAlias().'.assetsDirectory',$config['assetsDirectory']);
         $container->setParameter($this->getAlias().'.override',$config['override']);
         $container->setParameter($this->getAlias().'.compress',$config['compress']);
         $container->setParameter($this->getAlias().'.sitemap',$config['sitemap']);
