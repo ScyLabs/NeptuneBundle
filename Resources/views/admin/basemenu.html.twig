@@ -28,16 +28,16 @@
 </li>
 <hr/>
 
-<li class="nav-label">{{"Coordonnées et admins" | trans}}</li>
+<li class="nav-label">{{"Informations & coordonnées" | trans}}</li>
 <li>
-    <a href="{{ path('neptune_infos_edit') }}" class="ajax edit"><i class="fa fa-photo"></i>{{"Informations & coordonnées" | trans}}</a>
+    <a href="{{ path('neptune_infos_edit') }}" class="ajax edit"><i class="fa fa-photo"></i>{{"Modifier les informations" | trans}}</a>
 </li>
 {# <li><a href="{{ path('neptune_user') }}"><i class="fa fa-user"></i>{{"Gérer vos admins" | trans}}</a> </li> #}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
     <hr/>
     <li class="nav-label">{{"Gestions des traductions" | trans}}</li>
     <li>
-        <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-flag"></i><span class="hide-menu">{{ 'Traductions' | trans }}</span> </a>
+        <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-flag"></i><span class="hide-menu">{{ 'Importer / Exporter' | trans }}</span> </a>
         <ul aria-expanded="false" class="collapse">
             <li><a href="{{ path('neptune_export_text') }}" class="ajax export"><i class="fa fa-list-ul m-r-10"></i>{{'Exporter le texte' | trans}}</a> </li>
             <li><a href="{{ path('neptune_import_text') }}" class="ajax edit"><i class="fa fa-plus m-r-10"></i>{{'Importer le texte' | trans}}</a> </li>
