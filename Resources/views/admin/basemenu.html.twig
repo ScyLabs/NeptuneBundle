@@ -1,11 +1,8 @@
-<li class="nav-devider"></li>
-<li> <a href="{{ path('neptune_home') }}" aria-expanded="false"><i class="fa fa-tachometer"></i><span class="hide-menu">{{ 'Tableau de bord' | trans }}<span class="label label-rouded label-primary pull-right">2</span></span></a>
-</li>
-<hr/>
+<li class="nav-label">{{"Gestion du menu" | trans}}</li>
 <li>
-    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{ 'Gérer vos pages' | trans }}</span> </a>
+    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{ 'Structure & Pages' | trans }}</span> </a>
     <ul aria-expanded="false" class="collapse">
-        <li><a href="{{ path('neptune_entity',{'type':'page'}) }}"><i class="fa fa-list-ul m-r-10"></i>{{ 'Toutes les pages' | trans }}</a> </li>
+        <li><a href="{{ path('neptune_entity',{'type':'page'}) }}"><i class="fa fa-list-ul m-r-10"></i>{{ 'Voir les pages' | trans }}</a> </li>
         {% if is_granted('ROLE_SUPER_ADMIN') %}
             <li><a href="{{ path('neptune_type',{'type':'page'}) }}" class="ajax edit"><i class="fa fa-list-ul m-r-10"></i>{{'Types de pages' | trans}}</a> </li>
             <li><a href="{{ path('neptune_type_add',{'type':'page'}) }}" class="ajax edit"><i class="fa fa-plus m-r-10"></i>{{'Créer un type de page' | trans}}</a> </li>
@@ -22,31 +19,20 @@
     </li>
 {% endif %}
 <li>
-    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{ 'Gérer vos éléments' | trans }}</span> </a>
+    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{ 'Gestion des éléments' | trans }}</span> </a>
     <ul aria-expanded="false" class="collapse">
-        <li><a href="{{ path('neptune_entity',{'type':'element'}) }}">{{'Tous les éléments' | trans }}</a></li>
+        <li><a href="{{ path('neptune_entity',{'type':'element'}) }}">{{'Voir les éléments' | trans }}</a></li>
         <li><a href="{{ path('neptune_type',{'type':'element'}) }}" class="ajax edit"><i class="fa fa-list-ul m-r-10"></i>{{"Types d'éléments" | trans}}</a> </li>
         <li><a href="{{ path('neptune_type_add',{'type':'element'}) }}" class="ajax edit"><i class="fa fa-plus m-r-10"></i>{{"Créer un type d'élément" | trans}}</a> </li>
     </ul>
 </li>
-<li>
-    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{"Partenaires" | trans}}</span> </a>
-    <ul aria-expanded="false" class="collapse">
-        <li><a href="{{ path('neptune_entity',{'type':'partner'}) }}"><i class="fa fa-list-ul m-r-10"></i>{{"Gérer vos Partenaires" | trans}}</a> </li>
-        <li><a href="{{ path('neptune_entity_add',{'type':'partner'}) }}" class="ajax edit"><i class="fa fa-plus m-r-10"></i>{{"Créer un Partenaire" | trans}}</a> </li>
-    </ul>
-</li>
 <hr/>
-<li class="nav-label">{{"Medias" | trans}}</li>
-<li>
-    <a href="{{ path('neptune_type',{'type':'file'}) }}" class="ajax edit"><i class="fa fa-photo"></i> {{"Type de fichier" | trans}}</a>
-</li>
-<hr/>
+
 <li class="nav-label">{{"Coordonnées et admins" | trans}}</li>
 <li>
-    <a href="{{ path('neptune_infos_edit') }}" class="ajax edit"><i class="fa fa-photo"></i>{{"Gérer vos coordonnées" | trans}}</a>
+    <a href="{{ path('neptune_infos_edit') }}" class="ajax edit"><i class="fa fa-photo"></i>{{"Informations & coordonnées" | trans}}</a>
 </li>
-<li><a href="{{ path('neptune_user') }}"><i class="fa fa-user"></i>{{"Gérer vos admins" | trans}}</a> </li>
+{# <li><a href="{{ path('neptune_user') }}"><i class="fa fa-user"></i>{{"Gérer vos admins" | trans}}</a> </li> #}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
     <hr/>
     <li>
@@ -57,15 +43,7 @@
         </ul>
     </li>
 {% endif %}
-{% if is_granted('ROLE_SUPER_ADMIN') %}
-    {% if app.user.apiToken is not null %}
-        <li><a href="{{ path('codex_zones') }}">Import de zone</a></li>
-        <li><a href="{{ path('codex_category') }}">Catégories du codex</a></li>
-    {% endif %}
-    {% if app.user.apiToken is null%}
-        <li><a href="{{ path('codex_zones') }}">Lier le site au codex</a></li>
-    {% endif %}
-{% endif %}
+
 {{ include('@ScyLabsNeptune/admin/menu.html.twig') }}
 {{ ScyLabs_showHook(_self,'ScyLabsNeptuneBundle.admin.menu') | raw }}
 

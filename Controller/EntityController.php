@@ -377,7 +377,7 @@ class EntityController extends BaseController
 
         }
         elseif(new $class() instanceof Element){
-            $objects = $this->getDoctrine()->getRepository(ElementType::class)->findBy(array(
+            $objects = $this->getDoctrine()->getRepository($this->getClass('elementType'))->findBy(array(
                 'remove'    =>  false
             ));
             $elemListing = true;
