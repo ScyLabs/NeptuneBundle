@@ -239,7 +239,7 @@ h6 {
 
 .page-wrapper {
   background: #fafafa;
-  min-height: 100vh;
+  min-height: 100vh !important;
 }
 
 .container-fluid {
@@ -1874,9 +1874,18 @@ textarea {
   font-weight: 700;
   height: 55px;
   bottom: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.3s ease;
+}
+
+.left-sidebar .logout:hover {
+  background: #007ee5;
+  border-color: #007ee5;
+  color: white;
+  transition: all 0.3s ease;
 }
 
 .left-sidebar .logout i {
