@@ -35,15 +35,28 @@
 {# <li><a href="{{ path('neptune_user') }}"><i class="fa fa-user"></i>{{"Gérer vos admins" | trans}}</a> </li> #}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
     <hr/>
+    <li class="nav-label">{{"Gestions des traductions" | trans}}</li>
     <li>
-        <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-flag"></i><span class="hide-menu">{{ 'Gestions des traductions' | trans }}</span> </a>
+        <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-flag"></i><span class="hide-menu">{{ 'Traductions' | trans }}</span> </a>
         <ul aria-expanded="false" class="collapse">
             <li><a href="{{ path('neptune_export_text') }}" class="ajax export"><i class="fa fa-list-ul m-r-10"></i>{{'Exporter le texte' | trans}}</a> </li>
             <li><a href="{{ path('neptune_import_text') }}" class="ajax edit"><i class="fa fa-plus m-r-10"></i>{{'Importer le texte' | trans}}</a> </li>
         </ul>
     </li>
 {% endif %}
-
+<!-- Profile -->
+{% if app.user.username is defined %}
+    {# <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i style="margin-left: 20px;" class="fal fa-user"></i> </a>
+        <div class="dropdown-menu dropdown-menu-right animated zoomIn">
+            <ul class="dropdown-user"> 
+                <li>#}
+                <a href="{{ path('neptune_logout') }}" class="logout"><i class="fa fa-power-off"></i> Deconnexion</a>
+                {# </li>
+            </ul>
+        </div>
+    </li> #}
+{% endif %}
 {{ include('@ScyLabsNeptune/admin/menu.html.twig') }}
 {{ ScyLabs_showHook(_self,'ScyLabsNeptuneBundle.admin.menu') | raw }}
 

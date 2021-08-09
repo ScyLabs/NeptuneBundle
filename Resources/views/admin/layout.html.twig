@@ -56,7 +56,7 @@
 <!-- Main wrapper  -->
 <div id="main-wrapper">
     <!-- header header  -->
-    <div class="header">
+    {# <div class="header">
         <nav class="navbar top-navbar navbar-expand-md navbar-light">
             <!-- Logo -->
             <div class="navbar-header">
@@ -86,21 +86,11 @@
                     <!-- Messages -->
 
                     <!-- End Messages -->
-                    <!-- Profile -->
-                    {% if app.user.username is defined %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i style="margin-left: 20px;" class="fal fa-user"></i> </a>
-                            <div class="dropdown-menu dropdown-menu-right animated zoomIn">
-                                <ul class="dropdown-user">
-                                    <li><a href="{{ path('neptune_logout') }}"><i class="fa fa-power-off"></i> Deconnexion</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    {% endif %}
+
                 </ul>
             </div>
         </nav>
-    </div>
+    </div> #}
     <!-- End header header -->
     <!-- Left Sidebar  -->
     <div class="left-sidebar">
