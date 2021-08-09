@@ -31,17 +31,17 @@
             <h3>Connectez vous</h3>
             <form action="{{ path('neptune_login') }}" method="post">
                 
-                <label for="email">{{ 'security.login.username'|trans }}</label>
+                <label for="email">Nom d'utilisateur</label>
                 <input type="email" id="email" name="email" value="{{ last_username }}" required="required" autocomplete="username" />
 
-                <label for="password">{{ 'security.login.password'|trans }}</label>
+                <label for="password">Mot de passe</label>
                 <input type="password" id="password" name="password" required="required" autocomplete="current-password" />
 
                 <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                <label for="remember_me">Se souvenir de moi</label>
 
-                <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
-                <a href="#">{{ "resetting.request.submit" | trans}}</a>
+                <input type="submit" id="_submit" name="_submit" value="Envoyer" />
+                <a href="#">Envoyer</a>
 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             </form>
