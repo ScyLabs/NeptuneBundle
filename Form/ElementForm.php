@@ -72,26 +72,26 @@ class ElementForm extends AbstractType implements ContainerAwareInterface
             },
         ]);
 
-        if(null !== $icons = $this->container->getParameter('scy_labs_neptune.icons')){
-            if(is_array($icons)){
-                $choices = array('Aucune'=>'');
-                foreach ($icons as $key => $icon){
+        // if(null !== $icons = $this->container->getParameter('scy_labs_neptune.icons')){
+        //     if(is_array($icons)){
+        //         $choices = array('Aucune'=>'');
+        //         foreach ($icons as $key => $icon){
 
-                    $choices[$key] = $key;
-                }
-                $builder->add('icon',ChoiceType::class,array(
-                    'label' => "Icone",
-                    "choices"   => $choices,
-                    "required"  => false
+        //             $choices[$key] = $key;
+        //         }
+        //         $builder->add('icon',ChoiceType::class,array(
+        //             'label' => "Icone",
+        //             "choices"   => $choices,
+        //             "required"  => false
 
-                ));
-            }
-        }else{
-            $builder->add('icon',TextType::class,array(
-                'required'=>false,
-                'label'=> 'Icone'
-            ));
-        }
+        //         ));
+        //     }
+        // }else{
+        //     $builder->add('icon',TextType::class,array(
+        //         'required'=>false,
+        //         'label'=> 'Icone'
+        //     ));
+        // }
 
 
     }
