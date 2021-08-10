@@ -4,7 +4,7 @@
     <div class="col-lg-{{  (app.request.attributes.get('_route') == 'neptune_entity') ? '10' : '12'}}">
         {% if objects is defined %}
             <div class="tabs">
-                <ul class="onglets">
+                <ul class="onglets tabalt">
                     {% for type in objects %}
                         <li><a href="#tabs-{{ type.name }}" data-type="{{ type.id }}">{{ type.title }}</a></li>
                     {% endfor %}
@@ -15,7 +15,7 @@
                         <div class="tabs card" id="tabs-{{ type.name }}">
                             <ul class="onglets">
                                 <li><a href="#tabs-{{ type.name }}-1">Gestion</a></li>
-                                <li><a href="#tabs-{{ type.name }}-2">Prios</a></li>
+                                <li><a href="#tabs-{{ type.name }}-2">Tri</a></li>
                             </ul>
                             <div id="tabs-{{ type.name }}-1">
                                 <div class="card">
@@ -49,16 +49,16 @@
                                                             <td>{{ object.prio }}</td>
                                                             <td>
                                                                 <ul class="actions">
-                                                                    <li><a href="{{ path('neptune_entity_clone',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax clone" title="Dupliquer"><i class="fal fa-clone"></i></a></li>
-                                                                    <li><a href="{{ path('neptune_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax" title="Gestion des fichiers"><i class="fal fa-file-alt"></i></a></li>
-                                                                    <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax edit" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
+                                                                    <li><a href="{{ path('neptune_entity_clone',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax clone" title="Dupliquer"><i class="far fa-clone"></i></a></li>
+                                                                    <li><a href="{{ path('neptune_file_gallery_prio',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax" title="Médias"><i class="far fa-image"></i></a></li>
+                                                                    <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':object.id}) }}" class="ajax edit" title="Textes"><i class="far fa-font"></i></a></li>
                                                                     {% if object.zones is defined %}
-                                                                        <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':app.request.attributes.get('type'),'parentId':object.id}) }}" class="ajax" title="Contenu"><i class="fal fa-align-left"></i></a></li>
+                                                                        <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':app.request.attributes.get('type'),'parentId':object.id}) }}" class="ajax" title="Détails"><i class="far fa-th"></i></a></li>
                                                                     {% endif %}
-                                                                    <li><a href="{{ path('neptune_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax edit" title="Modifier"><i class="fal fa-pencil"></i></a></li>
+                                                                    <li><a href="{{ path('neptune_entity_edit',{'id':object.id,'type':app.request.attributes.get('type')}) }}" class="ajax edit" title="Editer"><i class="far fa-pen"></i></a></li>
                                                                     <li class="">
                                                                         <a class="ajax delete" data-id="{{ object.id }}" href="{{ path('neptune_entity_remove',{'id':object.id,'type':app.request.attributes.get('type') }) }}" title="Supprimer">
-                                                                            <i class="fal fa-trash"></i>
+                                                                           <i class="fas fa-times"></i>
                                                                         </a>
                                                                     </li>
                                                                 </ul>
@@ -75,7 +75,7 @@
                             <div id="tabs-{{ type.name }}-2">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title">Nestedable</h4>
+                                        <h4 class="card-title">Définir l'ordre des éléments</h4>
                                         <div class="card-content">
                                             <div class="">
                                                 <div class="dd nestable{{ app.request.attributes.get('type') == 'page' ? '' : '1'}}" id="nestable{{ app.request.attributes.get('type') == 'page' ? '' : '1'}}" data-action="{{ path('neptune_entity_prio',{'type':app.request.attributes.get('type')}) }}">
@@ -116,10 +116,10 @@
     </div>
 
     {% if app.request.attributes.get('_route') == 'neptune_entity' %}
-        <div class="col-lg-2 m-t-25">
-            <div class="card">
-                <a href="{{ path('neptune_entity_add',{'type':app.request.attributes.get('type')}) }}" class="btn btn-pink m-b-10 m-l-5 show_form ajax add">Créer un element</a>
-            </div>
+        <div class="col-lg-2 m-t-0">
+   
+                <a href="{{ path('neptune_entity_add',{'type':app.request.attributes.get('type')}) }}" class="btn btn-pink m-b-10 m-l-5 show_form ajax add">Ajouter un element</a>
+
         </div>
     {% endif %}
 </div>

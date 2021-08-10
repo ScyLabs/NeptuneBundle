@@ -115,7 +115,8 @@ a.link {
 
 a.link:focus,
 a.link:hover {
-  color: #1976d2;
+  color: #68b2f4;
+
 }
 
 .img-responsive,
@@ -141,7 +142,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #455a64;
+  color: #424242;
   font-weight: 400;
 }
 
@@ -238,7 +239,7 @@ h6 {
 }
 
 .page-wrapper {
-  background: #fafafa;
+  background: #f0f4f9;
   min-height: 100vh !important;
 }
 
@@ -248,11 +249,11 @@ h6 {
 
 @media (min-width: 1024px) {
   .page-wrapper {
-    margin-left: 270px;
+    margin-left: 300px;
   }
 
   .footer {
-    left: 270px;
+    left: 300px;
   }
 }
 
@@ -798,7 +799,7 @@ h6 {
   }
 }
 
-#99abb4 @media (max-width: 1370px) {
+@media (max-width: 1370px) {
   .widget-app-columns {
     -webkit-column-count: 2;
     -moz-column-count: 2;
@@ -811,6 +812,7 @@ button {
   outline: none !important;
   text-decoration: none !important;
   color: #99abb4;
+  color: #67757c;
   transition: all 0.2s ease 0s;
 }
 
@@ -1855,22 +1857,22 @@ textarea {
 
 .left-sidebar {
   position: absolute;
-  width: 270px;
+  width: 300px;
   height: 100%;
   top: 0;
   z-index: 20;
   /* padding-top: 60px; */
   background: #19222f;
-  -webkit-box-shadow: 1px 0 20px rgba(0, 0, 0, 0.08);
-  box-shadow: 1px 0 20px rgba(0, 0, 0, 0.08);
-  color: white;
+  /* -webkit-box-shadow: 1px 0 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 1px 0 20px rgba(0, 0, 0, 0.08); */
+  color: #8196b1;
 }
 
 .left-sidebar .logout {
   position: absolute;
-  width: 270px;
-  border-top: 1px solid #445869;
-  color: #7496a7;
+  width: 300px;
+  border-top: 1px solid #8196b1;
+  color: #8196b1;
   font-weight: 700;
   height: 55px;
   bottom: 0;
@@ -1928,7 +1930,7 @@ textarea {
 
 .sidebar-nav {
   /* background: #fff; */
-  padding: 20px;
+  padding: 15px;
 }
 
 .sidebar-nav ul {
@@ -1944,10 +1946,11 @@ textarea {
   color: #607d8b;
   color: #8296a0;
   color: #7496a7;
-  padding: 7px 35px 7px 15px;
+  color: #8196b1;
+  padding: 7px 25px 7px 15px;
   display: block;
   font-size: 14px;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 .sidebar-nav ul li a:hover {
@@ -1972,7 +1975,7 @@ textarea {
 }
 
 .sidebar-nav ul li ul li a {
-  padding: 7px 35px 7px 15px;
+  padding: 7px 25px 7px 15px;
 }
 
 .sidebar-nav ul li ul ul {
@@ -2001,7 +2004,7 @@ textarea {
 }
 
 .sidebar-nav>ul>li>a {
-  border-left: 3px solid transparent;
+  /* border-left: 3px solid transparent; */
 }
 
 .sidebar-nav>ul>li>a i {
@@ -2021,18 +2024,18 @@ textarea {
 
 .sidebar-nav>ul>li>a.active {
   font-weight: 400;
-  background: #fff;
-  color: #1976d2;
+  /* background: #fff; */
+  color: #68b2f4;
 }
 
 .sidebar-nav>ul>li.active>a {
-  color: #1976d2;
+  color: #68b2f4;
   font-weight: 500;
-  border-left: 3px solid #fff;
+  /* border-left: 3px solid #fff; */
 }
 
 .sidebar-nav>ul>li.active>a i {
-  color: #1976d2;
+  /* color: #1976d2; */
 }
 
 .sidebar-nav .has-arrow {
@@ -2371,13 +2374,13 @@ textarea {
 }
 
 .page-titles {
-  background: #ffffff;
+  background: #e0e6ec;
   margin: 0 0 30px;
   padding: 15px 10px;
   position: relative;
   z-index: 10;
-  -webkit-box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
-  box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
+  color: #67757c;
+  box-shadow: none;
 }
 
 .page-titles h3 {
@@ -2394,6 +2397,10 @@ textarea {
 .page-titles .breadcrumb li {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.page-titles .breadcrumb li a {
+  color: #67757c !important;
 }
 
 .page-titles .breadcrumb .breadcrumb-item+.breadcrumb-item:before {
@@ -2610,9 +2617,9 @@ textarea {
   stroke-linejoin: round;
   stroke-linecap: round;
   stroke-dasharray: 500%;
-  stroke-dasharray: 0 /;
+  stroke-dasharray: 0;
   /* fixes IE prob */
-  stroke-dashoffset: 0 /;
+  stroke-dashoffset: 0;
   /* fixes IE prob */
   -webkit-animation: am-draw 40s;
   animation: am-draw 40s;
@@ -2794,8 +2801,14 @@ textarea {
   margin: 15px 0;
   padding: 20px;
   border: 0 solid #e7e7e7;
-  border-radius: 5px;
-  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  /* box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.07); */
+  box-shadow: 0 2px 20px 0 rgb(23, 41, 64, 0.05),
+    0 5px 10px 0 rgb(23, 41, 64, 0.08);
+}
+
+#tabs-1 .card {
+  border-radius: 0 10px 10px 10px;
 }
 
 .card-subtitle {
@@ -3155,8 +3168,8 @@ table.dataTable thead .sorting::after {
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current,
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-  background-color: #1976d2;
-  border: 1px solid #1976d2;
+  background-color: #68b1f4;
+  border: 1px solid #68b1f4;
   color: #ffffff !important;
 }
 
@@ -3305,6 +3318,13 @@ table.dataTable thead .sorting::after {
 .btn {
   padding: 7px 12px;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 20px 0 rgb(23, 41, 64, 0.05),
+    0 5px 10px 0 rgb(23, 41, 64, 0.1);
 }
 
 .btn-group label {
@@ -5891,15 +5911,23 @@ footer p {
 /*    Input Style
 ------------------------*/
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .form-control {
-  height: 42px;
-  border-radius: 0;
+  height: 45px;
+  border-radius: 10px;
+  color: #444;
   box-shadow: none;
   border-color: #e7e7e7;
   font-family: 'Poppins', sans-serif;
+}
+
+.form-control label {
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: #999;
+  /* text-transform: uppercase; */
 }
 
 .form-control:hover {
@@ -6556,7 +6584,13 @@ tbody tr th {
 
 tbody tr td {
   font-family: 'Poppins', sans-serif;
-  color: #99abb4;
+  /* color: #99abb4; */
+}
+
+tbody a:hover {
+  font-family: 'Poppins', sans-serif;
+  /* color: #99abb4; */
+  color: #68b1f4;
 }
 
 tbody tr td:last-child {
@@ -6770,7 +6804,7 @@ tbody tr td:last-child {
 
 .dd-handle,
 .dd3-content {
-  color: #000 !important;
+  /* color: #000 !important; */
 }
 
 .profiletimeline {

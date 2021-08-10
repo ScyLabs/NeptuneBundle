@@ -2,7 +2,7 @@
 
 <div class="col-lg-12 m-t-25">
     <div class="">
-        <a href="{{ path('neptune_type_add',{'type':app.request.attributes.get('type')}) }}" class="btn btn-pink m-b-10 m-l-5 show_form ajax add">Créer un type</a>
+        <a href="{{ path('neptune_type_add',{'type':app.request.attributes.get('type')}) }}" class="btn btn-pink m-b-10 m-l-5 show_form ajax add">Ajouter un type</a>
     </div>
 </div>
 
@@ -35,14 +35,14 @@
                                                 <a href="{{ path('codex_export',{'id':type.id}) }}" class="ajax" title="Uploader la zone"><i class="fas fa-upload"></i></a>
                                             </li>
                                         {% endif %}
-                                        <li>
+                                        {# <li>
                                             <a href="{{ path('codex_zone_show_template',{'id':type.id}) }}" class="ajax iframe"><i class="fas fa-search"></i></a>
-                                        </li>
-                                        <li><a href="{{ path('neptune_type_edit',{'id':type.id,'type':app.request.attributes.get('type')}) }}" title="Modifier" class="ajax edit"><i class="fal fa-pencil"></i></a></li>
+                                        </li> #}
+                                        <li><a href="{{ path('neptune_type_edit',{'id':type.id,'type':app.request.attributes.get('type')}) }}" title="Modifier" class="ajax edit"><i class="far fa-pen"></i></a></li>
                                         {% if type.removable %}
                                             <li class="">
                                                 <a class="ajax delete" href="{{ path('neptune_type_remove',{'id':type.id,'type':app.request.attributes.get('type') }) }}" title="Supprimer">
-                                                    <i class="fal fa-trash"></i>
+                                                    <i class="fas fa-times"></i>
                                                 </a>
                                             </li>
                                         {% endif %}
