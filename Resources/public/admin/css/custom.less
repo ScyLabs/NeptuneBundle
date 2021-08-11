@@ -316,10 +316,38 @@
   background: none !important;
 }
 
-.actions>li {
-  display: inline-block;
-  font-size: 18px;
-  margin: 0 7px;
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  li {
+    display: inline-block;
+    font-size: 18px;
+    margin: 0 12px;
+
+    &:last-child {
+      margin-right: 0px;
+
+    }
+
+    .ajax {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .titr {
+        font-size: 11px;
+        display: inline-block;
+        line-height: 1.2;
+        margin-top: 5px;
+      }
+    }
+  }
+
+
+
+
 }
 
 .relative {

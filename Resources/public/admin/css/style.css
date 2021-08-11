@@ -6620,6 +6620,8 @@ tbody tr td:last-child {
   text-transform: uppercase;
 }
 
+
+
 .student-data-table label {
   margin-right: 7px;
 }
@@ -6655,7 +6657,7 @@ tbody tr td:last-child {
 
 .table td,
 .table th {
-  padding: 0.55rem;
+  padding: 1rem;
 }
 
 .table .round-img img {
