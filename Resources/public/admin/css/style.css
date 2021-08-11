@@ -1954,20 +1954,20 @@ textarea {
 }
 
 .sidebar-nav ul li a:hover {
-  color: #1976d2;
+  color: #68b1f4;
 }
 
 .sidebar-nav ul li a:hover i {
-  color: #1976d2;
+  color: #68b1f4;
 }
 
 .sidebar-nav ul li a.active {
-  color: #1976d2;
+  color: #68b1f4;
   font-weight: 500;
 }
 
 .sidebar-nav ul li a.active i {
-  color: #1976d2;
+  color: #68b1f4;
 }
 
 .sidebar-nav ul li ul {
@@ -6603,7 +6603,7 @@ tbody tr td:last-child {
 .table>tfoot>tr>th,
 .table>thead>tr>td,
 .table>thead>tr>th {
-  line-height: 32px;
+  /* line-height: 32px; */
   vertical-align: top;
 }
 
