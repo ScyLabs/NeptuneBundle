@@ -55,53 +55,7 @@
 
 <!-- Main wrapper  -->
 <div id="main-wrapper">
-    <!-- header header  -->
-    <div class="header">
-        <nav class="navbar top-navbar navbar-expand-md navbar-light">
-            <!-- Logo -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="index.html">
-                    <!-- Logo icon -->
-                    {#<b><img src="{{ asset('bundles/scylabsneptune/admin/images/logo.jpg') }}" alt="homepage" class="dark-logo" /></b>#}
-                    <!--End Logo icon -->
-                    <!-- Logo text -->
-                </a>
-            </div>
-            <!-- End Logo -->
-            <div class="navbar-collapse">
-                <!-- toggle and nav items -->
-                <ul class="navbar-nav mr-auto mt-md-0">
-                </ul>
-                <!-- User profile and search -->
-                <ul class="navbar-nav my-lg-0">
 
-                    <!-- Search
-                    <li class="nav-item hidden-sm-down search-box"> <a class="nav-link hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-search"></i></a>
-                        <form class="app-search">
-                            <input type="text" class="form-control" placeholder="Search here"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
-                    </li>
-                    -->
-                    <!-- Comment -->
-
-                    <!-- Messages -->
-
-                    <!-- End Messages -->
-                    <!-- Profile -->
-                    {% if app.user.username is defined %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Connecté en tant que {{ app.user.username }} <i style="margin-left: 20px;" class="fal fa-user"></i> </a>
-                            <div class="dropdown-menu dropdown-menu-right animated zoomIn">
-                                <ul class="dropdown-user">
-                                    <li><a href="{{ path('neptune_logout') }}"><i class="fa fa-power-off"></i> Deconnexion</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
-    </div>
-    <!-- End header header -->
     <!-- Left Sidebar  -->
     <div class="left-sidebar">
         <!-- Sidebar scroll-->
@@ -120,13 +74,15 @@
     <!-- Page wrapper  -->
     <div class="page-wrapper">
         <!-- Bread crumb -->
+         {% if title is defined %}
         <div class="row page-titles">
             <div class="col-md-5 align-self-center">
-                <h3 class="text-primary">
+                {# <div class="burger">{% include('svg/burger.svg') %}</div> #}
+                <h3 class="">
                     {% if title is defined%}
                         {{ title }}
                     {% else %}
-                        Pas de variable title envoyée par le controller
+                       
                     {% endif %}
                 </h3>
             </div>
@@ -138,11 +94,10 @@
                             <li class="breadcrumb-item"><a href="{{ ligne.link }}">{{ ligne.name }}</a></li>
                         {% endfor %}
                     {% endif %}
-
                 </ol>
             </div>
         </div>
-
+        {% endif %}
         <!-- CONTENU DE LA PAGE -->
         <div class="container-fluid">
 
