@@ -74,8 +74,10 @@
     <!-- Page wrapper  -->
     <div class="page-wrapper">
         <!-- Bread crumb -->
+         {% if title is defined %}
         <div class="row page-titles">
             <div class="col-md-5 align-self-center">
+                <div class="burger">{% include('svg/burger.svg') %}</div>
                 <h3 class="">
                     {% if title is defined%}
                         {{ title }}
@@ -92,11 +94,10 @@
                             <li class="breadcrumb-item"><a href="{{ ligne.link }}">{{ ligne.name }}</a></li>
                         {% endfor %}
                     {% endif %}
-
                 </ol>
             </div>
         </div>
-
+        {% endif %}
         <!-- CONTENU DE LA PAGE -->
         <div class="container-fluid">
 
