@@ -55,14 +55,18 @@
             <td>{{ page.prio }}</td>
             <td>
                 <ul class="actions">
-                    <li><a href="{{ path('neptune_entity_clone',{'type':'page','id':page.id}) }}" class="ajax clone"><i class="fal fa-clone"></i></a></li>
-                    <li><a href="{{ path('neptune_file_gallery_prio',{'type':'page','id':page.id}) }}" class="ajax" title="Gestion des fichiers"><i class="fal fa-file-alt"></i></a></li>
-                    <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':page.id}) }}" class="edit" target="_blank" title="Gestion des détails"><i class="fal fa-newspaper"></i></a></li>
-                    <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':'page','parentId':page.id}) }}" class="ajax" title="Contenu"><i class="fal fa-align-left"></i></a></li>
-                    <li><a href="{{ path('neptune_entity_edit',{'id':page.id,'type':app.request.attributes.get('type')}) }}" class="ajax edit" title="Modifier"><i class="fal fa-pencil"></i></a></li>
+                    <li><a href="{{ path('neptune_entity_clone',{'type':'page','id':page.id}) }}" title="Cloner" class="ajax clone">  
+                            <i class="far fa-clone"></i>
+                            <span class="action">Cloner</span>
+                        </a></li>
+                    <li><a href="{{ path('neptune_file_gallery_prio',{'type':'page','id':page.id}) }}" class="ajax" title="Médias"><i class="far fa-image"></i> <span class="action">Médias</span></a></li>
+                    <li><a href="{{ path('neptune_detail',{'type':app.request.attributes.get('type'),'id':page.id}) }}" class="edit" target="_blank" title="Textes"><i class="far fa-font"></i> <span class="action">Textes</span></a></li>
+                    <li><a href="{{ path('neptune_entity',{'type':'zone','parentType':'page','parentId':page.id}) }}" class="ajax" title="Zones"><i class="far fa-th"></i> <span class="action">Zones</span></a></li>
+                    <li><a href="{{ path('neptune_entity_edit',{'id':page.id,'type':app.request.attributes.get('type')}) }}" class="ajax edit" title="Editer"><i class="far fa-pen"></i> <span class="action">Editer</span></a></li>
                     <li class="">
-                        <a class="ajax delete" data-id="{{ page.id }}" href="{{ path('neptune_entity_remove',{'id':page.id,'type':app.request.attributes.get('type') }) }}">
-                            <i class="fal fa-trash"></i>
+                        <a class="ajax delete" data-id="{{ page.id }}" href="{{ path('neptune_entity_remove',{'id':page.id,'type':app.request.attributes.get('type') }) }}" title="Supprimer">
+                             <i class="fas fa-times"></i>
+                             <span class="action">Supprimer</span>
                         </a>
                     </li>
                 </ul>
