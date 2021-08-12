@@ -1,6 +1,9 @@
-<li class="nav-label">{{"Gestion du menu" | trans}}</li>
+<li class="nav-label">{{"Gestion du site" | trans}}</li>
+{# <li> <a href="{{ path('neptune_home') }}" aria-expanded="false"><i class="fa fa-tachometer"></i><span class="hide-menu">{{ 'Tableau de bord' | trans }}<span class="label label-rouded label-primary pull-right">2</span></span></a>
+</li>
+<hr/> #}
 <li>
-    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{ 'Structure & Pages' | trans }}</span> </a>
+    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{ 'Structure & pages' | trans }}</span> </a>
     <ul aria-expanded="false" class="collapse">
         <li><a href="{{ path('neptune_entity',{'type':'page'}) }}"><i class="fa fa-list-ul m-r-10"></i>{{ 'Voir les pages' | trans }}</a> </li>
         {% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -27,7 +30,19 @@
     </ul>
 </li>
 <hr/>
-
+{# <li>
+    <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-file-alt"></i><span class="hide-menu">{{"Partenaires" | trans}}</span> </a>
+    <ul aria-expanded="false" class="collapse">
+        <li><a href="{{ path('neptune_entity',{'type':'partner'}) }}"><i class="fa fa-list-ul m-r-10"></i>{{"Gérer vos Partenaires" | trans}}</a> </li>
+        <li><a href="{{ path('neptune_entity_add',{'type':'partner'}) }}" class="ajax edit"><i class="fa fa-plus m-r-10"></i>{{"Créer un Partenaire" | trans}}</a> </li>
+    </ul>
+</li>
+<hr/> #}
+{# <li class="nav-label">{{"Medias" | trans}}</li>
+<li>
+    <a href="{{ path('neptune_type',{'type':'file'}) }}" class="ajax edit"><i class="fa fa-photo"></i> {{"Type de fichier" | trans}}</a>
+</li>
+<hr/> #}
 <li class="nav-label">{{"Informations & coordonnées" | trans}}</li>
 <li>
     <a href="{{ path('neptune_infos_edit') }}" class="ajax edit"><i class="fa fa-photo"></i>{{"Modifier les informations" | trans}}</a>
@@ -44,18 +59,18 @@
         </ul>
     </li>
 {% endif %}
-<!-- Profile -->
+{# {% if is_granted('ROLE_SUPER_ADMIN') %}
+    {% if app.user.apiToken is not null %}
+        <li><a href="{{ path('codex_zones') }}">Import de zone</a></li>
+        <li><a href="{{ path('codex_category') }}">Catégories du codex</a></li>
+    {% endif %}
+    {% if app.user.apiToken is null%}
+        <li><a href="{{ path('codex_zones') }}">Lier le site au codex</a></li>
+    {% endif %}
+{% endif %} #}
+
 {% if app.user.username is defined %}
-    {# <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i style="margin-left: 20px;" class="fal fa-user"></i> </a>
-        <div class="dropdown-menu dropdown-menu-right animated zoomIn">
-            <ul class="dropdown-user"> 
-                <li>#}
-                <a href="{{ path('neptune_logout') }}" class="logout"><i class="fa fa-power-off"></i> Deconnexion</a>
-                {# </li>
-            </ul>
-        </div>
-    </li> #}
+        <a href="{{ path('neptune_logout') }}" class="logout"><i class="fa fa-power-off"></i> Deconnexion</a>
 {% endif %}
 {{ include('@ScyLabsNeptune/admin/menu.html.twig') }}
 {{ ScyLabs_showHook(_self,'ScyLabsNeptuneBundle.admin.menu') | raw }}
