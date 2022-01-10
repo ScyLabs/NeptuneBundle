@@ -18,7 +18,6 @@ class ClassFounder implements ClassFounderInterface,ContainerAwareInterface
 
     use ContainerAwareTrait;
 
-
     public function getClass(string $alias){
 
         $originalClasses = Yaml::parseFile(dirname(__DIR__).'/Resources/config/original_classes.yaml');

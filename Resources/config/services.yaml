@@ -1,88 +1,78 @@
 parameters:
-    changelogs:
-        active: false
-        version: "1.0"
-        
+  changelogs:
+    active: false
+    version: "1.0"
+
 services:
-    
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        public: true       
-                            
-    ScyLabs\NeptuneBundle\:
-        resource: '../../*'
-        exclude: '../../{Entity,Migrations,Tests,Kernel.php}'
+  _defaults:
+    autowire: true # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    public: true
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    ScyLabs\NeptuneBundle\Controller\:
-        resource: '../../Controller'
-        tags: ['controller.service_arguments']
+  ScyLabs\NeptuneBundle\:
+    resource: "../../*"
+    exclude: "../../{Entity,Migrations,Tests,Kernel.php}"
 
-    ScyLabs\NeptuneBundle\Controller\TwigExceptionController:
-        public: true
-        arguments:
-            $debug: '%kernel.debug%'
-        calls:
-            - [ setContainer, [ '@service_container']]
+  # controllers are imported separately to make sure services can be injected
+  # as action arguments even if you don't extend any base controller class
+  ScyLabs\NeptuneBundle\Controller\:
+    resource: "../../Controller"
+    tags: ["controller.service_arguments"]
 
-    ScyLabs\NeptuneBundle\Repository\:
-        resource: '../../Repository'
+  ScyLabs\NeptuneBundle\Repository\:
+    resource: "../../Repository"
 
-    #Debut service
-    ScyLabs\NeptuneBundle\Services\FileUploader:
-        arguments:
-            $targetDirectory: '%uploads_directory%'
+  #Debut service
+  ScyLabs\NeptuneBundle\Services\FileUploader:
+    arguments:
+      $targetDirectory: "%uploads_directory%"
 
-    ScyLabs\NeptuneBundle\Services\CleanText:
-                arguments:
+  ScyLabs\NeptuneBundle\Services\CleanText:
+    arguments:
 
-    #Fin service
+  #Fin service
 
-    #Listeners
+  #Listeners
 
-    ScyLabs\NeptuneBundle\EventListener\FileListener:
-        tags:
-            - { name: doctrine.event_listener,event: prePersist }
-            - { name: doctrine.event_listener,event: preUpdate }
-            - { name: doctrine.event_listener,event: preRemove }
+  ScyLabs\NeptuneBundle\EventListener\FileListener:
+    tags:
+      - { name: doctrine.event_listener, event: prePersist }
+      - { name: doctrine.event_listener, event: preUpdate }
+      - { name: doctrine.event_listener, event: preRemove }
 
+  ScyLabs\NeptuneBundle\EventListener\LoadORMMetadataSubscriber:
+    arguments:
+      - "@service_container"
+    tags:
+      - { name: doctrine.event_subscriber }
 
+  ScyLabs\NeptuneBundle\EventListener\TypeListener:
+    tags:
+      - { name: doctrine.event_listener, event: prePersist }
+      - { name: doctrine.event_listener, event: preUpdate }
 
-    ScyLabs\NeptuneBundle\EventListener\LoadORMMetadataSubscriber:
-        arguments:
-            - "@service_container"
-        tags:
-            - { name: doctrine.event_subscriber }
+  ScyLabs\NeptuneBundle\EventListener\EntityListener:
+    arguments:
+      $langs: "%langs%"
+    tags:
+      - { name: doctrine.event_listener, event: postPersist }
+      - { name: doctrine.event_listener, event: preUpdate }
+      - { name: doctrine.event_listener, event: postUpdate }
+  ScyLabs\NeptuneBundle\EventListener\CompressListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.controller }
+    calls:
+      - [setContainer, ["@service_container"]]
 
-    ScyLabs\NeptuneBundle\EventListener\TypeListener:
-          tags:
-              - { name: doctrine.event_listener,event: prePersist }
-              - { name: doctrine.event_listener,event: preUpdate }
+  ScyLabs\NeptuneBundle\Form\ElementForm:
+    calls:
+      - [setContainer, ["@service_container"]]
 
-    ScyLabs\NeptuneBundle\EventListener\EntityListener:
-        arguments:
-            $langs: '%langs%'
-        tags:
-            - { name: doctrine.event_listener,event: postPersist }
-            - { name: doctrine.event_listener,event: preUpdate }
-            - { name: doctrine.event_listener,event: postUpdate }
-    ScyLabs\NeptuneBundle\EventListener\CompressListener:
-        tags:
-            - { name: kernel.event_listener,event: kernel.controller }
-        calls:
-            - [ setContainer, [ '@service_container']]
+  ScyLabs\NeptuneBundle\Form\ZoneForm:
+    calls:
+      - [setContainer, ["@service_container"]]
 
-    ScyLabs\NeptuneBundle\Form\ElementForm:
-        calls:
-            - [ setContainer, [ '@service_container']]
-    
-    ScyLabs\NeptuneBundle\Form\ZoneForm:
-        calls:
-            - [ setContainer, [ '@service_container']]
-
-    ScyLabs\NeptuneBundle\Services\ClassFounder:
-        calls:
-            - [ setContainer, [ '@service_container']]
-    #Fin listeners
+  ScyLabs\NeptuneBundle\Services\ClassFounder:
+    calls:
+      - [setContainer, ["@service_container"]]
+  #Fin listeners
